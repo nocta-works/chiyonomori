@@ -1071,22 +1071,15 @@ function initScrollSlideReveal() {
   // 一番左＝神社の基礎知識（記事）、その隣＝エリア（依頼O-1で追加した入口）。
   var BASICS_LABEL = { ja: '神社の基礎知識', en: 'Basics' };
   var AREA_LABEL = { ja: 'エリア', en: 'Areas' };
-  // 実行順I（依頼S-2・2026-09-13）：エリア再編14→10が完了。奈良は大阪のL2へ、
-  // 高山は名古屋のL3へ吸収（鎌倉・大宮が東京へ吸収されたのと同じ形）のため、
-  // 単独エリアとしては削除。京都・大阪・名古屋・福岡・広島・伊勢神宮・出雲大社は
-  // 東京と同じ同心円レイヤー構成に作り直した。富士（南＝富士山本宮浅間大社／
-  // 北＝富士吉田）は山を挟んだ対なので同心円にせず、相互リンクのみ。
+  // 依頼V（2026-09-13・本人指定「作業の幅が膨らみすぎているのは抑えたい。
+  // まずは東京京都大阪のみをこだわる」）：対象を東京・京都・大阪の3エリアに
+  // 絞る。伊勢神宮・富士山本宮浅間大社・出雲大社・広島・名古屋・富士吉田・福岡の
+  // 7エリアはドロップダウンと地図の囲いから外す（＝V-1）が、area-pagesファイル
+  // 自体・詳細ページ・地図データ（183社）は削除しない。戻す時にそのまま使う。
   var AREA_PAGES = [
     { name:{ja:'東京',en:'Tokyo'}, file:'area-pages/東京.html' },
     { name:{ja:'大阪',en:'Osaka'}, file:'area-pages/大阪.html' },
     { name:{ja:'京都',en:'Kyoto'}, file:'area-pages/京都.html' },
-    { name:{ja:'名古屋',en:'Nagoya'}, file:'area-pages/名古屋.html' },
-    { name:{ja:'福岡',en:'Fukuoka'}, file:'area-pages/福岡.html' },
-    { name:{ja:'伊勢神宮',en:'Ise Jingu'}, file:'area-pages/伊勢神宮.html' },
-    { name:{ja:'富士山本宮浅間大社',en:'Fujisan Hongu Sengen Taisha'}, file:'area-pages/富士山本宮浅間大社.html' },
-    { name:{ja:'出雲大社',en:'Izumo Taisha'}, file:'area-pages/出雲大社.html' },
-    { name:{ja:'広島',en:'Hiroshima'}, file:'area-pages/広島.html' },
-    { name:{ja:'富士吉田',en:'Fujiyoshida'}, file:'area-pages/富士吉田.html' },
   ];
   // 実行順F（依頼P-2＋R-4・2026-09-13）：エリアを地図上で囲うための、エリア→
   // 所属社リスト。⚠️依頼R-5の教訓＝名前だけでは同名他県の社と衝突する
@@ -1107,31 +1100,11 @@ function initScrollSlideReveal() {
     'area-pages/大阪.html': { layers: [
       { key:'L1', shrines:['大阪|住吉大社','大阪|大阪天満宮','大阪|今宮戎神社'] },
       { key:'L2', shrines:['奈良|大神神社','奈良|春日大社','奈良|石上神宮','兵庫|伊弉諾神宮','兵庫|伊和神社'] }
-    ]},
-    'area-pages/名古屋.html': { layers: [
-      { key:'L1', shrines:['愛知|熱田神宮','愛知|若宮八幡社'] },
-      { key:'L2', shrines:['岐阜|南宮大社','岐阜|伊奈波神社','愛知|真清田神社'] },
-      { key:'L3', shrines:['岐阜|水無神社','岐阜|桜山八幡宮','石川|白山比咩神社','石川|尾山神社','石川|気多大社','長野|諏訪大社本宮'] }
-    ]},
-    'area-pages/福岡.html': { layers: [
-      { key:'L1', shrines:['福岡|櫛田神社','福岡|筥崎宮','福岡|住吉神社'] },
-      { key:'L2', shrines:['福岡|太宰府天満宮','福岡|竈門神社','福岡|宗像大社'] },
-      { key:'L3', shrines:['大分|宇佐神宮','福岡|英彦山神宮'] }
-    ]},
-    'area-pages/伊勢神宮.html': { layers: [
-      { key:'L1', shrines:['三重|伊勢神宮（内宮）','三重|伊勢神宮（外宮）','三重|猿田彦神社'] },
-      { key:'L2', shrines:['三重|伊雑宮','三重|伊射波神社'] }
-    ]},
-    'area-pages/富士山本宮浅間大社.html': { shrines:['静岡|富士山本宮浅間大社','静岡|山宮浅間神社','静岡|村山浅間神社'] },
-    'area-pages/出雲大社.html': { layers: [
-      { key:'L1', shrines:['島根|出雲大社','島根|日御碕神社'] },
-      { key:'L2', shrines:['島根|熊野大社','島根|八重垣神社','島根|佐太神社'] }
-    ]},
-    'area-pages/広島.html': { layers: [
-      { key:'L1', shrines:['広島|厳島神社','広島|速谷神社'] },
-      { key:'L2', shrines:['広島|吉備津神社'] }
-    ]},
-    'area-pages/富士吉田.html': { shrines:['山梨|北口本宮冨士浅間神社','山梨|甲斐国一宮浅間神社','山梨|河口浅間神社'] }
+    ]}
+    // 依頼V-1（2026-09-13）：名古屋・福岡・伊勢神宮・富士山本宮浅間大社・
+    // 出雲大社・広島・富士吉田の7エリアぶんはここから削除（ドロップダウン・
+    // 地図の囲みから外す）。データそのものは消していないので、戻す時は
+    // 実装キュー.mdの「完了済み」欄（実行順I）に定義をそのまま残してある。
   };
   var ARTICLE_PAGES = [
     { num: 1, name:{ja:'日本と神社',     en:'Japan & Shrines'},   file:'articles/日本と神社.html' },
