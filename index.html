@@ -284,7 +284,7 @@
        z-indexがそのままこのドロップダウンパネルと直接競合し、低い値だと地図の下に
        埋もれてしまう（本人指摘・2026-09-10で発覚） */
     position: absolute; top: calc(100% + 8px); left: 0; z-index: 2000;
-    min-width: 200px; padding: 6px;
+    min-width: 230px; max-height: 70vh; overflow-y: auto; padding: 6px;
     background: linear-gradient(180deg, var(--bg-popup-1) 0%, var(--bg-popup-2) 100%);
     border: 1px solid var(--border-header); border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -320,6 +320,17 @@
   .filter-btn.ni     { border-color: var(--tag-ni);     color: var(--tag-ni-light);     background: rgba(var(--tag-ni-rgb),0.12); }
   .filter-btn.ni.active     { background: rgba(var(--tag-ni-rgb),0.32);     box-shadow: 0 0 9px rgba(var(--tag-ni-rgb),0.4); }
   .filter-btn .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  /* タグボタン横の?リンク（実装キュー実行順6・依頼M）：フィルターボタン本体
+     とは別のクリック領域にするため、button内ではなく隣接するaタグにする
+     （#mock-controlsのクリック委譲は.filter-btnだけを見ているので干渉しない） */
+  .tag-help {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; margin-right: 4px; border-radius: 50%;
+    font-size: 10px; line-height: 1; color: var(--tan-text); opacity: 0.45;
+    border: 1px solid var(--border-4); text-decoration: none; flex-shrink: 0;
+    transition: opacity 0.2s;
+  }
+  .tag-help:hover { opacity: 0.9; }
   /* 名社１のダミータグ（本人指定・2026-09-10：外国人旅行者向けの選定はまだ済んでいない
      ため、今はタグの置き場所だけ確保する。破線＋低opacity＋クリック不可で
      「準備中」であることを視覚的に示し、フィルターのクリック委譲（.filter-btn対象）
@@ -725,6 +736,38 @@ function initScrollSlideReveal() {
     hachiman:{ label:{ja:'八幡',en:'Hachiman'},     char:{ja:'八',en:'H'},  color:'#be185d', border:'#f9a8d4' },
     inari:   { label:{ja:'稲荷',en:'Inari'},        char:{ja:'稲',en:'In'}, color:'#0d9488', border:'#5eead4' },
   };
+  // URLでの状態保持（実装キュー実行順5・依頼H＋依頼Mの前提。2026-09-13）：
+  // 記事ページ（依頼M）から地図に戻った時に選択中のタグが消えないよう、
+  // ?tags=jingu,ichi のようにURLへ反映する。依頼Cの?shrine=と同じ考え方。
+  // ドロップダウン（記事一覧）やタグボタンの?リンクからも参照するため、
+  // activeFiltersの初期化はタグ設定の直後・ドロップダウン構築より前に置く。
+  var TAG_URL_PARAM = 'tags';
+  function readTagsFromUrl() {
+    var raw = new URLSearchParams(location.search).get(TAG_URL_PARAM);
+    if (!raw) return null;
+    var wanted = raw.split(',').filter(function(t){ return TAG_ORDER.indexOf(t) !== -1; });
+    return wanted.length ? new Set(wanted) : null;
+  }
+  var activeFilters = readTagsFromUrl() || new Set(TAG_ORDER);
+  function syncTagsUrl() {
+    var url = new URL(location.href);
+    var isDefault = activeFilters.size === TAG_ORDER.length && TAG_ORDER.every(function(t){ return activeFilters.has(t); });
+    if (isDefault) {
+      url.searchParams.delete(TAG_URL_PARAM);
+    } else {
+      var ordered = TAG_ORDER.filter(function(t){ return activeFilters.has(t); });
+      url.searchParams.set(TAG_URL_PARAM, ordered.join(','));
+    }
+    history.replaceState(null, '', url.pathname + url.search + url.hash);
+  }
+  // 記事ページ・個別紹介ページへ移動するリンクに、今選んでいるタグ状態を
+  // 引き継ぐ（デフォルト＝全タグ選択時はパラメータを付けずURLを短く保つ）
+  function withTagsQuery(path) {
+    var isDefault = activeFilters.size === TAG_ORDER.length && TAG_ORDER.every(function(t){ return activeFilters.has(t); });
+    if (isDefault) return path;
+    var ordered = TAG_ORDER.filter(function(t){ return activeFilters.has(t); });
+    return path + '?' + TAG_URL_PARAM + '=' + encodeURIComponent(ordered.join(','));
+  }
   function topTag(tags) {
     return tags.reduce(function(b,t){ return PRIORITY[t] > PRIORITY[b] ? t : b; }, tags[0]);
   }
@@ -764,23 +807,31 @@ function initScrollSlideReveal() {
       '</div></div>';
   }
 
-  // 個別神社ページへの導線（本人指定・2026-09-10：横並びのアイコン列ではなく、
-  // 普段は閉じていてクリックで開く縦の収納型ドロップダウンに変更。
-  // ページが増えたらこの配列に追記するだけでよい）
-  var DROPDOWN_LABEL = { ja: '個別紹介', en: 'Shrine Pages' };
-  var SHRINE_PAGES = [
-    { name:{ja:'伊勢神宮',en:'Ise Jingu'},   short:{ja:'伊',en:'I'}, tag:'jingu', file:'shrine-pages/伊勢神宮.html' },
-    { name:{ja:'明治神宮',en:'Meiji Jingu'}, short:{ja:'明',en:'M'}, tag:'jingu', file:'shrine-pages/明治神宮.html' },
+  // 根本の紹介・記事一覧への導線（実装キュー実行順6・依頼M・2026-09-13：
+  // 個別社ページ2本のドロップダウンから、日本と神社の基礎を扱う記事9本の
+  // ドロップダウンへ差し替え。個別社ページ（伊勢神宮・明治神宮）はここから
+  // 外れるが削除はしない＝巡礼記録層として地域ページ・「次の一社」から辿れる。
+  // 普段は閉じていてクリックで開く縦の収納型ドロップダウンの構造自体は変えない）
+  var DROPDOWN_LABEL = { ja: '神社の基礎知識', en: 'Learn the Basics' };
+  var ARTICLE_PAGES = [
+    { num: 1, name:{ja:'日本と神社',     en:'Japan & Shrines'},   file:'articles/日本と神社.html' },
+    { num: 2, name:{ja:'参拝の作法',     en:'How to Visit'},      file:'articles/参拝の作法.html' },
+    { num: 3, name:{ja:'鳥居',           en:'Torii Gates'},       file:'articles/鳥居.html' },
+    { num: 4, name:{ja:'境内の見どころ', en:'What to See'},       file:'articles/境内の見どころ.html' },
+    { num: 5, name:{ja:'御朱印とお守り', en:'Goshuin & Charms'},  file:'articles/御朱印とお守り.html' },
+    { num: 6, name:{ja:'神々',           en:'The Kami'},          file:'articles/神々.html' },
+    { num: 7, name:{ja:'歴史',           en:'History'},           file:'articles/歴史.html' },
+    { num: 8, name:{ja:'格式',           en:'Shrine Ranks'},      file:'articles/格式.html' },
+    { num: 9, name:{ja:'系統',           en:'Shrine Lineages'},   file:'articles/系統.html' },
   ];
   function renderShrineDropdown(){
     var label = document.getElementById('shrine-dropdown-label');
     if (label) label.textContent = '⛩ ' + DROPDOWN_LABEL[currentLang];
     var panel = document.getElementById('shrine-dropdown-panel');
     if (!panel) return;
-    panel.innerHTML = SHRINE_PAGES.map(function(s){
-      var c = TAG_CONFIG[s.tag];
-      return '<a class="shrine-dropdown-item" href="' + s.file + '">' +
-        '<span class="shrine-dropdown-badge" style="background:' + c.color + ';border:1.5px solid ' + c.border + ';">' + s.short[currentLang] + '</span>' +
+    panel.innerHTML = ARTICLE_PAGES.map(function(s){
+      return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '">' +
+        '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">' + s.num + '</span>' +
         '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
         '</a>';
     }).join('');
@@ -799,28 +850,6 @@ function initScrollSlideReveal() {
 
   // タグフィルター（本人指定・2026-09-10：神宮・大社・一宮・二宮の4タグのみ。
   // 本番と違い候補タグがこの4つで全部なので「その他のタグ」展開パネルは作らない）
-  // URLでの状態保持（実装キュー実行順5・依頼H＋依頼Mの前提。2026-09-13）：
-  // 記事ページ（依頼M）から地図に戻った時に選択中のタグが消えないよう、
-  // ?tags=jingu,ichi のようにURLへ反映する。依頼Cの?shrine=と同じ考え方。
-  var TAG_URL_PARAM = 'tags';
-  function readTagsFromUrl() {
-    var raw = new URLSearchParams(location.search).get(TAG_URL_PARAM);
-    if (!raw) return null;
-    var wanted = raw.split(',').filter(function(t){ return TAG_ORDER.indexOf(t) !== -1; });
-    return wanted.length ? new Set(wanted) : null;
-  }
-  var activeFilters = readTagsFromUrl() || new Set(TAG_ORDER);
-  function syncTagsUrl() {
-    var url = new URL(location.href);
-    var isDefault = activeFilters.size === TAG_ORDER.length && TAG_ORDER.every(function(t){ return activeFilters.has(t); });
-    if (isDefault) {
-      url.searchParams.delete(TAG_URL_PARAM);
-    } else {
-      var ordered = TAG_ORDER.filter(function(t){ return activeFilters.has(t); });
-      url.searchParams.set(TAG_URL_PARAM, ordered.join(','));
-    }
-    history.replaceState(null, '', url.pathname + url.search + url.hash);
-  }
   function passesFilter(shrine) {
     return shrine.tags.some(function(t){ return activeFilters.has(t); });
   }
@@ -833,12 +862,17 @@ function initScrollSlideReveal() {
   function renderFilterButtons() {
     var container = document.getElementById('mock-controls');
     if (!container) return;
+    // タグボタンの隣の?リンク（実装キュー実行順6・依頼M）：格式（神宮・大社・
+    // 一宮・二宮）が何を意味するかを記事8「格式」で説明する。系統タグは
+    // フィルターに出していないので?リンクも無い（本人指定・2026-09-12）
+    var helpTitle = currentLang === 'ja' ? '格式について読む' : 'What do these ranks mean?';
     var buttonsHtml = TAG_ORDER.map(function(tag){
       var c = TAG_CONFIG[tag];
       var active = activeFilters.has(tag) ? ' active' : '';
       return '<button type="button" class="filter-btn ' + tag + active + '" data-tag="' + tag + '">' +
         '<span class="dot" style="background:' + c.border + ';box-shadow:0 0 5px ' + c.border + '"></span>' +
-        c.label[currentLang] + '</button>';
+        c.label[currentLang] + '</button>' +
+        '<a class="tag-help" href="' + withTagsQuery('articles/格式.html') + '" title="' + helpTitle + '">?</a>';
     }).join('');
     // 名社１のダミータグ（本人指定・2026-09-10）：外国人旅行者向けの選定がまだのため、
     // 実データ・クリック機能なしで置き場所だけ確保する
@@ -855,8 +889,13 @@ function initScrollSlideReveal() {
     if (!btn) return;
     var tag = btn.getAttribute('data-tag');
     activeFilters.has(tag) ? activeFilters.delete(tag) : activeFilters.add(tag);
-    btn.classList.toggle('active', activeFilters.has(tag));
     syncTagsUrl();
+    // ボタンのactive表示だけでなく、隣の?リンクや記事ドロップダウンの
+    // リンク（どちらもwithTagsQueryで現在のタグ状態を埋め込んでいる）も
+    // 作り直す必要があるため、classList.toggleの部分更新ではなく
+    // 両方を再描画する（2026-09-13・依頼M実装で変更）
+    renderFilterButtons();
+    renderShrineDropdown();
     redrawMarkers();
   });
 

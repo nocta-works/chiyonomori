@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>歴史——神社が国家と結ばれ、ほどかれるまで｜根本の紹介 プロトタイプ（design-lab）</title>
+<style>
+  /* design-lab/articles/歴史.html — 実装キュー依頼M：
+     メインページの個別社紹介ドロップダウンを、日本と神社の根本を扱う
+     記事9本に差し替える。おすすめページ（area-pages）と同じ配色トークンを
+     継承しつつ、長文の読み物用にタイポグラフィと余白を調整している。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .article-hero {
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+  }
+  .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(24px, 4vw, 34px); color: var(--gold); margin: 0 0 18px; line-height: 1.5;
+  }
+  .article-lead { font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.92; margin: 0; }
+
+  .article-body { max-width: 700px; margin: 0 auto; padding: 0 24px 20px; font-size: 14px; }
+  .article-body h2 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 19px; color: var(--gold); margin: 48px 0 14px; letter-spacing: 0.02em;
+    border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); padding-left: 12px;
+  }
+  .article-body h3 { font-size: 14px; color: var(--gold); opacity: 0.9; margin: 30px 0 10px; letter-spacing: 0.05em; }
+  .article-body p { line-height: 2.05; opacity: 0.9; margin: 0 0 16px; }
+  .article-body ul, .article-body ol { margin: 0 0 16px; padding-left: 1.3em; }
+  .article-body li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
+  .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+  .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
+  .article-table th { color: var(--gold); font-weight: 600; opacity: 0.85; white-space: nowrap; }
+  .article-table td:first-child { white-space: nowrap; color: var(--gold); opacity: 0.9; }
+
+  .article-nav {
+    max-width: 700px; margin: 40px auto 0; padding: 0 24px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .article-nav a {
+    flex: 1; min-width: 220px; text-decoration: none; font-size: 12px; line-height: 1.8;
+    border: 1px solid var(--border-4); border-radius: 3px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); color: var(--tan-text); opacity: 0.85;
+    transition: background var(--dur-base) ease;
+  }
+  .article-nav a:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .article-nav-next { text-align: right; }
+  .article-nav-label { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; margin-bottom: 6px; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 20px; font-size: 11px; color: var(--border-4); }
+
+  @media (max-width: 600px) {
+    .article-hero { padding: 90px 6vw 36px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="../index.html#mock-app" class="back-link" id="back-link">← 地図に戻る</a>
+<div class="lang-toggle" id="lang-toggle">
+  <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
+  <button type="button" class="lang-btn" data-lang="en">EN</button>
+</div>
+
+<div class="article-hero">
+  <span class="article-eyebrow">中級向け・記事7／全9本</span>
+  <h1 class="article-title">歴史——神社が国家と結ばれ、ほどかれるまで</h1>
+  <p class="article-lead">今ある神社の姿は、<strong>ほとんどが明治以降に整えられたもの。</strong>建物は古くても、制度は新しい。その経緯を知ると、格式の意味（記事8「格式」）も分かる。</p>
+</div>
+
+<div class="article-body">
+<ul>
+<li><strong>古代——社殿が無かった。</strong> 山、岩、森そのものを拝んだ。<strong>今もその形が残っている社がある</strong>——奈良の大神神社は本殿を持たず三輪山を拝み、静岡の山宮浅間神社には社殿が無く富士山を遥拝する。<strong>建物は後から来た</strong></li>
+<li><strong>6世紀・仏教伝来 → 神仏習合。</strong> 以後<strong>1,000年以上、神社と寺は同じ場所にあった。</strong>神は仏が姿を変えたもの、という説明で共存した</li>
+<li><strong>927年・延喜式神名帳</strong>——朝廷が2,861社を台帳に載せたとされる。<strong>国家が神社を一覧で管理した最初。</strong>ここに載った社を「式内社」と呼ぶ</li>
+<li><strong>平安後期——一宮の成立。</strong> 国ごとの序列が自然に定着する（→記事8「格式」）</li>
+<li><strong>中世</strong>——源氏が八幡を武神として担ぎ、武家政権とともに全国へ広がる。<strong>熊野詣</strong>が流行する</li>
+<li><strong>江戸</strong>——<strong>お伊勢参り。</strong>庶民が旅をする口実として神社が使われた。数百万人規模の集団参詣が起きた年もあったとされる</li>
+<li><strong>🔴明治——神仏分離と国家神道。</strong> 政府が神社と寺を強制的に分離。<strong>廃仏毀釈で多くの仏像・経典が破壊された。</strong>神社は国家の施設と位置づけられ、官幣大社・国幣大社といった社格が制度化された</li>
+<li><strong>🔴戦後——国家管理の廃止。</strong> 神社は民間の宗教法人になり、<strong>社格制度は廃止された。</strong>だから今は「<strong>旧</strong>官幣大社」と「旧」が付く（→記事8「格式」の「大社」の節につながる）</li>
+<li><strong>現在</strong>——約8万社とされる。多くは地域の氏子の寄付で維持されている。<strong>過疎で維持できなくなり、宮司が常駐しない社が増えている</strong></li>
+</ul>
+
+</div>
+
+<div class="article-nav">
+<a class="article-nav-prev" href="神々.html"><span class="article-nav-label">← 前の記事</span>神々</a>
+<a class="article-nav-next" href="格式.html"><span class="article-nav-label">次の記事 →</span>格式</a>
+
+</div>
+
+<div class="page-footer">根本の紹介 プロトタイプ・記事7／歴史 / design-lab（本番未反映）</div>
+
+<script>
+(function(){
+  // 地図に戻るリンクにタグ選択状態を引き継ぐ（実装キュー実行順5・依頼M）：
+  // このページへ来る前に地図側で選んでいたタグフィルターがURLの?tagsに
+  // 残っていれば、それを引き継いで地図に戻す。無ければ従来どおり。
+  var tags = new URLSearchParams(location.search).get('tags');
+  var back = document.getElementById('back-link');
+  if (back && tags) {
+    back.setAttribute('href', '../index.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+  }
+  function applyLang(lang){
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) applyLang(btn.getAttribute('data-lang'));
+    });
+  }
+})();
+</script>
+</body>
+</html>
