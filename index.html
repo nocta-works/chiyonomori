@@ -799,7 +799,28 @@ function initScrollSlideReveal() {
 
   // タグフィルター（本人指定・2026-09-10：神宮・大社・一宮・二宮の4タグのみ。
   // 本番と違い候補タグがこの4つで全部なので「その他のタグ」展開パネルは作らない）
-  var activeFilters = new Set(TAG_ORDER);
+  // URLでの状態保持（実装キュー実行順5・依頼H＋依頼Mの前提。2026-09-13）：
+  // 記事ページ（依頼M）から地図に戻った時に選択中のタグが消えないよう、
+  // ?tags=jingu,ichi のようにURLへ反映する。依頼Cの?shrine=と同じ考え方。
+  var TAG_URL_PARAM = 'tags';
+  function readTagsFromUrl() {
+    var raw = new URLSearchParams(location.search).get(TAG_URL_PARAM);
+    if (!raw) return null;
+    var wanted = raw.split(',').filter(function(t){ return TAG_ORDER.indexOf(t) !== -1; });
+    return wanted.length ? new Set(wanted) : null;
+  }
+  var activeFilters = readTagsFromUrl() || new Set(TAG_ORDER);
+  function syncTagsUrl() {
+    var url = new URL(location.href);
+    var isDefault = activeFilters.size === TAG_ORDER.length && TAG_ORDER.every(function(t){ return activeFilters.has(t); });
+    if (isDefault) {
+      url.searchParams.delete(TAG_URL_PARAM);
+    } else {
+      var ordered = TAG_ORDER.filter(function(t){ return activeFilters.has(t); });
+      url.searchParams.set(TAG_URL_PARAM, ordered.join(','));
+    }
+    history.replaceState(null, '', url.pathname + url.search + url.hash);
+  }
   function passesFilter(shrine) {
     return shrine.tags.some(function(t){ return activeFilters.has(t); });
   }
@@ -835,6 +856,7 @@ function initScrollSlideReveal() {
     var tag = btn.getAttribute('data-tag');
     activeFilters.has(tag) ? activeFilters.delete(tag) : activeFilters.add(tag);
     btn.classList.toggle('active', activeFilters.has(tag));
+    syncTagsUrl();
     redrawMarkers();
   });
 
@@ -993,14 +1015,25 @@ function initScrollSlideReveal() {
       });
       updateStats();
       renderSidebarList();
-      // 社を指定して地図を開く口（本人指定・2026-09-12・実装キュー依頼C）：
-      // 地域ページ／個別ページの「次の一社」カードから ?shrine=<名前> 付きで
-      // 遷移してきた場合、その社を選択済みの状態で開く。一致しなければ
-      // （まだ地図のデータに載っていない社を指す場合など）通常どおり全体を表示する
+      // 社を指定して地図を開く口（本人指定・2026-09-12・実装キュー依頼C／
+      // 2026-09-13・依頼Hで識別子を?shrine=<県>|<名前>に変更）：
+      // 地域ページ／個別ページの「次の一社」カードから遷移してきた場合、
+      // その社を選択済みの状態で開く。一致しなければ
+      // （まだ地図のデータに載っていない社を指す場合など）通常どおり全体を表示する。
+      // ⚠️同名の社が複数存在する（住吉神社3社・吉備津神社2社など）ため、
+      // 名前だけの一致では区別できない→県|名前で判定する。旧形式（名前のみ）の
+      // リンクが万一残っていた場合は、名前だけでの一致にフォールバックする。
       var focusedShrine = null;
-      var wantedShrineName = new URLSearchParams(location.search).get('shrine');
-      if (wantedShrineName) {
-        focusedShrine = shrines.filter(function(s){ return s.name === wantedShrineName; })[0] || null;
+      var wantedShrineParam = new URLSearchParams(location.search).get('shrine');
+      if (wantedShrineParam) {
+        var sepIndex = wantedShrineParam.indexOf('|');
+        if (sepIndex !== -1) {
+          var wantedPref = wantedShrineParam.slice(0, sepIndex);
+          var wantedName = wantedShrineParam.slice(sepIndex + 1);
+          focusedShrine = shrines.filter(function(s){ return s.pref === wantedPref && s.name === wantedName; })[0] || null;
+        } else {
+          focusedShrine = shrines.filter(function(s){ return s.name === wantedShrineParam; })[0] || null;
+        }
       }
       function fitWhenReady(attempts) {
         attempts = attempts || 0;
