@@ -308,7 +308,7 @@
      「理想の形はあるが伝えにくいので、一般的なものを一旦採用」とのことなので、
      最も一般的なドロップダウンメニューの型を採用した */
   .mock-toolbar {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    display: flex; align-items: center; justify-content: flex-start; gap: 12px;
     padding: 10px 20px; border-bottom: 1px solid var(--border-4);
     position: relative;
   }
@@ -337,11 +337,6 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     display: none;
   }
-  /* 本人指摘（2026-09-13）：「エリア」はトグルの並びで2番目＝画面の右寄りに
-     位置するため、他と同じ左寄せ(left:0)だとパネルが画面右端ぎりぎりまで
-     伸びる（狭い画面では実際にはみ出す）。右寄せに変えてトグルの右端から
-     左へ開くようにし、はみ出しを解消する */
-  #area-dropdown-panel { left: auto; right: 0; }
   .shrine-dropdown.open .shrine-dropdown-panel { display: block; }
   .shrine-dropdown-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; text-decoration: none; }
   .shrine-dropdown-item:hover { background: rgba(var(--gold-glow-rgb),0.10); }
@@ -355,7 +350,14 @@
   /* タグフィルター（本人指定・2026-09-10：海外版は神宮・大社・一宮・二宮の4タグに厳選。
      見た目・構成は本番index.htmlの.controls-tagsに合わせるが、参拝記録・令制国絞り込み・
      達成状況モーダルはこの地図には持ち込まない） */
-  .mock-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  /* 本人指摘（2026-09-13）：「エリア」アイコンの配置が真ん中寄りに見えていた
+     真因＝.mock-toolbarのjustify-content:space-betweenが3つの直接の子（基礎知識・
+     エリア・タグ操作列）の間を均等な余白で押し広げていたため、2番目の「エリア」が
+     隣の「基礎知識」から離れて浮いて見えていた（開いた時のパネルが左に寄りすぎた
+     のも同じ原因＝ボタン自体が右へ押し出されていた分をパネル側の右寄せで
+     打ち消していたための副作用）。.mock-toolbar側をflex-start＋ここでmargin-left:autoに
+     変更し、2つのドロップダウンは隣接させたまま、タグ操作列だけを右端へ寄せる形にした */
+  .mock-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-left: auto; }
   .filter-btn {
     display: flex; align-items: center; gap: 5px;
     padding: 5px 11px; border-radius: 20px; border: 1.5px solid;
