@@ -2218,5 +2218,374 @@
     "reason": "伯耆国二宮。旧国幣小社。霊峰大山信仰の中心で、麓の本社と大山中腹の奥宮からなる。",
     "nameEn": "Ogamiyama Jinja",
     "prefEn": "Tottori"
+  },
+  {
+    "pref": "東京",
+    "name": "神田神社（神田明神）",
+    "tags": [
+      "meisha"
+    ],
+    "province": "武蔵国",
+    "lat": 35.70194,
+    "lng": 139.76778,
+    "deity": "大己貴命・少彦名命・平将門命",
+    "reason": "江戸総鎮守。旧府社・別表神社。江戸城・将軍家の守護として崇敬された。",
+    "nameEn": "Kanda Jinja (Kanda Myojin)",
+    "prefEn": "Tokyo"
+  },
+  {
+    "pref": "東京",
+    "name": "日枝神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "武蔵国",
+    "lat": 35.67472,
+    "lng": 139.73958,
+    "deity": "大山咋神",
+    "reason": "勅祭社。旧官幣大社。江戸城（皇居）の産土神。山王祭は天下三大祭のひとつ。",
+    "nameEn": "Hie Jinja",
+    "prefEn": "Tokyo"
+  },
+  {
+    "pref": "大阪",
+    "name": "大阪天満宮",
+    "tags": [
+      "meisha"
+    ],
+    "province": "摂津国",
+    "lat": 34.69602,
+    "lng": 135.51262,
+    "deity": "菅原道真",
+    "reason": "地名代表社。大阪の天神さん。天神祭（日本三大祭）で著名。学問の神として多くの受験生が参拝。",
+    "nameEn": "Osaka Tenmangu",
+    "prefEn": "Osaka"
+  },
+  {
+    "pref": "大阪",
+    "name": "今宮戎神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "摂津国",
+    "lat": 34.65533,
+    "lng": 135.50247,
+    "deity": "事代主命（えびす神）",
+    "reason": "商売繁盛の象徴「十日戎」の総本社的存在。大阪市浪速区に鎮座。毎年1月9〜11日の十日戎には100万人以上が参拝し、商人の町大阪の金運・商売繁盛の守護神として君臨。",
+    "nameEn": "Imamiya Ebisu Jinja",
+    "prefEn": "Osaka"
+  },
+  {
+    "pref": "京都",
+    "name": "八坂神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "山城国",
+    "lat": 35.00364,
+    "lng": 135.77853,
+    "deity": "素戔嗚尊・奇稲田姫命・八柱御子神",
+    "reason": "旧官幣大社。祇園祭の中心神社。全国約2,300社の祇園信仰の総本社。",
+    "nameEn": "Yasaka Jinja",
+    "prefEn": "Kyoto"
+  },
+  {
+    "pref": "愛知",
+    "name": "若宮八幡社",
+    "tags": [
+      "meisha",
+      "hachiman"
+    ],
+    "province": "尾張国",
+    "lat": 35.10856,
+    "lng": 136.90938,
+    "deity": "仁徳天皇",
+    "reason": "旧県社。社伝では文武天皇の時代に創建。慶長15年に徳川家康が名古屋の総鎮守とし、例祭「若宮まつり」で知られる。",
+    "nameEn": "Wakamiya Hachimansha",
+    "prefEn": "Aichi"
+  },
+  {
+    "pref": "福岡",
+    "name": "太宰府天満宮",
+    "tags": [
+      "meisha"
+    ],
+    "province": "筑前国",
+    "lat": 33.52143,
+    "lng": 130.535,
+    "deity": "菅原道真",
+    "reason": "旧官幣中社。北野天満宮と並ぶ天満宮の総本社。道真公の墓所に建立。年間約1,000万人が参拝。",
+    "nameEn": "Dazaifu Tenmangu",
+    "prefEn": "Fukuoka"
+  },
+  {
+    "pref": "福岡",
+    "name": "櫛田神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "筑前国",
+    "lat": 33.59311,
+    "lng": 130.41069,
+    "deity": "大幡主命・天照大神・素盞嗚尊",
+    "reason": "博多の総鎮守として「お櫛田さん」と親しまれる。国の重要無形民俗文化財「博多祇園山笠」の奉納先として知られる。",
+    "nameEn": "Kushida Jinja",
+    "prefEn": "Fukuoka"
+  },
+  {
+    "pref": "神奈川",
+    "name": "鶴岡八幡宮",
+    "tags": [
+      "meisha",
+      "hachiman"
+    ],
+    "province": "相模国",
+    "lat": 35.32608,
+    "lng": 139.55642,
+    "deity": "応神天皇・比売神・神功皇后",
+    "reason": "八幡宮。源頼朝が鎌倉幕府の守護神として創建。日本三大八幡宮の一。鎌倉の総鎮守として年間数百万人が参拝。",
+    "nameEn": "Tsurugaoka Hachimangu",
+    "prefEn": "Kanagawa"
+  },
+  {
+    "pref": "神奈川",
+    "name": "銭洗弁財天宇賀福神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "相模国",
+    "lat": 35.3258,
+    "lng": 139.542,
+    "deity": "宇賀福神・弁財天",
+    "reason": "銭洗い金運の代名詞。鎌倉市佐助の洞窟に鎮座。清水でお金を洗うと何倍にも増えるとされ、全国有数の金運スポットとして年間多数の参拝者が訪れる。",
+    "nameEn": "Zeniarai Benzaiten Ugafuku Jinja",
+    "prefEn": "Kanagawa"
+  },
+  {
+    "pref": "神奈川",
+    "name": "荏柄天神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "相模国",
+    "lat": 35.32585,
+    "lng": 139.5643,
+    "deity": "菅原道真",
+    "reason": "関東最古の天神社（1104年創建）。鶴岡八幡宮境内の森に鎮座。絵筆塚など文化人の信仰が厚い。",
+    "nameEn": "Egara Tenjinsha",
+    "prefEn": "Kanagawa"
+  },
+  {
+    "pref": "山梨",
+    "name": "北口本宮冨士浅間神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "甲斐国",
+    "lat": 35.47075,
+    "lng": 138.79242,
+    "deity": "木花開耶姫命・彦火瓊瓊杵命・大山祇神",
+    "reason": "浅間神社系。富士山北口登山道の起点。日本最大の木造鳥居が有名。世界文化遺産・富士山の構成資産。",
+    "nameEn": "Kitaguchi Hongu Fuji Sengen Jinja",
+    "prefEn": "Yamanashi"
+  },
+  {
+    "pref": "京都",
+    "name": "北野天満宮",
+    "tags": [
+      "meisha"
+    ],
+    "province": "山城国",
+    "lat": 35.0292,
+    "lng": 135.73501,
+    "deity": "菅原道真",
+    "reason": "旧官幣中社。全国約12,000社の天満宮・天神社の総本社。学問の神として全国的な信仰を集める。",
+    "nameEn": "Kitano Tenmangu",
+    "prefEn": "Kyoto"
+  },
+  {
+    "pref": "香川",
+    "name": "金刀比羅宮",
+    "tags": [
+      "meisha"
+    ],
+    "province": "讃岐国",
+    "lat": 34.18426,
+    "lng": 133.80961,
+    "deity": "大物主神・崇徳天皇",
+    "reason": "旧国幣中社。「こんぴらさん」として全国的に有名。海の守護神として船乗りの信仰を集めてきた。",
+    "nameEn": "Kotohiragu",
+    "prefEn": "Kagawa"
+  },
+  {
+    "pref": "静岡",
+    "name": "山宮浅間神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "駿河国",
+    "lat": 35.27124,
+    "lng": 138.63706,
+    "deity": "木花之佐久夜毘売命",
+    "reason": "浅間神社系。富士山本宮浅間大社の前身・元宮。本殿を持たず富士山を直接拝む最古の形式。世界文化遺産構成資産。",
+    "nameEn": "Yamamiya Sengen Jinja",
+    "prefEn": "Shizuoka"
+  },
+  {
+    "pref": "岐阜",
+    "name": "桜山八幡宮",
+    "tags": [
+      "meisha",
+      "hachiman"
+    ],
+    "province": "飛騨国",
+    "lat": 36.14825,
+    "lng": 137.26044,
+    "deity": "八幡神・応神天皇",
+    "reason": "旧県社。高山北部の総鎮守で、例祭は「秋の高山祭」として知られ、11台の祭屋台が曳き揃えられる。",
+    "nameEn": "Sakurayama Hachimangu",
+    "prefEn": "Gifu"
+  },
+  {
+    "pref": "三重",
+    "name": "猿田彦神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "伊勢国",
+    "lat": 34.46694,
+    "lng": 136.72014,
+    "deity": "猿田彦神",
+    "reason": "猿田彦大神を祀り、直系の子孫とされる宇治土公家が代々宮司を務める。みちひらきの神として信仰される。",
+    "nameEn": "Sarutahiko Jinja",
+    "prefEn": "Mie"
+  },
+  {
+    "pref": "東京",
+    "name": "大国魂神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "武蔵国",
+    "lat": 35.66733,
+    "lng": 139.479,
+    "deity": "大国魂大神（大己貴命）",
+    "reason": "武蔵国総社。旧官幣小社。武蔵国内の神々を合祀する国の鎮守。",
+    "nameEn": "Okunitama Jinja",
+    "prefEn": "Tokyo"
+  },
+  {
+    "pref": "千葉",
+    "name": "葛飾八幡宮",
+    "tags": [
+      "meisha",
+      "hachiman"
+    ],
+    "province": "下総国",
+    "lat": 35.72417,
+    "lng": 139.93105,
+    "deity": "誉田別命（応神天皇）・息長帯姫命（神功皇后）・玉依姫命",
+    "reason": "「本八幡」の地名由来。寛平年間、宇多天皇の勅願で石清水八幡宮を勧請。下総国総鎮守。",
+    "nameEn": "Katsushika Hachimangu",
+    "prefEn": "Chiba"
+  },
+  {
+    "pref": "神奈川",
+    "name": "伊勢山皇大神宮",
+    "tags": [
+      "meisha"
+    ],
+    "province": "相模国",
+    "lat": 35.45028,
+    "lng": 139.62611,
+    "deity": "天照大御神",
+    "reason": "地名代表社。横浜の総鎮守。関東のお伊勢さんとも称される。幕末・明治に横浜が開港した地に鎮座。",
+    "nameEn": "Iseyama Kotai Jingu",
+    "prefEn": "Kanagawa"
+  },
+  {
+    "pref": "埼玉",
+    "name": "三峯神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "武蔵国",
+    "lat": 35.92543,
+    "lng": 138.9304,
+    "deity": "伊弉諾命・伊弉冉命",
+    "reason": "秩父三社のひとつ。眷属に狼を持ち、強力な気が宿るとされる関東屈指のパワースポット。",
+    "nameEn": "Mitsumine Jinja",
+    "prefEn": "Saitama"
+  },
+  {
+    "pref": "東京",
+    "name": "武蔵御嶽神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "武蔵国",
+    "lat": 35.78311,
+    "lng": 139.15008,
+    "deity": "櫛真智命・大己貴命・少彦名命・日本武尊",
+    "reason": "御岳山（標高929m）山頂に鎮座。関東一円の山岳信仰の中心。奥多摩随一の霊峰として全国から参拝者が訪れる古社。旧国幣小社。",
+    "nameEn": "Musashi Mitake Jinja",
+    "prefEn": "Tokyo"
+  },
+  {
+    "pref": "神奈川",
+    "name": "大山阿夫利神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "相模国",
+    "lat": 35.43213,
+    "lng": 139.23807,
+    "deity": "大山祇大神・雷神・高龗神",
+    "reason": "大山信仰の総本社。雨降山とも呼ばれ水・農業の神。江戸時代に「大山詣り」で大流行した山岳霊場。",
+    "nameEn": "Oyama Afuri Jinja",
+    "prefEn": "Kanagawa"
+  },
+  {
+    "pref": "東京",
+    "name": "虎ノ門金刀比羅宮",
+    "tags": [
+      "meisha"
+    ],
+    "province": "武蔵国",
+    "lat": 35.66961,
+    "lng": 139.748,
+    "deity": "大物主神・崇徳天皇",
+    "reason": "讃岐・金刀比羅宮の江戸幕府公認の出張所。港区虎ノ門に鎮座。金運・商売繁盛の神として江戸時代より信仰を集める都内屈指の金運神社。",
+    "nameEn": "Toranomon Kotohiragu",
+    "prefEn": "Tokyo"
+  },
+  {
+    "pref": "東京",
+    "name": "花園神社",
+    "tags": [
+      "meisha",
+      "inari"
+    ],
+    "province": "武蔵国",
+    "lat": 35.69355,
+    "lng": 139.70518,
+    "deity": "倉稲魂命・日本武尊・稲荷大神",
+    "reason": "新宿の総鎮守。新宿区に鎮座。商業・芸能・開運のご利益で有名。毎年11月の酉の市は新宿の風物詩として多くの熊手商が並ぶ。歌舞伎町に隣接する繁華街の守護神。",
+    "nameEn": "Hanazono Jinja",
+    "prefEn": "Tokyo"
+  },
+  {
+    "pref": "千葉",
+    "name": "千葉神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "下総国",
+    "lat": 35.61181,
+    "lng": 140.12383,
+    "deity": "天之御中主神（妙見菩薩）",
+    "reason": "地名代表社。千葉氏の守護神・妙見信仰の総本山。北辰（北極星）を祀る全国唯一の格式。",
+    "nameEn": "Chiba Jinja",
+    "prefEn": "Chiba"
   }
 ]

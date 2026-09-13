@@ -346,12 +346,6 @@
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-size: 13px; font-weight: bold; color: #fff;
   }
   .shrine-dropdown-name { font-size: 13px; color: var(--tan-text); white-space: nowrap; }
-  /* エリア／記事の2区分見出し（実装キュー依頼O-1・2026-09-13） */
-  .shrine-dropdown-section-label {
-    font-size: 10px; letter-spacing: 0.12em; color: var(--gold-muted); text-transform: uppercase;
-    padding: 10px 10px 4px; margin-top: 4px;
-  }
-  .shrine-dropdown-section-label:first-child { margin-top: 0; }
 
   /* タグフィルター（本人指定・2026-09-10：海外版は神宮・大社・一宮・二宮の4タグに厳選。
      見た目・構成は本番index.htmlの.controls-tagsに合わせるが、参拝記録・令制国絞り込み・
@@ -372,6 +366,8 @@
   .filter-btn.ichi.active   { background: rgba(var(--tag-ichi-rgb),0.36);   box-shadow: 0 0 9px rgba(var(--tag-ichi-rgb),0.4); }
   .filter-btn.ni     { border-color: var(--tag-ni);     color: var(--tag-ni-light);     background: rgba(var(--tag-ni-rgb),0.12); }
   .filter-btn.ni.active     { background: rgba(var(--tag-ni-rgb),0.32);     box-shadow: 0 0 9px rgba(var(--tag-ni-rgb),0.4); }
+  .filter-btn.meisha { border-color: var(--tag-meisha); color: var(--tag-meisha-light); background: rgba(var(--tag-meisha-rgb),0.12); }
+  .filter-btn.meisha.active { background: rgba(var(--tag-meisha-rgb),0.32); box-shadow: 0 0 9px rgba(var(--tag-meisha-rgb),0.4); }
   .filter-btn .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
   /* 格式の?ボタン（実装キュー依頼N-1・2026-09-13）：タグ列全体に1つだけ。
      押すと個別記事へは飛ばず、5タグを比較できる窓（モーダル）を開く
@@ -419,16 +415,6 @@
     border-top: 1px solid var(--border-4); font-size: 12px; color: var(--gold); text-decoration: none;
   }
   .rank-modal-more:hover { text-decoration: underline; }
-  /* 名社１のダミータグ（本人指定・2026-09-10：外国人旅行者向けの選定はまだ済んでいない
-     ため、今はタグの置き場所だけ確保する。破線＋低opacity＋クリック不可で
-     「準備中」であることを視覚的に示し、フィルターのクリック委譲（.filter-btn対象）
-     からも意図的に外している */
-  .filter-btn-dummy {
-    display: flex; align-items: center; gap: 5px;
-    padding: 5px 11px; border-radius: 20px; border: 1.5px dashed var(--tag-meisha);
-    font-family: inherit; font-size: 13px; letter-spacing: 0.05em;
-    color: var(--tag-meisha-light); opacity: 0.4; cursor: not-allowed; background: transparent;
-  }
   .ctrl-divider { width: 1px; height: 22px; background: var(--border-4); margin: 0 2px; flex-shrink: 0; }
   .mock-stats { font-size: 12px; color: var(--tan-text-2); border-left: 1px solid var(--border-4); padding-left: 10px; white-space: nowrap; }
 
@@ -590,11 +576,19 @@
     </div>
   </div>
   <div class="mock-toolbar">
-    <div class="shrine-dropdown" id="shrine-dropdown">
-      <button type="button" class="shrine-dropdown-toggle" id="shrine-dropdown-toggle">
-        <span id="shrine-dropdown-label"></span><span class="shrine-dropdown-caret">▾</span>
+    <!-- 実行順B（依頼P-1・2026-09-13）：1つに詰め込みすぎていたドロップダウンを
+         「神社の基礎知識」と「エリア」の2つに分割 -->
+    <div class="shrine-dropdown" id="basics-dropdown">
+      <button type="button" class="shrine-dropdown-toggle" id="basics-dropdown-toggle">
+        <span id="basics-dropdown-label"></span><span class="shrine-dropdown-caret">▾</span>
       </button>
-      <div class="shrine-dropdown-panel" id="shrine-dropdown-panel"></div>
+      <div class="shrine-dropdown-panel" id="basics-dropdown-panel"></div>
+    </div>
+    <div class="shrine-dropdown" id="area-dropdown">
+      <button type="button" class="shrine-dropdown-toggle" id="area-dropdown-toggle">
+        <span id="area-dropdown-label"></span><span class="shrine-dropdown-caret">▾</span>
+      </button>
+      <div class="shrine-dropdown-panel" id="area-dropdown-panel"></div>
     </div>
     <div class="mock-controls" id="mock-controls"></div>
   </div>
@@ -914,17 +908,36 @@ function initScrollSlideReveal() {
     '水無神社': 'shrine-pages/水無神社.html',
     '桜山八幡宮': 'shrine-pages/桜山八幡宮.html',
     '猿田彦神社': 'shrine-pages/猿田彦神社.html',
+    // 実行順D（依頼T・2026-09-13）：東京エリア18社を追加
+    '神田神社（神田明神）': 'shrine-pages/神田神社（神田明神）.html',
+    '日枝神社': 'shrine-pages/日枝神社.html',
+    '虎ノ門金刀比羅宮': 'shrine-pages/虎ノ門金刀比羅宮.html',
+    '花園神社': 'shrine-pages/花園神社.html',
+    '大国魂神社': 'shrine-pages/大国魂神社.html',
+    '葛飾八幡宮': 'shrine-pages/葛飾八幡宮.html',
+    '伊勢山皇大神宮': 'shrine-pages/伊勢山皇大神宮.html',
+    '武蔵一宮氷川神社': 'shrine-pages/武蔵一宮氷川神社.html',
+    '千葉神社': 'shrine-pages/千葉神社.html',
+    '鶴岡八幡宮': 'shrine-pages/鶴岡八幡宮.html',
+    '銭洗弁財天宇賀福神社': 'shrine-pages/銭洗弁財天宇賀福神社.html',
+    '荏柄天神社': 'shrine-pages/荏柄天神社.html',
+    '三峯神社': 'shrine-pages/三峯神社.html',
+    '武蔵御嶽神社': 'shrine-pages/武蔵御嶽神社.html',
+    '大山阿夫利神社': 'shrine-pages/大山阿夫利神社.html',
+    '鹿島神宮': 'shrine-pages/鹿島神宮.html',
+    '香取神宮': 'shrine-pages/香取神宮.html',
+    '寒川神社': 'shrine-pages/寒川神社.html',
   };
   var PRIORITY = { jingu:10, taisha:9, ichi:8, ni:7, meisha:6, meisha2:5, hachiman:4, inari:3, meisha3:2 };
-  // 海外版で実際に絞り込み対象にするタグ（本人指定・2026-09-10）。名社１は
-  // 外国人旅行者向けに選定し直す方針のため、選定が済むまではここに含めない
-  var TAG_ORDER = ['jingu', 'taisha', 'ichi', 'ni'];
+  // 実行順A（依頼R-1＋S-1・2026-09-13）：名社26社の選定が済み、地図データにも
+  // 追加したため、ここから正式にフィルター対象へ。「準備中」のダミー表示は撤去。
+  var TAG_ORDER = ['jingu', 'taisha', 'ichi', 'ni', 'meisha'];
   var TAG_CONFIG = {
     jingu:   { label:{ja:'神宮',en:'Jingu'},        char:{ja:'神',en:'J'},  color:'#c47a08', border:'#f5c842', bg:'rgba(212,134,10,0.18)' },
     taisha:  { label:{ja:'大社',en:'Taisha'},       char:{ja:'大',en:'T'},  color:'#6d28d9', border:'#c4a8ff', bg:'rgba(124,58,237,0.18)' },
     ichi:    { label:{ja:'一宮',en:'Ichinomiya (1st)'}, char:{ja:'一',en:'1'}, color:'#c41810', border:'#ff9a8a', bg:'rgba(232,48,32,0.18)' },
     ni:      { label:{ja:'二宮',en:'Ninomiya (2nd)'},   char:{ja:'二',en:'2'}, color:'#1540c0', border:'#88b4ff', bg:'rgba(26,80,216,0.18)' },
-    meisha:  { label:{ja:'名社１',en:'Notable α'}, char:{ja:'名',en:'α'}, color:'#047857', border:'#6ee7b7' },
+    meisha:  { label:{ja:'名社',en:'Notable'}, char:{ja:'名',en:'N'}, color:'#047857', border:'#6ee7b7', bg:'rgba(4,120,87,0.18)' },
     meisha2: { label:{ja:'名社２',en:'Notable β'}, char:{ja:'社',en:'β'}, color:'#0369a1', border:'#7dd3fc' },
     meisha3: { label:{ja:'名社３',en:'Notable γ'}, char:{ja:'奉',en:'γ'}, color:'#92400e', border:'#fcd34d' },
     hachiman:{ label:{ja:'八幡',en:'Hachiman'},     char:{ja:'八',en:'H'},  color:'#be185d', border:'#f9a8d4' },
@@ -1016,18 +1029,21 @@ function initScrollSlideReveal() {
   // 🔴依頼N-3（2026-09-13・本人指摘）：9項目は多すぎるため4項目へ合併。
   // 1+7／2+5／3+4／6+8+9 の組み合わせで記事ファイル自体を4枚に統合済み
   // （design-lab/articles/、旧9枚は削除済み）。
-  var DROPDOWN_LABEL = { ja: '見る・知る', en: 'Explore & Learn' };
-  // 🔴依頼O-1（2026-09-13・戦略セッションの通し検査で判明）：地域ページ14枚に
-  // サイト内から入る口が1つも無かった（E2＝検索流入の受け皿として作ったが、
-  // 英語化も公開もまだで検索流入がゼロのため、実質どこからも辿り着けない状態
-  // だった）。ドロップダウンに「エリアから探す」を追加して最小の入口にする。
+  // 実行順B（依頼P-1・2026-09-13・本人指摘）：「左の『見る・知る』アイコンに
+  // 詰め込みすぎ」との指摘を受け、1つのドロップダウンに同居していた記事4本と
+  // エリア14件を、独立した2つのドロップダウンへ分割する。
+  // 一番左＝神社の基礎知識（記事）、その隣＝エリア（依頼O-1で追加した入口）。
+  var BASICS_LABEL = { ja: '神社の基礎知識', en: 'Basics' };
+  var AREA_LABEL = { ja: 'エリア', en: 'Areas' };
+  // 依頼S-2（2026-09-13）：エリア再編14→10（進行中）。鎌倉・大宮は東京の
+  // L2/L3に吸収済み（依頼T-1）のため、ここから削除。奈良→大阪／高山→名古屋の
+  // 吸収は「他エリアは後続」（本人指定）のため、この節では未着手のまま残す。
   var AREA_PAGES = [
     { name:{ja:'東京',en:'Tokyo'}, file:'area-pages/東京.html' },
     { name:{ja:'大阪',en:'Osaka'}, file:'area-pages/大阪.html' },
     { name:{ja:'京都',en:'Kyoto'}, file:'area-pages/京都.html' },
     { name:{ja:'名古屋',en:'Nagoya'}, file:'area-pages/名古屋.html' },
     { name:{ja:'福岡',en:'Fukuoka'}, file:'area-pages/福岡.html' },
-    { name:{ja:'鎌倉',en:'Kamakura'}, file:'area-pages/鎌倉.html' },
     { name:{ja:'伊勢神宮',en:'Ise Jingu'}, file:'area-pages/伊勢神宮.html' },
     { name:{ja:'富士山本宮浅間大社',en:'Fujisan Hongu Sengen Taisha'}, file:'area-pages/富士山本宮浅間大社.html' },
     { name:{ja:'出雲大社',en:'Izumo Taisha'}, file:'area-pages/出雲大社.html' },
@@ -1035,7 +1051,6 @@ function initScrollSlideReveal() {
     { name:{ja:'高山',en:'Takayama'}, file:'area-pages/高山.html' },
     { name:{ja:'富士吉田',en:'Fujiyoshida'}, file:'area-pages/富士吉田.html' },
     { name:{ja:'奈良',en:'Nara'}, file:'area-pages/奈良.html' },
-    { name:{ja:'大宮',en:'Omiya'}, file:'area-pages/大宮.html' },
   ];
   var ARTICLE_PAGES = [
     { num: 1, name:{ja:'日本と神社',     en:'Japan & Shrines'},   file:'articles/日本と神社.html' },
@@ -1043,39 +1058,56 @@ function initScrollSlideReveal() {
     { num: 3, name:{ja:'鳥居と境内',     en:'Torii & Grounds'},   file:'articles/鳥居.html' },
     { num: 4, name:{ja:'神々と分類',     en:'Kami & Ranks'},      file:'articles/神々.html' },
   ];
-  var DROPDOWN_SECTION_LABEL = { ja: { area: 'エリアから探す', article: '神社の基礎知識' }, en: { area: 'Explore by Area', article: 'Learn the Basics' } };
-  function renderShrineDropdown(){
-    var label = document.getElementById('shrine-dropdown-label');
-    if (label) label.textContent = '⛩ ' + DROPDOWN_LABEL[currentLang];
-    var panel = document.getElementById('shrine-dropdown-panel');
+  function renderBasicsDropdown(){
+    var label = document.getElementById('basics-dropdown-label');
+    if (label) label.textContent = '⛩ ' + BASICS_LABEL[currentLang];
+    var panel = document.getElementById('basics-dropdown-panel');
     if (!panel) return;
-    var sec = DROPDOWN_SECTION_LABEL[currentLang];
-    var areaHtml = AREA_PAGES.map(function(s){
-      return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '">' +
-        '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">📍</span>' +
-        '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
-        '</a>';
-    }).join('');
-    var articleHtml = ARTICLE_PAGES.map(function(s){
+    panel.innerHTML = ARTICLE_PAGES.map(function(s){
       return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '">' +
         '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">' + s.num + '</span>' +
         '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
         '</a>';
     }).join('');
-    panel.innerHTML =
-      '<div class="shrine-dropdown-section-label">' + sec.area + '</div>' + areaHtml +
-      '<div class="shrine-dropdown-section-label">' + sec.article + '</div>' + articleHtml;
   }
+  function renderAreaDropdown(){
+    var label = document.getElementById('area-dropdown-label');
+    if (label) label.textContent = '📍 ' + AREA_LABEL[currentLang];
+    var panel = document.getElementById('area-dropdown-panel');
+    if (!panel) return;
+    panel.innerHTML = AREA_PAGES.map(function(s){
+      return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '">' +
+        '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">📍</span>' +
+        '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
+        '</a>';
+    }).join('');
+  }
+  function renderShrineDropdown(){ renderBasicsDropdown(); renderAreaDropdown(); }
   renderShrineDropdown();
-  var shrineDropdown = document.getElementById('shrine-dropdown');
-  document.getElementById('shrine-dropdown-toggle').addEventListener('click', function(e){
+  // 2つのドロップダウンをそれぞれ独立して開閉できるようにする（片方を開くと
+  // もう片方は閉じる。外側クリックでどちらも閉じる）
+  var dropdowns = [document.getElementById('basics-dropdown'), document.getElementById('area-dropdown')];
+  function closeAllDropdowns(except){
+    dropdowns.forEach(function(d){ if (d && d !== except) d.classList.remove('open'); });
+  }
+  document.getElementById('basics-dropdown-toggle').addEventListener('click', function(e){
     e.stopPropagation();
-    shrineDropdown.classList.toggle('open');
+    var d = document.getElementById('basics-dropdown');
+    var willOpen = !d.classList.contains('open');
+    closeAllDropdowns();
+    d.classList.toggle('open', willOpen);
+  });
+  document.getElementById('area-dropdown-toggle').addEventListener('click', function(e){
+    e.stopPropagation();
+    var d = document.getElementById('area-dropdown');
+    var willOpen = !d.classList.contains('open');
+    closeAllDropdowns();
+    d.classList.toggle('open', willOpen);
   });
   document.addEventListener('click', function(e){
-    if (shrineDropdown.classList.contains('open') && !shrineDropdown.contains(e.target)) {
-      shrineDropdown.classList.remove('open');
-    }
+    dropdowns.forEach(function(d){
+      if (d && d.classList.contains('open') && !d.contains(e.target)) d.classList.remove('open');
+    });
   });
 
   // タグフィルター（本人指定・2026-09-10：神宮・大社・一宮・二宮の4タグのみ。
@@ -1099,20 +1131,13 @@ function initScrollSlideReveal() {
         '<span class="dot" style="background:' + c.border + ';box-shadow:0 0 5px ' + c.border + '"></span>' +
         c.label[currentLang] + '</button>';
     }).join('');
-    // 名社１のダミータグ（本人指定・2026-09-10）：外国人旅行者向けの選定がまだのため、
-    // 実データ・クリック機能なしで置き場所だけ確保する
-    var dummyCfg = TAG_CONFIG.meisha;
-    var dummyTitle = currentLang === 'ja' ? '選定中（外国人旅行者向けに準備中）' : 'Coming soon (curation in progress)';
-    var dummyHtml = '<button type="button" class="filter-btn-dummy" disabled title="' + dummyTitle + '">' +
-      '<span class="dot" style="background:' + dummyCfg.border + ';box-shadow:0 0 5px ' + dummyCfg.border + '"></span>' +
-      dummyCfg.label[currentLang] + '</button>';
     // 格式の?リンク（実装キュー依頼N-1・2026-09-13修正）：タグ1つにつき1つずつ
     // 出していたのを撤回し、タグ列全体に1つだけにした。格式は5つを比べて
     // 初めて意味が分かるものなので、個別記事へ飛ばさず窓（モーダル）で
     // 5つ並べて見せる（本人指定）
     var rankHelpTitle = currentLang === 'ja' ? '格式について' : 'About shrine ranks';
     var rankHelpHtml = '<button type="button" class="rank-help-btn" id="rank-help-btn" title="' + rankHelpTitle + '">?</button>';
-    container.innerHTML = buttonsHtml + dummyHtml + rankHelpHtml + '<div class="ctrl-divider"></div><div class="mock-stats" id="mock-stats"></div>';
+    container.innerHTML = buttonsHtml + rankHelpHtml + '<div class="ctrl-divider"></div><div class="mock-stats" id="mock-stats"></div>';
   }
   renderFilterButtons();
   document.getElementById('mock-controls').addEventListener('click', function(e){
@@ -1140,9 +1165,10 @@ function initScrollSlideReveal() {
     { tag: 'taisha', label: { ja: '大社', en: 'Taisha' }, count: 24, desc: { ja: '2つの意味がある。戦前の社格（官幣大社・国幣大社）と、名前としての「〇〇大社」。戦前は出雲大社ただ一社を指した。', en: 'Two meanings: a pre-war state rank, and the name "Taisha" itself. Before the war, "Taisha" meant only Izumo Taisha.' } },
     { tag: 'ichi', label: { ja: '一宮', en: 'Ichinomiya' }, count: 91, desc: { ja: '律令時代の国（全国約70国）ごとの筆頭社。朝廷が決めた一覧ではなく、国司が最初に参る社が定着したもの。だから国によって異説がある。', en: 'The top-ranked shrine of each historical province (~70 nationwide). Not an official decree — the shrine a new governor visited first, settled by custom.' } },
     { tag: 'ni', label: { ja: '二宮', en: 'Ninomiya' }, count: 35, desc: { ja: '同じ序列の2番目。一宮に次ぐ社。', en: 'Second in the same provincial ranking, after the ichinomiya.' } },
-    // 「名社」は依頼D後に meisha/meisha2/meisha3 を統合した先の表示名。
-    // TAG_CONFIG.meisha.labelは統合前の暫定ラベル「名社１」なのでここでは使わない
-    { tag: 'meisha', label: { ja: '名社', en: 'Notable' }, count: 14, desc: { ja: '上の4つと違い、制度ではなくこのサイトが選んだ社。格式に入らないが、その土地を語るとき外せない社。', en: 'Unlike the four above, this is an editorial choice, not an official rank — shrines essential to a place’s story despite no formal rank.' } },
+    // 名社26社（実行順A・依頼R-1+S-1で確定・2026-09-13）。件数はここに固定値で
+    // 持つ＝地図データ上は一部の格式社（例：富士山本宮浅間大社）も副次的に
+    // meishaタグを帯びているため、tagsを数えるだけでは26からずれる
+    { tag: 'meisha', label: { ja: '名社', en: 'Notable' }, count: 26, desc: { ja: '上の4つと違い、制度ではなくこのサイトが選んだ社。格式に入らないが、その土地を語るとき外せない社。', en: 'Unlike the four above, this is an editorial choice, not an official rank — shrines essential to a place’s story despite no formal rank.' } },
   ];
   function openRankModal() {
     var modal = document.getElementById('rank-modal');
