@@ -78,13 +78,23 @@
   .shrine-card-icon {
     position: relative; aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center;
     background: repeating-linear-gradient(135deg, #241a0f 0 12px, #211809 12px 24px);
+    overflow: hidden;
   }
+  /* 本人指摘（2026-09-13）：東京エリアは全社が詳細ページ（写真つき）を
+     持つため、サムネにも実写真を使う。写真の無い3社（武蔵一宮氷川神社・
+     銭洗弁財天宇賀福神社・荏柄天神社）だけ、従来のタグ1文字バッジ表示を残す */
+  .shrine-card-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .shrine-card-icon-badge {
     width: 48px; height: 48px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
     font-size: 22px; font-weight: bold; color: #fff;
     box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
+  }
+  .shrine-card-icon-badge.has-photo {
+    position: absolute; bottom: 8px; left: 8px;
+    width: 34px; height: 34px; font-size: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.6), 0 0 0 1.5px rgba(255,255,255,0.3) inset;
   }
   .shrine-card-body { padding: 16px 18px 20px; }
   .shrine-card-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
@@ -124,7 +134,7 @@
     <p class="section-lead">都心の駅から徒歩圏。同じ日に2〜3社をはしごできる。</p>
     <div class="shrine-cards">
       <a class="shrine-card" href="../shrine-pages/明治神宮.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c47a08;">神</span></div>
+        <div class="shrine-card-icon"><img src="../assets/meiji-hero.jpg" alt="明治神宮"><span class="shrine-card-icon-badge has-photo" style="background:#c47a08;">神</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">神宮</span>
           <span class="shrine-card-name">明治神宮</span>
@@ -133,7 +143,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/神田神社（神田明神）.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/kanda-honden.jpg" alt="神田神社（神田明神）"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">神田神社（神田明神）</span>
@@ -142,7 +152,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/日枝神社.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/hie-escalator.jpg" alt="日枝神社"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">日枝神社</span>
@@ -151,7 +161,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/虎ノ門金刀比羅宮.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/toranomon-skyline.jpg" alt="虎ノ門金刀比羅宮"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">虎ノ門金刀比羅宮</span>
@@ -160,7 +170,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/花園神社.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/hanazono-keidai.jpg" alt="花園神社"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">花園神社</span>
@@ -176,7 +186,7 @@
     <p class="section-lead">西は府中、東は市川、南は横浜、北は大宮。都心を四方から囲む圏。</p>
     <div class="shrine-cards">
       <a class="shrine-card" href="../shrine-pages/大国魂神社.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/okunitama-haiden.jpg" alt="大国魂神社"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">大国魂神社</span>
@@ -185,7 +195,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/葛飾八幡宮.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/katsushika-sandou.jpg" alt="葛飾八幡宮"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">葛飾八幡宮</span>
@@ -194,7 +204,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/伊勢山皇大神宮.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/iseyama-torii.jpg" alt="伊勢山皇大神宮"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">伊勢山皇大神宮</span>
@@ -212,7 +222,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/千葉神社.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/chiba-honden.jpg" alt="千葉神社"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">千葉神社</span>
@@ -228,7 +238,7 @@
     <p class="section-lead">鎌倉・秩父・奥多摩・丹沢・茨城・千葉・神奈川。長く滞在する人ほど、この先まで行ける。</p>
     <div class="shrine-cards">
       <a class="shrine-card" href="../shrine-pages/鶴岡八幡宮.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/tsurugaoka-dankazura.jpg" alt="鶴岡八幡宮"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">鶴岡八幡宮</span>
@@ -255,7 +265,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/三峯神社.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/mitsumine-torii.jpg" alt="三峯神社"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">三峯神社</span>
@@ -264,7 +274,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/武蔵御嶽神社.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/mitake-honden.jpg" alt="武蔵御嶽神社"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">武蔵御嶽神社</span>
@@ -273,7 +283,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/大山阿夫利神社.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-icon"><img src="../assets/afuri-geisha.jpg" alt="大山阿夫利神社"><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">名社</span>
           <span class="shrine-card-name">大山阿夫利神社</span>
@@ -282,7 +292,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/鹿島神宮.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c47a08;">神</span></div>
+        <div class="shrine-card-icon"><img src="../assets/kashima-otorii.jpg" alt="鹿島神宮"><span class="shrine-card-icon-badge has-photo" style="background:#c47a08;">神</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">神宮</span>
           <span class="shrine-card-name">鹿島神宮</span>
@@ -291,7 +301,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/香取神宮.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c47a08;">神</span></div>
+        <div class="shrine-card-icon"><img src="../assets/katori-romon.jpg" alt="香取神宮"><span class="shrine-card-icon-badge has-photo" style="background:#c47a08;">神</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">神宮</span>
           <span class="shrine-card-name">香取神宮</span>
@@ -300,7 +310,7 @@
         </div>
       </a>
       <a class="shrine-card" href="../shrine-pages/寒川神社.html">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">一</span></div>
+        <div class="shrine-card-icon"><img src="../assets/samukawa-haiden.jpg" alt="寒川神社"><span class="shrine-card-icon-badge has-photo" style="background:#c41810;">一</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">一宮</span>
           <span class="shrine-card-name">寒川神社</span>
