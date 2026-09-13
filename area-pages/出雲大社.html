@@ -6,9 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>出雲大社｜神社マップ 日本版プレビュー（仮）</title>
 <style>
-  /* design-lab/area-pages/出雲大社.html — レベル2（実装キュー依頼K）。
-     東京.html と同じ地域主役型テンプレート。おすすめページ層は写真を使わない
-     方針（実装キュー依頼J）のため、ヒーロー・カードとも模様背景とタグアイコンで統一。 */
+  /* design-lab/area-pages/出雲大社.html — 実行順I（依頼S-2・2026-09-13）：
+     東京.html と同じ同心円レイヤー構成のテンプレートを踏襲。 */
   :root {
     --bg-body: #1a1209;
     --gold: #f5d08a;
@@ -41,27 +40,32 @@
   .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
 
   .area-hero {
-    position: relative; height: 72vh; min-height: 420px; display: flex; align-items: flex-end;
+    position: relative; height: 60vh; min-height: 380px; display: flex; align-items: flex-end;
     background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
                 repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
   }
   .area-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.05) 55%); }
-  .area-hero-content { position: relative; padding: 0 6vw 52px; width: 100%; }
+  .area-hero-content { position: relative; padding: 0 6vw 40px; width: 100%; }
   .area-label { display: block; font-size: 12px; letter-spacing: 0.24em; color: var(--gold); opacity: 0.75; margin-bottom: 8px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
   .area-name {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
     font-size: clamp(34px, 6.5vw, 60px); color: var(--gold); margin: 0 0 14px; letter-spacing: 0.05em;
     text-shadow: 0 4px 24px rgba(0,0,0,0.6);
   }
-  .area-tagline { max-width: 540px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
+  .area-tagline { max-width: 600px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
 
-  .content { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-  .section { margin-top: 76px; }
-  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0 0 8px; }
-  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 0 0 26px; }
-  .body-text { font-size: 14px; line-height: 2.05; color: var(--tan-text); opacity: 0.88; }
+  .content { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .layer-section { margin-top: 64px; }
+  .layer-ring { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .layer-num {
+    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0; }
+  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 8px 0 26px; }
 
-  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
   .shrine-card {
     display: flex; flex-direction: column; text-decoration: none;
     background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
@@ -73,34 +77,23 @@
     background: repeating-linear-gradient(135deg, #241a0f 0 12px, #211809 12px 24px);
   }
   .shrine-card-icon-badge {
-    width: 52px; height: 52px; border-radius: 50%;
+    width: 48px; height: 48px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
-    font-size: 24px; font-weight: bold; color: #fff;
+    font-size: 22px; font-weight: bold; color: #fff;
     box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
   }
-  .shrine-card-body { padding: 18px 20px 22px; }
+  .shrine-card-body { padding: 16px 18px 20px; }
   .shrine-card-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
-  .shrine-card-name { display: block; font-size: 17px; color: var(--tan-text); margin: 8px 0 2px; }
-  .shrine-card-en { display: block; font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text); opacity: 0.5; }
-  .shrine-card-why { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.72; margin: 12px 0 0; }
-
-  .next-step {
-    display: block; text-decoration: none; margin-top: 16px; padding: 22px 24px;
-    border: 1px solid var(--border-4); border-left: 2px solid rgba(var(--gold-glow-rgb),0.55);
-    border-radius: 3px; background: rgba(255,255,255,0.02);
-    transition: background var(--dur-base) ease;
-  }
-  .next-step:hover { background: rgba(var(--gold-glow-rgb),0.06); }
-  .next-step-label { font-size: 10px; letter-spacing: 0.16em; color: var(--gold); opacity: 0.8; }
-  .next-step-title { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 0; }
-  .next-step-why { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
+  .shrine-card-name { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 2px; }
+  .shrine-card-en { display: block; font-size: 10.5px; letter-spacing: 0.05em; color: var(--tan-text); opacity: 0.5; }
+  .shrine-card-why { font-size: 12px; line-height: 1.85; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
 
   .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 76px; font-size: 11px; color: var(--border-4); }
 
   @media (max-width: 600px) {
-    .area-hero { height: 62vh; }
-    .section { margin-top: 56px; }
+    .area-hero { height: 54vh; }
+    .layer-section { margin-top: 48px; }
   }
 </style>
 </head>
@@ -122,10 +115,9 @@
 </div>
 
 <div class="content">
-
-  <div class="section">
-    <h2 class="section-title">この地域の三社</h2>
-    <p class="section-lead">出雲大社は出雲市、熊野大社と八重垣神社は松江市にある。</p>
+  <div class="layer-section">
+    <div class="layer-ring"><span class="layer-num">1</span><h2 class="section-title">L1・出雲</h2></div>
+    <p class="section-lead">出雲大社は出雲市にある。</p>
     <div class="shrine-cards">
       <a class="shrine-card" href="../index.html?shrine=島根|出雲大社#mock-app">
         <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#6d28d9;">大</span></div>
@@ -136,6 +128,22 @@
           <p class="shrine-card-why">大国主大神を祀る。参拝の作法が二礼四拍手一礼で、全国のほとんどの神社（二礼二拍手一礼）と違う。縁結びの社として知られるが、結ぶのは男女に限らずあらゆる縁とされる。</p>
         </div>
       </a>
+      <a class="shrine-card" href="../index.html?shrine=島根|日御碕神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">名社</span>
+          <span class="shrine-card-name">日御碕神社</span>
+          <span class="shrine-card-en">Hinomisaki Jinja</span>
+          <p class="shrine-card-why">出雲大社から海沿いに。天照大御神を祀る日沉宮と素盞嗚尊を祀る神の宮からなり、「日の本の夜を守る」社とされる。</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="layer-section">
+    <div class="layer-ring"><span class="layer-num">2</span><h2 class="section-title">L2・松江</h2></div>
+    <p class="section-lead">出雲から電車で30分ほど。</p>
+    <div class="shrine-cards">
       <a class="shrine-card" href="../index.html?shrine=島根|熊野大社#mock-app">
         <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#6d28d9;">大</span></div>
         <div class="shrine-card-body">
@@ -154,24 +162,16 @@
           <p class="shrine-card-why">素戔嗚尊と稲田姫命を祀る。境内の鏡の池に硬貨を載せた紙を浮かべ、沈むまでの時間で縁の近さを占う。</p>
         </div>
       </a>
-
+      <a class="shrine-card" href="../index.html?shrine=島根|佐太神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#1540c0;">二</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">二宮</span>
+          <span class="shrine-card-name">佐太神社</span>
+          <span class="shrine-card-en">Sada Jinja</span>
+          <p class="shrine-card-why">出雲国二宮。出雲三大社の一社で、旧暦10月に八百万の神を迎え送る「神在祭」が古式により行われる。</p>
+        </div>
+      </a>
     </div>
-  </div>
-
-  <div class="section">
-    <h2 class="section-title">もう少し続けるなら</h2>
-    <p class="section-lead">日の沈む方角の社と、出雲大社と両参りする社。</p>
-    <a class="next-step" href="../index.html?shrine=島根|日御碕神社#mock-app">
-      <span class="next-step-label">海沿いへ</span>
-      <span class="next-step-title">日御碕神社</span>
-      <p class="next-step-why">出雲大社から海沿いに。日の沈む方角を守る社とされる。</p>
-    </a>
-    <a class="next-step" href="../index.html?shrine=島根|美保神社#mock-app">
-      <span class="next-step-label">両参りの相手</span>
-      <span class="next-step-title">美保神社</span>
-      <p class="next-step-why">大国主の子・事代主を祀る。出雲大社と両方参る「両参り」の相手。</p>
-    </a>
-
   </div>
 
 </div>
@@ -181,14 +181,6 @@
 <script>
 (function(){
   function applyLang(lang){
-    document.querySelectorAll('[data-en]').forEach(function(el){
-      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
-      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
-    });
-    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
-      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
-      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
-    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

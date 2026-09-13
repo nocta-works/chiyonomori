@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>大阪｜神社マップ 日本版プレビュー（仮）</title>
 <style>
-  /* design-lab/area-pages/大阪.html — 東京.html と同じ地域主役型テンプレート。
-     おすすめページ層は写真を使わない方針（実装キュー依頼J）。ヒーロー・カードとも模様背景とタグアイコンで統一。 */
+  /* design-lab/area-pages/大阪.html — 実行順I（依頼S-2・2026-09-13）：
+     東京.html と同じ同心円レイヤー構成のテンプレートを踏襲。 */
   :root {
     --bg-body: #1a1209;
     --gold: #f5d08a;
@@ -39,71 +39,61 @@
   }
   .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
 
-  /* 依頼J（2026-09-12）：おすすめページ（この層）は写真を一切使わない方針に統一。
-     .no-photoという「例外」名をやめ、これを標準形にした */
   .area-hero {
-    position: relative; height: 72vh; min-height: 420px; display: flex; align-items: flex-end;
+    position: relative; height: 60vh; min-height: 380px; display: flex; align-items: flex-end;
     background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
                 repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
   }
   .area-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.05) 55%); }
-  .area-hero-content { position: relative; padding: 0 6vw 52px; width: 100%; }
+  .area-hero-content { position: relative; padding: 0 6vw 40px; width: 100%; }
   .area-label { display: block; font-size: 12px; letter-spacing: 0.24em; color: var(--gold); opacity: 0.75; margin-bottom: 8px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
   .area-name {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
     font-size: clamp(34px, 6.5vw, 60px); color: var(--gold); margin: 0 0 14px; letter-spacing: 0.05em;
     text-shadow: 0 4px 24px rgba(0,0,0,0.6);
   }
-  .area-tagline { max-width: 540px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
+  .area-tagline { max-width: 600px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
 
-  .content { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-  .section { margin-top: 76px; }
-  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0 0 8px; }
-  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 0 0 26px; }
-  .body-text { font-size: 14px; line-height: 2.05; color: var(--tan-text); opacity: 0.88; }
+  .content { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .layer-section { margin-top: 64px; }
+  .layer-ring { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .layer-num {
+    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0; }
+  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 8px 0 26px; }
 
-  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
   .shrine-card {
     display: flex; flex-direction: column; text-decoration: none;
     background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
     overflow: hidden; transition: background var(--dur-base) ease, border-color var(--dur-base) ease;
   }
   .shrine-card:hover { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); }
-  /* 依頼J（2026-09-12）：カードの図像も写真をやめ、幹のマーカーと同じ
-     タグ1文字アイコンに統一（全社が必ず1つのタグを持つので写真に依存しない） */
   .shrine-card-icon {
     position: relative; aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center;
     background: repeating-linear-gradient(135deg, #241a0f 0 12px, #211809 12px 24px);
   }
   .shrine-card-icon-badge {
-    width: 52px; height: 52px; border-radius: 50%;
+    width: 48px; height: 48px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
-    font-size: 24px; font-weight: bold; color: #fff;
+    font-size: 22px; font-weight: bold; color: #fff;
     box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
   }
-  .shrine-card-body { padding: 18px 20px 22px; }
+  .shrine-card-body { padding: 16px 18px 20px; }
   .shrine-card-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
-  .shrine-card-name { display: block; font-size: 17px; color: var(--tan-text); margin: 8px 0 2px; }
-  .shrine-card-en { display: block; font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text); opacity: 0.5; }
-  .shrine-card-why { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.72; margin: 12px 0 0; }
-
-  .next-step {
-    display: block; text-decoration: none; margin-top: 16px; padding: 22px 24px;
-    border: 1px solid var(--border-4); border-left: 2px solid rgba(var(--gold-glow-rgb),0.55);
-    border-radius: 3px; background: rgba(255,255,255,0.02);
-    transition: background var(--dur-base) ease;
-  }
-  .next-step:hover { background: rgba(var(--gold-glow-rgb),0.06); }
-  .next-step-label { font-size: 10px; letter-spacing: 0.16em; color: var(--gold); opacity: 0.8; }
-  .next-step-title { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 0; }
-  .next-step-why { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
+  .shrine-card-name { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 2px; }
+  .shrine-card-en { display: block; font-size: 10.5px; letter-spacing: 0.05em; color: var(--tan-text); opacity: 0.5; }
+  .shrine-card-why { font-size: 12px; line-height: 1.85; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
 
   .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 76px; font-size: 11px; color: var(--border-4); }
 
   @media (max-width: 600px) {
-    .area-hero { height: 62vh; }
-    .section { margin-top: 56px; }
+    .area-hero { height: 54vh; }
+    .layer-section { margin-top: 48px; }
   }
 </style>
 </head>
@@ -125,22 +115,19 @@
 </div>
 
 <div class="content">
-
-  <div class="section">
-    <h2 class="section-title">この街の三社</h2>
+  <div class="layer-section">
+    <div class="layer-ring"><span class="layer-num">1</span><h2 class="section-title">L1・市内</h2></div>
     <p class="section-lead">三社とも大阪市内にある。</p>
     <div class="shrine-cards">
-
       <a class="shrine-card" href="../index.html?shrine=大阪|住吉大社#mock-app">
         <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#6d28d9;">大</span></div>
         <div class="shrine-card-body">
           <span class="shrine-card-tag">大社</span>
           <span class="shrine-card-name">住吉大社</span>
           <span class="shrine-card-en">Sumiyoshi Taisha</span>
-          <p class="shrine-card-why">全国2,300社の住吉神社の総本社。航海の神を祀り、正面の反橋（太鼓橋）は最大傾斜48度で、渡ること自体が祓いとされた。</p>
+          <p class="shrine-card-why">全国2,300社の住吉神社の総本社。正面の反橋（太鼓橋）は最大傾斜48度で、渡ること自体が祓いとされた。</p>
         </div>
       </a>
-
       <a class="shrine-card" href="../index.html?shrine=大阪|大阪天満宮#mock-app">
         <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
@@ -150,7 +137,6 @@
           <p class="shrine-card-why">菅原道真を祀る。7月の天神祭は日本三大祭のひとつで、船が川を埋め、火が水に映る。</p>
         </div>
       </a>
-
       <a class="shrine-card" href="../index.html?shrine=大阪|今宮戎神社#mock-app">
         <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
@@ -160,25 +146,59 @@
           <p class="shrine-card-why">商売繁盛の戎神。1月の十日戎には三日間で百万人が笹を受けに来る。ふだんは静かな街なかの社。</p>
         </div>
       </a>
-
     </div>
   </div>
 
-  <div class="section">
-    <h2 class="section-title">もう少し続けるなら</h2>
-    <p class="section-lead">隣の京都へ足を伸ばすか、住吉大社をもう少し深く知ることができる。</p>
-
-    <a class="next-step" href="京都.html">
-      <span class="next-step-label">隣の都市へ</span>
-      <span class="next-step-title">京都へ（30分）</span>
-      <p class="next-step-why">電車で30分。日本で最も神社が密集している街が隣にある。</p>
-    </a>
-
-    <a class="next-step" href="../index.html#mock-app">
-      <span class="next-step-label">社をもっと知る</span>
-      <span class="next-step-title">住吉の海</span>
-      <p class="next-step-why">住吉大社はもともと海辺の社で、今は埋め立てで内陸に見える。大阪湾との位置関係を知ると社の向きの意味が変わる。</p>
-    </a>
+  <div class="layer-section">
+    <div class="layer-ring"><span class="layer-num">2</span><h2 class="section-title">L2・奈良・兵庫</h2></div>
+    <p class="section-lead">大阪から電車で30〜60分。奈良は独立エリアではなく、ここに含めた。</p>
+    <div class="shrine-cards">
+      <a class="shrine-card" href="../index.html?shrine=奈良|大神神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">一</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">一宮</span>
+          <span class="shrine-card-name">大神神社</span>
+          <span class="shrine-card-en">Omiwa Jinja</span>
+          <p class="shrine-card-why">大和国一宮。本殿を持たず、三輪山そのものを御神体として拝む。日本最古級の祭祀の形。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=奈良|春日大社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#6d28d9;">大</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">大社</span>
+          <span class="shrine-card-name">春日大社</span>
+          <span class="shrine-card-en">Kasuga Taisha</span>
+          <p class="shrine-card-why">藤原氏の氏神。原始林ごと世界遺産で、参道には3千基とされる灯籠が連なる。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=奈良|石上神宮#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c47a08;">神</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">神宮</span>
+          <span class="shrine-card-name">石上神宮</span>
+          <span class="shrine-card-en">Isonokami Jingu</span>
+          <p class="shrine-card-why">神武天皇の国土平定に由来する神剣・韴霊を祀る、日本最古級の神社のひとつ。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=兵庫|伊弉諾神宮#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c47a08;">神</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">神宮</span>
+          <span class="shrine-card-name">伊弉諾神宮</span>
+          <span class="shrine-card-en">Izanagi Jingu</span>
+          <p class="shrine-card-why">淡路国一宮。国生み神話の伊弉諾・伊弉冉二神を祀る、日本神話の出発点。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=兵庫|伊和神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">一</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">一宮</span>
+          <span class="shrine-card-name">伊和神社</span>
+          <span class="shrine-card-en">Iwa Jinja</span>
+          <p class="shrine-card-why">播磨国一宮。「鶴石」に創祀の伝承が残る、播磨を代表する古社。</p>
+        </div>
+      </a>
+    </div>
   </div>
 
 </div>
@@ -188,14 +208,6 @@
 <script>
 (function(){
   function applyLang(lang){
-    document.querySelectorAll('[data-en]').forEach(function(el){
-      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
-      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
-    });
-    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
-      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
-      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
-    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

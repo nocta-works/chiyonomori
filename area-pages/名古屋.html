@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>名古屋｜神社マップ 日本版プレビュー（仮）</title>
 <style>
-  /* design-lab/area-pages/名古屋.html — 東京.html と同じ地域主役型テンプレート。
-     おすすめページ層は写真を使わない方針（実装キュー依頼J）。ヒーロー・カードとも模様背景とタグアイコンで統一。 */
+  /* design-lab/area-pages/名古屋.html — 実行順I（依頼S-2・2026-09-13）：
+     東京.html と同じ同心円レイヤー構成のテンプレートを踏襲。 */
   :root {
     --bg-body: #1a1209;
     --gold: #f5d08a;
@@ -39,71 +39,61 @@
   }
   .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
 
-  /* 依頼J（2026-09-12）：おすすめページ（この層）は写真を一切使わない方針に統一。
-     .no-photoという「例外」名をやめ、これを標準形にした */
   .area-hero {
-    position: relative; height: 72vh; min-height: 420px; display: flex; align-items: flex-end;
+    position: relative; height: 60vh; min-height: 380px; display: flex; align-items: flex-end;
     background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
                 repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
   }
   .area-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.05) 55%); }
-  .area-hero-content { position: relative; padding: 0 6vw 52px; width: 100%; }
+  .area-hero-content { position: relative; padding: 0 6vw 40px; width: 100%; }
   .area-label { display: block; font-size: 12px; letter-spacing: 0.24em; color: var(--gold); opacity: 0.75; margin-bottom: 8px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
   .area-name {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
     font-size: clamp(34px, 6.5vw, 60px); color: var(--gold); margin: 0 0 14px; letter-spacing: 0.05em;
     text-shadow: 0 4px 24px rgba(0,0,0,0.6);
   }
-  .area-tagline { max-width: 540px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
+  .area-tagline { max-width: 600px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
 
-  .content { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-  .section { margin-top: 76px; }
-  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0 0 8px; }
-  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 0 0 26px; }
-  .body-text { font-size: 14px; line-height: 2.05; color: var(--tan-text); opacity: 0.88; }
+  .content { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .layer-section { margin-top: 64px; }
+  .layer-ring { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .layer-num {
+    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0; }
+  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 8px 0 26px; }
 
-  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
   .shrine-card {
     display: flex; flex-direction: column; text-decoration: none;
     background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
     overflow: hidden; transition: background var(--dur-base) ease, border-color var(--dur-base) ease;
   }
   .shrine-card:hover { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); }
-  /* 依頼J（2026-09-12）：カードの図像も写真をやめ、幹のマーカーと同じ
-     タグ1文字アイコンに統一（全社が必ず1つのタグを持つので写真に依存しない） */
   .shrine-card-icon {
     position: relative; aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center;
     background: repeating-linear-gradient(135deg, #241a0f 0 12px, #211809 12px 24px);
   }
   .shrine-card-icon-badge {
-    width: 52px; height: 52px; border-radius: 50%;
+    width: 48px; height: 48px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
-    font-size: 24px; font-weight: bold; color: #fff;
+    font-size: 22px; font-weight: bold; color: #fff;
     box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
   }
-  .shrine-card-body { padding: 18px 20px 22px; }
+  .shrine-card-body { padding: 16px 18px 20px; }
   .shrine-card-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
-  .shrine-card-name { display: block; font-size: 17px; color: var(--tan-text); margin: 8px 0 2px; }
-  .shrine-card-en { display: block; font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text); opacity: 0.5; }
-  .shrine-card-why { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.72; margin: 12px 0 0; }
-
-  .next-step {
-    display: block; text-decoration: none; margin-top: 16px; padding: 22px 24px;
-    border: 1px solid var(--border-4); border-left: 2px solid rgba(var(--gold-glow-rgb),0.55);
-    border-radius: 3px; background: rgba(255,255,255,0.02);
-    transition: background var(--dur-base) ease;
-  }
-  .next-step:hover { background: rgba(var(--gold-glow-rgb),0.06); }
-  .next-step-label { font-size: 10px; letter-spacing: 0.16em; color: var(--gold); opacity: 0.8; }
-  .next-step-title { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 0; }
-  .next-step-why { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
+  .shrine-card-name { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 2px; }
+  .shrine-card-en { display: block; font-size: 10.5px; letter-spacing: 0.05em; color: var(--tan-text); opacity: 0.5; }
+  .shrine-card-why { font-size: 12px; line-height: 1.85; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
 
   .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 76px; font-size: 11px; color: var(--border-4); }
 
   @media (max-width: 600px) {
-    .area-hero { height: 62vh; }
-    .section { margin-top: 56px; }
+    .area-hero { height: 54vh; }
+    .layer-section { margin-top: 48px; }
   }
 </style>
 </head>
@@ -125,12 +115,10 @@
 </div>
 
 <div class="content">
-
-  <div class="section">
-    <h2 class="section-title">この街の三社</h2>
-    <p class="section-lead">熱田神宮と若宮八幡社は名古屋市内、真清田神社は隣接する一宮市にある。</p>
+  <div class="layer-section">
+    <div class="layer-ring"><span class="layer-num">1</span><h2 class="section-title">L1・市内</h2></div>
+    <p class="section-lead">熱田神宮と若宮八幡社は名古屋市内にある。</p>
     <div class="shrine-cards">
-
       <a class="shrine-card" href="../index.html?shrine=愛知|熱田神宮#mock-app">
         <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c47a08;">神</span></div>
         <div class="shrine-card-body">
@@ -140,17 +128,6 @@
           <p class="shrine-card-why">草薙剣を祀る。伊勢神宮に次ぐ格式とされながら、都心の駅から歩ける場所にあり、境内は近隣の人の通り道にもなっている。</p>
         </div>
       </a>
-
-      <a class="shrine-card" href="../index.html?shrine=愛知|真清田神社#mock-app">
-        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">一</span></div>
-        <div class="shrine-card-body">
-          <span class="shrine-card-tag">一宮</span>
-          <span class="shrine-card-name">真清田神社</span>
-          <span class="shrine-card-en">Masumida Jinja</span>
-          <p class="shrine-card-why">尾張国の一宮。「一宮」という市の名前は、この社がそこにあることから付いた。制度が地名になった例。</p>
-        </div>
-      </a>
-
       <a class="shrine-card" href="../index.html?shrine=愛知|若宮八幡社#mock-app">
         <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
         <div class="shrine-card-body">
@@ -160,25 +137,102 @@
           <p class="shrine-card-why">名古屋の総鎮守。名古屋城が築かれる際に現在地へ移された、街の設計に組み込まれた社。</p>
         </div>
       </a>
-
     </div>
   </div>
 
-  <div class="section">
-    <h2 class="section-title">もう少し続けるなら</h2>
-    <p class="section-lead">伊勢神宮へ足を伸ばすか、真清田神社の背景にある令制国の話を知ることができる。</p>
+  <div class="layer-section">
+    <div class="layer-ring"><span class="layer-num">2</span><h2 class="section-title">L2・岐阜</h2></div>
+    <p class="section-lead">名古屋から電車で30〜60分。真清田神社は愛知県だが名古屋市外、岐阜と合わせて中間圏に置いた。</p>
+    <div class="shrine-cards">
+      <a class="shrine-card" href="../index.html?shrine=岐阜|南宮大社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#6d28d9;">大</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">大社</span>
+          <span class="shrine-card-name">南宮大社</span>
+          <span class="shrine-card-en">Nangu Taisha</span>
+          <p class="shrine-card-why">美濃国一宮。金山彦大神を祀る、全国の鉱山・金属業の総本宮。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=岐阜|伊奈波神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">名社</span>
+          <span class="shrine-card-name">伊奈波神社</span>
+          <span class="shrine-card-en">Inaba Jinja</span>
+          <p class="shrine-card-why">美濃国三宮。斎藤道三が稲葉山城を築く際、現在地へ遷したと伝わる。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=愛知|真清田神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">一</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">一宮</span>
+          <span class="shrine-card-name">真清田神社</span>
+          <span class="shrine-card-en">Masumida Jinja</span>
+          <p class="shrine-card-why">尾張国の一宮。「一宮」という市の名前は、この社がそこにあることから付いた。制度が地名になった例。</p>
+        </div>
+      </a>
+    </div>
+  </div>
 
-    <a class="next-step" href="../index.html#mock-app">
-      <span class="next-step-label">次の都市へ</span>
-      <span class="next-step-title">伊勢へ</span>
-      <p class="next-step-why">名古屋から伊勢神宮。（レベル2への接続。所要時間は要確認）</p>
-    </a>
-
-    <a class="next-step" href="../index.html#mock-app">
-      <span class="next-step-label">背景を知る</span>
-      <span class="next-step-title">尾張国</span>
-      <p class="next-step-why">真清田神社は尾張国の一宮。令制国ごとに序列が決まっていた時代の残り。</p>
-    </a>
+  <div class="layer-section">
+    <div class="layer-ring"><span class="layer-num">3</span><h2 class="section-title">L3・飛騨高山・石川・長野</h2></div>
+    <p class="section-lead">高山は独立エリアではなく、ここに含めた。長く滞在する人ほど、この先まで行ける。</p>
+    <div class="shrine-cards">
+      <a class="shrine-card" href="../shrine-pages/水無神社.html">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">一</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">一宮</span>
+          <span class="shrine-card-name">水無神社</span>
+          <span class="shrine-card-en">Minashi Jinja</span>
+          <p class="shrine-card-why">飛騨国一宮。高山の山岳霊場に鎮座する、全国の水無神社の総本社。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../shrine-pages/桜山八幡宮.html">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">名社</span>
+          <span class="shrine-card-name">桜山八幡宮</span>
+          <span class="shrine-card-en">Sakurayama Hachimangu</span>
+          <p class="shrine-card-why">高山北部の総鎮守。秋の高山祭では11台の祭屋台が曳き揃えられる。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=石川|白山比咩神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">一</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">一宮</span>
+          <span class="shrine-card-name">白山比咩神社</span>
+          <span class="shrine-card-en">Shirayama Hime Jinja</span>
+          <p class="shrine-card-why">加賀国一宮。白山を神体山とし、全国三千余社の白山神社の総本宮。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=石川|尾山神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">名社</span>
+          <span class="shrine-card-name">尾山神社</span>
+          <span class="shrine-card-en">Oyama Jinja</span>
+          <p class="shrine-card-why">加賀百万石の祖・前田利家を祀る。和漢洋折衷の神門が金沢の象徴。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=石川|気多大社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#6d28d9;">大</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">大社</span>
+          <span class="shrine-card-name">気多大社</span>
+          <span class="shrine-card-en">Keta Taisha</span>
+          <p class="shrine-card-why">能登国一宮。「入らずの森」を神域に持ち、神職も年一度しか立ち入らない。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=長野|諏訪大社本宮#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#6d28d9;">大</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">大社</span>
+          <span class="shrine-card-name">諏訪大社本宮</span>
+          <span class="shrine-card-en">Suwa Taisha Honmiya</span>
+          <p class="shrine-card-why">信濃国一宮。本殿を持たない諏訪造の社殿を伝える、全国諏訪神社の総本社の一つ。</p>
+        </div>
+      </a>
+    </div>
   </div>
 
 </div>
@@ -188,14 +242,6 @@
 <script>
 (function(){
   function applyLang(lang){
-    document.querySelectorAll('[data-en]').forEach(function(el){
-      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
-      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
-    });
-    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
-      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
-      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
-    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

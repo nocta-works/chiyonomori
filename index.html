@@ -1071,9 +1071,11 @@ function initScrollSlideReveal() {
   // 一番左＝神社の基礎知識（記事）、その隣＝エリア（依頼O-1で追加した入口）。
   var BASICS_LABEL = { ja: '神社の基礎知識', en: 'Basics' };
   var AREA_LABEL = { ja: 'エリア', en: 'Areas' };
-  // 依頼S-2（2026-09-13）：エリア再編14→10（進行中）。鎌倉・大宮は東京の
-  // L2/L3に吸収済み（依頼T-1）のため、ここから削除。奈良→大阪／高山→名古屋の
-  // 吸収は「他エリアは後続」（本人指定）のため、この節では未着手のまま残す。
+  // 実行順I（依頼S-2・2026-09-13）：エリア再編14→10が完了。奈良は大阪のL2へ、
+  // 高山は名古屋のL3へ吸収（鎌倉・大宮が東京へ吸収されたのと同じ形）のため、
+  // 単独エリアとしては削除。京都・大阪・名古屋・福岡・広島・伊勢神宮・出雲大社は
+  // 東京と同じ同心円レイヤー構成に作り直した。富士（南＝富士山本宮浅間大社／
+  // 北＝富士吉田）は山を挟んだ対なので同心円にせず、相互リンクのみ。
   var AREA_PAGES = [
     { name:{ja:'東京',en:'Tokyo'}, file:'area-pages/東京.html' },
     { name:{ja:'大阪',en:'Osaka'}, file:'area-pages/大阪.html' },
@@ -1084,33 +1086,52 @@ function initScrollSlideReveal() {
     { name:{ja:'富士山本宮浅間大社',en:'Fujisan Hongu Sengen Taisha'}, file:'area-pages/富士山本宮浅間大社.html' },
     { name:{ja:'出雲大社',en:'Izumo Taisha'}, file:'area-pages/出雲大社.html' },
     { name:{ja:'広島',en:'Hiroshima'}, file:'area-pages/広島.html' },
-    { name:{ja:'高山',en:'Takayama'}, file:'area-pages/高山.html' },
     { name:{ja:'富士吉田',en:'Fujiyoshida'}, file:'area-pages/富士吉田.html' },
-    { name:{ja:'奈良',en:'Nara'}, file:'area-pages/奈良.html' },
   ];
   // 実行順F（依頼P-2＋R-4・2026-09-13）：エリアを地図上で囲うための、エリア→
   // 所属社リスト。⚠️依頼R-5の教訓＝名前だけでは同名他県の社と衝突する
   // （日枝神社が富山を返した実例）ため、必ず「県|名前」で持ち、marker側の
-  // shrine.pref+shrine.nameと突き合わせる。東京だけ実行順D（依頼T）で確定した
-  // 3層（L1山手線圏内／L2山手線＋α／L3完全に郊外）を持つ。他は1層。
-  // 一覧は各area-pagesファイルの実際のshrine-cardから抽出（2026-09-13時点）。
+  // shrine.pref+shrine.nameと突き合わせる。実行順I（依頼S-2）で東京以外も
+  // 2〜3層のlayers構成に統一（京都・大阪・名古屋・福岡・広島・伊勢神宮・
+  // 出雲大社）。富士2エリアは層を持たない単純な所属社リストのまま。
   var AREA_SHRINES = {
     'area-pages/東京.html': { layers: [
       { key:'L1', shrines:['東京|明治神宮','東京|神田神社（神田明神）','東京|日枝神社','東京|虎ノ門金刀比羅宮','東京|花園神社'] },
       { key:'L2', shrines:['東京|大国魂神社','千葉|葛飾八幡宮','神奈川|伊勢山皇大神宮','埼玉|武蔵一宮氷川神社','千葉|千葉神社'] },
       { key:'L3', shrines:['神奈川|鶴岡八幡宮','神奈川|銭洗弁財天宇賀福神社','神奈川|荏柄天神社','埼玉|三峯神社','東京|武蔵御嶽神社','神奈川|大山阿夫利神社','茨城|鹿島神宮','千葉|香取神宮','神奈川|寒川神社'] }
     ]},
-    'area-pages/大阪.html': { shrines:['大阪|住吉大社','大阪|大阪天満宮','大阪|今宮戎神社'] },
-    'area-pages/京都.html': { shrines:['京都|伏見稲荷大社','京都|八坂神社','京都|下鴨神社'] },
-    'area-pages/名古屋.html': { shrines:['愛知|熱田神宮','愛知|真清田神社','愛知|若宮八幡社'] },
-    'area-pages/福岡.html': { shrines:['福岡|太宰府天満宮','福岡|筥崎宮','福岡|櫛田神社'] },
-    'area-pages/伊勢神宮.html': { shrines:['三重|伊勢神宮（内宮）','三重|伊勢神宮（外宮）','三重|猿田彦神社'] },
+    'area-pages/京都.html': { layers: [
+      { key:'L1', shrines:['京都|伏見稲荷大社','京都|八坂神社','京都|下鴨神社','京都|上賀茂神社','京都|北野天満宮','京都|松尾大社','京都|平安神宮'] },
+      { key:'L2', shrines:['滋賀|日吉大社','滋賀|建部大社','滋賀|多賀大社','滋賀|近江神宮'] }
+    ]},
+    'area-pages/大阪.html': { layers: [
+      { key:'L1', shrines:['大阪|住吉大社','大阪|大阪天満宮','大阪|今宮戎神社'] },
+      { key:'L2', shrines:['奈良|大神神社','奈良|春日大社','奈良|石上神宮','兵庫|伊弉諾神宮','兵庫|伊和神社'] }
+    ]},
+    'area-pages/名古屋.html': { layers: [
+      { key:'L1', shrines:['愛知|熱田神宮','愛知|若宮八幡社'] },
+      { key:'L2', shrines:['岐阜|南宮大社','岐阜|伊奈波神社','愛知|真清田神社'] },
+      { key:'L3', shrines:['岐阜|水無神社','岐阜|桜山八幡宮','石川|白山比咩神社','石川|尾山神社','石川|気多大社','長野|諏訪大社本宮'] }
+    ]},
+    'area-pages/福岡.html': { layers: [
+      { key:'L1', shrines:['福岡|櫛田神社','福岡|筥崎宮','福岡|住吉神社'] },
+      { key:'L2', shrines:['福岡|太宰府天満宮','福岡|竈門神社','福岡|宗像大社'] },
+      { key:'L3', shrines:['大分|宇佐神宮','福岡|英彦山神宮'] }
+    ]},
+    'area-pages/伊勢神宮.html': { layers: [
+      { key:'L1', shrines:['三重|伊勢神宮（内宮）','三重|伊勢神宮（外宮）','三重|猿田彦神社'] },
+      { key:'L2', shrines:['三重|伊雑宮','三重|伊射波神社'] }
+    ]},
     'area-pages/富士山本宮浅間大社.html': { shrines:['静岡|富士山本宮浅間大社','静岡|山宮浅間神社','静岡|村山浅間神社'] },
-    'area-pages/出雲大社.html': { shrines:['島根|出雲大社','島根|熊野大社','島根|八重垣神社'] },
-    'area-pages/広島.html': { shrines:['広島|厳島神社','広島|速谷神社','広島|吉備津神社'] },
-    'area-pages/高山.html': { shrines:['岐阜|水無神社','岐阜|桜山八幡宮','岐阜|飛騨総社'] },
-    'area-pages/富士吉田.html': { shrines:['山梨|北口本宮冨士浅間神社','山梨|甲斐国一宮浅間神社','山梨|河口浅間神社'] },
-    'area-pages/奈良.html': { shrines:['奈良|大神神社','奈良|春日大社','奈良|石上神宮'] }
+    'area-pages/出雲大社.html': { layers: [
+      { key:'L1', shrines:['島根|出雲大社','島根|日御碕神社'] },
+      { key:'L2', shrines:['島根|熊野大社','島根|八重垣神社','島根|佐太神社'] }
+    ]},
+    'area-pages/広島.html': { layers: [
+      { key:'L1', shrines:['広島|厳島神社','広島|速谷神社'] },
+      { key:'L2', shrines:['広島|吉備津神社'] }
+    ]},
+    'area-pages/富士吉田.html': { shrines:['山梨|北口本宮冨士浅間神社','山梨|甲斐国一宮浅間神社','山梨|河口浅間神社'] }
   };
   var ARTICLE_PAGES = [
     { num: 1, name:{ja:'日本と神社',     en:'Japan & Shrines'},   file:'articles/日本と神社.html' },
@@ -1236,10 +1257,12 @@ function initScrollSlideReveal() {
     { tag: 'taisha', label: { ja: '大社', en: 'Taisha' }, count: 24, desc: { ja: '2つの意味がある。戦前の社格（官幣大社・国幣大社）と、名前としての「〇〇大社」。戦前は出雲大社ただ一社を指した。', en: 'Two meanings: a pre-war state rank, and the name "Taisha" itself. Before the war, "Taisha" meant only Izumo Taisha.' } },
     { tag: 'ichi', label: { ja: '一宮', en: 'Ichinomiya' }, count: 91, desc: { ja: '律令時代の国（全国約70国）ごとの筆頭社。朝廷が決めた一覧ではなく、国司が最初に参る社が定着したもの。だから国によって異説がある。', en: 'The top-ranked shrine of each historical province (~70 nationwide). Not an official decree — the shrine a new governor visited first, settled by custom.' } },
     { tag: 'ni', label: { ja: '二宮', en: 'Ninomiya' }, count: 35, desc: { ja: '同じ序列の2番目。一宮に次ぐ社。', en: 'Second in the same provincial ranking, after the ichinomiya.' } },
-    // 名社26社（実行順A・依頼R-1+S-1で確定・2026-09-13）。件数はここに固定値で
-    // 持つ＝地図データ上は一部の格式社（例：富士山本宮浅間大社）も副次的に
-    // meishaタグを帯びているため、tagsを数えるだけでは26からずれる
-    { tag: 'meisha', label: { ja: '名社', en: 'Notable' }, count: 26, desc: { ja: '上の4つと違い、制度ではなくこのサイトが選んだ社。格式に入らないが、その土地を語るとき外せない社。', en: 'Unlike the four above, this is an editorial choice, not an official rank — shrines essential to a place’s story despite no formal rank.' } },
+    // 名社31社（実行順A・依頼R-1+S-1で26社確定後、実行順I・依頼S-2で他エリアの
+    // 3層設計に伴い5社追加＝2026-09-13）。件数はここに固定値で持つ＝地図データ上は
+    // 一部の格式社（例：富士山本宮浅間大社）や、meisha2/meisha3から統合した社
+    // （例：水無神社）も副次的にmeishaタグを帯びているため、tagsを数えるだけでは
+    // 31からずれる（tags.includes('meisha')の生カウントは55）
+    { tag: 'meisha', label: { ja: '名社', en: 'Notable' }, count: 31, desc: { ja: '上の4つと違い、制度ではなくこのサイトが選んだ社。格式に入らないが、その土地を語るとき外せない社。', en: 'Unlike the four above, this is an editorial choice, not an official rank — shrines essential to a place’s story despite no formal rank.' } },
   ];
   function openRankModal() {
     var modal = document.getElementById('rank-modal');
@@ -1401,24 +1424,36 @@ function initScrollSlideReveal() {
         L2: { color:'#f5d08a', weight:2,   opacity:0.6,  fillColor:'#f5d08a', fillOpacity:0.05 },
         L3: { color:'#f5d08a', weight:1.5, opacity:0.3,  fillColor:'#f5d08a', fillOpacity:0.03 }
       };
-      var outerBounds = null;
       var allIdents = [];
       var drawOrder = def.layers.slice().reverse();
-      drawOrder.forEach(function(layerDef, i){
+      drawOrder.forEach(function(layerDef){
         var shape = computeAreaShape(layerDef.shrines);
         allIdents = allIdents.concat(layerDef.shrines);
         if (!shape) return;
         var layer = drawAreaShape(shape, layerStyles[layerDef.key]);
-        if (shape.type === 'rect') {
-          if (i === 0) outerBounds = shape.bounds; // reverse後の最初＝最も外側（L3）
-          layer.on('click', function(e){
-            L.DomEvent.stopPropagation(e);
+        layer.on('click', function(e){
+          L.DomEvent.stopPropagation(e);
+          if (shape.type === 'rect') {
             map.flyToBounds(shape.bounds, { padding:[40,40], duration:0.6 });
-          });
-        }
+          } else {
+            map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration:0.6 });
+          }
+        });
       });
       dimOutOfArea(allIdents);
-      if (outerBounds) map.flyToBounds(outerBounds, { padding:[40,40], duration:0.8 });
+      // ⚠️外側の層（最も広いはず）が1点しかない場合、その層はrectでなくcircleに
+      // フォールバックするため、層ごとのshapeだけを見て全体のズーム先を決めると
+      // 「外側がrectの時しかズームしない」というバグになる（広島のL2＝吉備津神社
+      // 1社のみで実際に発生・2026-09-13）。全社をまとめて計算した1つのshapeを
+      // 別に使うことで、層の内訳に関係なく必ずズームする
+      var overallShape = computeAreaShape(allIdents);
+      if (overallShape) {
+        if (overallShape.type === 'rect') {
+          map.flyToBounds(overallShape.bounds, { padding:[40,40], duration:0.8 });
+        } else {
+          map.flyTo(overallShape.center, Math.max(map.getZoom(), 9), { duration:0.8 });
+        }
+      }
     } else {
       var shape = computeAreaShape(def.shrines);
       if (!shape) return;

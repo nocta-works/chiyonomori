@@ -201,7 +201,7 @@
     "pref": "宮崎",
     "name": "宮崎神宮",
     "tags": [
-      "meisha3",
+      "meisha",
       "jingu"
     ],
     "province": "日向国",
@@ -489,7 +489,7 @@
     "pref": "大阪",
     "name": "大鳥大社",
     "tags": [
-      "meisha2",
+      "meisha",
       "taisha",
       "ichi"
     ],
@@ -674,7 +674,7 @@
     "pref": "福岡",
     "name": "高良大社",
     "tags": [
-      "meisha2",
+      "meisha",
       "taisha",
       "ichi"
     ],
@@ -764,7 +764,7 @@
     "pref": "三重",
     "name": "敢國神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "伊賀国",
@@ -827,7 +827,7 @@
     "pref": "京都",
     "name": "出雲大神宮",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "丹波国",
@@ -842,7 +842,7 @@
     "pref": "京都",
     "name": "籠神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "丹後国",
@@ -900,7 +900,7 @@
     "pref": "兵庫",
     "name": "出石神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "但馬国",
@@ -915,7 +915,7 @@
     "pref": "千葉",
     "name": "安房神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "安房国",
@@ -944,7 +944,7 @@
     "pref": "和歌山",
     "name": "丹生都比売神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "紀伊国",
@@ -973,7 +973,7 @@
     "pref": "大分",
     "name": "柞原八幡宮",
     "tags": [
-      "meisha2",
+      "meisha",
       "hachiman",
       "ichi"
     ],
@@ -1132,7 +1132,7 @@
     "pref": "山梨",
     "name": "甲斐国一宮浅間神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "甲斐国",
@@ -1147,7 +1147,7 @@
     "pref": "岐阜",
     "name": "水無神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "飛騨国",
@@ -1190,7 +1190,7 @@
     "pref": "岡山",
     "name": "吉備津神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "備中国",
@@ -1233,7 +1233,7 @@
     "pref": "島根",
     "name": "物部神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "石見国",
@@ -1347,7 +1347,7 @@
     "pref": "愛知",
     "name": "砥鹿神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "三河国",
@@ -1376,7 +1376,7 @@
     "pref": "新潟",
     "name": "度津神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "佐渡国",
@@ -1560,7 +1560,7 @@
     "pref": "福島",
     "name": "馬場都々古別神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "岩代国",
@@ -1659,7 +1659,7 @@
     "pref": "静岡",
     "name": "事任八幡宮",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi",
       "hachiman"
     ],
@@ -1759,7 +1759,7 @@
     "pref": "鹿児島",
     "name": "枚聞神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ichi"
     ],
     "province": "薩摩国",
@@ -1996,7 +1996,7 @@
     "pref": "愛知",
     "name": "知立神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ni"
     ],
     "province": "三河国",
@@ -2053,7 +2053,7 @@
     "pref": "石川",
     "name": "菅生石部神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ni"
     ],
     "province": "加賀国",
@@ -2208,7 +2208,7 @@
     "pref": "鳥取",
     "name": "大神山神社",
     "tags": [
-      "meisha2",
+      "meisha",
       "ni"
     ],
     "province": "伯耆国",
@@ -2587,5 +2587,75 @@
     "reason": "地名代表社。千葉氏の守護神・妙見信仰の総本山。北辰（北極星）を祀る全国唯一の格式。",
     "nameEn": "Chiba Jinja",
     "prefEn": "Chiba"
+  },
+  {
+    "pref": "岐阜",
+    "name": "伊奈波神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "美濃国",
+    "lat": 35.42723,
+    "lng": 136.77081,
+    "deity": "五十瓊敷入彦命",
+    "reason": "美濃国三宮。五十瓊敷入彦命を主祭神に祀る古社。斎藤道三が稲葉山城築城に際し、現在地へ遷座したと伝わる。",
+    "nameEn": "Inaba Jinja",
+    "prefEn": "Gifu"
+  },
+  {
+    "pref": "石川",
+    "name": "尾山神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "加賀国",
+    "lat": 36.56639,
+    "lng": 136.65528,
+    "deity": "前田利家・芳春院",
+    "reason": "地名代表社。加賀百万石の祖・前田利家を祀る。和漢洋折衷の神門（重文）がシンボル。金沢の歴史の象徴。",
+    "nameEn": "Oyama Jinja",
+    "prefEn": "Ishikawa"
+  },
+  {
+    "pref": "福岡",
+    "name": "竈門神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "筑前国",
+    "lat": 33.5398,
+    "lng": 130.56912,
+    "deity": "玉依姫",
+    "reason": "宝満山に上宮、山麓に下宮を構え、玉依姫命を主祭神とする。古くから宝満山信仰の中心となり、縁結びの神として信仰される。",
+    "nameEn": "Kamado Jinja",
+    "prefEn": "Fukuoka"
+  },
+  {
+    "pref": "島根",
+    "name": "日御碕神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "出雲国",
+    "lat": 35.42958,
+    "lng": 132.62936,
+    "deity": "天照大神",
+    "reason": "天照大御神を祀る日沉宮と素盞嗚尊を祀る神の宮からなり、「日の本の夜を守る」社として崇敬される。",
+    "nameEn": "Hinomisaki Jinja",
+    "prefEn": "Shimane"
+  },
+  {
+    "pref": "島根",
+    "name": "八重垣神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "出雲国",
+    "lat": 35.42903,
+    "lng": 133.07369,
+    "deity": "素戔嗚尊・稲田姫命・大国主命ほか",
+    "reason": "松江市に鎮座する縁結び・開運の名社。境内の「鏡の池」に紙を浮かべて縁を占う習わしが有名。素戔嗚尊が稲田姫を守った故事ゆかりのパワースポット。",
+    "nameEn": "Yaegaki Jinja",
+    "prefEn": "Shimane"
   }
 ]
