@@ -226,6 +226,53 @@
     0%, 100% { box-shadow: 0 0 14px rgba(var(--gold-glow-rgb),0.2); }
     50% { box-shadow: 0 0 34px rgba(var(--gold-glow-rgb),0.5); }
   }
+  /* ── トリプティック（実装キュー実行順7・2026-09-13戦略セッション確定仕様）：
+     ④を縦写真1枚ずつのスクロールから、縦写真3枚を等幅3列で同時に見せる形へ
+     置き換える。`_選定.json`のtriptychs配列が空（モードB未実行）の間は、
+     現行の1枚ずつ3連スクロール（.scroll-slide／zoomout-manifest.json）に
+     フォールバックする——このCSS・JSは既存のものをそのまま残してあり、
+     以下は新しく追加するトリプティック用の別クラス。
+     ⚠️選別ツールのモードB（photo-review.html）もこのCSSをそのまま使う想定
+     （本人指定：「実際のオープニングと同じ並べ方で見せる」）。クラス名を
+     変えるときは両方を必ず揃えて直すこと。 ── */
+  .triptych-section {
+    position: relative; height: 100vh; overflow: hidden;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+    background: #000; scroll-snap-align: start;
+  }
+  .triptych-col { position: relative; overflow: hidden; height: 100%; }
+  .triptych-col img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.92) contrast(1.05);
+    opacity: 0; transition: opacity 1.2s ease;
+  }
+  .triptych-col.revealed img { opacity: 1; }
+  /* 左→中→右の順に時間差でフェードイン（本人指定：ズームではなくフェード。
+     3枚同時のtransformアニメーションは09-11のマーカー描画バグと同じ火種になる
+     ため使わない） */
+  .triptych-col[data-pos="0"] img { transition-delay: 0ms; }
+  .triptych-col[data-pos="1"] img { transition-delay: 200ms; }
+  .triptych-col[data-pos="2"] img { transition-delay: 400ms; }
+  /* ④の固定キャプションは3枚をまたぐ.fixed-captionを使っていたが、
+     トリプティックは1画面に収まるので「またぐ」必要が無い。三連の中に
+     通常配置する（本人指定） */
+  .triptych-caption {
+    position: absolute; left: 50%; bottom: 17%; transform: translateX(-50%);
+    z-index: 10; text-align: center; max-width: 80vw; pointer-events: none;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    color: var(--gold); font-size: clamp(20px, 3.6vw, 34px); letter-spacing: 0.06em;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.75);
+    opacity: 0; transition: opacity 1s ease 300ms;
+  }
+  .triptych-caption.triptych-caption-show { opacity: 1; }
+  @media (max-width: 480px) {
+    .triptych-caption { font-size: clamp(15px, 4.4vw, 22px); bottom: 12%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .triptych-col img { transition: none; transition-delay: 0ms; }
+    .triptych-caption { transition: none; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .scroll-slide-hint { animation: none; }
     .scroll-slide-hint-arrow { animation: none; }
@@ -660,6 +707,14 @@ function initScrollSlideReveal() {
   items.forEach(function(el){ io.observe(el); });
 }
 
+// トリプティック（実装キュー実行順7・2026-09-13戦略セッション確定仕様）：
+// ④を縦写真1枚ずつのスクロールから、縦写真3枚を等幅3列で同時に見せる形へ
+// 置き換える。写真動画/_選定.json の triptychs 配列（本人がモードBで承認した
+// 組み合わせ）から1組をランダムに選んで表示する。配列が空、またはこの
+// ファイル自体が無い（=公開プレビュー環境。写真動画/は本番未同期）場合は、
+// 従来どおりzoomout-manifest.jsonを使った1枚ずつ3連スクロールにフォールバック
+// する——本人指定「空のときは現行のフォールバックにすること。ここを実装
+// しないと、本人がモードBを回すまでオープニングが壊れる」。
 (function(){
   var FALLBACK = [
     { file: 'assets/katori-backlit.jpg', alt: '香取神宮' },
@@ -678,6 +733,11 @@ function initScrollSlideReveal() {
     return picked;
   }
 
+  function pickOne(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  // フォールバック経路（従来のまま・変更なし）
   function renderSlides(list) {
     var container = document.getElementById('scroll-slides');
     if (!container) return;
@@ -690,12 +750,71 @@ function initScrollSlideReveal() {
         '</section>';
     }).join('');
     initScrollSlideReveal();
+    var fixedCaption = document.getElementById('fixed-caption');
+    if (fixedCaption) fixedCaption.style.display = '';
   }
 
-  fetch('assets/zoomout-manifest.json')
-    .then(function(res){ return res.json(); })
-    .then(function(list){ renderSlides(list && list.length ? list : FALLBACK); })
-    .catch(function(){ renderSlides(FALLBACK); });
+  // トリプティック経路（新規）：写真動画/内の元画像を直接参照する
+  // （design-lab/assets/への縮小コピーは作っていない＝ローカルのdesign-lab
+  // 環境専用の演出で、公開プレビューでは写真動画/自体が同期されないため
+  // 自動的にフォールバック経路になる）
+  function renderTriptych(photos) {
+    var container = document.getElementById('scroll-slides');
+    if (!container) return;
+    // 公開プレビューでは動かさない機能なので、フォールバックの.fixed-caption
+    // が同じ#scroll-slidesの交差判定で表示されてしまわないよう明示的に隠す
+    var fixedCaption = document.getElementById('fixed-caption');
+    if (fixedCaption) fixedCaption.style.display = 'none';
+    container.innerHTML =
+      '<section class="triptych-section reveal-triptych">' +
+      photos.map(function(path, i){
+        return '<div class="triptych-col" data-pos="' + i + '">' +
+          '<img src="../' + path + '" alt="">' +
+          '</div>';
+      }).join('') +
+      '<div class="triptych-caption">その一つ一つに、実際に足を運んだ。</div>' +
+      '<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>' +
+      '</section>';
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var section = container.querySelector('.triptych-section');
+    var cols = container.querySelectorAll('.triptych-col');
+    var caption = container.querySelector('.triptych-caption');
+    function reveal(){
+      cols.forEach(function(el){ el.classList.add('revealed'); });
+      if (caption) caption.classList.add('triptych-caption-show');
+    }
+    if (reduced || !('IntersectionObserver' in window)) {
+      reveal();
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) { reveal(); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.4 });
+    io.observe(section);
+  }
+
+  function startFallback() {
+    fetch('assets/zoomout-manifest.json')
+      .then(function(res){ return res.json(); })
+      .then(function(list){ renderSlides(list && list.length ? list : FALLBACK); })
+      .catch(function(){ renderSlides(FALLBACK); });
+  }
+
+  // {cache:'no-store'}が要る：モードBで承認するたびに更新されるファイルなので、
+  // ブラウザキャッシュが古いtriptychsを返し続ける事故を防ぐ（検証中に実際に発生した）
+  fetch('../写真動画/_選定.json', { cache: 'no-store' })
+    .then(function(res){ if (!res.ok) throw new Error('not found'); return res.json(); })
+    .then(function(data){
+      var triptychs = data && data.triptychs;
+      if (triptychs && triptychs.length) {
+        renderTriptych(pickOne(triptychs).photos);
+      } else {
+        startFallback();
+      }
+    })
+    .catch(function(){ startFallback(); });
 })();
 
 // ⑤本体：神宮・大社タグの神社のみ（48社）を表示する簡易地図
