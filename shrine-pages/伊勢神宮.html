@@ -121,6 +121,23 @@
     font-size: 12.5px; color: var(--gold-muted); text-align: center; line-height: 1.7; letter-spacing: 0.02em;
   }
 
+  /* 次の一社（実装キュー実行順8・依頼K後半で追加。2026-09-13）：
+     このページには元々「次の一社」が無く行き止まりだった。新規作成した
+     猿田彦神社.htmlへつなぐ。明治神宮.htmlと同じ構造をそのまま流用 */
+  .next-shrines { max-width: 860px; margin: 72px auto 0; padding: 0 24px; }
+  .next-shrines-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.8; margin-bottom: 6px; }
+  .next-shrines-lead { font-size: 13px; line-height: 1.9; color: var(--tan-text); opacity: 0.7; margin: 0 0 22px; }
+  .next-shrine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .next-shrine-card {
+    display: block; padding: 20px 22px; text-decoration: none;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
+    transition: background var(--dur-base, .3s) ease, border-color var(--dur-base, .3s) ease;
+  }
+  .next-shrine-card:hover { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); }
+  .next-shrine-set { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
+  .next-shrine-name { display: block; font-size: 17px; color: var(--tan-text); margin: 8px 0 2px; }
+  .next-shrine-en { display: block; font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text); opacity: 0.5; }
+  .next-shrine-why { font-size: 12px; line-height: 1.85; color: var(--tan-text); opacity: 0.72; margin: 12px 0 0; }
   .page-footer { text-align: center; padding: 40px; font-size: 11px; color: var(--border-4); }
 
   @media (prefers-reduced-motion: reduce) {
@@ -234,6 +251,25 @@
     <p class="photo-block-caption" data-en="The riverside town along the Isuzu. On the walk back from worship, the water catches the light.">五十鈴川沿いの町並み。参拝を終えた帰り道、川面が光を返す。</p>
   </div>
 
+</div>
+
+<div class="next-shrines">
+  <div class="next-shrines-title">次の一社</div>
+  <p class="next-shrines-lead">内宮のすぐそば。物事の初めに参る社とされる。</p>
+  <div class="next-shrine-grid">
+    <a class="next-shrine-card" href="猿田彦神社.html">
+      <span class="next-shrine-set">すぐそば</span>
+      <span class="next-shrine-name">猿田彦神社</span>
+      <span class="next-shrine-en">Sarutahiko Jinja</span>
+      <p class="next-shrine-why">天孫降臨の道案内をした神。内宮参拝とセットで訪れる人が多い。</p>
+    </a>
+  </div>
+  <a class="next-shrine-card" href="../area-pages/伊勢神宮.html" style="margin-top:14px">
+    <span class="next-shrine-set">この地域</span>
+    <span class="next-shrine-name">伊勢の三社</span>
+    <span class="next-shrine-en">Ise</span>
+    <p class="next-shrine-why">二千年、二十年ごとに建て替えられる社と、その参道の入口を守る社。</p>
+  </a>
 </div>
 
 <div class="page-footer">個別神社紹介ページ プロトタイプ・伊勢神宮 / design-lab（本番未反映）</div>
