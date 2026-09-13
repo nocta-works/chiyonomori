@@ -346,6 +346,12 @@
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-size: 13px; font-weight: bold; color: #fff;
   }
   .shrine-dropdown-name { font-size: 13px; color: var(--tan-text); white-space: nowrap; }
+  /* エリア／記事の2区分見出し（実装キュー依頼O-1・2026-09-13） */
+  .shrine-dropdown-section-label {
+    font-size: 10px; letter-spacing: 0.12em; color: var(--gold-muted); text-transform: uppercase;
+    padding: 10px 10px 4px; margin-top: 4px;
+  }
+  .shrine-dropdown-section-label:first-child { margin-top: 0; }
 
   /* タグフィルター（本人指定・2026-09-10：海外版は神宮・大社・一宮・二宮の4タグに厳選。
      見た目・構成は本番index.htmlの.controls-tagsに合わせるが、参拝記録・令制国絞り込み・
@@ -1010,24 +1016,55 @@ function initScrollSlideReveal() {
   // 🔴依頼N-3（2026-09-13・本人指摘）：9項目は多すぎるため4項目へ合併。
   // 1+7／2+5／3+4／6+8+9 の組み合わせで記事ファイル自体を4枚に統合済み
   // （design-lab/articles/、旧9枚は削除済み）。
-  var DROPDOWN_LABEL = { ja: '神社の基礎知識', en: 'Learn the Basics' };
+  var DROPDOWN_LABEL = { ja: '見る・知る', en: 'Explore & Learn' };
+  // 🔴依頼O-1（2026-09-13・戦略セッションの通し検査で判明）：地域ページ14枚に
+  // サイト内から入る口が1つも無かった（E2＝検索流入の受け皿として作ったが、
+  // 英語化も公開もまだで検索流入がゼロのため、実質どこからも辿り着けない状態
+  // だった）。ドロップダウンに「エリアから探す」を追加して最小の入口にする。
+  var AREA_PAGES = [
+    { name:{ja:'東京',en:'Tokyo'}, file:'area-pages/東京.html' },
+    { name:{ja:'大阪',en:'Osaka'}, file:'area-pages/大阪.html' },
+    { name:{ja:'京都',en:'Kyoto'}, file:'area-pages/京都.html' },
+    { name:{ja:'名古屋',en:'Nagoya'}, file:'area-pages/名古屋.html' },
+    { name:{ja:'福岡',en:'Fukuoka'}, file:'area-pages/福岡.html' },
+    { name:{ja:'鎌倉',en:'Kamakura'}, file:'area-pages/鎌倉.html' },
+    { name:{ja:'伊勢神宮',en:'Ise Jingu'}, file:'area-pages/伊勢神宮.html' },
+    { name:{ja:'富士山本宮浅間大社',en:'Fujisan Hongu Sengen Taisha'}, file:'area-pages/富士山本宮浅間大社.html' },
+    { name:{ja:'出雲大社',en:'Izumo Taisha'}, file:'area-pages/出雲大社.html' },
+    { name:{ja:'広島',en:'Hiroshima'}, file:'area-pages/広島.html' },
+    { name:{ja:'高山',en:'Takayama'}, file:'area-pages/高山.html' },
+    { name:{ja:'富士吉田',en:'Fujiyoshida'}, file:'area-pages/富士吉田.html' },
+    { name:{ja:'奈良',en:'Nara'}, file:'area-pages/奈良.html' },
+    { name:{ja:'大宮',en:'Omiya'}, file:'area-pages/大宮.html' },
+  ];
   var ARTICLE_PAGES = [
     { num: 1, name:{ja:'日本と神社',     en:'Japan & Shrines'},   file:'articles/日本と神社.html' },
     { num: 2, name:{ja:'参拝の作法',     en:'How to Visit'},      file:'articles/参拝の作法.html' },
     { num: 3, name:{ja:'鳥居と境内',     en:'Torii & Grounds'},   file:'articles/鳥居.html' },
     { num: 4, name:{ja:'神々と分類',     en:'Kami & Ranks'},      file:'articles/神々.html' },
   ];
+  var DROPDOWN_SECTION_LABEL = { ja: { area: 'エリアから探す', article: '神社の基礎知識' }, en: { area: 'Explore by Area', article: 'Learn the Basics' } };
   function renderShrineDropdown(){
     var label = document.getElementById('shrine-dropdown-label');
     if (label) label.textContent = '⛩ ' + DROPDOWN_LABEL[currentLang];
     var panel = document.getElementById('shrine-dropdown-panel');
     if (!panel) return;
-    panel.innerHTML = ARTICLE_PAGES.map(function(s){
+    var sec = DROPDOWN_SECTION_LABEL[currentLang];
+    var areaHtml = AREA_PAGES.map(function(s){
+      return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '">' +
+        '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">📍</span>' +
+        '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
+        '</a>';
+    }).join('');
+    var articleHtml = ARTICLE_PAGES.map(function(s){
       return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '">' +
         '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">' + s.num + '</span>' +
         '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
         '</a>';
     }).join('');
+    panel.innerHTML =
+      '<div class="shrine-dropdown-section-label">' + sec.area + '</div>' + areaHtml +
+      '<div class="shrine-dropdown-section-label">' + sec.article + '</div>' + articleHtml;
   }
   renderShrineDropdown();
   var shrineDropdown = document.getElementById('shrine-dropdown');
