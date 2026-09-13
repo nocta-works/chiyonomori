@@ -497,6 +497,14 @@
   .area-enclosure-cta:hover { background: rgba(var(--gold-glow-rgb),0.22); }
   .area-enclosure-cta-close { opacity: 0.6; font-size: 14px; line-height: 1; padding-left: 2px; }
   .area-enclosure-cta-close:hover { opacity: 1; }
+  /* 本人指摘（2026-09-13）：エリアの囲いにカーソルを当てると「エリア名 LvN」を
+     出す。Leafletのデフォルト（白背景の吹き出し）をサイトの配色に合わせて上書き */
+  .area-enclosure-tooltip {
+    background: rgba(20,14,6,0.92); border: 1px solid var(--gold); color: var(--gold);
+    font-family: inherit; font-size: 12px; letter-spacing: 0.03em; padding: 4px 10px;
+    border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  }
+  .area-enclosure-tooltip::before { display: none; }
 
   /* 狭幅では引き出し式サイドバー等は作り込まず、まず地図の表示領域を優先する
      （本番のボトムシート化まではこの試作の現段階ではスコープ外） */
@@ -1392,11 +1400,20 @@ function initScrollSlideReveal() {
       // 描画とクリック判定は逆順（外側から）でないと、外側L3が最後に描かれて
       // 内側L1の上に乗ってしまい、L1の領域をクリックしてもL3が反応してしまう。
       // そのため描画直前にreverse()してL3→L2→L1の順にする
+      // 本人指摘（2026-09-13）＝「囲いの中が少し違いが分かるような表現、色が
+      // 濃くなるなど」。不透明度の差だけでは分かりにくいため、色調そのものも
+      // 内側ほど鮮やかな金・外側ほど落ち着いた金に変えた（サイトの配色トークン
+      // --gold/--gold-2/--gold-mutedをそのまま流用し、配色の統一感は保つ）
       var layerStyles = {
-        L1: { color:'#f5d08a', weight:2.5, opacity:0.95, fillColor:'#f5d08a', fillOpacity:0.10 },
-        L2: { color:'#f5d08a', weight:2,   opacity:0.6,  fillColor:'#f5d08a', fillOpacity:0.05 },
-        L3: { color:'#f5d08a', weight:1.5, opacity:0.3,  fillColor:'#f5d08a', fillOpacity:0.03 }
+        L1: { color:'#f5d08a', weight:3,   opacity:1,    fillColor:'#f5d08a', fillOpacity:0.16 },
+        L2: { color:'#e0b060', weight:2,   opacity:0.75, fillColor:'#e0b060', fillOpacity:0.09 },
+        L3: { color:'#907040', weight:1.5, opacity:0.45, fillColor:'#907040', fillOpacity:0.05 }
       };
+      // 本人指摘（2026-09-13）＝「囲いにカーソルを当てている時、東京Lv2のような
+      // 表示が出るアクションが可能なら」。Leafletのsticky tooltipで実装＝
+      // カーソルに追従して「エリア名 LvN」を出す
+      var levelNum = { L1:1, L2:2, L3:3 };
+      var areaName = areaPage ? areaPage.name[currentLang] : '';
       var allIdents = [];
       var drawOrder = def.layers.slice().reverse();
       drawOrder.forEach(function(layerDef){
@@ -1404,6 +1421,7 @@ function initScrollSlideReveal() {
         allIdents = allIdents.concat(layerDef.shrines);
         if (!shape) return;
         var layer = drawAreaShape(shape, layerStyles[layerDef.key]);
+        layer.bindTooltip(areaName + ' Lv' + levelNum[layerDef.key], { sticky: true, className: 'area-enclosure-tooltip' });
         layer.on('click', function(e){
           L.DomEvent.stopPropagation(e);
           if (shape.type === 'rect') {
@@ -1432,6 +1450,7 @@ function initScrollSlideReveal() {
       if (!shape) return;
       var style = { color:'#f5d08a', weight:2.5, opacity:0.85, fillColor:'#f5d08a', fillOpacity:0.08 };
       var layer = drawAreaShape(shape, style);
+      layer.bindTooltip(areaPage ? areaPage.name[currentLang] : '', { sticky: true, className: 'area-enclosure-tooltip' });
       layer.on('click', function(e){ L.DomEvent.stopPropagation(e); location.href = goUrl; });
       dimOutOfArea(def.shrines);
       if (shape.type === 'rect') {
