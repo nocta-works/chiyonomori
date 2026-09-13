@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>富士山本宮浅間大社｜神社マップ 日本版プレビュー（仮）</title>
+<style>
+  /* design-lab/area-pages/富士山本宮浅間大社.html — レベル2（実装キュー依頼K）。
+     東京.html と同じ地域主役型テンプレート。おすすめページ層は写真を使わない
+     方針（実装キュー依頼J）のため、ヒーロー・カードとも模様背景とタグアイコンで統一。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .area-hero {
+    position: relative; height: 72vh; min-height: 420px; display: flex; align-items: flex-end;
+    background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
+                repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
+  }
+  .area-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.05) 55%); }
+  .area-hero-content { position: relative; padding: 0 6vw 52px; width: 100%; }
+  .area-label { display: block; font-size: 12px; letter-spacing: 0.24em; color: var(--gold); opacity: 0.75; margin-bottom: 8px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+  .area-name {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(34px, 6.5vw, 60px); color: var(--gold); margin: 0 0 14px; letter-spacing: 0.05em;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  }
+  .area-tagline { max-width: 540px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
+
+  .content { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  .section { margin-top: 76px; }
+  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0 0 8px; }
+  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 0 0 26px; }
+  .body-text { font-size: 14px; line-height: 2.05; color: var(--tan-text); opacity: 0.88; }
+
+  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .shrine-card {
+    display: flex; flex-direction: column; text-decoration: none;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
+    overflow: hidden; transition: background var(--dur-base) ease, border-color var(--dur-base) ease;
+  }
+  .shrine-card:hover { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); }
+  .shrine-card-icon {
+    position: relative; aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(135deg, #241a0f 0 12px, #211809 12px 24px);
+  }
+  .shrine-card-icon-badge {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 24px; font-weight: bold; color: #fff;
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
+  }
+  .shrine-card-body { padding: 18px 20px 22px; }
+  .shrine-card-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
+  .shrine-card-name { display: block; font-size: 17px; color: var(--tan-text); margin: 8px 0 2px; }
+  .shrine-card-en { display: block; font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text); opacity: 0.5; }
+  .shrine-card-why { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.72; margin: 12px 0 0; }
+
+  .next-step {
+    display: block; text-decoration: none; margin-top: 16px; padding: 22px 24px;
+    border: 1px solid var(--border-4); border-left: 2px solid rgba(var(--gold-glow-rgb),0.55);
+    border-radius: 3px; background: rgba(255,255,255,0.02);
+    transition: background var(--dur-base) ease;
+  }
+  .next-step:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .next-step-label { font-size: 10px; letter-spacing: 0.16em; color: var(--gold); opacity: 0.8; }
+  .next-step-title { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 0; }
+  .next-step-why { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 76px; font-size: 11px; color: var(--border-4); }
+
+  @media (max-width: 600px) {
+    .area-hero { height: 62vh; }
+    .section { margin-top: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<div class="lang-toggle" id="lang-toggle">
+  <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
+  <button type="button" class="lang-btn" data-lang="en">EN</button>
+</div>
+
+<div class="area-hero">
+  <div class="area-hero-overlay"></div>
+  <div class="area-hero-content">
+    <span class="area-label">山を鎮めるために</span>
+    <h1 class="area-name">富士山本宮浅間大社</h1>
+    <p class="area-tagline">全国1,300の浅間神社の総本宮。噴火を繰り返す山を鎮めるために建てられ、富士山の八合目より上は今もこの神社の境内にあたる。山そのものが社地という設計になっている。</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <h2 class="section-title">この地域の三社</h2>
+    <p class="section-lead">三社とも富士宮市内にある。</p>
+    <div class="shrine-cards">
+      <a class="shrine-card" href="../index.html?shrine=富士山本宮浅間大社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#6d28d9;">大</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">大社</span>
+          <span class="shrine-card-name">富士山本宮浅間大社</span>
+          <span class="shrine-card-en">Fujisan Hongu Sengen Taisha</span>
+          <p class="shrine-card-why">木花之佐久夜毘売命を祀る。境内の湧玉池は富士山の雪解け水が湧き出したもので、かつて登拝者はここで身を清めてから山へ入った。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=山宮浅間神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">名社</span>
+          <span class="shrine-card-name">山宮浅間神社</span>
+          <span class="shrine-card-en">Yamamiya Sengen Jinja</span>
+          <p class="shrine-card-why">社殿が無い。遥拝所から富士山そのものを拝む。浅間大社の元宮とされ、建物を建てる前の神社がどういう形だったかが、そのまま残っている数少ない例。</p>
+        </div>
+      </a>
+      <a class="shrine-card" href="../index.html?shrine=村山浅間神社#mock-app">
+        <div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+        <div class="shrine-card-body">
+          <span class="shrine-card-tag">名社</span>
+          <span class="shrine-card-name">村山浅間神社</span>
+          <span class="shrine-card-en">Murayama Sengen Jinja</span>
+          <p class="shrine-card-why">富士山の修験道の拠点だった社。神仏習合の名残が境内に残り、明治の神仏分離で何が起きたかが見える。</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">もう少し続けるなら</h2>
+    <p class="section-lead">富士山の北側・富士吉田へ足を伸ばすか、伊豆国一宮を訪ねることができる。</p>
+    <a class="next-step" href="富士吉田.html">
+      <span class="next-step-label">山の反対側</span>
+      <span class="next-step-title">富士吉田へ（山の北側）</span>
+      <p class="next-step-why">同じ富士山を、山梨側から。南北で対になっている。</p>
+    </a>
+    <a class="next-step" href="../index.html?shrine=三嶋大社#mock-app">
+      <span class="next-step-label">同じ静岡で</span>
+      <span class="next-step-title">三嶋大社</span>
+      <p class="next-step-why">伊豆国一宮。</p>
+    </a>
+
+  </div>
+
+</div>
+
+<div class="page-footer">地域ページ プロトタイプ・富士山本宮浅間大社 / design-lab（本番未反映）</div>
+
+<script>
+(function(){
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) applyLang(btn.getAttribute('data-lang'));
+    });
+  }
+})();
+</script>
+</body>
+</html>
