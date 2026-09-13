@@ -67,6 +67,17 @@
   .shrine-meta { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; font-size: 12px; color: var(--tan-text); opacity: 0.85; }
   .shrine-meta span b { color: var(--gold); font-weight: normal; display: block; font-size: 10px; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 2px; }
 
+  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。
+     読まずに分かる層を足す（ベンチマーク調査の共通点＝概要を先に、本文はその後） */
+  .quick-facts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 24px;
+    max-width: 760px; margin: 0 auto 56px; padding: 20px 24px;
+    border: 1px solid var(--border-4); border-radius: 4px; background: rgba(255,255,255,0.02);
+  }
+  .quick-fact-label { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; margin-bottom: 4px; }
+  .quick-fact-value { font-size: 13.5px; color: var(--tan-text); line-height: 1.6; }
+  .quick-fact-en { display: block; font-size: 10.5px; color: var(--tan-text); opacity: 0.5; letter-spacing: 0.03em; margin-top: 2px; }
+
   .shrine-links { display: flex; gap: 8px; margin-top: 20px; max-width: 360px; }
   .shrine-link {
     display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1;
@@ -153,6 +164,13 @@
 </div>
 
 <div class="content">
+  <div class="quick-facts">
+  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">大己貴命・少彦名命・平将門命</span></div>
+  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">商売繁盛・縁結び・IT情報安全<span class="quick-fact-en">Business, relationships, IT security</span></span></div>
+  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">730年と伝わる</span></div>
+  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">地下鉄末広町・JR御茶ノ水</span></div>
+</div>
+
   <div class="section">
     <span class="section-label">History</span>
     <h2 class="section-title">由緒・創建</h2>
