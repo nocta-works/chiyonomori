@@ -34,6 +34,14 @@
     --color-wiki-hover: #d8d8e8;
     --color-popup-reason: #708870;
     --color-popup-deity: #906848;
+    /* 依頼X-2（2026-09-13）：幹（index.html）と同じ6個のモーショントークンを
+       移植。海外版はこれまで秒数を直書きしていたため、一括調整ができなかった */
+    --dur-fast: 0.12s;
+    --dur-base: 0.15s;
+    --dur-slow: 0.2s;
+    --dur-slower: 0.25s;
+    --dur-slowest: 0.28s;
+    --dur-bar: 0.4s;
     --tag-jingu: #d4860a;    --tag-jingu-rgb: 212,134,10;   --tag-jingu-light: #f5c842;
     --tag-taisha: #7c3aed;   --tag-taisha-rgb: 124,58,237;  --tag-taisha-light: #c4a8ff;
     --tag-ichi: #e83020;     --tag-ichi-rgb: 232,48,32;     --tag-ichi-light: #ff9a8a;
@@ -318,11 +326,11 @@
     padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border-4);
     background: rgba(0,0,0,0.22); color: var(--tan-text);
     font-family: inherit; font-size: 13px; letter-spacing: 0.03em; cursor: pointer;
-    transition: all 0.2s;
+    transition: all var(--dur-slow);
   }
   .shrine-dropdown-toggle:hover { border-color: var(--gold-muted); color: var(--gold-2); }
   .shrine-dropdown.open .shrine-dropdown-toggle { border-color: var(--gold); color: var(--gold); background: rgba(var(--gold-glow-rgb),0.14); }
-  .shrine-dropdown-caret { font-size: 9px; opacity: 0.7; transition: transform 0.2s; }
+  .shrine-dropdown-caret { font-size: 9px; opacity: 0.7; transition: transform var(--dur-slow); }
   .shrine-dropdown.open .shrine-dropdown-caret { transform: rotate(180deg); }
   .shrine-dropdown-panel {
     /* z-indexはLeafletの内部ペイン（ズームコントロール1000・ポップアップペイン700等）より
@@ -362,7 +370,7 @@
     display: flex; align-items: center; gap: 5px;
     padding: 5px 11px; border-radius: 20px; border: 1.5px solid;
     cursor: pointer; font-family: inherit; font-size: 13px; letter-spacing: 0.05em;
-    transition: all 0.25s; opacity: 0.42; background: transparent;
+    transition: all var(--dur-slower); opacity: 0.42; background: transparent;
   }
   .filter-btn.active { opacity: 1; }
   .filter-btn.jingu  { border-color: var(--tag-jingu);  color: var(--tag-jingu-light);  background: rgba(var(--tag-jingu-rgb),0.12); }
@@ -384,7 +392,7 @@
     width: 22px; height: 22px; border-radius: 50%; margin-left: 2px;
     font-family: inherit; font-size: 12px; line-height: 1; color: var(--tan-text); opacity: 0.6;
     border: 1px solid var(--border-4); background: rgba(255,255,255,0.03); cursor: pointer;
-    transition: opacity 0.2s, background 0.2s; flex-shrink: 0;
+    transition: opacity var(--dur-slow), background var(--dur-slow); flex-shrink: 0;
   }
   .rank-help-btn:hover { opacity: 1; background: rgba(var(--gold-glow-rgb),0.14); }
 
@@ -454,7 +462,7 @@
   .shrine-item {
     display: flex; align-items: center; gap: 8px; padding: 6px 12px;
     cursor: pointer; border-bottom: 1px solid rgba(58,30,8,0.4);
-    transition: background 0.12s;
+    transition: background var(--dur-fast);
   }
   .shrine-item:hover { background: rgba(var(--gold-glow-rgb),0.08); }
   .shrine-item-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
@@ -464,23 +472,39 @@
   }
   .shrine-item-pref { font-size: 10px; color: var(--gold-muted); flex-shrink: 0; }
 
-  /* マーカーの出現/消滅アニメーション（本番index.htmlの実装をそのまま移植・2026-09-09の
-     修正込み）。クリーンアップをanimationendに頼らずsetTimeoutで確実に行う理由は
-     本番側コメント参照：animation-fill-mode(both)がLeafletの位置決めtransformを
-     恒久的に上書きしたまま残ると、以後の地図移動でマーカーが取り残される */
+  /* 🔴依頼X-1（2026-09-13・最優先）：幹（index.html）は2026-09-09〜11に
+     「マーカーが消える」「発光が明るすぎる」の2件を受けて3段階の修正を重ね、
+     最終的にtransform:scaleを廃止してopacity単独に変更（コミットe7276a2）した。
+     理由＝Leafletがマーカーの位置決めに同じtransformを使っており、CSSの
+     scaleアニメーションと衝突する。海外版はこの修正が未反映で、同じバグを
+     踏める状態のまま残っていた。幹と同じ形（opacityのみ）に揃える。
+     「拡大しながら出現」の効果は失うが、フェードのみでも段階的出現は成立する
+     （幹で実証済み）。durationも幹と同じ--dur-slower/--dur-fastに揃えた */
   @keyframes markerPopIn {
-    from { opacity: 0; transform: scale(0.4); }
-    to   { opacity: 1; transform: scale(1); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
-  .marker-pop-in { animation: markerPopIn 0.25s cubic-bezier(0.34,1.56,0.64,1) both; transform-origin: 50% 95%; }
-  .marker-pop-out { animation: markerPopIn 0.12s ease-in reverse both; transform-origin: 50% 95%; }
+  .marker-pop-in { animation: markerPopIn var(--dur-slower) ease-out both; }
+  .marker-pop-out { animation: markerPopIn var(--dur-fast) ease-in reverse both; }
+
+  /* 依頼X-3（2026-09-13）：幹だけが持っていた「サイドバーの追従」演出を移植。
+     マーカーは速く反応する主役、サイドバーのリスト項目はやや遅れて横から
+     スライドして追従する脇役、という速度差で「今どちらが主役か」を示す
+     （枝2プランのparallax as hierarchy）。0.6s＝--dur-bar(0.4s)の1.5倍。
+     transformを使うが、Leafletのマーカーとは無関係な通常のDOM要素なので
+     X-1の問題（transformの衝突）は起きない */
+  @keyframes listItemIn {
+    from { opacity: 0; transform: translateX(14px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .shrine-item.list-item-in { animation: listItemIn 0.6s ease-out both; }
 
   /* 実行順F（依頼P-2＋R-4・2026-09-13）：エリア選択時の地図上の囲い表現。
      上のマーカーアニメーションの教訓（transformでのアニメーションはLeafletの
      位置決めと衝突する）を踏まえ、囲い自体（L.rectangle/L.circle）はLeafletが
      SVGのd属性で描画するため対象外だが、周辺のUI（マーカーの減光・CTAピル）も
      念のためopacityのみでアニメーションする */
-  .leaflet-marker-icon { transition: opacity 0.3s ease; }
+  .leaflet-marker-icon { transition: opacity var(--dur-slowest) ease; }
   .marker-dimmed { opacity: 0.22 !important; }
   .area-enclosure-cta-wrap {
     position: absolute; top: 14px; left: 0; right: 0; z-index: 900;
@@ -491,7 +515,7 @@
     padding: 9px 16px; border-radius: 24px; border: 1px solid var(--gold);
     background: rgba(20,14,6,0.92); color: var(--gold); font-size: 13px;
     letter-spacing: 0.03em; text-decoration: none; cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.25s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity var(--dur-slower) ease;
   }
   .area-enclosure-cta.visible { display: flex; opacity: 1; }
   .area-enclosure-cta:hover { background: rgba(var(--gold-glow-rgb),0.22); }
@@ -971,6 +995,10 @@ function initScrollSlideReveal() {
     '鹿島神宮': 'shrine-pages/鹿島神宮.html',
     '香取神宮': 'shrine-pages/香取神宮.html',
     '寒川神社': 'shrine-pages/寒川神社.html',
+    // 依頼Y-2/Y-4（2026-09-13）：幹のデータ変更（東京3社追加）を反映
+    '愛宕神社': 'shrine-pages/愛宕神社.html',
+    '代々木八幡宮': 'shrine-pages/代々木八幡宮.html',
+    '布多天神社': 'shrine-pages/布多天神社.html',
   };
   var PRIORITY = { jingu:10, taisha:9, ichi:8, ni:7, meisha:6, meisha2:5, hachiman:4, inari:3, meisha3:2 };
   // 実行順A（依頼R-1＋S-1・2026-09-13）：名社26社の選定が済み、地図データにも
@@ -1097,8 +1125,10 @@ function initScrollSlideReveal() {
   // 出雲大社）。富士2エリアは層を持たない単純な所属社リストのまま。
   var AREA_SHRINES = {
     'area-pages/東京.html': { layers: [
-      { key:'L1', shrines:['東京|明治神宮','東京|神田神社（神田明神）','東京|日枝神社','東京|虎ノ門金刀比羅宮','東京|花園神社'] },
-      { key:'L2', shrines:['東京|大国魂神社','千葉|葛飾八幡宮','神奈川|伊勢山皇大神宮','埼玉|武蔵一宮氷川神社','千葉|千葉神社'] },
+      // 依頼Y-2（2026-09-13）：幹の追加3社を反映。愛宕神社・代々木八幡宮はL1、
+      // 布多天神社（調布）は府中と新宿の間なのでL2へ
+      { key:'L1', shrines:['東京|明治神宮','東京|神田神社（神田明神）','東京|日枝神社','東京|虎ノ門金刀比羅宮','東京|花園神社','東京|愛宕神社','東京|代々木八幡宮'] },
+      { key:'L2', shrines:['東京|大国魂神社','千葉|葛飾八幡宮','神奈川|伊勢山皇大神宮','埼玉|武蔵一宮氷川神社','千葉|千葉神社','東京|布多天神社'] },
       { key:'L3', shrines:['神奈川|鶴岡八幡宮','神奈川|銭洗弁財天宇賀福神社','神奈川|荏柄天神社','埼玉|三峯神社','東京|武蔵御嶽神社','神奈川|大山阿夫利神社','茨城|鹿島神宮','千葉|香取神宮','神奈川|寒川神社'] }
     ]},
     'area-pages/京都.html': { layers: [
@@ -1236,14 +1266,15 @@ function initScrollSlideReveal() {
   var RANK_INFO = [
     { tag: 'jingu', label: { ja: '神宮', en: 'Jingu' }, count: 24, desc: { ja: '皇室にゆかりのある神、または天皇を祀る社。勅許で与えられる社号。ただ「神宮」とだけ呼ぶのは伊勢神宮ひとつ。古さではなく皇室との関係で決まる。', en: 'Shrines enshrining kami connected to the imperial line, or an emperor. Granted by imperial sanction — only Ise Jingu is called simply "Jingu."' } },
     { tag: 'taisha', label: { ja: '大社', en: 'Taisha' }, count: 24, desc: { ja: '2つの意味がある。戦前の社格（官幣大社・国幣大社）と、名前としての「〇〇大社」。戦前は出雲大社ただ一社を指した。', en: 'Two meanings: a pre-war state rank, and the name "Taisha" itself. Before the war, "Taisha" meant only Izumo Taisha.' } },
-    { tag: 'ichi', label: { ja: '一宮', en: 'Ichinomiya' }, count: 91, desc: { ja: '律令時代の国（全国約70国）ごとの筆頭社。朝廷が決めた一覧ではなく、国司が最初に参る社が定着したもの。だから国によって異説がある。', en: 'The top-ranked shrine of each historical province (~70 nationwide). Not an official decree — the shrine a new governor visited first, settled by custom.' } },
+    { tag: 'ichi', label: { ja: '一宮', en: 'Ichinomiya' }, count: 92, desc: { ja: '律令時代の国（全国約70国）ごとの筆頭社。朝廷が決めた一覧ではなく、国司が最初に参る社が定着したもの。だから国によって異説がある。', en: 'The top-ranked shrine of each historical province (~70 nationwide). Not an official decree — the shrine a new governor visited first, settled by custom.' } },
     { tag: 'ni', label: { ja: '二宮', en: 'Ninomiya' }, count: 35, desc: { ja: '同じ序列の2番目。一宮に次ぐ社。', en: 'Second in the same provincial ranking, after the ichinomiya.' } },
-    // 名社31社（実行順A・依頼R-1+S-1で26社確定後、実行順I・依頼S-2で他エリアの
-    // 3層設計に伴い5社追加＝2026-09-13）。件数はここに固定値で持つ＝地図データ上は
+    // 名社33社（実行順A・依頼R-1+S-1で26社確定→実行順I・依頼S-2で5社追加→
+    // 依頼Y-1で鶴岡八幡宮が一宮へ移り-1→依頼Y-2で愛宕神社・代々木八幡宮・
+    // 布多天神社を追加+3＝2026-09-13）。件数はここに固定値で持つ＝地図データ上は
     // 一部の格式社（例：富士山本宮浅間大社）や、meisha2/meisha3から統合した社
     // （例：水無神社）も副次的にmeishaタグを帯びているため、tagsを数えるだけでは
-    // 31からずれる（tags.includes('meisha')の生カウントは55）
-    { tag: 'meisha', label: { ja: '名社', en: 'Notable' }, count: 31, desc: { ja: '上の4つと違い、制度ではなくこのサイトが選んだ社。格式に入らないが、その土地を語るとき外せない社。', en: 'Unlike the four above, this is an editorial choice, not an official rank — shrines essential to a place’s story despite no formal rank.' } },
+    // 33からずれる（tags.includes('meisha')の生カウントは57）
+    { tag: 'meisha', label: { ja: '名社', en: 'Notable' }, count: 33, desc: { ja: '上の4つと違い、制度ではなくこのサイトが選んだ社。格式に入らないが、その土地を語るとき外せない社。', en: 'Unlike the four above, this is an editorial choice, not an official rank — shrines essential to a place’s story despite no formal rank.' } },
   ];
   function openRankModal() {
     var modal = document.getElementById('rank-modal');
@@ -1286,6 +1317,13 @@ function initScrollSlideReveal() {
   function buildShrineItem(shrine, dotColor) {
     var item = document.createElement('div');
     item.className = 'shrine-item';
+    // 依頼X-3（2026-09-13）：マーカー（速い・主役）に対してサイドバーの
+    // リスト項目はやや遅れて追従させる（parallax as hierarchy、幹から移植）
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced) {
+      item.classList.add('list-item-in');
+      item.style.animationDelay = (Math.random() * 375).toFixed(0) + 'ms';
+    }
     // サイドバー一覧の英語対応（本人指定・2026-09-10）：社名・都道府県名を
     // shrines-overseas.jsonのnameEn/prefEnに差し替える。祭神・由緒などの
     // 個別社データは従来どおり翻訳対象外（ポップアップは日本語のまま）
