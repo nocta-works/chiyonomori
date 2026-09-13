@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>日本と神社——8万の社がある国で｜根本の紹介 プロトタイプ（design-lab）</title>
+<title>日本と神社——何が無い国か｜根本の紹介 プロトタイプ（design-lab）</title>
 <style>
-  /* design-lab/articles/日本と神社.html — 実装キュー依頼M：
-     メインページの個別社紹介ドロップダウンを、日本と神社の根本を扱う
-     記事9本に差し替える。おすすめページ（area-pages）と同じ配色トークンを
-     継承しつつ、長文の読み物用にタイポグラフィと余白を調整している。 */
+  /* design-lab/articles/日本と神社.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
   :root {
     --bg-body: #1a1209;
     --gold: #f5d08a;
@@ -63,6 +63,7 @@
   .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
   .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
   .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
 
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -100,24 +101,39 @@
 </div>
 
 <div class="article-hero">
-  <span class="article-eyebrow">初心者向け・記事1／全9本</span>
-  <h1 class="article-title">日本と神社——8万の社がある国で</h1>
-  <p class="article-lead">日本には約8万の神社がある。コンビニより多い。<strong>それなのに、日本人に「何を信じているのか」と聞いても、たいてい答えは返ってこない。</strong>不誠実なのではなく、そういう宗教だから。</p>
+  <span class="article-eyebrow">初心者〜中級向け・記事1／全4本</span>
+  <h1 class="article-title">日本と神社——何が無い国か</h1>
+  <p class="article-lead">日本には約8万の神社がある。コンビニより多い。<strong>それなのに、日本人に「何を信じているのか」と聞いても、たいてい答えは返ってこない。</strong>不誠実なのではなく、そういう宗教だから。今どうなっているか、そしてどうしてそうなったか——2つの節で見る。</p>
 </div>
 
 <div class="article-body">
+<h2>日本と神社——8万の社がある国で</h2>
 <ul>
 <li><strong>神道には教祖がいない。経典もない。入信の手続きもない。</strong> 誰かが作ったものではなく、いつの間にかそこにあった——という形で今日まで来ている。だから「信者」という数え方が成り立たない</li>
 <li><strong>多くの日本人は、神社にも寺にも行く。</strong> 結婚式は神社、葬式は寺、12月にはクリスマスを祝う。<strong>矛盾ではなく役割分担</strong>として理解されている</li>
-<li><strong>見分け方はひとつ＝鳥居があれば神社、仏像があれば寺。</strong> ただし両方ある場所もある。<strong>1,000年以上のあいだ、神社と寺は同じ敷地に共存していた</strong>（→記事7「歴史」）</li>
+<li><strong>見分け方はひとつ＝鳥居があれば神社、仏像があれば寺。</strong> ただし両方ある場所もある。<strong>1,000年以上のあいだ、神社と寺は同じ敷地に共存していた</strong>（次の節で詳しく）</li>
 <li><strong>祈る対象が違う。</strong> 神社は今生きているこの世のこと——健康、仕事、合格、安産。<strong>寺は死後と先祖。</strong>だから神社に墓は無い</li>
 <li><strong>⚠️旅行者が知っておくと楽になること</strong>＝神社は誰でも入れる。拝観料が要る社はほとんどない。信仰の有無も問われない。<strong>服装の制限もなく、タトゥーも咎められない</strong>（温泉とは違う）</li>
+</ul>
+<p class="article-bridge">なぜそうなったのかは、1,500年さかのぼると見えてくる。</p>
+<h2>歴史——神社が国家と結ばれ、ほどかれるまで</h2>
+<p>今ある神社の姿は、<strong>ほとんどが明治以降に整えられたもの。</strong>建物は古くても、制度は新しい。</p>
+<ul>
+<li><strong>古代——社殿が無かった。</strong> 山、岩、森そのものを拝んだ。<strong>今もその形が残っている社がある</strong>——奈良の大神神社は本殿を持たず三輪山を拝み、静岡の山宮浅間神社には社殿が無く富士山を遥拝する。<strong>建物は後から来た</strong></li>
+<li><strong>6世紀・仏教伝来 → 神仏習合。</strong> 以後<strong>1,000年以上、神社と寺は同じ場所にあった。</strong>神は仏が姿を変えたもの、という説明で共存した</li>
+<li><strong>927年・延喜式神名帳</strong>——朝廷が2,861社を台帳に載せたとされる。<strong>国家が神社を一覧で管理した最初。</strong>ここに載った社を「式内社」と呼ぶ</li>
+<li><strong>平安後期——一宮の成立。</strong> 国ごとの序列が自然に定着する（→「神々と、この地図の分類」で詳しく）</li>
+<li><strong>中世</strong>——源氏が八幡を武神として担ぎ、武家政権とともに全国へ広がる。<strong>熊野詣</strong>が流行する</li>
+<li><strong>江戸</strong>——<strong>お伊勢参り。</strong>庶民が旅をする口実として神社が使われた。数百万人規模の集団参詣が起きた年もあったとされる</li>
+<li><strong>🔴明治——神仏分離と国家神道。</strong> 政府が神社と寺を強制的に分離。<strong>廃仏毀釈で多くの仏像・経典が破壊された。</strong>神社は国家の施設と位置づけられ、官幣大社・国幣大社といった社格が制度化された</li>
+<li><strong>🔴戦後——国家管理の廃止。</strong> 神社は民間の宗教法人になり、<strong>社格制度は廃止された。</strong>だから今は「<strong>旧</strong>官幣大社」と「旧」が付く</li>
+<li><strong>現在</strong>——約8万社とされる。多くは地域の氏子の寄付で維持されている。<strong>過疎で維持できなくなり、宮司が常駐しない社が増えている</strong></li>
 </ul>
 
 </div>
 
 <div class="article-nav">
-<a class="article-nav-next" href="参拝の作法.html"><span class="article-nav-label">次の記事 →</span>参拝の作法</a>
+<a class="article-nav-next" href="参拝の作法.html"><span class="article-nav-label">次の記事 →</span>参拝の作法と、授かりもの</a>
 
 </div>
 
@@ -125,9 +141,6 @@
 
 <script>
 (function(){
-  // 地図に戻るリンクにタグ選択状態を引き継ぐ（実装キュー実行順5・依頼M）：
-  // このページへ来る前に地図側で選んでいたタグフィルターがURLの?tagsに
-  // 残っていれば、それを引き継いで地図に戻す。無ければ従来どおり。
   var tags = new URLSearchParams(location.search).get('tags');
   var back = document.getElementById('back-link');
   if (back && tags) {

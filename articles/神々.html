@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>神々——人が神になる国｜根本の紹介 プロトタイプ（design-lab）</title>
+<title>神々と、この地図の分類｜根本の紹介 プロトタイプ（design-lab）</title>
 <style>
-  /* design-lab/articles/神々.html — 実装キュー依頼M：
-     メインページの個別社紹介ドロップダウンを、日本と神社の根本を扱う
-     記事9本に差し替える。おすすめページ（area-pages）と同じ配色トークンを
-     継承しつつ、長文の読み物用にタイポグラフィと余白を調整している。 */
+  /* design-lab/articles/神々.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
   :root {
     --bg-body: #1a1209;
     --gold: #f5d08a;
@@ -63,6 +63,7 @@
   .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
   .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
   .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
 
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -100,12 +101,13 @@
 </div>
 
 <div class="article-hero">
-  <span class="article-eyebrow">中級向け・記事6／全9本</span>
-  <h1 class="article-title">神々——人が神になる国</h1>
-  <p class="article-lead"><strong>八百万（やおよろず）の神</strong>という言い方がある。数え切れないほどいる、という意味。<strong>人格を持った神だけでなく、山も岩も木も滝も神</strong>になる。そして——<strong>人も神になる。</strong>ここが他の宗教と大きく違う。</p>
+  <span class="article-eyebrow">中級向け・記事4／全4本</span>
+  <h1 class="article-title">神々と、この地図の分類</h1>
+  <p class="article-lead"><strong>八百万（やおよろず）の神</strong>という言い方がある。数え切れないほどいる、という意味。<strong>人も神になる</strong>——ここが他の宗教と大きく違う。誰が祀られているか、国家がどう序列づけたか、同じ神がなぜ全国にいるか。3つの節で見る。</p>
 </div>
 
 <div class="article-body">
+<h2>神々——人が神になる国</h2>
 <h3>神話の骨格（これだけで各社の説明が読める）</h3>
 <ul>
 <li><strong>伊邪那岐・伊邪那美</strong>——国と神々を生んだ夫婦神</li>
@@ -121,22 +123,61 @@
 <li><strong>平将門</strong>——朝廷に反乱を起こして討たれた武将。神田神社（東京）に祀られている</li>
 </ul>
 <p><strong>→ 敗者・怨霊を神として祀るという発想が、日本の神社を理解する鍵になる。</strong></p>
+<p class="article-bridge">誰が祀られているかが分かったところで、次はこの地図の色分け——格式の話。</p>
+<h2>格式——神宮・大社・一宮・二宮、そして名社</h2>
+<p>この地図は神社を5つの色で塗り分けている。<strong>4つは千年以上前に決まったもので、1つはこのサイトが決めたもの。</strong>その違いから始める。</p>
+<h3>神宮（この地図に24社）</h3>
+<p>「神宮」は誰でも名乗れる社号ではない。<strong>皇室にゆかりのある神、または天皇そのものを祀る社に、勅許によって与えられる。</strong></p>
+<p>ひとつの目印がある。<strong>ただ「神宮」とだけ呼ばれる社は、伊勢神宮ただひとつ。</strong>正式名称に「伊勢」は付かない。他はすべて地名か天皇名を冠する——熱田神宮、鹿島神宮、明治神宮。</p>
+<p>ただし<strong>格が一律に高いわけではない。</strong>伊勢神宮は二千年、明治神宮は1920年の創建。<strong>神宮という社号は、古さではなく皇室との関係で決まっている。</strong></p>
+<h3>大社（この地図に24社）</h3>
+<p>最もひっかかりやすいのがここ。<strong>「大社」には別々の2つの意味がある。</strong></p>
+<p>ひとつは<strong>社格</strong>——明治から戦後まで、国が神社を等級で管理していた時代の官幣大社・国幣大社。もうひとつは<strong>社号</strong>、つまり名前としての「〇〇大社」。</p>
+<p><strong>戦前、「大社」といえば出雲大社ただ一社を指した。</strong>他の社が「大社」を名乗り始めたのは、戦後に国家管理が廃止されてから。<strong>社格と社号は別物で、名前に大社と付いていることは、かつて大社だったことを意味しない。</strong></p>
+<h3>一宮（この地図に91社）・二宮（35社）</h3>
+<p><strong>令制国</strong>——律令の時代に引かれた地理の区分で、全国におよそ70国あったとされる。その国ごとに最も格の高い社が一宮、次が二宮、三宮と続く。</p>
+<p><strong>この序列は朝廷が一覧を作ったものではない。</strong>国司が任地に着いて最初に参る社が、いつのまにか定着したもの。自然発生なので、<strong>国によっては一宮が複数あり、今も異説が残っている。</strong></p>
+<p>令制国の境は現代の県境と一致しない。<strong>だから地図で一宮を表示すると、分布が県単位で偏って見える。</strong></p>
+<p><strong>旅行者にとっての使いどころはここ。</strong>知らない土地に着いたら、その国の一宮を探す。<strong>その土地で最も古く、最も重い社である可能性が高い。</strong></p>
+<h3>名社</h3>
+<p><strong>上の4つとは性質が違う。制度が決めたものではなく、このサイトが選んだもの。</strong></p>
+<p>神田神社、日枝神社、太宰府天満宮、鶴岡八幡宮——<strong>どれも格式のどれにも当てはまらないが、その土地を語るときに外せない社。</strong></p>
+<p><strong>これは編集判断であって、権威ではない。</strong>他の4色が千年前の誰かの決定なのに対し、この色だけは現在の判断で動く。</p>
+<h3>最後に——格式は「良い神社」の順位ではない</h3>
+<p>一宮でない社が劣るわけではない。<strong>格式が示すのは国家との関係の強さで、信仰の厚さとも、境内の美しさとも、行って良かったかとも関係がない。</strong></p>
+<p>どれから訪ねるか迷ったときの目安。それ以上のものではない。</p>
+<p class="article-bridge">格式と混同されやすいのが系統。同じ名前の神社が、なぜ全国にいくつもあるのか。</p>
+<h2>系統——なぜ同じ名前の神社が、全国にいくつもあるのか</h2>
+<p>日本には約8万の神社があるが、名前の種類はずっと少ない。稲荷、八幡、天神、浅間——同じ名前が何千と繰り返される。<strong>なぜか。</strong></p>
+<p><strong>答え＝勧請（かんじょう）。</strong>神は分けても減らない、という考え方。総本社から分霊を迎えれば、そこに同じ神が宿る。<strong>コピーではなく、同一の神が複数の場所に同時にいる。</strong>この前提を説明しないと、以下がすべて理解できない。</p>
+<div class="table-wrap"><table class="article-table">
+<thead><tr><th>系統</th><th>総本社</th><th>数の目安</th><th>何の神か</th></tr></thead>
+<tbody>
+<tr><td>稲荷</td><td><a href="../index.html?shrine=京都|伏見稲荷大社#mock-app">伏見稲荷大社（京都）</a></td><td>3万社程度とされる</td><td>元は穀物の神。中世以降に商売の神へ。千本鳥居は願いが叶った礼に奉納されたもの</td></tr>
+<tr><td>八幡</td><td><a href="../index.html?shrine=大分|宇佐神宮#mock-app">宇佐神宮（大分）</a></td><td>4万社程度とされる</td><td>応神天皇。源氏が武神として信仰し、武家政権とともに全国へ広がった</td></tr>
+<tr><td>天神</td><td><a href="../index.html?shrine=福岡|太宰府天満宮#mock-app">太宰府天満宮（福岡）</a></td><td>1万社程度とされる</td><td>菅原道真。<strong>恨みを鎮めるために祀られた神が、学問の神になった。</strong>もう一方の総本社は北野天満宮（京都）</td></tr>
+<tr><td>浅間</td><td><a href="../index.html?shrine=静岡|富士山本宮浅間大社#mock-app">富士山本宮浅間大社（静岡）</a></td><td>1,300社程度とされる</td><td>富士山そのもの。噴火を鎮めるために祀られた</td></tr>
+<tr><td>住吉</td><td><a href="../index.html?shrine=大阪|住吉大社#mock-app">住吉大社（大阪）</a></td><td>2,300社程度とされる</td><td>航海の神</td></tr>
+<tr><td>諏訪</td><td><a href="../index.html?shrine=長野|諏訪大社本宮#mock-app">諏訪大社本宮（長野）</a></td><td>2.5万社程度とされる</td><td>建御名方神。国譲りで最後まで抵抗した神</td></tr>
+<tr><td>春日</td><td><a href="../index.html?shrine=奈良|春日大社#mock-app">春日大社（奈良）</a></td><td>3,000社程度とされる</td><td>藤原氏の氏神</td></tr>
+<tr><td>熊野</td><td><a href="../index.html?shrine=和歌山|熊野本宮大社#mock-app">熊野本宮大社（和歌山）</a></td><td>3,000社程度とされる</td><td>熊野三山。中世の熊野詣</td></tr>
+<tr><td>氷川</td><td><a href="../index.html?shrine=埼玉|武蔵一宮氷川神社#mock-app">武蔵一宮氷川神社（埼玉）</a></td><td>280社程度とされる</td><td><strong>関東の一部にしかない。系統には地理的な偏りがある</strong></td></tr>
+<tr><td>祇園</td><td><a href="../index.html?shrine=京都|八坂神社#mock-app">八坂神社（京都）</a></td><td>2,300社程度とされる</td><td>疫病を鎮める神</td></tr>
+</tbody></table></div>
+<p class="article-note"><strong>数の目安は通説による概数で、一次資料には未照合。</strong>「約」ではなく「〜社程度とされる」という言い方に留めている。</p>
+<p><strong>系統は地図のフィルターにしていない。</strong>理由を正直に書く——系統が分かるには前に予備知識が要り、初めて日本を訪れる人の選択基準にならないから。<strong>代わりに、各系統の総本社はほとんどが格式でも高いので、上の表から総本社へ飛べば、そこから先は地図で辿れる。</strong></p>
 
 </div>
 
 <div class="article-nav">
-<a class="article-nav-prev" href="御朱印とお守り.html"><span class="article-nav-label">← 前の記事</span>御朱印とお守り</a>
-<a class="article-nav-next" href="歴史.html"><span class="article-nav-label">次の記事 →</span>歴史</a>
+<a class="article-nav-prev" href="鳥居.html"><span class="article-nav-label">← 前の記事</span>鳥居と境内</a>
 
 </div>
 
-<div class="page-footer">根本の紹介 プロトタイプ・記事6／神々 / design-lab（本番未反映）</div>
+<div class="page-footer">根本の紹介 プロトタイプ・記事4／神々 / design-lab（本番未反映）</div>
 
 <script>
 (function(){
-  // 地図に戻るリンクにタグ選択状態を引き継ぐ（実装キュー実行順5・依頼M）：
-  // このページへ来る前に地図側で選んでいたタグフィルターがURLの?tagsに
-  // 残っていれば、それを引き継いで地図に戻す。無ければ従来どおり。
   var tags = new URLSearchParams(location.search).get('tags');
   var back = document.getElementById('back-link');
   if (back && tags) {

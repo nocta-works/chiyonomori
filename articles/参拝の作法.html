@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>参拝の作法——間違えても、誰も咎めない｜根本の紹介 プロトタイプ（design-lab）</title>
+<title>参拝の作法と、授かりもの｜根本の紹介 プロトタイプ（design-lab）</title>
 <style>
-  /* design-lab/articles/参拝の作法.html — 実装キュー依頼M：
-     メインページの個別社紹介ドロップダウンを、日本と神社の根本を扱う
-     記事9本に差し替える。おすすめページ（area-pages）と同じ配色トークンを
-     継承しつつ、長文の読み物用にタイポグラフィと余白を調整している。 */
+  /* design-lab/articles/参拝の作法.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
   :root {
     --bg-body: #1a1209;
     --gold: #f5d08a;
@@ -63,6 +63,7 @@
   .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
   .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
   .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
 
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -100,12 +101,13 @@
 </div>
 
 <div class="article-hero">
-  <span class="article-eyebrow">初心者向け・記事2／全9本</span>
-  <h1 class="article-title">参拝の作法——間違えても、誰も咎めない</h1>
-  <p class="article-lead">手順はある。だが<strong>神社に「破門」は無い。</strong>作法を外したことで怒られることもない。<strong>完璧にやることより、静かにしていることの方がずっと重要。</strong>それを前提に読んでほしい。</p>
+  <span class="article-eyebrow">初心者向け・記事2／全4本</span>
+  <h1 class="article-title">参拝の作法と、授かりもの</h1>
+  <p class="article-lead">手順はある。だが<strong>神社に「破門」は無い。</strong>作法を外したことで怒られることもない。<strong>完璧にやることより、静かにしていることの方がずっと重要。</strong>参拝そのものと、その証や持ち帰るもの——2つの節で見る。</p>
 </div>
 
 <div class="article-body">
+<h2>参拝の作法——間違えても、誰も咎めない</h2>
 <ol>
 <li><strong>鳥居で一礼してからくぐる。</strong> 帰りは振り返ってもう一度</li>
 <li><strong>参道の真ん中を歩かない。</strong> 中央は神の通り道とされる。端を歩く</li>
@@ -113,13 +115,23 @@
 <li><strong>拝殿で二礼二拍手一礼。</strong> 賽銭を入れ、鈴があれば鳴らし、2回お辞儀、2回拍手、願い、最後に1回お辞儀。<strong>賽銭の額に決まりはない</strong>（5円玉が好まれるのは「ご縁」との語呂合わせ）</li>
 <li><strong>⚠️例外がある。出雲大社と宇佐神宮は二礼四拍手一礼。</strong>全国共通のつもりでいると外す</li>
 </ol>
-<p><strong>やらない方がいいこと</strong>＝神事の最中の撮影／禁止表示のある場所での撮影／社殿の中へ立ち入ること（<strong>そもそも入れない。詳しくは記事4「境内の見どころ」</strong>）</p>
+<p><strong>やらない方がいいこと</strong>＝神事の最中の撮影／禁止表示のある場所での撮影／社殿の中へ立ち入ること（<strong>そもそも入れない</strong>）</p>
+<p class="article-bridge">参拝を終えたあと、何を受け取り、何を持ち帰るか。</p>
+<h2>御朱印とお守り——買うものではなく、受けるもの</h2>
+<p>どれも売り物として扱われていない。値段は付いているが、<strong>「買う」ではなく「受ける」、「売る」ではなく「授ける」</strong>と言う。言い換えの問題に見えて、扱い方が変わってくる。</p>
+<ul>
+<li><strong>御朱印</strong>＝参拝した証として、その場で墨と朱印で書いてもらうもの。<strong>⚠️スタンプラリーではない。必ず先に参拝してから受ける。</strong>専用の御朱印帳が要る（多くの社で買える）。300〜500円程度。<strong>混雑時や書き手がいない社は「書き置き」（あらかじめ書かれた紙）になる</strong></li>
+<li><strong>お守り</strong>＝持ち歩く。<strong>1年で返すのが基本</strong>——古いものは神社に納め、焚き上げてもらう</li>
+<li><strong>お札</strong>＝家に置く。神棚があればそこへ</li>
+<li><strong>⚠️返し方</strong>＝お守りやお札をゴミ箱に入れない。<strong>返す場所（古札納所）が境内にある。</strong>受けた社と違う社でも、たいてい受け付けてもらえる</li>
+<li><strong>海外に持ち帰る場合</strong>＝返しに来られなくても咎められない。感謝して手元に置くか、丁寧に処分すればよい、とされている</li>
+</ul>
 
 </div>
 
 <div class="article-nav">
 <a class="article-nav-prev" href="日本と神社.html"><span class="article-nav-label">← 前の記事</span>日本と神社</a>
-<a class="article-nav-next" href="鳥居.html"><span class="article-nav-label">次の記事 →</span>鳥居</a>
+<a class="article-nav-next" href="鳥居.html"><span class="article-nav-label">次の記事 →</span>鳥居と境内</a>
 
 </div>
 
@@ -127,9 +139,6 @@
 
 <script>
 (function(){
-  // 地図に戻るリンクにタグ選択状態を引き継ぐ（実装キュー実行順5・依頼M）：
-  // このページへ来る前に地図側で選んでいたタグフィルターがURLの?tagsに
-  // 残っていれば、それを引き継いで地図に戻す。無ければ従来どおり。
   var tags = new URLSearchParams(location.search).get('tags');
   var back = document.getElementById('back-link');
   if (back && tags) {

@@ -367,17 +367,52 @@
   .filter-btn.ni     { border-color: var(--tag-ni);     color: var(--tag-ni-light);     background: rgba(var(--tag-ni-rgb),0.12); }
   .filter-btn.ni.active     { background: rgba(var(--tag-ni-rgb),0.32);     box-shadow: 0 0 9px rgba(var(--tag-ni-rgb),0.4); }
   .filter-btn .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  /* タグボタン横の?リンク（実装キュー実行順6・依頼M）：フィルターボタン本体
-     とは別のクリック領域にするため、button内ではなく隣接するaタグにする
-     （#mock-controlsのクリック委譲は.filter-btnだけを見ているので干渉しない） */
-  .tag-help {
+  /* 格式の?ボタン（実装キュー依頼N-1・2026-09-13）：タグ列全体に1つだけ。
+     押すと個別記事へは飛ばず、5タグを比較できる窓（モーダル）を開く
+     （本人指定：格式は「比べないと意味が分からない」もの） */
+  .rank-help-btn {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 16px; height: 16px; margin-right: 4px; border-radius: 50%;
-    font-size: 10px; line-height: 1; color: var(--tan-text); opacity: 0.45;
-    border: 1px solid var(--border-4); text-decoration: none; flex-shrink: 0;
-    transition: opacity 0.2s;
+    width: 22px; height: 22px; border-radius: 50%; margin-left: 2px;
+    font-family: inherit; font-size: 12px; line-height: 1; color: var(--tan-text); opacity: 0.6;
+    border: 1px solid var(--border-4); background: rgba(255,255,255,0.03); cursor: pointer;
+    transition: opacity 0.2s, background 0.2s; flex-shrink: 0;
   }
-  .tag-help:hover { opacity: 0.9; }
+  .rank-help-btn:hover { opacity: 1; background: rgba(var(--gold-glow-rgb),0.14); }
+
+  .rank-modal {
+    position: fixed; inset: 0; z-index: 3000; display: none;
+    align-items: center; justify-content: center; padding: 24px;
+    background: rgba(8,6,3,0.72);
+  }
+  .rank-modal.open { display: flex; }
+  .rank-modal-content {
+    width: 100%; max-width: 480px; max-height: 84vh; overflow-y: auto;
+    background: linear-gradient(180deg, var(--bg-popup-1) 0%, var(--bg-popup-2) 100%);
+    border: 1px solid var(--border-header); border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6); padding: 22px 22px 18px; position: relative;
+  }
+  .rank-modal-title { font-size: 15px; color: var(--gold); letter-spacing: 0.03em; margin: 0 30px 16px 0; }
+  .rank-modal-close {
+    position: absolute; top: 14px; right: 14px; width: 26px; height: 26px; border-radius: 50%;
+    border: 1px solid var(--border-4); background: none; color: var(--tan-text); font-size: 15px; cursor: pointer;
+  }
+  .rank-modal-close:hover { background: rgba(255,255,255,0.08); }
+  .rank-modal-row { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.07); }
+  .rank-modal-row:first-child { border-top: none; }
+  .rank-modal-badge {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-size: 15px; font-weight: bold; color: #fff;
+  }
+  .rank-modal-text { flex: 1; min-width: 0; }
+  .rank-modal-row-title { font-size: 13px; color: var(--tan-text); display: flex; align-items: baseline; gap: 8px; }
+  .rank-modal-count { font-size: 11px; color: var(--gold-muted); }
+  .rank-modal-row p { margin: 4px 0 0; font-size: 12px; line-height: 1.8; color: var(--tan-text-2); }
+  .rank-modal-more {
+    display: block; text-align: center; margin-top: 16px; padding-top: 14px;
+    border-top: 1px solid var(--border-4); font-size: 12px; color: var(--gold); text-decoration: none;
+  }
+  .rank-modal-more:hover { text-decoration: underline; }
   /* 名社１のダミータグ（本人指定・2026-09-10：外国人旅行者向けの選定はまだ済んでいない
      ため、今はタグの置き場所だけ確保する。破線＋低opacity＋クリック不可で
      「準備中」であることを視覚的に示し、フィルターのクリック委譲（.filter-btn対象）
@@ -474,6 +509,16 @@
   .popup-province { font-size:11px; color:var(--tan-text-2); padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px; margin-bottom:5px; }
   .popup-reason { font-size:11px; color:var(--color-popup-reason); padding:3px 8px; background:rgba(0,255,128,0.04); border-radius:4px; margin-bottom:5px; }
   .popup-deity { font-size:11px; color:var(--color-popup-deity); line-height:1.6; margin-bottom:8px; }
+  /* サイト内への導線（実装キュー依頼N-2・2026-09-13）：外部3本（地図・公式・Wiki）
+     より上に置く。外部リンクを置く画面には必ずサイト内への導線を上に置く、
+     という今後の規則の最初の適用箇所 */
+  .popup-link-detail {
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    padding: 6px 8px; border-radius: 6px; font-size: 11.5px; text-decoration: none;
+    letter-spacing: 0.03em; margin-bottom: 6px;
+    background: rgba(var(--gold-glow-rgb),0.16); border: 1px solid rgba(var(--gold-glow-rgb),0.4); color: var(--gold);
+  }
+  .popup-link-detail:hover { background: rgba(var(--gold-glow-rgb),0.3); }
   .popup-links { display: flex; gap: 5px; margin-top: 6px; }
   .popup-link { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1; min-width: 0; padding: 5px 6px; border-radius: 6px; font-size: 10.5px; text-decoration: none; letter-spacing: 0.03em; white-space: nowrap; }
   .popup-link-icon { font-size: 12px; }
@@ -546,6 +591,14 @@
       <div class="shrine-dropdown-panel" id="shrine-dropdown-panel"></div>
     </div>
     <div class="mock-controls" id="mock-controls"></div>
+  </div>
+  <div class="rank-modal" id="rank-modal">
+    <div class="rank-modal-content">
+      <button type="button" class="rank-modal-close" id="rank-modal-close">✕</button>
+      <h2 class="rank-modal-title" id="rank-modal-title"></h2>
+      <div id="rank-modal-rows"></div>
+      <a class="rank-modal-more" id="rank-modal-more" href="#"></a>
+    </div>
   </div>
   <div id="map-area">
     <div id="shrine-map"></div>
@@ -828,17 +881,33 @@ function initScrollSlideReveal() {
   var HEADER_TITLE = { ja: '社巡り道標（海外版・仮）', en: 'Shrine Guide (Overseas Ver. — Draft)' };
   var CHROME_TEXT = {
     ja: {
-      province: '旧国：', deity: '祭神：', map: '地図', official: '公式', wiki: 'Wiki',
+      province: '旧国：', deity: '祭神：', map: '地図', official: '公式', wiki: 'Wiki', detail: '詳しく見る',
       listTitle: '神社リスト',
       shownFmt: function(n){ return '表示中 ' + n + ' 社'; },
       countFmt: function(n){ return n + '社'; },
     },
     en: {
-      province: 'Province: ', deity: 'Deity: ', map: 'Map', official: 'Official', wiki: 'Wiki',
+      province: 'Province: ', deity: 'Deity: ', map: 'Map', official: 'Official', wiki: 'Wiki', detail: 'Read more',
       listTitle: 'Shrine List',
       shownFmt: function(n){ return 'Showing ' + n + ' shrine' + (n === 1 ? '' : 's'); },
       countFmt: function(n){ return n + ' shrine' + (n === 1 ? '' : 's'); },
     },
+  };
+  // 詳細ページ（巡礼記録層）を持つ社の一覧（実装キュー依頼N-2・2026-09-13）：
+  // 地図のポップアップ・サイドバーに、外部リンクより上に内部リンクを
+  // 必ず1本以上置く（本人指摘：外部リンクだけで内部への導線が無かった）。
+  // 依頼Dで名前が地図データに載っていない社（山宮浅間神社・北口本宮冨士浅間神社・
+  // 水無神社・桜山八幡宮・猿田彦神社）も先に登録しておく＝載った時点で自動的に効く
+  var DETAIL_PAGES = {
+    '伊勢神宮（内宮）': 'shrine-pages/伊勢神宮.html',
+    '伊勢神宮（外宮）': 'shrine-pages/伊勢神宮.html',
+    '明治神宮': 'shrine-pages/明治神宮.html',
+    '富士山本宮浅間大社': 'shrine-pages/富士山本宮浅間大社.html',
+    '山宮浅間神社': 'shrine-pages/山宮浅間神社.html',
+    '北口本宮冨士浅間神社': 'shrine-pages/北口本宮冨士浅間神社.html',
+    '水無神社': 'shrine-pages/水無神社.html',
+    '桜山八幡宮': 'shrine-pages/桜山八幡宮.html',
+    '猿田彦神社': 'shrine-pages/猿田彦神社.html',
   };
   var PRIORITY = { jingu:10, taisha:9, ichi:8, ni:7, meisha:6, meisha2:5, hachiman:4, inari:3, meisha3:2 };
   // 海外版で実際に絞り込み対象にするタグ（本人指定・2026-09-10）。名社１は
@@ -912,6 +981,12 @@ function initScrollSlideReveal() {
     var gmapsUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(s.name);
     var officialUrl = 'https://www.google.com/search?q=' + encodeURIComponent(s.name + ' 公式');
     var wikiUrl = 'https://ja.wikipedia.org/w/index.php?search=' + encodeURIComponent(s.name) + '&title=特別:検索&go=Go';
+    // 詳細ページ（巡礼記録層）がある社だけ、外部3本より上に内部リンクを出す
+    // （実装キュー依頼N-2）。持たない社には出さない＝リンク切れを作らない
+    var detailFile = DETAIL_PAGES[s.name];
+    var detailHtml = detailFile
+      ? '<a href="' + detailFile + '" class="popup-link-detail"><span class="popup-link-icon">⛩</span>' + t.detail + '</a>'
+      : '';
     return '<div class="popup-content">' +
       '<div class="popup-badges">' + badges + '</div>' +
       '<div class="popup-name">' + s.name + '</div>' +
@@ -919,6 +994,7 @@ function initScrollSlideReveal() {
       '<div class="popup-province">' + t.province + s.province + '</div>' +
       reasonHtml +
       '<div class="popup-deity">' + t.deity + s.deity + '</div>' +
+      detailHtml +
       '<div class="popup-links">' +
         '<a href="' + gmapsUrl + '" target="_blank" rel="noopener" class="popup-link gmaps"><span class="popup-link-icon">📍</span>' + t.map + '</a>' +
         '<a href="' + officialUrl + '" target="_blank" rel="noopener" class="popup-link official"><span class="popup-link-icon">🌐</span>' + t.official + '</a>' +
@@ -926,22 +1002,20 @@ function initScrollSlideReveal() {
       '</div></div>';
   }
 
-  // 根本の紹介・記事一覧への導線（実装キュー実行順6・依頼M・2026-09-13：
-  // 個別社ページ2本のドロップダウンから、日本と神社の基礎を扱う記事9本の
-  // ドロップダウンへ差し替え。個別社ページ（伊勢神宮・明治神宮）はここから
+  // 根本の紹介・記事一覧への導線（実装キュー実行順6・依頼M・2026-09-13）：
+  // 個別社ページ2本のドロップダウンから、日本と神社の基礎を扱う記事の
+  // ドロップダウンへ差し替え。個別社ページ（伊勢神宮・明治神宮ほか）はここから
   // 外れるが削除はしない＝巡礼記録層として地域ページ・「次の一社」から辿れる。
   // 普段は閉じていてクリックで開く縦の収納型ドロップダウンの構造自体は変えない）
+  // 🔴依頼N-3（2026-09-13・本人指摘）：9項目は多すぎるため4項目へ合併。
+  // 1+7／2+5／3+4／6+8+9 の組み合わせで記事ファイル自体を4枚に統合済み
+  // （design-lab/articles/、旧9枚は削除済み）。
   var DROPDOWN_LABEL = { ja: '神社の基礎知識', en: 'Learn the Basics' };
   var ARTICLE_PAGES = [
     { num: 1, name:{ja:'日本と神社',     en:'Japan & Shrines'},   file:'articles/日本と神社.html' },
     { num: 2, name:{ja:'参拝の作法',     en:'How to Visit'},      file:'articles/参拝の作法.html' },
-    { num: 3, name:{ja:'鳥居',           en:'Torii Gates'},       file:'articles/鳥居.html' },
-    { num: 4, name:{ja:'境内の見どころ', en:'What to See'},       file:'articles/境内の見どころ.html' },
-    { num: 5, name:{ja:'御朱印とお守り', en:'Goshuin & Charms'},  file:'articles/御朱印とお守り.html' },
-    { num: 6, name:{ja:'神々',           en:'The Kami'},          file:'articles/神々.html' },
-    { num: 7, name:{ja:'歴史',           en:'History'},           file:'articles/歴史.html' },
-    { num: 8, name:{ja:'格式',           en:'Shrine Ranks'},      file:'articles/格式.html' },
-    { num: 9, name:{ja:'系統',           en:'Shrine Lineages'},   file:'articles/系統.html' },
+    { num: 3, name:{ja:'鳥居と境内',     en:'Torii & Grounds'},   file:'articles/鳥居.html' },
+    { num: 4, name:{ja:'神々と分類',     en:'Kami & Ranks'},      file:'articles/神々.html' },
   ];
   function renderShrineDropdown(){
     var label = document.getElementById('shrine-dropdown-label');
@@ -981,17 +1055,12 @@ function initScrollSlideReveal() {
   function renderFilterButtons() {
     var container = document.getElementById('mock-controls');
     if (!container) return;
-    // タグボタンの隣の?リンク（実装キュー実行順6・依頼M）：格式（神宮・大社・
-    // 一宮・二宮）が何を意味するかを記事8「格式」で説明する。系統タグは
-    // フィルターに出していないので?リンクも無い（本人指定・2026-09-12）
-    var helpTitle = currentLang === 'ja' ? '格式について読む' : 'What do these ranks mean?';
     var buttonsHtml = TAG_ORDER.map(function(tag){
       var c = TAG_CONFIG[tag];
       var active = activeFilters.has(tag) ? ' active' : '';
       return '<button type="button" class="filter-btn ' + tag + active + '" data-tag="' + tag + '">' +
         '<span class="dot" style="background:' + c.border + ';box-shadow:0 0 5px ' + c.border + '"></span>' +
-        c.label[currentLang] + '</button>' +
-        '<a class="tag-help" href="' + withTagsQuery('articles/格式.html') + '" title="' + helpTitle + '">?</a>';
+        c.label[currentLang] + '</button>';
     }).join('');
     // 名社１のダミータグ（本人指定・2026-09-10）：外国人旅行者向けの選定がまだのため、
     // 実データ・クリック機能なしで置き場所だけ確保する
@@ -1000,22 +1069,73 @@ function initScrollSlideReveal() {
     var dummyHtml = '<button type="button" class="filter-btn-dummy" disabled title="' + dummyTitle + '">' +
       '<span class="dot" style="background:' + dummyCfg.border + ';box-shadow:0 0 5px ' + dummyCfg.border + '"></span>' +
       dummyCfg.label[currentLang] + '</button>';
-    container.innerHTML = buttonsHtml + dummyHtml + '<div class="ctrl-divider"></div><div class="mock-stats" id="mock-stats"></div>';
+    // 格式の?リンク（実装キュー依頼N-1・2026-09-13修正）：タグ1つにつき1つずつ
+    // 出していたのを撤回し、タグ列全体に1つだけにした。格式は5つを比べて
+    // 初めて意味が分かるものなので、個別記事へ飛ばさず窓（モーダル）で
+    // 5つ並べて見せる（本人指定）
+    var rankHelpTitle = currentLang === 'ja' ? '格式について' : 'About shrine ranks';
+    var rankHelpHtml = '<button type="button" class="rank-help-btn" id="rank-help-btn" title="' + rankHelpTitle + '">?</button>';
+    container.innerHTML = buttonsHtml + dummyHtml + rankHelpHtml + '<div class="ctrl-divider"></div><div class="mock-stats" id="mock-stats"></div>';
   }
   renderFilterButtons();
   document.getElementById('mock-controls').addEventListener('click', function(e){
+    if (e.target.closest('#rank-help-btn')) { openRankModal(); return; }
     var btn = e.target.closest('.filter-btn');
     if (!btn) return;
     var tag = btn.getAttribute('data-tag');
     activeFilters.has(tag) ? activeFilters.delete(tag) : activeFilters.add(tag);
     syncTagsUrl();
-    // ボタンのactive表示だけでなく、隣の?リンクや記事ドロップダウンの
-    // リンク（どちらもwithTagsQueryで現在のタグ状態を埋め込んでいる）も
-    // 作り直す必要があるため、classList.toggleの部分更新ではなく
-    // 両方を再描画する（2026-09-13・依頼M実装で変更）
+    // ボタンのactive表示だけでなく、記事ドロップダウンのリンク
+    // （withTagsQueryで現在のタグ状態を埋め込んでいる）も作り直す必要が
+    // あるため、classList.toggleの部分更新ではなく両方を再描画する
+    // （2026-09-13・依頼M実装で変更）
     renderFilterButtons();
     renderShrineDropdown();
     redrawMarkers();
+  });
+
+  // 格式の窓（モーダル）（実装キュー依頼N-1・2026-09-13）：5タグを縦に並べて
+  // 比較できる形。件数は現行データ（神宮24・大社24・一宮91・二宮35）と一致
+  // 確認済み。名社の14件は依頼D（164社への絞り込み）実施後の数で、まだ
+  // 現行データには反映されていない（本キュー依頼Dの節を参照）
+  var RANK_INFO = [
+    { tag: 'jingu', label: { ja: '神宮', en: 'Jingu' }, count: 24, desc: { ja: '皇室にゆかりのある神、または天皇を祀る社。勅許で与えられる社号。ただ「神宮」とだけ呼ぶのは伊勢神宮ひとつ。古さではなく皇室との関係で決まる。', en: 'Shrines enshrining kami connected to the imperial line, or an emperor. Granted by imperial sanction — only Ise Jingu is called simply "Jingu."' } },
+    { tag: 'taisha', label: { ja: '大社', en: 'Taisha' }, count: 24, desc: { ja: '2つの意味がある。戦前の社格（官幣大社・国幣大社）と、名前としての「〇〇大社」。戦前は出雲大社ただ一社を指した。', en: 'Two meanings: a pre-war state rank, and the name "Taisha" itself. Before the war, "Taisha" meant only Izumo Taisha.' } },
+    { tag: 'ichi', label: { ja: '一宮', en: 'Ichinomiya' }, count: 91, desc: { ja: '律令時代の国（全国約70国）ごとの筆頭社。朝廷が決めた一覧ではなく、国司が最初に参る社が定着したもの。だから国によって異説がある。', en: 'The top-ranked shrine of each historical province (~70 nationwide). Not an official decree — the shrine a new governor visited first, settled by custom.' } },
+    { tag: 'ni', label: { ja: '二宮', en: 'Ninomiya' }, count: 35, desc: { ja: '同じ序列の2番目。一宮に次ぐ社。', en: 'Second in the same provincial ranking, after the ichinomiya.' } },
+    // 「名社」は依頼D後に meisha/meisha2/meisha3 を統合した先の表示名。
+    // TAG_CONFIG.meisha.labelは統合前の暫定ラベル「名社１」なのでここでは使わない
+    { tag: 'meisha', label: { ja: '名社', en: 'Notable' }, count: 14, desc: { ja: '上の4つと違い、制度ではなくこのサイトが選んだ社。格式に入らないが、その土地を語るとき外せない社。', en: 'Unlike the four above, this is an editorial choice, not an official rank — shrines essential to a place’s story despite no formal rank.' } },
+  ];
+  function openRankModal() {
+    var modal = document.getElementById('rank-modal');
+    if (!modal) return;
+    var t = currentLang === 'ja'
+      ? { title: '格式——5つの色の意味', more: 'もっと読む（神々と、この地図の分類）' }
+      : { title: 'Shrine Ranks — What the 5 Colors Mean', more: 'Read more (Kami & Ranks)' };
+    document.getElementById('rank-modal-title').textContent = t.title;
+    document.getElementById('rank-modal-rows').innerHTML = RANK_INFO.map(function(r){
+      var c = TAG_CONFIG[r.tag];
+      return '<div class="rank-modal-row">' +
+        '<span class="rank-modal-badge" style="background:' + c.color + ';border-color:' + c.border + ';">' + c.char[currentLang] + '</span>' +
+        '<div class="rank-modal-text"><div class="rank-modal-row-title">' + r.label[currentLang] + '<span class="rank-modal-count">' + r.count + '</span></div>' +
+        '<p>' + r.desc[currentLang] + '</p></div></div>';
+    }).join('');
+    var moreLink = document.getElementById('rank-modal-more');
+    moreLink.textContent = t.more;
+    moreLink.href = withTagsQuery('articles/神々.html');
+    modal.classList.add('open');
+  }
+  function closeRankModal() {
+    var modal = document.getElementById('rank-modal');
+    if (modal) modal.classList.remove('open');
+  }
+  document.getElementById('rank-modal-close').addEventListener('click', closeRankModal);
+  document.getElementById('rank-modal').addEventListener('click', function(e){
+    if (e.target.id === 'rank-modal') closeRankModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeRankModal();
   });
 
   function updateStats() {
