@@ -65,6 +65,25 @@
   .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
   .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
 
+  /* 依頼W-4（2026-09-13）：比較図・配置図はSVGで描く。部位名など図中に
+     出す文字はインラインSVGの<text>に置き、data-enで言語切替に対応する
+     （外部ファイル参照のimgにすると文字にJSが届かないため不可） */
+  .diagram { margin: 30px 0 38px; }
+  .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+
+  .diagram-path { display: flex; flex-wrap: wrap; gap: 2px; align-items: flex-start; justify-content: center; }
+  .diagram-node { display: flex; flex-direction: column; align-items: center; width: 84px; text-align: center; }
+  .diagram-node-dot {
+    width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
+    background: rgba(255,255,255,0.02); font-size: 18px; flex-shrink: 0;
+  }
+  .diagram-node-label { font-size: 11px; line-height: 1.5; color: var(--tan-text); opacity: 0.85; }
+  .diagram-path-arrow { color: var(--gold-muted); font-size: 14px; opacity: 0.5; padding-top: 14px; }
+  .diagram-node-dot.diagram-limit { border-style: dashed; opacity: 0.6; }
+
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
@@ -114,6 +133,45 @@
 <li><strong>千本鳥居（伏見稲荷大社）</strong>＝あれは装飾ではなく<strong>奉納。</strong>願いが叶った礼に人が1本ずつ寄進したもので、<strong>柱の裏を見ると寄進者の名前と年月が彫ってある。</strong>今も増え続けている</li>
 <li><strong>海に立つ鳥居（厳島神社）・山頂の鳥居</strong>＝島や山そのものが神なので、社殿を建てられない。<strong>鳥居だけが手前に立つ</strong></li>
 </ul>
+
+<div class="diagram">
+  <p class="diagram-title">神明鳥居と明神鳥居——見分け方</p>
+  <div class="diagram-svg-wrap">
+    <svg viewBox="0 -16 360 246" width="100%" style="max-width:520px;">
+      <g stroke="var(--gold)" stroke-width="3" fill="none" stroke-linecap="round">
+        <line x1="40" y1="45" x2="40" y2="195"/>
+        <line x1="110" y1="45" x2="110" y2="195"/>
+        <line x1="25" y1="45" x2="125" y2="45"/>
+        <line x1="40" y1="95" x2="110" y2="95"/>
+      </g>
+      <text x="75" y="222" text-anchor="middle" fill="var(--tan-text)" font-size="13" data-en="Shinmei torii">神明鳥居</text>
+
+      <g stroke="var(--gold)" stroke-width="3" fill="none" stroke-linecap="round">
+        <line x1="250" y1="58" x2="250" y2="195"/>
+        <line x1="320" y1="58" x2="320" y2="195"/>
+        <path d="M223 48 Q285 26 347 48"/>
+        <path d="M235 61 Q285 44 335 61"/>
+        <line x1="250" y1="108" x2="320" y2="108"/>
+        <line x1="285" y1="61" x2="285" y2="82"/>
+      </g>
+      <text x="285" y="222" text-anchor="middle" fill="var(--tan-text)" font-size="13" data-en="Myojin torii">明神鳥居</text>
+
+      <line x1="285" y1="20" x2="285" y2="0" stroke="var(--gold-muted)" stroke-width="1"/>
+      <text x="285" y="-6" text-anchor="middle" fill="var(--gold-muted)" font-size="10.5" data-en="Kasagi (curved)">笠木</text>
+
+      <line x1="335" y1="55" x2="352" y2="45" stroke="var(--gold-muted)" stroke-width="1"/>
+      <text x="356" y="42" text-anchor="start" fill="var(--gold-muted)" font-size="10.5" data-en="Shimagi">島木</text>
+
+      <line x1="320" y1="108" x2="352" y2="108" stroke="var(--gold-muted)" stroke-width="1"/>
+      <text x="356" y="112" text-anchor="start" fill="var(--gold-muted)" font-size="10.5" data-en="Nuki">貫</text>
+
+      <line x1="320" y1="160" x2="352" y2="160" stroke="var(--gold-muted)" stroke-width="1"/>
+      <text x="356" y="164" text-anchor="start" fill="var(--gold-muted)" font-size="10.5" data-en="Hashira (posts)">柱</text>
+    </svg>
+  </div>
+  <p class="diagram-note" data-en="Shinmei: straight beams, no ornament (Ise Jingu's lineage). Myojin: the top beam curves upward and a second beam (shimagi) sits below it — most torii nationwide are this type.">神明＝直線・装飾なし（伊勢神宮の系統）。明神＝笠木が反り、島木が入る。数の上ではこちらが大半。</p>
+</div>
+
 <p class="article-bridge">鳥居をくぐった先、境内で実際に何を見ればいいか。</p>
 <h2>境内——見えないものを中心に作られている</h2>
 <p>神社でいちばん大事なものは、<strong>見えない。</strong>本殿の奥に神体があり、<strong>誰も見ない。</strong>伊勢神宮の神体は天皇でさえ見ない。この前提が分かると、境内の作りの意味が変わる。</p>
@@ -125,6 +183,42 @@
 <li><strong>御神木</strong>＝社殿より古いことがある。<strong>建物は建て替えられるが、木は建て替えられない</strong></li>
 <li><strong>絵馬・おみくじ</strong>＝絵馬は願いを書いて掛ける板。おみくじは凶が出ても構わない（境内に結んで置いていける）</li>
 </ul>
+
+<div class="diagram">
+  <p class="diagram-title">境内の順路</p>
+  <div class="diagram-path">
+    <div class="diagram-node">
+      <div class="diagram-node-dot"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><line x1="8" y1="8" x2="8" y2="26"/><line x1="24" y1="8" x2="24" y2="26"/><line x1="4" y1="8" x2="28" y2="8"/><line x1="8" y1="14" x2="24" y2="14"/></svg></div>
+      <span class="diagram-node-label" data-en="First torii">一の鳥居</span>
+    </div>
+    <span class="diagram-path-arrow">→</span>
+    <div class="diagram-node">
+      <div class="diagram-node-dot"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><line x1="6" y1="26" x2="13" y2="6"/><line x1="26" y1="26" x2="19" y2="6"/><line x1="16" y1="26" x2="16" y2="6" stroke-dasharray="2,3"/></svg></div>
+      <span class="diagram-node-label" data-en="Approach path (walk the edge)">参道<br>（端を歩く）</span>
+    </div>
+    <span class="diagram-path-arrow">→</span>
+    <div class="diagram-node">
+      <div class="diagram-node-dot"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="13" cy="14" rx="9" ry="6"/><line x1="20" y1="11" x2="28" y2="5"/></svg></div>
+      <span class="diagram-node-label" data-en="Temizuya (purification)">手水舎</span>
+    </div>
+    <span class="diagram-path-arrow">→</span>
+    <div class="diagram-node">
+      <div class="diagram-node-dot"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><path d="M16 8 Q10 8 9 14 Q7 16 8 22 Q8 26 16 26 Q24 26 24 22 Q25 16 23 14 Q22 8 16 8 Z"/><circle cx="12" cy="14" r="1" fill="var(--gold)" stroke="none"/><circle cx="20" cy="14" r="1" fill="var(--gold)" stroke="none"/></svg></div>
+      <span class="diagram-node-label" data-en="Komainu guardians">狛犬</span>
+    </div>
+    <span class="diagram-path-arrow">→</span>
+    <div class="diagram-node">
+      <div class="diagram-node-dot"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><path d="M6 24 L6 16 L16 8 L26 16 L26 24 Z"/><line x1="6" y1="24" x2="26" y2="24"/></svg></div>
+      <span class="diagram-node-label" data-en="Haiden (worship hall)">拝殿</span>
+    </div>
+    <span class="diagram-path-arrow">→</span>
+    <div class="diagram-node">
+      <div class="diagram-node-dot diagram-limit"><svg viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round" opacity="0.7"><path d="M8 24 L8 17 L16 11 L24 17 L24 24 Z"/><line x1="4" y1="24" x2="28" y2="24"/><line x1="4" y1="20" x2="28" y2="20" stroke-dasharray="2,2"/></svg></div>
+      <span class="diagram-node-label" data-en="Honden (main hall) — off-limits">本殿<br>（入れない）</span>
+    </div>
+  </div>
+  <p class="diagram-note" data-en="Visitors can go as far as the front of the haiden. The honden itself is not open, and often not even visible.">参拝者が立てるのは拝殿の前まで。本殿には入れないし、中身も見えない。</p>
+</div>
 
 </div>
 

@@ -65,6 +65,25 @@
   .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
   .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
 
+  /* 依頼W-4（2026-09-13）：手順図・比較図はSVGで描く（AI生成は日本語の文字を
+     まともに描けないため）。文字はHTMLのキャプションに置き、SVGは図のみを
+     担当する。ラスタ画像と違い、言語を増やしてもキャプションのdata-enを
+     差し替えるだけで済む */
+  .diagram { margin: 30px 0 38px; }
+  .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-steps { display: flex; flex-wrap: wrap; gap: 2px; align-items: flex-start; justify-content: center; }
+  .diagram-step { display: flex; flex-direction: column; align-items: center; width: 94px; text-align: center; }
+  .diagram-step-num { font-size: 10px; color: var(--gold); opacity: 0.7; margin-bottom: 4px; letter-spacing: 0.05em; }
+  .diagram-step-circle {
+    width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
+    background: rgba(255,255,255,0.02); flex-shrink: 0;
+  }
+  .diagram-step-circle svg { width: 26px; height: 26px; }
+  .diagram-step-label { font-size: 11px; line-height: 1.5; color: var(--tan-text); opacity: 0.85; }
+  .diagram-arrow { color: var(--gold-muted); font-size: 14px; opacity: 0.5; padding-top: 18px; }
+  .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
@@ -115,6 +134,72 @@
 <li><strong>拝殿で二礼二拍手一礼。</strong> 賽銭を入れ、鈴があれば鳴らし、2回お辞儀、2回拍手、願い、最後に1回お辞儀。<strong>賽銭の額に決まりはない</strong>（5円玉が好まれるのは「ご縁」との語呂合わせ）</li>
 <li><strong>⚠️例外がある。出雲大社と宇佐神宮は二礼四拍手一礼。</strong>全国共通のつもりでいると外す</li>
 </ol>
+
+<div class="diagram">
+  <p class="diagram-title">手水の手順——柄杓1杯で全部やる</p>
+  <div class="diagram-steps">
+    <div class="diagram-step">
+      <span class="diagram-step-num">1</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="13" cy="14" rx="9" ry="6"/><line x1="20" y1="11" x2="28" y2="5"/></svg></div>
+      <span class="diagram-step-label" data-en="Pour over left hand">左手を洗う</span>
+    </div>
+    <span class="diagram-arrow">→</span>
+    <div class="diagram-step">
+      <span class="diagram-step-num">2</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="19" cy="14" rx="9" ry="6"/><line x1="12" y1="11" x2="4" y2="5"/></svg></div>
+      <span class="diagram-step-label" data-en="Pour over right hand">右手を洗う</span>
+    </div>
+    <span class="diagram-arrow">→</span>
+    <div class="diagram-step">
+      <span class="diagram-step-num">3</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="13" cy="14" rx="9" ry="6"/><path d="M20 11 Q24 13 23 18"/></svg></div>
+      <span class="diagram-step-label" data-en="Rinse mouth from left hand (never touch the ladle to your lips)">左手に受けて口をすすぐ</span>
+    </div>
+    <span class="diagram-arrow">→</span>
+    <div class="diagram-step">
+      <span class="diagram-step-num">4</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="13" cy="14" rx="9" ry="6"/><line x1="20" y1="11" x2="28" y2="5"/></svg></div>
+      <span class="diagram-step-label" data-en="Pour over left hand once more">もう一度左手</span>
+    </div>
+    <span class="diagram-arrow">→</span>
+    <div class="diagram-step">
+      <span class="diagram-step-num">5</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><line x1="16" y1="4" x2="16" y2="24"/><ellipse cx="16" cy="26" rx="8" ry="3"/></svg></div>
+      <span class="diagram-step-label" data-en="Stand the ladle upright to rinse the handle">柄を立てて柄杓の柄を流す</span>
+    </div>
+  </div>
+</div>
+
+<div class="diagram">
+  <p class="diagram-title">拝殿での作法——二礼二拍手一礼</p>
+  <div class="diagram-steps">
+    <div class="diagram-step">
+      <span class="diagram-step-num">1</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><circle cx="16" cy="12" r="7"/><line x1="16" y1="6" x2="16" y2="18"/><line x1="10" y1="24" x2="22" y2="24"/></svg></div>
+      <span class="diagram-step-label" data-en="Offer a coin">賽銭</span>
+    </div>
+    <span class="diagram-arrow">→</span>
+    <div class="diagram-step">
+      <span class="diagram-step-num">2</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><path d="M8 24 L18 24 L26 9"/><circle cx="26" cy="6" r="2.4" fill="var(--gold)" stroke="none"/></svg></div>
+      <span class="diagram-step-label" data-en="Bow twice">2回お辞儀</span>
+    </div>
+    <span class="diagram-arrow">→</span>
+    <div class="diagram-step">
+      <span class="diagram-step-num">3</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><path d="M11 9 Q8 17 12 25"/><path d="M21 9 Q24 17 20 25"/></svg></div>
+      <span class="diagram-step-label" data-en="Clap twice">2回拍手</span>
+    </div>
+    <span class="diagram-arrow">→</span>
+    <div class="diagram-step">
+      <span class="diagram-step-num">4</span>
+      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><path d="M8 24 L18 24 L26 9"/><circle cx="26" cy="6" r="2.4" fill="var(--gold)" stroke="none"/></svg></div>
+      <span class="diagram-step-label" data-en="Bow once, after your wish">願って1回お辞儀</span>
+    </div>
+  </div>
+  <p class="diagram-note" data-en="⚠️Exception: Izumo Taisha and Usa Jingu use four claps instead of two.">⚠️出雲大社と宇佐神宮だけ、拍手は4回。</p>
+</div>
+
 <p><strong>やらない方がいいこと</strong>＝神事の最中の撮影／禁止表示のある場所での撮影／社殿の中へ立ち入ること（<strong>そもそも入れない</strong>）</p>
 <p class="article-bridge">参拝を終えたあと、何を受け取り、何を持ち帰るか。</p>
 <h2>御朱印とお守り——買うものではなく、受けるもの</h2>

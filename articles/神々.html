@@ -65,6 +65,24 @@
   .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
   .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
 
+  /* 依頼W-4（2026-09-13）：系図・タグ一覧もSVG／HTML＋CSSで描く。神名・社名は
+     全てインラインSVGの<text>かHTMLの通常テキストなので、data-enで
+     言語ごとに差し替えられる（ラスタ画像のように作り直す必要がない） */
+  .diagram { margin: 30px 0 38px; }
+  .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+
+  .rank-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 22px 0 8px; }
+  .rank-item { display: flex; flex-direction: column; align-items: center; width: 84px; text-align: center; }
+  .rank-badge {
+    width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif; font-size: 19px; font-weight: bold;
+    color: #fff; margin-bottom: 8px; box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
+  }
+  .rank-name { font-size: 12px; color: var(--tan-text); }
+  .rank-count { font-size: 10.5px; color: var(--gold-muted); margin-top: 2px; }
+
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
@@ -116,6 +134,58 @@
 <li><strong>大国主大神</strong>——国を造り、そして天の神に<strong>譲った</strong>（国譲り）。<strong>出雲大社</strong></li>
 <li><strong>建御名方神</strong>——国譲りに最後まで抵抗し、敗れて信濃へ逃れた神。<strong>諏訪大社</strong></li>
 </ul>
+
+<div class="diagram">
+  <p class="diagram-title">神話の系図——誰が、どの社に祀られているか</p>
+  <div class="diagram-svg-wrap">
+    <svg viewBox="0 0 820 380" width="100%" style="max-width:640px;">
+      <g stroke="var(--gold)" stroke-width="1.4" fill="none">
+        <line x1="410" y1="42" x2="160" y2="84"/>
+        <line x1="410" y1="42" x2="410" y2="84"/>
+        <line x1="160" y1="116" x2="160" y2="161"/>
+        <line x1="410" y1="116" x2="410" y2="159"/>
+        <line x1="410" y1="191" x2="280" y2="236"/>
+        <line x1="410" y1="191" x2="410" y2="234"/>
+        <line x1="410" y1="266" x2="410" y2="311"/>
+        <line x1="650" y1="266" x2="650" y2="311"/>
+      </g>
+      <line x1="470" y1="250" x2="590" y2="250" stroke="var(--gold-muted)" stroke-width="1.2" stroke-dasharray="3,3"/>
+      <text x="530" y="240" text-anchor="middle" fill="var(--gold-muted)" font-size="10.5" data-en="Confronted">国譲りで対峙</text>
+
+      <rect x="330" y="8" width="160" height="34" rx="4" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <text x="410" y="30" text-anchor="middle" fill="var(--tan-text)" font-size="13" data-en="Izanagi &amp; Izanami">伊邪那岐・伊邪那美</text>
+
+      <rect x="100" y="84" width="120" height="32" rx="4" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <text x="160" y="105" text-anchor="middle" fill="var(--tan-text)" font-size="12.5" data-en="Amaterasu">天照大御神</text>
+
+      <rect x="350" y="84" width="120" height="32" rx="4" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <text x="410" y="105" text-anchor="middle" fill="var(--tan-text)" font-size="12.5" data-en="Susanoo">須佐之男命</text>
+
+      <rect x="105" y="161" width="110" height="30" rx="4" fill="none" stroke="var(--gold-muted)" stroke-width="1.2" stroke-dasharray="3,2"/>
+      <text x="160" y="181" text-anchor="middle" fill="var(--gold)" font-size="12" data-en="Ise Jingu">伊勢神宮</text>
+
+      <rect x="350" y="159" width="120" height="32" rx="4" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <text x="410" y="180" text-anchor="middle" fill="var(--tan-text)" font-size="12.5" data-en="Okuninushi">大国主大神</text>
+
+      <rect x="225" y="236" width="110" height="30" rx="4" fill="none" stroke="var(--gold-muted)" stroke-width="1.2" stroke-dasharray="3,2"/>
+      <text x="280" y="256" text-anchor="middle" fill="var(--gold)" font-size="12" data-en="Izumo Taisha">出雲大社</text>
+
+      <rect x="350" y="234" width="120" height="32" rx="4" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <text x="410" y="255" text-anchor="middle" fill="var(--tan-text)" font-size="12.5" data-en="Takeminakata">建御名方神</text>
+
+      <rect x="590" y="234" width="120" height="32" rx="4" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <text x="650" y="255" text-anchor="middle" fill="var(--tan-text)" font-size="12.5" data-en="Takemikazuchi">武甕槌大神</text>
+
+      <rect x="355" y="311" width="110" height="30" rx="4" fill="none" stroke="var(--gold-muted)" stroke-width="1.2" stroke-dasharray="3,2"/>
+      <text x="410" y="331" text-anchor="middle" fill="var(--gold)" font-size="12" data-en="Suwa Taisha">諏訪大社</text>
+
+      <rect x="595" y="311" width="110" height="30" rx="4" fill="none" stroke="var(--gold-muted)" stroke-width="1.2" stroke-dasharray="3,2"/>
+      <text x="650" y="331" text-anchor="middle" fill="var(--gold)" font-size="12" data-en="Kashima Jingu">鹿島神宮</text>
+    </svg>
+  </div>
+  <p class="diagram-note" data-en="Solid boxes are kami, dashed boxes are the shrines that enshrine them.">実線＝神。破線＝その神を祀る社。</p>
+</div>
+
 <h3>⚡人が神になる例</h3>
 <ul>
 <li><strong>応神天皇 → 八幡神</strong>（全国約4万社とされる）</li>
@@ -126,6 +196,38 @@
 <p class="article-bridge">誰が祀られているかが分かったところで、次はこの地図の色分け——格式の話。</p>
 <h2>格式——神宮・大社・一宮・二宮、そして名社</h2>
 <p>この地図は神社を5つの色で塗り分けている。<strong>4つは千年以上前に決まったもので、1つはこのサイトが決めたもの。</strong>その違いから始める。</p>
+
+<div class="diagram">
+  <div class="rank-row">
+    <div class="rank-item">
+      <div class="rank-badge" style="background:#c47a08;">神</div>
+      <span class="rank-name" data-en="Jingu">神宮</span>
+      <span class="rank-count">24</span>
+    </div>
+    <div class="rank-item">
+      <div class="rank-badge" style="background:#6d28d9;">大</div>
+      <span class="rank-name" data-en="Taisha">大社</span>
+      <span class="rank-count">24</span>
+    </div>
+    <div class="rank-item">
+      <div class="rank-badge" style="background:#c41810;">一</div>
+      <span class="rank-name" data-en="Ichinomiya">一宮</span>
+      <span class="rank-count">92</span>
+    </div>
+    <div class="rank-item">
+      <div class="rank-badge" style="background:#1540c0;">二</div>
+      <span class="rank-name" data-en="Ninomiya">二宮</span>
+      <span class="rank-count">35</span>
+    </div>
+    <div class="rank-item">
+      <div class="rank-badge" style="background:#047857;">名</div>
+      <span class="rank-name" data-en="Notable">名社</span>
+      <span class="rank-count">33</span>
+    </div>
+  </div>
+  <p class="diagram-note" data-en="Same icons and colors as the map markers and the “?” comparison window.">地図のマーカー・「?」の比較窓と同じ色とアイコン。</p>
+</div>
+
 <h3>神宮（この地図に24社）</h3>
 <p>「神宮」は誰でも名乗れる社号ではない。<strong>皇室にゆかりのある神、または天皇そのものを祀る社に、勅許によって与えられる。</strong></p>
 <p>ひとつの目印がある。<strong>ただ「神宮」とだけ呼ばれる社は、伊勢神宮ただひとつ。</strong>正式名称に「伊勢」は付かない。他はすべて地名か天皇名を冠する——熱田神宮、鹿島神宮、明治神宮。</p>
@@ -134,7 +236,7 @@
 <p>最もひっかかりやすいのがここ。<strong>「大社」には別々の2つの意味がある。</strong></p>
 <p>ひとつは<strong>社格</strong>——明治から戦後まで、国が神社を等級で管理していた時代の官幣大社・国幣大社。もうひとつは<strong>社号</strong>、つまり名前としての「〇〇大社」。</p>
 <p><strong>戦前、「大社」といえば出雲大社ただ一社を指した。</strong>他の社が「大社」を名乗り始めたのは、戦後に国家管理が廃止されてから。<strong>社格と社号は別物で、名前に大社と付いていることは、かつて大社だったことを意味しない。</strong></p>
-<h3>一宮（この地図に91社）・二宮（35社）</h3>
+<h3>一宮（この地図に92社）・二宮（35社）</h3>
 <p><strong>令制国</strong>——律令の時代に引かれた地理の区分で、全国におよそ70国あったとされる。その国ごとに最も格の高い社が一宮、次が二宮、三宮と続く。</p>
 <p><strong>この序列は朝廷が一覧を作ったものではない。</strong>国司が任地に着いて最初に参る社が、いつのまにか定着したもの。自然発生なので、<strong>国によっては一宮が複数あり、今も異説が残っている。</strong></p>
 <p>令制国の境は現代の県境と一致しない。<strong>だから地図で一宮を表示すると、分布が県単位で偏って見える。</strong></p>
