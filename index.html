@@ -25,6 +25,7 @@
     --tan-text-2: #b08858;
     /* ── 以下、本番index.htmlのポップアップ配色をそのまま流用（⑤本体の神宮・大社地図用） ── */
     --bg-popup-1: #1e0e06;
+    --bg-popup-1-rgb: 30,14,6;
     --bg-popup-2: #0f0a1a;
     --border-header: #6b3a1f;
     --text-body: #f0e6c8;
@@ -521,14 +522,44 @@
   .area-enclosure-cta:hover { background: rgba(var(--gold-glow-rgb),0.22); }
   .area-enclosure-cta-close { opacity: 0.6; font-size: 14px; line-height: 1; padding-left: 2px; }
   .area-enclosure-cta-close:hover { opacity: 1; }
-  /* 本人指摘（2026-09-13）：エリアの囲いにカーソルを当てると「エリア名 LvN」を
-     出す。Leafletのデフォルト（白背景の吹き出し）をサイトの配色に合わせて上書き */
-  .area-enclosure-tooltip {
+  /* 依頼Z-2①（2026-09-14）：エリアのLv表示を、カーソル追従のtooltipから
+     枠の内側左上に常時表示する固定ラベルへ変更。理由＝マーカーホバーの社名表示
+     （下の#hover-cursor-tag）とカーソル追従の表示先が競合するため、Lv表示は
+     カーソルから退避させる（本人指定）。L.marker+divIconで作るため、
+     Leafletのdivicon既定スタイル（白背景・枠線）を上書きする必要がある */
+  /* pointer-events:none＝Leafletのinteractive:falseはクリック判定こそ外すが
+     ネイティブのmouseoverイベントまでは止めないため、CSS側でも明示的に無効化する。
+     これが無いと、ラベルにカーソルを乗せた時に.leaflet-marker-icon一致で
+     マーカー社名のホバー表示（下の#hover-cursor-tag）と誤って競合する */
+  .leaflet-div-icon.area-level-label-icon { background: transparent; border: none; pointer-events: none; }
+  .area-level-label {
+    display: inline-block; white-space: nowrap;
     background: rgba(20,14,6,0.92); border: 1px solid var(--gold); color: var(--gold);
-    font-family: inherit; font-size: 12px; letter-spacing: 0.03em; padding: 4px 10px;
-    border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+    font-family: inherit; font-size: 11px; letter-spacing: 0.03em; padding: 3px 9px;
+    border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.5);
   }
-  .area-enclosure-tooltip::before { display: none; }
+
+  /* 依頼Z-2②（2026-09-14）：本番index.htmlの`initHoverCursorTag()`（枝2-B3）を
+     移植。マーカーにカーソルを乗せると社名を、サイドバー項目に乗せると
+     「地図へ」をカーソルのすぐ横に出す。CSSは本番と同一（色だけこのファイルの
+     トークンに合わせている） */
+  #hover-cursor-tag {
+    position: fixed;
+    z-index: 3000;
+    pointer-events: none;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: rgba(var(--bg-popup-1-rgb),0.92);
+    border: 1px solid var(--border-header);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(14px, 18px) scale(0.9);
+    transition: opacity var(--dur-fast), transform var(--dur-fast);
+  }
+  #hover-cursor-tag.visible { opacity: 1; transform: translate(14px, 18px) scale(1); }
 
   /* 狭幅では引き出し式サイドバー等は作り込まず、まず地図の表示領域を優先する
      （本番のボトムシート化まではこの試作の現段階ではスコープ外） */
@@ -590,6 +621,9 @@
 </style>
 </head>
 <body>
+
+<!-- 依頼Z-2②：本番index.htmlと同じホバーカーソル演出の受け皿（PC限定でJS側が有効化） -->
+<div id="hover-cursor-tag"></div>
 
 <div id="intro">
   <div class="intro-hero">
@@ -1050,6 +1084,11 @@ function initScrollSlideReveal() {
   function topTag(tags) {
     return tags.reduce(function(b,t){ return PRIORITY[t] > PRIORITY[b] ? t : b; }, tags[0]);
   }
+  // 依頼Z-0/Z-2③：マーカーのホバー社名・エリアラベルなど、表示言語に応じた
+  // 社名が要る箇所で共通利用する。nameEnは186社すべてに入っている（欠落0）。
+  function shrineName(shrine) {
+    return currentLang === 'en' ? shrine.nameEn : shrine.name;
+  }
   var iconCache = {};
   function getIcon(tag) {
     var key = currentLang + '_' + tag;
@@ -1368,6 +1407,7 @@ function initScrollSlideReveal() {
     var entry = markerList.filter(function(item){ return item.shrine === shrine; })[0];
     if (!entry) return;
     if (!map.hasLayer(entry.marker)) entry.marker.addTo(map);
+    if (entry.marker._icon) entry.marker._icon.dataset.name = shrineName(shrine);
     map.flyTo([shrine.lat, shrine.lng], Math.max(map.getZoom(), 9), { duration: 0.7 });
     setTimeout(function(){ entry.marker.openPopup(); }, 650);
   }
@@ -1423,6 +1463,26 @@ function initScrollSlideReveal() {
     areaEnclosureLayers.push(layer);
     return layer;
   }
+  // 依頼Z-2①（2026-09-14）：エリアのLv表示を、カーソル追従のtooltipから
+  // 枠の内側左上に常時表示する固定ラベルへ変更（本人指定＝マーカーホバーの
+  // 社名表示とカーソル上の表示先が競合するため）。矩形・円のどちらも
+  // Leafletのgetbounds()でbounds化できるので、形によらず同じ処理で置ける。
+  // offsetPx＝東京の3層のように複数ラベルが同じ内側隅に近い位置へ集まる場合の
+  // 縦方向の重なり回避（L1=0px・L2=+20px・L3=+40pxずつ下へ）。
+  function addAreaLevelLabel(layer, text, offsetPx) {
+    if (!map) return;
+    var nw = layer.getBounds().getNorthWest();
+    var icon = L.divIcon({
+      className: 'area-level-label-icon',
+      html: '<div class="area-level-label">' + text + '</div>',
+      iconSize: null,
+      // [8,8]＝枠の「内側」へ8pxオフセット（本人指定）。offsetPxはさらに
+      // 縦方向へ重ねて逃がす分
+      iconAnchor: [-8, -(8 + offsetPx)]
+    });
+    var label = L.marker(nw, { icon: icon, interactive: false, keyboard: false, zIndexOffset: 1000 }).addTo(map);
+    areaEnclosureLayers.push(label);
+  }
   function focusArea(file) {
     if (!map) return;
     var def = AREA_SHRINES[file];
@@ -1447,9 +1507,9 @@ function initScrollSlideReveal() {
         L2: { color:'#e0b060', weight:2,   opacity:0.75, fillColor:'#e0b060', fillOpacity:0.09 },
         L3: { color:'#907040', weight:1.5, opacity:0.45, fillColor:'#907040', fillOpacity:0.05 }
       };
-      // 本人指摘（2026-09-13）＝「囲いにカーソルを当てている時、東京Lv2のような
-      // 表示が出るアクションが可能なら」。Leafletのsticky tooltipで実装＝
-      // カーソルに追従して「エリア名 LvN」を出す
+      // 依頼Z-2①（2026-09-14）＝カーソル追従のLv表示は廃止し、枠の内側左上に
+      // 常時表示の固定ラベルを置く（マーカーホバーの社名表示とカーソル上の
+      // 表示先が競合するため。本人指定）。
       var levelNum = { L1:1, L2:2, L3:3 };
       var areaName = areaPage ? areaPage.name[currentLang] : '';
       var allIdents = [];
@@ -1459,7 +1519,7 @@ function initScrollSlideReveal() {
         allIdents = allIdents.concat(layerDef.shrines);
         if (!shape) return;
         var layer = drawAreaShape(shape, layerStyles[layerDef.key]);
-        layer.bindTooltip(areaName + ' Lv' + levelNum[layerDef.key], { sticky: true, className: 'area-enclosure-tooltip' });
+        addAreaLevelLabel(layer, areaName + ' Lv' + levelNum[layerDef.key], (levelNum[layerDef.key] - 1) * 20);
         layer.on('click', function(e){
           L.DomEvent.stopPropagation(e);
           if (shape.type === 'rect') {
@@ -1488,7 +1548,7 @@ function initScrollSlideReveal() {
       if (!shape) return;
       var style = { color:'#f5d08a', weight:2.5, opacity:0.85, fillColor:'#f5d08a', fillOpacity:0.08 };
       var layer = drawAreaShape(shape, style);
-      layer.bindTooltip(areaPage ? areaPage.name[currentLang] : '', { sticky: true, className: 'area-enclosure-tooltip' });
+      addAreaLevelLabel(layer, areaPage ? areaPage.name[currentLang] : '', 0);
       layer.on('click', function(e){ L.DomEvent.stopPropagation(e); location.href = goUrl; });
       dimOutOfArea(def.shrines);
       if (shape.type === 'rect') {
@@ -1543,7 +1603,10 @@ function initScrollSlideReveal() {
       if (show && !onMap) {
         item.marker.addTo(map);
         var inIcon = item.marker._icon;
-        if (inIcon) playMarkerAnim(inIcon, 'marker-pop-in', 'marker-pop-out', 250);
+        if (inIcon) {
+          inIcon.dataset.name = shrineName(item.shrine);
+          playMarkerAnim(inIcon, 'marker-pop-in', 'marker-pop-out', 250);
+        }
       } else if (!show && onMap && !item._removeTimer) {
         var outIcon = item.marker._icon;
         if (outIcon) playMarkerAnim(outIcon, 'marker-pop-out', 'marker-pop-in', 150);
@@ -1571,6 +1634,10 @@ function initScrollSlideReveal() {
     renderSidebarList();
     markerList.forEach(function(item){
       item.marker.setIcon(getIcon(topTag(item.shrine.tags)));
+      // 依頼Z-2③：setIconはアイコンのDOM要素を作り直すため、直前に付けた
+      // dataset.name（ホバー時の社名表示用）も消える。言語切替のたびに
+      // 全マーカーぶん再設定する
+      if (item.marker._icon) item.marker._icon.dataset.name = shrineName(item.shrine);
       if (item.marker.getPopup()) item.marker.getPopup().setContent(buildPopupContent(item.shrine));
     });
   }
@@ -1589,6 +1656,39 @@ function initScrollSlideReveal() {
       clearAreaEnclosure();
     });
   }
+
+  // 依頼Z-2②（2026-09-14）：本番index.htmlの`initHoverCursorTag()`（枝2-B3）を
+  // ほぼそのまま移植。hover:hover かつ pointer:fine（実マウスを持つ環境）でのみ
+  // 有効化——タッチ端末はhoverが不安定に発火するため対象外（本番と同じ授業料）。
+  (function initHoverCursorTag() {
+    if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var tag = document.getElementById('hover-cursor-tag');
+    if (!tag) return;
+    var current = null;
+
+    function show(label) {
+      if (current === label) return;
+      current = label;
+      tag.textContent = label;
+      tag.classList.add('visible');
+    }
+    function hide() {
+      if (current === null) return;
+      current = null;
+      tag.classList.remove('visible');
+    }
+
+    document.addEventListener('mousemove', function(e){
+      tag.style.left = e.clientX + 'px';
+      tag.style.top = e.clientY + 'px';
+    });
+    document.addEventListener('mouseover', function(e){
+      var markerEl = e.target.closest('.leaflet-marker-icon');
+      if (markerEl) { show(markerEl.dataset.name || (currentLang === 'en' ? 'View' : '見る')); return; }
+      if (e.target.closest('.shrine-item')) { show(currentLang === 'en' ? 'To the map' : '地図へ'); return; }
+      hide();
+    });
+  })();
 
   fetch('assets/shrines-overseas.json')
     .then(function(res){ return res.json(); })
@@ -1624,7 +1724,10 @@ function initScrollSlideReveal() {
       shrines.forEach(function(s){
         var marker = L.marker([s.lat, s.lng], { icon: getIcon(topTag(s.tags)) })
           .bindPopup(buildPopupContent(s), { className: 'shrine-popup' });
-        if (passesFilter(s)) marker.addTo(map);
+        if (passesFilter(s)) {
+          marker.addTo(map);
+          if (marker._icon) marker._icon.dataset.name = shrineName(s);
+        }
         markerList.push({ marker: marker, shrine: s });
         bounds.push([s.lat, s.lng]);
       });
