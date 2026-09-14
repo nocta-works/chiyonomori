@@ -1426,8 +1426,16 @@ function initScrollSlideReveal() {
     })[0];
     return entry ? [entry.shrine.lat, entry.shrine.lng] : null;
   }
-  // 実装の形（依頼P-2）＝bounds＋余白（範囲の15%か最低0.05°）の矩形。
-  // 1点しかない場合は固定半径8kmの円にフォールバックする。
+  // 実装の形（依頼P-2）＝bounds＋余白の矩形。1点しかない場合は固定半径8kmの円に
+  // フォールバックする。
+  // ⚠️余白は当初「範囲の15%か最低0.05°」だったが、本人指摘（2026-09-15）＝
+  // 「Lvごとの範囲が拡大している。Lv1は山手線を意識したいのでもう少し縮小。
+  // Lv2は西は府中、北は大宮、東は千葉神社、南は伊勢山皇大神宮までにもう少し縮小。
+  // Lv3は北西は三峯神社、南は鎌倉、東は鹿島まで」を受けて「範囲の8%か最低0.02°」に
+  // 縮小。0.05°の床がL1のような狭いクラスタ（東京都心）では余白側が支配的になり、
+  // 各社の実座標が示す本来の範囲より箱が大きく見えすぎていたのが原因。床を下げても
+  // 名指しされた最外周の社（大国魂神社・武蔵一宮氷川神社・千葉神社・伊勢山皇大神宮／
+  // 三峯神社・鎌倉3社・鹿島神宮）は必ずmin/maxそのものを構成するため箱の外に出ない。
   function computeAreaShape(idents) {
     var pts = idents.map(findShrineLatLng).filter(function(p){ return p; });
     if (pts.length === 0) return null;
@@ -1435,8 +1443,8 @@ function initScrollSlideReveal() {
     var lats = pts.map(function(p){ return p[0]; }), lngs = pts.map(function(p){ return p[1]; });
     var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
     var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs);
-    var padLat = Math.max(0.05, (maxLat - minLat) * 0.15);
-    var padLng = Math.max(0.05, (maxLng - minLng) * 0.15);
+    var padLat = Math.max(0.02, (maxLat - minLat) * 0.08);
+    var padLng = Math.max(0.02, (maxLng - minLng) * 0.08);
     return { type:'rect', bounds: [[minLat - padLat, minLng - padLng], [maxLat + padLat, maxLng + padLng]] };
   }
   var areaEnclosureLayers = [];
