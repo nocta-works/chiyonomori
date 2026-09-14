@@ -1441,10 +1441,12 @@ function initScrollSlideReveal() {
   }
   var areaEnclosureLayers = [];
   var areaDimmedIcons = [];
+  var areaLevelLabels = []; // { marker, areaFile, levelKey } — 言語切替時にテキストを再計算するため保持
   function clearAreaEnclosure() {
     if (!map) return;
     areaEnclosureLayers.forEach(function(l){ map.removeLayer(l); });
     areaEnclosureLayers = [];
+    areaLevelLabels = [];
     areaDimmedIcons.forEach(function(icon){ icon.classList.remove('marker-dimmed'); });
     areaDimmedIcons = [];
     var cta = document.getElementById('area-enclosure-cta');
@@ -1469,12 +1471,19 @@ function initScrollSlideReveal() {
   // Leafletのgetbounds()でbounds化できるので、形によらず同じ処理で置ける。
   // offsetPx＝東京の3層のように複数ラベルが同じ内側隅に近い位置へ集まる場合の
   // 縦方向の重なり回避（L1=0px・L2=+20px・L3=+40pxずつ下へ）。
-  function addAreaLevelLabel(layer, text, offsetPx) {
+  function areaLevelLabelText(areaFile, levelKey) {
+    var areaPage = AREA_PAGES.filter(function(a){ return a.file === areaFile; })[0];
+    var areaName = areaPage ? areaPage.name[currentLang] : '';
+    if (!levelKey) return areaName;
+    var levelNum = { L1:1, L2:2, L3:3 };
+    return areaName + ' Lv' + levelNum[levelKey];
+  }
+  function addAreaLevelLabel(layer, areaFile, levelKey, offsetPx) {
     if (!map) return;
     var nw = layer.getBounds().getNorthWest();
     var icon = L.divIcon({
       className: 'area-level-label-icon',
-      html: '<div class="area-level-label">' + text + '</div>',
+      html: '<div class="area-level-label">' + areaLevelLabelText(areaFile, levelKey) + '</div>',
       iconSize: null,
       // [8,8]＝枠の「内側」へ8pxオフセット（本人指定）。offsetPxはさらに
       // 縦方向へ重ねて逃がす分
@@ -1482,6 +1491,7 @@ function initScrollSlideReveal() {
     });
     var label = L.marker(nw, { icon: icon, interactive: false, keyboard: false, zIndexOffset: 1000 }).addTo(map);
     areaEnclosureLayers.push(label);
+    areaLevelLabels.push({ marker: label, areaFile: areaFile, levelKey: levelKey });
   }
   function focusArea(file) {
     if (!map) return;
@@ -1511,7 +1521,6 @@ function initScrollSlideReveal() {
       // 常時表示の固定ラベルを置く（マーカーホバーの社名表示とカーソル上の
       // 表示先が競合するため。本人指定）。
       var levelNum = { L1:1, L2:2, L3:3 };
-      var areaName = areaPage ? areaPage.name[currentLang] : '';
       var allIdents = [];
       var drawOrder = def.layers.slice().reverse();
       drawOrder.forEach(function(layerDef){
@@ -1519,7 +1528,7 @@ function initScrollSlideReveal() {
         allIdents = allIdents.concat(layerDef.shrines);
         if (!shape) return;
         var layer = drawAreaShape(shape, layerStyles[layerDef.key]);
-        addAreaLevelLabel(layer, areaName + ' Lv' + levelNum[layerDef.key], (levelNum[layerDef.key] - 1) * 20);
+        addAreaLevelLabel(layer, file, layerDef.key, (levelNum[layerDef.key] - 1) * 20);
         layer.on('click', function(e){
           L.DomEvent.stopPropagation(e);
           if (shape.type === 'rect') {
@@ -1548,7 +1557,7 @@ function initScrollSlideReveal() {
       if (!shape) return;
       var style = { color:'#f5d08a', weight:2.5, opacity:0.85, fillColor:'#f5d08a', fillOpacity:0.08 };
       var layer = drawAreaShape(shape, style);
-      addAreaLevelLabel(layer, areaPage ? areaPage.name[currentLang] : '', 0);
+      addAreaLevelLabel(layer, file, null, 0);
       layer.on('click', function(e){ L.DomEvent.stopPropagation(e); location.href = goUrl; });
       dimOutOfArea(def.shrines);
       if (shape.type === 'rect') {
@@ -1639,6 +1648,15 @@ function initScrollSlideReveal() {
       // 全マーカーぶん再設定する
       if (item.marker._icon) item.marker._icon.dataset.name = shrineName(item.shrine);
       if (item.marker.getPopup()) item.marker.getPopup().setContent(buildPopupContent(item.shrine));
+    });
+    // 本人指摘（2026-09-14）：エリア選択中に言語を切り替えても「東京Lv1」等の
+    // 固定ラベルが日本語のまま残っていた。ラベルは形を作り直さずテキストだけ
+    // その場で更新する（囲いの再描画・再ズームは不要なため）
+    areaLevelLabels.forEach(function(item){
+      var el = item.marker.getElement();
+      if (!el) return;
+      var inner = el.querySelector('.area-level-label');
+      if (inner) inner.textContent = areaLevelLabelText(item.areaFile, item.levelKey);
     });
   }
   var langToggle = document.getElementById('lang-toggle');
