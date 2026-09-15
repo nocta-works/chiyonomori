@@ -1451,7 +1451,7 @@ function initScrollSlideReveal() {
   }
   var areaEnclosureLayers = [];
   var areaDimmedIcons = [];
-  var areaLevelLabels = []; // { marker, areaFile, levelKey } — 言語切替時にテキストを再計算するため保持
+  var areaLevelLabels = []; // { marker, layer, areaFile, levelKey } — 言語切替時にラベル・囲いのホバー表示テキストを再計算するため保持
   function clearAreaEnclosure() {
     if (!map) return;
     areaEnclosureLayers.forEach(function(l){ map.removeLayer(l); });
@@ -1501,7 +1501,13 @@ function initScrollSlideReveal() {
     });
     var label = L.marker(nw, { icon: icon, interactive: false, keyboard: false, zIndexOffset: 1000 }).addTo(map);
     areaEnclosureLayers.push(label);
-    areaLevelLabels.push({ marker: label, areaFile: areaFile, levelKey: levelKey });
+    // 本人指摘（2026-09-15）：固定ラベルへの変更でカーソルを乗せた時の強調が
+    // 消えたのが惜しいとのことで復活。#hover-cursor-tagの仕組み（マーカー名と
+    // 同じもの）に囲い自体もカーソル追従で答えられるよう、囲いのDOM要素にも
+    // 同じテキストをdata属性で持たせる（固定ラベルとは表示先が別なので競合しない）
+    var layerEl = layer.getElement && layer.getElement();
+    if (layerEl) layerEl.dataset.name = areaLevelLabelText(areaFile, levelKey);
+    areaLevelLabels.push({ marker: label, layer: layer, areaFile: areaFile, levelKey: levelKey });
   }
   function focusArea(file) {
     if (!map) return;
@@ -1664,9 +1670,13 @@ function initScrollSlideReveal() {
     // その場で更新する（囲いの再描画・再ズームは不要なため）
     areaLevelLabels.forEach(function(item){
       var el = item.marker.getElement();
-      if (!el) return;
-      var inner = el.querySelector('.area-level-label');
-      if (inner) inner.textContent = areaLevelLabelText(item.areaFile, item.levelKey);
+      if (el) {
+        var inner = el.querySelector('.area-level-label');
+        if (inner) inner.textContent = areaLevelLabelText(item.areaFile, item.levelKey);
+      }
+      // 囲い自体のホバー表示（dataset.name）も同じタイミングで更新
+      var layerEl = item.layer && item.layer.getElement && item.layer.getElement();
+      if (layerEl) layerEl.dataset.name = areaLevelLabelText(item.areaFile, item.levelKey);
     });
   }
   var langToggle = document.getElementById('lang-toggle');
@@ -1713,6 +1723,12 @@ function initScrollSlideReveal() {
     document.addEventListener('mouseover', function(e){
       var markerEl = e.target.closest('.leaflet-marker-icon');
       if (markerEl) { show(markerEl.dataset.name || (currentLang === 'en' ? 'View' : '見る')); return; }
+      // 本人指摘（2026-09-15）：エリアの囲いにカーソルを乗せた時の強調表示を復活。
+      // 囲い（L.rectangle/L.circle）は既定でinteractive:trueなので、Leafletが
+      // 描画するSVG要素に`leaflet-interactive`クラスが付く。dataset.nameは
+      // addAreaLevelLabel()で「エリア名 LvN」を仕込んである
+      var areaEl = e.target.closest('.leaflet-interactive');
+      if (areaEl && areaEl.dataset.name) { show(areaEl.dataset.name); return; }
       if (e.target.closest('.shrine-item')) { show(currentLang === 'en' ? 'To the map' : '地図へ'); return; }
       hide();
     });
