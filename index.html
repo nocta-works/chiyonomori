@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>神社マップ 日本版プレビュー（仮）</title>
+<title>Chiyo no Mori — Shrines of Japan</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
   /* ══════════════════════════════════════════════════════════════
@@ -642,7 +641,7 @@
       </svg>
       <div class="intro-torii">⛩</div>
     </div>
-    <div class="intro-title">社巡り道標</div>
+    <div class="intro-title">Chiyo no Mori</div>
     <div class="intro-percent" id="intro-percent">0</div>
   </div>
 </div>
@@ -665,7 +664,7 @@
 <div class="mock-app" id="mock-app">
   <div class="mock-header">
     <div class="torii-icon">⛩</div>
-    <h1 id="mock-title">社巡り道標（海外版・仮）</h1>
+    <h1 id="mock-title">千代の杜</h1>
     <div class="lang-toggle" id="lang-toggle">
       <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
       <button type="button" class="lang-btn" data-lang="en">EN</button>
@@ -980,7 +979,7 @@ function initScrollSlideReveal() {
 // shrines-jingu-taisha.jsonの中身）は翻訳コストが別次元のため対象外（日本語のまま）。
 (function(){
   var currentLang = 'ja';
-  var HEADER_TITLE = { ja: '社巡り道標（海外版・仮）', en: 'Shrine Guide (Overseas Ver. — Draft)' };
+  var HEADER_TITLE = { ja: '千代の杜', en: 'Chiyo no Mori' };
   var CHROME_TEXT = {
     ja: {
       province: '旧国：', deity: '祭神：', map: '地図', official: '公式', wiki: 'Wiki', detail: '詳しく見る',
