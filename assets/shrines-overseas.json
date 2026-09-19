@@ -14,7 +14,10 @@
     "deity": "天照坐皇大御神",
     "reason": "正式名は皇大神宮。約二千年前から五十鈴川のほとりに天照大御神を祀り、20年に一度の式年遷宮を続ける。",
     "nameEn": "Ise Jingu (Naiku)",
-    "prefEn": "Mie"
+    "prefEn": "Mie",
+    "provinceEn": "Ise Province",
+    "deityEn": "Amaterasu, the sun goddess",
+    "reasonEn": "Formally called Kotai Jingu. Amaterasu, the sun goddess, has been enshrined on the banks of the Isuzu River for around two thousand years, with the buildings rebuilt every 20 years in the Shikinen Sengu."
   },
   {
     "pref": "三重",
@@ -28,7 +31,10 @@
     "deity": "豊受大御神",
     "reason": "正式名は豊受大神宮。約1500年前から、天照大御神の御饌を司る豊受大御神を祀り、20年に一度の式年遷宮を行う。",
     "nameEn": "Ise Jingu (Geku)",
-    "prefEn": "Mie"
+    "prefEn": "Mie",
+    "provinceEn": "Ise Province",
+    "deityEn": "Toyouke, goddess of food and agriculture",
+    "reasonEn": "Formally called Toyouke Daijingu. For around 1,500 years it has enshrined Toyouke, the goddess who provides Amaterasu's sacred meals, and holds the same 20-year Shikinen Sengu rebuilding."
   },
   {
     "pref": "京都",
@@ -42,7 +48,10 @@
     "deity": "桓武天皇・孝明天皇",
     "reason": "明治28年（1895）、平安遷都1100年を記念して創建。桓武天皇・孝明天皇を祀り、時代祭は京都三大祭の一つ。",
     "nameEn": "Heian Jingu",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Emperor Kanmu and Emperor Komei",
+    "reasonEn": "Founded in 1895 to mark 1,100 years since the capital moved to Heian-kyo. It enshrines Emperor Kanmu and Emperor Komei, and its Jidai Matsuri is one of Kyoto's three great festivals."
   },
   {
     "pref": "京都",
@@ -56,7 +65,10 @@
     "deity": "崇徳天皇・淳仁天皇",
     "reason": "旧官幣大社。明治天皇が崇徳天皇の御霊を迎えて創建し、のち淳仁天皇を合祀。蹴鞠の守護神も祀る。",
     "nameEn": "Shiramine Jingu",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Emperor Sutoku and Emperor Junnin",
+    "reasonEn": "A former imperial shrine. Emperor Meiji founded it to receive the spirit of Emperor Sutoku, and Emperor Junnin was later enshrined alongside him. It also honours the guardian deity of kemari, a court football game."
   },
   {
     "pref": "兵庫",
@@ -71,7 +83,10 @@
     "deity": "伊弉諾大神・伊弉冉大神",
     "reason": "淡路国一宮。旧官幣大社。国生み神話の伊弉諾・伊弉冉二神を祀り、『古事記』『日本書紀』に創祀の起源が記される。",
     "nameEn": "Izanagi Jingu",
-    "prefEn": "Hyogo"
+    "prefEn": "Hyogo",
+    "provinceEn": "Awaji Province",
+    "deityEn": "Izanagi and Izanami, the creator gods",
+    "reasonEn": "The ichinomiya of Awaji Province and a former imperial shrine. It enshrines Izanagi and Izanami, the creator gods of Japan's founding myth, and its origins are recorded in the Kojiki and Nihon Shoki."
   },
   {
     "pref": "北海道",
@@ -86,7 +101,10 @@
     "deity": "大国魂神・大那牟遅神・少彦名神・明治天皇",
     "reason": "旧官幣大社。明治2年、北海道開拓の守護神として開拓三神を奉斎し、昭和39年に明治天皇を増祀して北海道神宮と改称。",
     "nameEn": "Hokkaido Jingu",
-    "prefEn": "Hokkaido"
+    "prefEn": "Hokkaido",
+    "provinceEn": "Ezo",
+    "deityEn": "Okunitama, Onamuchi, Sukunahikona and Emperor Meiji",
+    "reasonEn": "A former imperial shrine. Founded in 1869 to enshrine the three gods of Hokkaido's development, it was renamed Hokkaido Jingu in 1964 when Emperor Meiji was added as a fourth deity."
   },
   {
     "pref": "千葉",
@@ -104,7 +122,10 @@
     "deity": "経津主大神",
     "reason": "下総国一宮。旧官幣大社。経津主大神を祀る全国の香取神社の総本社で、鹿島神宮・息栖神社とともに東国三社。",
     "nameEn": "Katori Jingu",
-    "prefEn": "Chiba"
+    "prefEn": "Chiba",
+    "provinceEn": "Shimosa Province",
+    "deityEn": "Futsunushi Okami",
+    "reasonEn": "The ichinomiya of Shimosa Province and a former imperial shrine. It is the head shrine of all Katori shrines nationwide, enshrining Futsunushi Okami, and forms the Three Shrines of the East with Kashima Jingu and Ikisu Jinja."
   },
   {
     "pref": "和歌山",
@@ -119,7 +140,10 @@
     "deity": "日前大神・国懸大神",
     "reason": "紀伊国一宮。旧官幣大社。一つの境内に日前神宮と國懸神宮が並び、日像鏡・日矛鏡を御神体とする。",
     "nameEn": "Hinokuma Jingu / Kunikakasu Jingu",
-    "prefEn": "Wakayama"
+    "prefEn": "Wakayama",
+    "provinceEn": "Kii Province",
+    "deityEn": "Hinokuma Okami and Kunikakasu Okami",
+    "reasonEn": "The ichinomiya of Kii Province and a former imperial shrine. Hinokuma Jingu and Kunikakasu Jingu stand side by side within a single precinct, their sacred objects being the mirrors Higata no Kagami and Hihoko no Kagami."
   },
   {
     "pref": "大分",
@@ -135,7 +159,10 @@
     "deity": "八幡大神・比売大神・神功皇后",
     "reason": "全国四万社を超える八幡宮の総本宮。日本三大八幡宮の一。伊勢神宮に次ぐ格式ともいわれる。",
     "nameEn": "Usa Jingu",
-    "prefEn": "Oita"
+    "prefEn": "Oita",
+    "provinceEn": "Buzen Province",
+    "deityEn": "Hachiman Okami, Himegami and Empress Jingu",
+    "reasonEn": "The head shrine of more than 40,000 Hachiman shrines nationwide, and one of Japan's three great Hachiman shrines. Some regard its rank as second only to Ise Jingu."
   },
   {
     "pref": "大阪",
@@ -149,7 +176,10 @@
     "deity": "土御門天皇・後鳥羽天皇・順徳天皇",
     "reason": "旧官幣大社。後鳥羽天皇の水無瀬離宮跡に鎮座し、土御門・順徳両天皇も祀る。後鳥羽天皇宸翰御手印置文は国宝。",
     "nameEn": "Minase Jingu",
-    "prefEn": "Osaka"
+    "prefEn": "Osaka",
+    "provinceEn": "Settsu Province",
+    "deityEn": "Emperor Tsuchimikado, Emperor Go-Toba and Emperor Juntoku",
+    "reasonEn": "A former imperial shrine, standing on the site of Emperor Go-Toba's Minase detached palace. It also enshrines Emperor Tsuchimikado and Emperor Juntoku. A testament in Go-Toba's own hand, with his handprint, is a National Treasure."
   },
   {
     "pref": "奈良",
@@ -163,7 +193,10 @@
     "deity": "後醍醐天皇",
     "reason": "旧官幣大社。南朝の吉野に後醍醐天皇を祀る。吉野山の桜と南朝の歴史で知られる。",
     "nameEn": "Yoshino Jingu",
-    "prefEn": "Nara"
+    "prefEn": "Nara",
+    "provinceEn": "Yamato Province",
+    "deityEn": "Emperor Go-Daigo",
+    "reasonEn": "A former imperial shrine enshrining Emperor Go-Daigo at Yoshino, seat of the Southern Court. Known for the cherry blossoms of Mount Yoshino and the history of the Southern Court."
   },
   {
     "pref": "奈良",
@@ -177,7 +210,10 @@
     "deity": "神武天皇・媛蹈韛五十鈴媛命",
     "reason": "明治23年（1890）、神武天皇の橿原宮跡に官幣大社として創建。京都御所の内侍所を本殿として明治天皇から下賜された。",
     "nameEn": "Kashihara Jingu",
-    "prefEn": "Nara"
+    "prefEn": "Nara",
+    "provinceEn": "Yamato Province",
+    "deityEn": "Emperor Jinmu and Himetataraisuzuhime",
+    "reasonEn": "Founded in 1890 as an imperial shrine on the site of Emperor Jinmu's Kashihara palace. Emperor Meiji granted the Naishidokoro hall of the Kyoto Imperial Palace to serve as its main hall."
   },
   {
     "pref": "奈良",
@@ -195,7 +231,10 @@
     "deity": "布都御魂大神ほか",
     "reason": "崇神天皇7年に創祀されたと伝わる古社。神武天皇の国土平定にゆかりの神剣・韴霊の御霊威を布都御魂大神として祀る。",
     "nameEn": "Isonokami Jingu",
-    "prefEn": "Nara"
+    "prefEn": "Nara",
+    "provinceEn": "Yamato Province",
+    "deityEn": "Futsunomitama Okami and others",
+    "reasonEn": "An ancient shrine said to have been founded in the reign of Emperor Sujin. It enshrines the sacred power of the sword Futsu no Mitama, linked to Emperor Jinmu's pacification of the land, as the deity Futsunomitama Okami."
   },
   {
     "pref": "宮崎",
@@ -210,7 +249,10 @@
     "deity": "神武天皇・鵜草葺不合命・玉依姫命",
     "reason": "地名代表社・神宮。初代天皇・神武天皇を祀る。旧官幣大社。宮崎の地名の由来とも言われる。",
     "nameEn": "Miyazaki Jingu",
-    "prefEn": "Miyazaki"
+    "prefEn": "Miyazaki",
+    "provinceEn": "Hyuga Province",
+    "deityEn": "Emperor Jinmu, Ugayafukiaezu and Tamayorihime",
+    "reasonEn": "A jingu-ranked shrine representative of its place name. It enshrines Emperor Jinmu, Japan's first emperor, and is a former imperial shrine. Some say the name Miyazaki derives from it."
   },
   {
     "pref": "宮崎",
@@ -224,7 +266,10 @@
     "deity": "彦波瀲武鸕鶿草葺不合尊",
     "reason": "旧官幣大社。日向灘の海食洞内に本殿を構え、亀石の枡形へ粘土製の「運玉」を投げる風習で知られる。",
     "nameEn": "Udo Jingu",
-    "prefEn": "Miyazaki"
+    "prefEn": "Miyazaki",
+    "provinceEn": "Hyuga Province",
+    "deityEn": "Ugayafukiaezu",
+    "reasonEn": "A former imperial shrine with its main hall inside a sea cave carved by the waves of Hyuga Nada. Known for the custom of throwing small clay balls into a stone turtle's back for good luck."
   },
   {
     "pref": "山口",
@@ -238,7 +283,10 @@
     "deity": "安徳天皇",
     "reason": "壇ノ浦で崩御した安徳天皇を祀る。毎年5月の先帝祭では御陵前祭や上臈参拝などが行われる。",
     "nameEn": "Akama Jingu",
-    "prefEn": "Yamaguchi"
+    "prefEn": "Yamaguchi",
+    "provinceEn": "Nagato Province",
+    "deityEn": "Emperor Antoku",
+    "reasonEn": "Enshrines Emperor Antoku, who died at the Battle of Dan-no-ura. Every May, the Sentei Festival includes a rite before his mausoleum and a procession of courtesans in period dress."
   },
   {
     "pref": "愛知",
@@ -252,7 +300,10 @@
     "deity": "熱田大神（草薙剣）",
     "reason": "三種の神器の一つ草薙神剣の鎮座を起源とする古社。日本武尊の没後、宮簀媛命が神剣を熱田の地に祀ったと伝わる。",
     "nameEn": "Atsuta Jingu",
-    "prefEn": "Aichi"
+    "prefEn": "Aichi",
+    "provinceEn": "Owari Province",
+    "deityEn": "The Atsuta deity (the sacred sword Kusanagi)",
+    "reasonEn": "An ancient shrine founded to house the sword Kusanagi, one of the three imperial regalia. After Yamato Takeru's death, Miyazuhime is said to have enshrined the sword at Atsuta."
   },
   {
     "pref": "東京",
@@ -266,7 +317,10 @@
     "deity": "明治天皇・昭憲皇太后",
     "reason": "大正9年（1920）創建。明治天皇と昭憲皇太后を祀り、約70万平方メートルの鎮守の杜は創建時に造成された人工林。",
     "nameEn": "Meiji Jingu",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Emperor Meiji and Empress Shoken",
+    "reasonEn": "Founded in 1920, enshrining Emperor Meiji and Empress Shoken. Its 700,000-square-metre forest is an entirely artificial woodland, planted when the shrine was built."
   },
   {
     "pref": "滋賀",
@@ -280,7 +334,10 @@
     "deity": "天智天皇",
     "reason": "勅祭社。旧官幣大社。近江遷都の地に天智天皇を祀る。かるたの聖地としても知られる。",
     "nameEn": "Omi Jingu",
-    "prefEn": "Shiga"
+    "prefEn": "Shiga",
+    "provinceEn": "Omi Province",
+    "deityEn": "Emperor Tenji",
+    "reasonEn": "An imperially-designated shrine and former imperial shrine, enshrining Emperor Tenji at the site of the Omi capital. Also known as a sacred site for competitive karuta card games."
   },
   {
     "pref": "福井",
@@ -295,7 +352,10 @@
     "deity": "伊奢沙別命ほか七柱",
     "reason": "越前国一宮。北陸道総鎮守として崇敬される敦賀の古社で、伊奢沙別命を主祭神に七柱の神を祀る。",
     "nameEn": "Kehi Jingu",
-    "prefEn": "Fukui"
+    "prefEn": "Fukui",
+    "provinceEn": "Echizen Province",
+    "deityEn": "Izasawake and seven other deities",
+    "reasonEn": "The ichinomiya of Echizen Province, an ancient shrine in Tsuruga revered as the guardian of the whole Hokuriku region. Its chief deity is Izasawake, worshipped alongside six other gods."
   },
   {
     "pref": "福岡",
@@ -309,7 +369,10 @@
     "deity": "正哉吾勝勝速日天忍穂耳尊",
     "reason": "旧官幣中社。三大修験道の一つとされる英彦山に鎮座。神仏分離後に英彦山神社となり、昭和50年に神宮へ改称。",
     "nameEn": "Hikosan Jingu",
-    "prefEn": "Fukuoka"
+    "prefEn": "Fukuoka",
+    "provinceEn": "Buzen Province",
+    "deityEn": "Amenooshihomimi, father of Ninigi",
+    "reasonEn": "A former imperial shrine on Mount Hiko, one of Japan's three great centres of mountain asceticism. It became Hikosan Jinja after the separation of Buddhism and Shinto, then was renamed Hikosan Jingu in 1975."
   },
   {
     "pref": "茨城",
@@ -327,7 +390,10 @@
     "deity": "武甕槌大神",
     "reason": "常陸国一宮。武甕槌大神を祀る古社で、午年には十二年に一度の式年大祭「御船祭」が行われる。",
     "nameEn": "Kashima Jingu",
-    "prefEn": "Ibaraki"
+    "prefEn": "Ibaraki",
+    "provinceEn": "Hitachi Province",
+    "deityEn": "Takemikazuchi Okami",
+    "reasonEn": "The ichinomiya of Hitachi Province, an ancient shrine enshrining Takemikazuchi Okami. Its Mifune Matsuri boat festival is held once every twelve years, in the Year of the Horse."
   },
   {
     "pref": "鹿児島",
@@ -342,7 +408,10 @@
     "deity": "天饒石国饒石天津日高彦火瓊瓊杵尊",
     "reason": "旧官幣大社。天孫降臨の瓊瓊杵尊を主祭神に祀り、現在の社殿は正徳5年（1715）に島津吉貴が造営した。",
     "nameEn": "Kirishima Jingu",
-    "prefEn": "Kagoshima"
+    "prefEn": "Kagoshima",
+    "provinceEn": "Hyuga Province",
+    "deityEn": "Ninigi, grandson of the sun goddess Amaterasu",
+    "reasonEn": "A former imperial shrine whose chief deity is Ninigi, who descended to earth as the grandson of the sun goddess. The present buildings were built in 1715 by the feudal lord Shimazu Yoshitaka."
   },
   {
     "pref": "鹿児島",
@@ -357,7 +426,10 @@
     "deity": "天津日高彦穂穂出見命・豊玉比売命",
     "reason": "大隅国一宮・旧官幣大社。彦火火出見尊を主祭神に祀り、古くは正八幡宮とも称された八幡信仰ゆかりの古社。",
     "nameEn": "Kagoshima Jingu",
-    "prefEn": "Kagoshima"
+    "prefEn": "Kagoshima",
+    "provinceEn": "Osumi Province",
+    "deityEn": "Hikohohodemi and Toyotamahime",
+    "reasonEn": "The ichinomiya of Osumi Province and a former imperial shrine. Its chief deity is Hikohohodemi, and it was once known as Sho Hachimangu, linking it to Hachiman worship."
   },
   {
     "pref": "三重",
@@ -371,7 +443,10 @@
     "deity": "天津彦根命",
     "reason": "旧国幣大社。「北伊勢大神宮」と称され伊勢神宮に次ぐ格式。上げ馬神事でも有名。",
     "nameEn": "Tado Taisha",
-    "prefEn": "Mie"
+    "prefEn": "Mie",
+    "provinceEn": "Ise Province",
+    "deityEn": "Amatsuhikone",
+    "reasonEn": "A former national shrine known as the 'Ise Jingu of northern Ise', ranked just below Ise Jingu itself. Also famous for its Age-uma horse-jumping ritual."
   },
   {
     "pref": "京都",
@@ -389,7 +464,10 @@
     "deity": "宇迦之御魂大神ほか五柱",
     "reason": "全国の稲荷神社の総本宮。和銅4年（711）に稲荷山へ鎮座したと伝わり、山中へ連なる朱塗りの千本鳥居で知られる。",
     "nameEn": "Fushimi Inari Taisha",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Ukanomitama Okami and five other deities",
+    "reasonEn": "The head shrine of all Inari shrines nationwide. Said to have been founded on Mount Inari in 711, and known for its thousands of vermilion torii gates lining the paths up the mountain."
   },
   {
     "pref": "京都",
@@ -406,7 +484,10 @@
     "deity": "大山咋神・市杵島姫命",
     "reason": "大宝元年（701）に秦氏が現在地へ社殿を造営した京都の古社。大山咋神・市杵島姫命を祀り、醸造の祖神として信仰される。",
     "nameEn": "Matsuo Taisha",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Oyamakui and Ichikishimahime",
+    "reasonEn": "An ancient Kyoto shrine whose buildings were erected on the present site by the Hata clan in 701. It enshrines Oyamakui and Ichikishimahime, and is worshipped as the ancestral deity of sake brewing."
   },
   {
     "pref": "京都",
@@ -423,7 +504,10 @@
     "deity": "酒解神・酒解子神・大若子神・小若子神",
     "reason": "二十二社（下八社）の一。橘嘉智子（檀林皇后）ゆかりの酒造・子授け・安産の神。境内を歩き回る猫でも知られる。",
     "nameEn": "Umenomiya Taisha",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Sakatoke, Sakatokeko, Owakago and Kowakago",
+    "reasonEn": "One of the Twenty-Two Shrines of classical Kyoto. Linked to Empress Tachibana no Kachiko, it is a god of sake brewing, conceiving children and safe childbirth, and is also known for the cats that roam its grounds."
   },
   {
     "pref": "和歌山",
@@ -437,7 +521,10 @@
     "deity": "家都美御子大神",
     "reason": "熊野三山の一社で、全国の熊野神社の総本宮。主祭神は家都美御子大神で、旧社地の大斎原にも祭祀の歴史を伝える。",
     "nameEn": "Kumano Hongu Taisha",
-    "prefEn": "Wakayama"
+    "prefEn": "Wakayama",
+    "provinceEn": "Kii Province",
+    "deityEn": "Ketsumikoo Okami",
+    "reasonEn": "One of the three Kumano shrines, and the head shrine of all Kumano shrines nationwide. Its chief deity is Ketsumikoo Okami, and its former site at Oyunohara also carries a long history of worship."
   },
   {
     "pref": "和歌山",
@@ -451,7 +538,10 @@
     "deity": "熊野速玉大神・熊野夫須美大神",
     "reason": "熊野三山の一社。神倉山の磐座・ゴトビキ岩を元宮とし、現在地の社殿が「新宮」の地名の由来になったと伝わる。",
     "nameEn": "Kumano Hayatama Taisha",
-    "prefEn": "Wakayama"
+    "prefEn": "Wakayama",
+    "provinceEn": "Kii Province",
+    "deityEn": "Kumano Hayatama Okami and Kumano Fusumi Okami",
+    "reasonEn": "One of the three Kumano shrines. Its original site was the sacred rock Gotobiki-iwa on Mount Kamikura, and its present buildings are said to be the origin of the place name Shingu, meaning 'new shrine'."
   },
   {
     "pref": "和歌山",
@@ -465,7 +555,10 @@
     "deity": "熊野夫須美大神",
     "reason": "熊野三山の一社。別宮・飛瀧神社では落差133mの那智の滝を御神体として祀り、熊野信仰と滝信仰が結び付く。",
     "nameEn": "Kumano Nachi Taisha",
-    "prefEn": "Wakayama"
+    "prefEn": "Wakayama",
+    "provinceEn": "Kii Province",
+    "deityEn": "Kumano Fusumi Okami",
+    "reasonEn": "One of the three Kumano shrines. Its associated shrine, Hiro Jinja, enshrines the 133-metre Nachi Falls itself as its sacred object, linking Kumano worship with the worship of waterfalls."
   },
   {
     "pref": "大阪",
@@ -483,7 +576,10 @@
     "deity": "底筒男命・中筒男命・表筒男命・息長帯比売命",
     "reason": "摂津国一宮。旧官幣大社。全国約2300社の住吉神社の総本社で、住吉造の本殿4棟は国宝。",
     "nameEn": "Sumiyoshi Taisha",
-    "prefEn": "Osaka"
+    "prefEn": "Osaka",
+    "provinceEn": "Settsu Province",
+    "deityEn": "Sokotsutsunoo, Nakatsutsunoo, Uwatsutsunoo and Okinagatarashihime",
+    "reasonEn": "The ichinomiya of Settsu Province and a former imperial shrine. It is the head shrine of around 2,300 Sumiyoshi shrines nationwide, and its four main halls, built in the Sumiyoshi style, are National Treasures."
   },
   {
     "pref": "大阪",
@@ -499,7 +595,10 @@
     "deity": "日本武尊・大鳥連祖神",
     "reason": "和泉国一宮。旧官幣大社。全国約280社の大鳥神社の総本社。日本武尊終焉の地と伝わる。",
     "nameEn": "Otori Taisha",
-    "prefEn": "Osaka"
+    "prefEn": "Osaka",
+    "provinceEn": "Izumi Province",
+    "deityEn": "Yamato Takeru and the ancestral god of the Otori clan",
+    "reasonEn": "The ichinomiya of Izumi Province and a former imperial shrine. It is the head shrine of around 280 Otori shrines nationwide, and is said to be the place where Yamato Takeru died."
   },
   {
     "pref": "奈良",
@@ -516,7 +615,10 @@
     "deity": "若宇加能売命",
     "reason": "大和の水神を祀る古社。毎年2月の御田植祭「砂かけ祭」では、雨に見立てた砂を掛け合い五穀豊穣を祈る。",
     "nameEn": "Hirose Taisha",
-    "prefEn": "Nara"
+    "prefEn": "Nara",
+    "provinceEn": "Yamato Province",
+    "deityEn": "Wakaukanome",
+    "reasonEn": "An ancient shrine enshrining the water god of Yamato. At its February rice-planting festival, known as the Sand-Throwing Festival, people throw sand at each other in place of rain to pray for a good harvest."
   },
   {
     "pref": "奈良",
@@ -530,7 +632,10 @@
     "deity": "天児屋根命・比売神・経津主命・武甕槌命",
     "reason": "藤原氏の氏神として神護景雲2年（768）に現在地へ創建されたと伝わる。春日山原始林とともに世界遺産を構成する古社。",
     "nameEn": "Kasuga Taisha",
-    "prefEn": "Nara"
+    "prefEn": "Nara",
+    "provinceEn": "Yamato Province",
+    "deityEn": "Amenokoyane, Himegami, Futsunushi and Takemikazuchi",
+    "reasonEn": "Said to have been founded on its present site in 768 as the tutelary shrine of the Fujiwara clan. It forms part of a World Heritage Site together with the ancient forest of Mount Kasuga."
   },
   {
     "pref": "奈良",
@@ -547,7 +652,10 @@
     "deity": "シナツヒコ",
     "reason": "風の神を祀る古社。崇神天皇の時代、凶作と疫病の中で神託により創建され、豊作と疫病退散を得たと伝わる。",
     "nameEn": "Tatta Taisha",
-    "prefEn": "Nara"
+    "prefEn": "Nara",
+    "provinceEn": "Yamato Province",
+    "deityEn": "Shinatsuhiko, a wind god",
+    "reasonEn": "An ancient shrine enshrining the god of wind. It is said to have been founded in the reign of Emperor Sujin, in response to an oracle given amid crop failure and plague, after which good harvests returned and the plague ended."
   },
   {
     "pref": "岐阜",
@@ -562,7 +670,10 @@
     "deity": "金山彦命",
     "reason": "美濃国一宮。旧国幣大社。金山彦大神を祀る全国の鉱山・金属業の総本宮として、鍛冶や金属関係者の信仰を集める。",
     "nameEn": "Nangu Taisha",
-    "prefEn": "Gifu"
+    "prefEn": "Gifu",
+    "provinceEn": "Mino Province",
+    "deityEn": "Kanayamahiko",
+    "reasonEn": "The ichinomiya of Mino Province and a former national shrine. As the head shrine for mining and metalworking nationwide, enshrining Kanayamahiko Okami, it draws worship from blacksmiths and metalworkers."
   },
   {
     "pref": "島根",
@@ -577,7 +688,10 @@
     "deity": "大国主大神",
     "reason": "出雲国一宮。旧官幣大社。大国主大神を祀り、縁結び・福の神として広く信仰される。現在の本殿は国宝。",
     "nameEn": "Izumo Taisha",
-    "prefEn": "Shimane"
+    "prefEn": "Shimane",
+    "provinceEn": "Izumo Province",
+    "deityEn": "Okuninushi Okami",
+    "reasonEn": "The ichinomiya of Izumo Province and a former imperial shrine. It enshrines Okuninushi Okami and is widely worshipped as a god of relationships and good fortune. The present main hall is a National Treasure."
   },
   {
     "pref": "島根",
@@ -592,7 +706,10 @@
     "deity": "神祖熊野大神櫛御気野命",
     "reason": "出雲国一宮。旧国幣大社。出雲大社と深い関わりを持ち、毎年10月の鑽火祭では古伝新嘗祭に用いる火鑽具を授ける。",
     "nameEn": "Kumano Taisha",
-    "prefEn": "Shimane"
+    "prefEn": "Shimane",
+    "provinceEn": "Izumo Province",
+    "deityEn": "Kamuroki Kumano Okami Kushimikenu",
+    "reasonEn": "The ichinomiya of Izumo Province and a former national shrine, closely linked to Izumo Taisha. At its October fire-making festival, it presents the fire-drill used in Izumo Taisha's ancient harvest rite."
   },
   {
     "pref": "滋賀",
@@ -606,7 +723,10 @@
     "deity": "伊弉諾尊・伊弉冉尊",
     "reason": "伊弉諾尊・伊弉冉尊を祀り、「お多賀さん」と親しまれる古社。延命長寿・縁結び・厄除けの神として中世以降広く信仰された。",
     "nameEn": "Taga Taisha",
-    "prefEn": "Shiga"
+    "prefEn": "Shiga",
+    "provinceEn": "Omi Province",
+    "deityEn": "Izanagi and Izanami, the creator gods",
+    "reasonEn": "An ancient shrine enshrining Izanagi and Izanami, affectionately known as 'Otaga-san'. Since the medieval period it has been widely worshipped as a god of long life, good relationships and protection from misfortune."
   },
   {
     "pref": "滋賀",
@@ -621,7 +741,10 @@
     "deity": "日本武尊・大己貴命",
     "reason": "近江国一宮。旧官幣大社。日本武尊を祀り、平治の乱後に平家に捕らわれた源頼朝が前途を祈願したと伝わる。",
     "nameEn": "Takebe Taisha",
-    "prefEn": "Shiga"
+    "prefEn": "Shiga",
+    "provinceEn": "Omi Province",
+    "deityEn": "Yamato Takeru and Onamuchi",
+    "reasonEn": "The ichinomiya of Omi Province and a former imperial shrine, enshrining Yamato Takeru. Minamoto no Yoritomo is said to have prayed here for his future after being captured by the Taira following the Heiji Rebellion."
   },
   {
     "pref": "滋賀",
@@ -639,7 +762,10 @@
     "deity": "大山咋神・大物主神",
     "reason": "全国約3800の日吉・日枝・山王神社の総本宮。比叡山延暦寺の護法神として崇敬され、東西両本宮の本殿は国宝。",
     "nameEn": "Hiyoshi Taisha",
-    "prefEn": "Shiga"
+    "prefEn": "Shiga",
+    "provinceEn": "Omi Province",
+    "deityEn": "Oyamakui and Omononushi",
+    "reasonEn": "The head shrine of around 3,800 Hiyoshi, Hie and Sanno shrines nationwide. Revered as the protector deity of Enryaku-ji temple on Mount Hiei, its East and West main halls are both National Treasures."
   },
   {
     "pref": "石川",
@@ -654,7 +780,10 @@
     "deity": "大己貴命",
     "reason": "能登国一宮。旧国幣大社。国の天然記念物「入らずの森」を神域に持ち、神職も年一度の神事以外は立ち入らないとされる。",
     "nameEn": "Keta Taisha",
-    "prefEn": "Ishikawa"
+    "prefEn": "Ishikawa",
+    "provinceEn": "Noto Province",
+    "deityEn": "Onamuchi",
+    "reasonEn": "The ichinomiya of Noto Province and a former national shrine. Its sacred precinct includes the 'forbidden forest', a natural monument that even priests are said to enter only once a year, for a single rite."
   },
   {
     "pref": "福岡",
@@ -668,7 +797,10 @@
     "deity": "沖津宮・中津宮・辺津宮の宗像三女神",
     "reason": "旧官幣大社。世界遺産登録（2017年）。全国6,200社以上の宗像神社の総本社。「神宿る島」沖ノ島を擁する。",
     "nameEn": "Munakata Taisha",
-    "prefEn": "Fukuoka"
+    "prefEn": "Fukuoka",
+    "provinceEn": "Chikuzen Province",
+    "deityEn": "The three Munakata goddesses of Okitsu-miya, Nakatsu-miya and Hetsu-miya",
+    "reasonEn": "A former imperial shrine and World Heritage Site (2017). It is the head shrine of more than 6,200 Munakata shrines nationwide, and encompasses Okinoshima, known as the 'island where a god dwells'."
   },
   {
     "pref": "福岡",
@@ -684,7 +816,10 @@
     "deity": "高良玉垂命・八幡大神・住吉大神",
     "reason": "筑後国一宮。旧官幣大社。九州屈指の大社。鎮座する高良山は筑後川流域を見渡す霊山。",
     "nameEn": "Kora Taisha",
-    "prefEn": "Fukuoka"
+    "prefEn": "Fukuoka",
+    "provinceEn": "Chikugo Province",
+    "deityEn": "Kora Tamatare, Hachiman Okami and Sumiyoshi Okami",
+    "reasonEn": "The ichinomiya of Chikugo Province and a former imperial shrine, among the foremost great shrines of Kyushu. It stands on Mount Kora, a sacred mountain overlooking the Chikugo River basin."
   },
   {
     "pref": "長野",
@@ -699,7 +834,10 @@
     "deity": "建御名方神・八坂刀売神",
     "reason": "信濃国一宮。全国の諏訪神社の総本社をなす諏訪大社四社の一つで、本宮には本殿がなく、独特の諏訪造の社殿を伝える。",
     "nameEn": "Suwa Taisha (Honmiya)",
-    "prefEn": "Nagano"
+    "prefEn": "Nagano",
+    "provinceEn": "Shinano Province",
+    "deityEn": "Takeminakata and Yasakatome",
+    "reasonEn": "The ichinomiya of Shinano Province, one of the four shrines making up Suwa Taisha, the head shrine of all Suwa shrines nationwide. The Honmiya has no main hall, keeping to its distinctive Suwa-zukuri style of architecture."
   },
   {
     "pref": "静岡",
@@ -714,7 +852,10 @@
     "deity": "大山祇命・事代主神",
     "reason": "伊豆国一宮・旧官幣大社。伊豆配流中の源頼朝が源氏再興を祈願し、旗挙げ後も篤く崇敬したことで知られる。",
     "nameEn": "Mishima Taisha",
-    "prefEn": "Shizuoka"
+    "prefEn": "Shizuoka",
+    "provinceEn": "Izu Province",
+    "deityEn": "Oyamatsumi and Kotoshironushi",
+    "reasonEn": "The ichinomiya of Izu Province and a former imperial shrine. Minamoto no Yoritomo prayed here for the revival of his clan while exiled in Izu, and continued to revere it deeply after raising his army."
   },
   {
     "pref": "静岡",
@@ -730,7 +871,10 @@
     "deity": "木花之佐久夜毘売命",
     "reason": "全国約1,300社の浅間神社の総本社。旧官幣大社・国幣大社。富士山を御神体とし、流鏑馬や富士山世界文化遺産の構成資産。日本随一の縁結び・安産の神。",
     "nameEn": "Fujisan Hongu Sengen Taisha",
-    "prefEn": "Shizuoka"
+    "prefEn": "Shizuoka",
+    "provinceEn": "Suruga Province",
+    "deityEn": "Konohanasakuyahime",
+    "reasonEn": "The head shrine of around 1,300 Sengen shrines nationwide, and a former imperial and national shrine. It takes Mount Fuji itself as its sacred object, holds yabusame mounted archery, and forms part of the Mount Fuji World Heritage Site. Regarded as Japan's foremost god of relationships and safe childbirth."
   },
   {
     "pref": "三重",
@@ -744,7 +888,10 @@
     "deity": "稚日女尊・伊佐波登美命・玉柱屋姫命・狭依姫命",
     "reason": "志摩国一宮。鳥羽・安楽島の加布良古崎に鎮座し「かぶらこさん」と親しまれる。かつては海から参拝したと伝わる。",
     "nameEn": "Izawa Jinja",
-    "prefEn": "Mie"
+    "prefEn": "Mie",
+    "provinceEn": "Shima Province",
+    "deityEn": "Wakahirume, Isawadomi, Tamahashirayahime and Sayorihime",
+    "reasonEn": "The ichinomiya of Shima Province, standing on Kaburako Point at Anagajima, Toba, and affectionately known as 'Kaburako-san'. Worshippers are said to have once approached it by sea."
   },
   {
     "pref": "三重",
@@ -758,7 +905,10 @@
     "deity": "天照坐皇大御神御魂",
     "reason": "志摩国一宮とされる皇大神宮の別宮。正宮に次ぐ格式を持ち、国指定重要無形民俗文化財の伊雑宮御田植祭で知られる。",
     "nameEn": "Izawanomiya",
-    "prefEn": "Mie"
+    "prefEn": "Mie",
+    "provinceEn": "Shima Province",
+    "deityEn": "The sacred spirit of Amaterasu, the sun goddess",
+    "reasonEn": "An associated shrine of Kotai Jingu, regarded as the ichinomiya of Shima Province. It ranks just below the main shrine, and is known for its rice-planting festival, a nationally designated Important Intangible Folk Cultural Property."
   },
   {
     "pref": "三重",
@@ -773,7 +923,10 @@
     "deity": "大彦命・少彦名命・金山比咩命",
     "reason": "伊賀国一宮。旧国幣中社。忍者の里・伊賀の守護神として古くから信仰される。",
     "nameEn": "Aekuni Jinja",
-    "prefEn": "Mie"
+    "prefEn": "Mie",
+    "provinceEn": "Iga Province",
+    "deityEn": "Ohiko, Sukunahikona and Kanayamahime",
+    "reasonEn": "The ichinomiya of Iga Province and a former national shrine, long worshipped as the guardian deity of Iga, homeland of the ninja."
   },
   {
     "pref": "三重",
@@ -787,7 +940,10 @@
     "deity": "猿田彦大神",
     "reason": "伊勢国一宮。猿田彦大神を祀る全国二千余社の本宮として信仰され、「みちびきの祖神」で知られる。",
     "nameEn": "Tsubaki Okamiyashiro",
-    "prefEn": "Mie"
+    "prefEn": "Mie",
+    "provinceEn": "Ise Province",
+    "deityEn": "Sarutahiko Okami",
+    "reasonEn": "The ichinomiya of Ise Province, worshipped as the head shrine of more than 2,000 shrines nationwide enshrining Sarutahiko Okami, known as the ancestral god of guidance."
   },
   {
     "pref": "京都",
@@ -804,7 +960,10 @@
     "deity": "賀茂別雷大神",
     "reason": "山城国一宮。京都最古級の古社で、本殿など2棟は国宝。下鴨神社とともに世界文化遺産「古都京都の文化財」を構成する。",
     "nameEn": "Kamigamo Jinja",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Kamowakeikazuchi Okami",
+    "reasonEn": "The ichinomiya of Yamashiro Province, among the oldest shrines in Kyoto. Its main hall and one other building are National Treasures, and together with Shimogamo Jinja it forms part of the World Heritage Site 'Historic Monuments of Ancient Kyoto'."
   },
   {
     "pref": "京都",
@@ -821,7 +980,10 @@
     "deity": "賀茂御祖大神",
     "reason": "山城国一宮。平安遷都後は京都の総鎮護として朝廷の崇敬を受け、糺の森と社殿は世界文化遺産「古都京都の文化財」を構成する。",
     "nameEn": "Shimogamo Jinja",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Kamomioya Okami",
+    "reasonEn": "The ichinomiya of Yamashiro Province. After the capital moved to Heian-kyo it was revered by the imperial court as guardian of the whole city, and its Tadasu no Mori forest and buildings form part of the World Heritage Site 'Historic Monuments of Ancient Kyoto'."
   },
   {
     "pref": "京都",
@@ -836,7 +998,10 @@
     "deity": "大国主命・三穂津姫命",
     "reason": "丹波国一宮。旧国幣中社。「元出雲」とも呼ばれ出雲大社より古いとする伝承を持つ。",
     "nameEn": "Izumo Daijingu",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Tanba Province",
+    "deityEn": "Okuninushi and Mihotsuhime",
+    "reasonEn": "The ichinomiya of Tanba Province and a former national shrine, also known as 'the original Izumo', with a tradition holding it to predate Izumo Taisha itself."
   },
   {
     "pref": "京都",
@@ -851,7 +1016,10 @@
     "deity": "彦火明命・豊受大神ほか",
     "reason": "丹後国一宮。旧国幣中社。天橋立・元伊勢と称される。内宮・外宮の神が最初に鎮座したとされる。",
     "nameEn": "Kono Jinja",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Tango Province",
+    "deityEn": "Hikohoakari, Toyouke and others",
+    "reasonEn": "The ichinomiya of Tango Province and a former national shrine, known as the 'Ise before Ise' of Amanohashidate. It is said to be where the deities of Ise Jingu's inner and outer shrines were first enshrined."
   },
   {
     "pref": "佐賀",
@@ -866,7 +1034,10 @@
     "deity": "応神天皇",
     "reason": "肥前国一宮。旧国幣小社。宇佐神宮の別宮として知られ、平安期には式外五所八幡別宮の一社として崇敬を受けた。",
     "nameEn": "Chiriku Hachimangu",
-    "prefEn": "Saga"
+    "prefEn": "Saga",
+    "provinceEn": "Hizen Province",
+    "deityEn": "Emperor Ojin",
+    "reasonEn": "The ichinomiya of Hizen Province and a former national shrine. Known as an associated shrine of Usa Jingu, it was revered in the Heian period as one of five subsidiary Hachiman shrines outside the official shrine register."
   },
   {
     "pref": "佐賀",
@@ -880,7 +1051,10 @@
     "deity": "淀姫神",
     "reason": "肥前国一宮。旧県社。欽明天皇25年（564）創建とされ、祭神の與止日女命は神功皇后の妹、一説に豊玉姫命と伝わる。",
     "nameEn": "Yodohime Jinja",
-    "prefEn": "Saga"
+    "prefEn": "Saga",
+    "provinceEn": "Hizen Province",
+    "deityEn": "Yodohime",
+    "reasonEn": "The ichinomiya of Hizen Province and a former prefectural shrine, said to have been founded in 564. Its deity, Yodohime, is said to be a younger sister of Empress Jingu, or by another tradition to be Toyotamahime."
   },
   {
     "pref": "兵庫",
@@ -894,7 +1068,10 @@
     "deity": "大己貴神",
     "reason": "播磨国一宮。旧国幣中社。境内には創祀の伝承にちなむ「鶴石」が残り、播磨を代表する古社として崇敬されてきた。",
     "nameEn": "Iwa Jinja",
-    "prefEn": "Hyogo"
+    "prefEn": "Hyogo",
+    "provinceEn": "Harima Province",
+    "deityEn": "Onamuchi",
+    "reasonEn": "The ichinomiya of Harima Province and a former national shrine. Its grounds still hold the 'Crane Stone' linked to the story of its founding, and it has long been revered as the leading ancient shrine of Harima."
   },
   {
     "pref": "兵庫",
@@ -909,7 +1086,10 @@
     "deity": "天日槍命・但馬諸神",
     "reason": "但馬国一宮。旧国幣中社。渡来神・天日槍命を祀る。但馬の国の神々を総括する古社。",
     "nameEn": "Izushi Jinja",
-    "prefEn": "Hyogo"
+    "prefEn": "Hyogo",
+    "provinceEn": "Tajima Province",
+    "deityEn": "Amenohihoko and the deities of Tajima",
+    "reasonEn": "The ichinomiya of Tajima Province and a former national shrine, enshrining Amenohihoko, a deity said to have come from overseas. An ancient shrine that presides over the gods of Tajima Province as a whole."
   },
   {
     "pref": "千葉",
@@ -924,7 +1104,10 @@
     "deity": "天太玉命・天比理刀咩命ほか",
     "reason": "安房国一宮。旧官幣大社。全国木工・建築の神の総本社。房総半島南端の霊場。",
     "nameEn": "Awa Jinja",
-    "prefEn": "Chiba"
+    "prefEn": "Chiba",
+    "provinceEn": "Awa Province (Chiba)",
+    "deityEn": "Amenofutodama, Amenohiritome and others",
+    "reasonEn": "The ichinomiya of Awa Province (Chiba) and a former imperial shrine, the head shrine for the gods of woodworking and construction nationwide. A sacred site at the southern tip of the Boso Peninsula."
   },
   {
     "pref": "千葉",
@@ -938,7 +1121,10 @@
     "deity": "玉依姫命",
     "reason": "上総国一宮。旧国幣中社。玉依姫命を祀り、子授け・子宝・縁結びの信仰で知られる。",
     "nameEn": "Tamasaki Jinja",
-    "prefEn": "Chiba"
+    "prefEn": "Chiba",
+    "provinceEn": "Kazusa Province",
+    "deityEn": "Tamayorihime",
+    "reasonEn": "The ichinomiya of Kazusa Province and a former national shrine, enshrining Tamayorihime. Known for its worship as a god of conceiving children and good relationships."
   },
   {
     "pref": "和歌山",
@@ -953,7 +1139,10 @@
     "deity": "丹生都比売大神・高野御子大神ほか",
     "reason": "紀伊国一宮。旧官幣大社。空海に高野山を授けたとの伝承から高野山総鎮守とされ、世界文化遺産にも登録される。",
     "nameEn": "Niutsuhime Jinja",
-    "prefEn": "Wakayama"
+    "prefEn": "Wakayama",
+    "provinceEn": "Kii Province",
+    "deityEn": "Niutsuhime and Takanomiko, and others",
+    "reasonEn": "The ichinomiya of Kii Province and a former imperial shrine. According to tradition its deity granted Mount Koya to the monk Kukai, and it is regarded as the guardian shrine of Mount Koya, also registered as a World Heritage Site."
   },
   {
     "pref": "埼玉",
@@ -967,7 +1156,10 @@
     "deity": "須佐之男命・稲田姫命・大己貴命",
     "reason": "武蔵国一宮。旧官幣大社。大宮の地名の由来となった古社で、関東を中心に約280社ある氷川神社の総本社。",
     "nameEn": "Musashi Ichinomiya Hikawa Jinja",
-    "prefEn": "Saitama"
+    "prefEn": "Saitama",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Susanoo, Inadahime and Onamuchi",
+    "reasonEn": "The ichinomiya of Musashi Province and a former imperial shrine. An ancient shrine that gave its name to the district of Omiya, and the head shrine of around 280 Hikawa shrines concentrated in the Kanto region."
   },
   {
     "pref": "大分",
@@ -983,7 +1175,10 @@
     "deity": "仲哀天皇・八幡神",
     "reason": "豊後国一宮。旧国幣小社。宇佐神宮の分祀を受けた八幡宮で、楼門・本殿などの社殿群は国の重要文化財。",
     "nameEn": "Yusuhara Hachimangu",
-    "prefEn": "Oita"
+    "prefEn": "Oita",
+    "provinceEn": "Bungo Province",
+    "deityEn": "Emperor Chuai and the god Hachiman",
+    "reasonEn": "The ichinomiya of Bungo Province and a former national shrine, a Hachiman shrine that received a division of the Usa Jingu deity. Its two-storey gate, main hall and other buildings are Important Cultural Properties."
   },
   {
     "pref": "大分",
@@ -997,7 +1192,10 @@
     "deity": "天照大御神",
     "reason": "豊後国一宮。旧国幣中社。古くは本宮山を祭祀の中心とし、応永15年（1408）に現在地へ遷座したと伝わる。",
     "nameEn": "Sasamuta Jinja",
-    "prefEn": "Oita"
+    "prefEn": "Oita",
+    "provinceEn": "Bungo Province",
+    "deityEn": "Amaterasu, the sun goddess",
+    "reasonEn": "The ichinomiya of Bungo Province and a former national shrine. Worship originally centred on Mount Hongu, and the shrine is said to have moved to its present site in 1408."
   },
   {
     "pref": "大阪",
@@ -1011,7 +1209,10 @@
     "deity": "天児屋根命・比売御神ほか",
     "reason": "河内国一宮。旧官幣大社。天児屋根命・比売御神を春日大社へ分祀した由緒から「元春日」と称される。",
     "nameEn": "Hiraoka Jinja",
-    "prefEn": "Osaka"
+    "prefEn": "Osaka",
+    "provinceEn": "Kawachi Province",
+    "deityEn": "Amenokoyane, Himegami and others",
+    "reasonEn": "The ichinomiya of Kawachi Province and a former imperial shrine, known as the 'original Kasuga' because its deities Amenokoyane and Himegami were later divided off to found Kasuga Taisha."
   },
   {
     "pref": "奈良",
@@ -1028,7 +1229,10 @@
     "deity": "大物主大神",
     "reason": "大和国一宮。旧官幣大社。三輪山そのものを御神体とし、本殿を設けず拝殿から山を拝む古い祭祀形態を伝える。",
     "nameEn": "Omiwa Jinja",
-    "prefEn": "Nara"
+    "prefEn": "Nara",
+    "provinceEn": "Yamato Province",
+    "deityEn": "Omononushi Okami",
+    "reasonEn": "The ichinomiya of Yamato Province and a former imperial shrine. It takes Mount Miwa itself as its sacred object and has no main hall, preserving the ancient form of worship in which the mountain is venerated directly from the offering hall."
   },
   {
     "pref": "宮城",
@@ -1042,7 +1246,10 @@
     "deity": "塩土老翁神・武甕槌神・経津主神",
     "reason": "陸奥国一宮。旧国幣中社。塩土老翁神・武甕槌神・経津主神を祀り、塩業・漁業や安産の守護神として信仰される。",
     "nameEn": "Shiogama Jinja",
-    "prefEn": "Miyagi"
+    "prefEn": "Miyagi",
+    "provinceEn": "Mutsu Province",
+    "deityEn": "Shiotsuchi no Oji, Takemikazuchi and Futsunushi",
+    "reasonEn": "The ichinomiya of Mutsu Province and a former national shrine, enshrining Shiotsuchi no Oji, Takemikazuchi and Futsunushi. Worshipped as guardian of the salt and fishing industries and of safe childbirth."
   },
   {
     "pref": "宮崎",
@@ -1056,7 +1263,10 @@
     "deity": "大己貴命",
     "reason": "日向国一宮。旧国幣小社。社伝では神武天皇の東遷に際し、大己貴命を祀って国土平安を祈ったことに始まる。",
     "nameEn": "Tsuno Jinja",
-    "prefEn": "Miyazaki"
+    "prefEn": "Miyazaki",
+    "provinceEn": "Hyuga Province",
+    "deityEn": "Onamuchi",
+    "reasonEn": "The ichinomiya of Hyuga Province and a former national shrine. According to its own tradition it began when Emperor Jinmu, on his eastward journey, enshrined Onamuchi and prayed for peace in the land."
   },
   {
     "pref": "富山",
@@ -1070,7 +1280,10 @@
     "deity": "大己貴命",
     "reason": "越中国一宮。旧県社。養老2年（718）に行基が創建したと伝わり、本殿は国の重要文化財に指定されている。",
     "nameEn": "Keta Jinja",
-    "prefEn": "Toyama"
+    "prefEn": "Toyama",
+    "provinceEn": "Ecchu Province",
+    "deityEn": "Onamuchi",
+    "reasonEn": "The ichinomiya of Ecchu Province and a former prefectural shrine, said to have been founded by the monk Gyoki in 718. Its main hall is a nationally designated Important Cultural Property."
   },
   {
     "pref": "富山",
@@ -1084,7 +1297,10 @@
     "deity": "大己貴神",
     "reason": "越中国一宮。旧国幣小社。大己貴神を主祭神に祀り、古くから越中の人々の崇敬を受けてきた。",
     "nameEn": "Takase Jinja",
-    "prefEn": "Toyama"
+    "prefEn": "Toyama",
+    "provinceEn": "Ecchu Province",
+    "deityEn": "Onamuchi",
+    "reasonEn": "The ichinomiya of Ecchu Province and a former national shrine, whose chief deity is Onamuchi. It has long been revered by the people of Ecchu."
   },
   {
     "pref": "山口",
@@ -1098,7 +1314,10 @@
     "deity": "表筒男命・中筒男命・底筒男命",
     "reason": "長門国一宮。旧官幣中社。大阪・博多と並ぶ「日本三大住吉」の一社で、九間社流造の本殿は国宝。",
     "nameEn": "Sumiyoshi Jinja",
-    "prefEn": "Yamaguchi"
+    "prefEn": "Yamaguchi",
+    "provinceEn": "Nagato Province",
+    "deityEn": "Uwatsutsunoo, Nakatsutsunoo and Sokotsutsunoo",
+    "reasonEn": "The ichinomiya of Nagato Province and a former imperial shrine, one of the 'Three Great Sumiyoshi Shrines of Japan' alongside those of Osaka and Hakata. Its nine-bay main hall, in the nagare-zukuri style, is a National Treasure."
   },
   {
     "pref": "山口",
@@ -1112,7 +1331,10 @@
     "deity": "玉祖命",
     "reason": "周防国一宮。旧国幣中社。玉作りの祖神・玉祖命を祀り、境内は国天然記念物・黒柏鶏の発祥地とされる。",
     "nameEn": "Tamanooya Jinja",
-    "prefEn": "Yamaguchi"
+    "prefEn": "Yamaguchi",
+    "provinceEn": "Suo Province",
+    "deityEn": "Tamanooya",
+    "reasonEn": "The ichinomiya of Suo Province and a former national shrine, enshrining Tamanooya, ancestral god of jewel-making. Its grounds are said to be the birthplace of the Kurokashiwa, a nationally protected breed of chicken."
   },
   {
     "pref": "山形",
@@ -1126,7 +1348,10 @@
     "deity": "大物忌神",
     "reason": "出羽国一宮。旧国幣中社。本社は鳥海山頂に鎮座し、麓の吹浦・蕨岡に二つの口ノ宮を置く山岳信仰の古社。",
     "nameEn": "Chokaisan Omonoimi Jinja",
-    "prefEn": "Yamagata"
+    "prefEn": "Yamagata",
+    "provinceEn": "Dewa Province",
+    "deityEn": "Omonoimi",
+    "reasonEn": "The ichinomiya of Dewa Province and a former national shrine, an ancient centre of mountain worship. Its main shrine stands on the summit of Mount Chokai, with two subsidiary entrance shrines at Fukuura and Warabioka at its foot."
   },
   {
     "pref": "山梨",
@@ -1141,7 +1366,10 @@
     "deity": "浅間大神（木花開耶姫命）",
     "reason": "甲斐国一宮（一説）。旧郷社。富士吉田とは別系統の甲府盆地における浅間信仰の中心。",
     "nameEn": "Asama Jinja (Kai Ichinomiya)",
-    "prefEn": "Yamanashi"
+    "prefEn": "Yamanashi",
+    "provinceEn": "Kai Province",
+    "deityEn": "Asama Okami (Konohanasakuyahime)",
+    "reasonEn": "By one tradition the ichinomiya of Kai Province, and a former village shrine. A centre of Sengen (Mount Fuji) worship in the Kofu Basin, distinct from the Fujiyoshida line of shrines."
   },
   {
     "pref": "岐阜",
@@ -1156,7 +1384,10 @@
     "deity": "水無神（三尾神）",
     "reason": "飛騨国一宮。旧国幣中社。高山の山岳霊場に鎮座。全国の水無神社・御霊神社の総本社。",
     "nameEn": "Minashi Jinja",
-    "prefEn": "Gifu"
+    "prefEn": "Gifu",
+    "provinceEn": "Hida Province",
+    "deityEn": "Minashi no Kami (Mio no Kami)",
+    "reasonEn": "The ichinomiya of Hida Province and a former national shrine, standing at a sacred mountain site in Takayama. It is the head shrine of all Minashi and Goryo shrines nationwide."
   },
   {
     "pref": "岡山",
@@ -1170,7 +1401,10 @@
     "deity": "鏡作神・天糠戸神",
     "reason": "美作国一宮。旧国幣中社。鏡作神を祀り、牛馬守護や鍛金・冶工の神として信仰される。御田植祭の鍬振り神事も伝わる。",
     "nameEn": "Nakayama Jinja",
-    "prefEn": "Okayama"
+    "prefEn": "Okayama",
+    "provinceEn": "Mimasaka Province",
+    "deityEn": "Kagamitsukuri and Amanonukado",
+    "reasonEn": "The ichinomiya of Mimasaka Province and a former national shrine, enshrining Kagamitsukuri. Worshipped as a guardian of cattle and horses and a god of metalworking, it also preserves a hoe-swinging rite within its rice-planting festival."
   },
   {
     "pref": "岡山",
@@ -1184,7 +1418,10 @@
     "deity": "大吉備津彦大神",
     "reason": "備前国一宮。旧国幣小社。大吉備津彦命を祀り、背後の吉備中山には古代から祭祀の場とされた天津磐座・磐境が残る。",
     "nameEn": "Kibitsuhiko Jinja",
-    "prefEn": "Okayama"
+    "prefEn": "Okayama",
+    "provinceEn": "Bizen Province",
+    "deityEn": "Okibitsuhiko Okami",
+    "reasonEn": "The ichinomiya of Bizen Province and a former national shrine, enshrining Okibitsuhiko. On Mount Kibi-no-Nakayama behind it stand ancient sacred rocks that have served as a place of worship since antiquity."
   },
   {
     "pref": "岡山",
@@ -1199,7 +1436,10 @@
     "deity": "大吉備津彦命",
     "reason": "備中国一宮。旧官幣中社。吉備津造（比翼入母屋造）の本殿は国宝。吉備の中山を神体とする。",
     "nameEn": "Kibitsu Jinja",
-    "prefEn": "Okayama"
+    "prefEn": "Okayama",
+    "provinceEn": "Bicchu Province",
+    "deityEn": "Okibitsuhiko",
+    "reasonEn": "The ichinomiya of Bicchu Province and a former imperial shrine. Its main hall, built in the unique Kibitsu style of paired hip-and-gable roofs, is a National Treasure, and it takes Mount Kibi-no-Nakayama as its sacred body."
   },
   {
     "pref": "岩手",
@@ -1213,7 +1453,10 @@
     "deity": "天照大御神ほか六柱",
     "reason": "陸中国一宮。旧国幣小社。もとは駒ケ岳山頂に祀られた山岳信仰の社で、明治36年（1903）に現在地へ遷座した。",
     "nameEn": "Komagata Jinja",
-    "prefEn": "Iwate"
+    "prefEn": "Iwate",
+    "provinceEn": "Rikuchu Province",
+    "deityEn": "Amaterasu, the sun goddess, and six other deities",
+    "reasonEn": "The ichinomiya of Rikuchu Province and a former national shrine. Originally a mountain shrine on the summit of Mount Komagatake, it moved to its present site in 1903."
   },
   {
     "pref": "島根",
@@ -1227,7 +1470,10 @@
     "deity": "水若酢命",
     "reason": "隠岐国一宮。旧国幣中社。『延喜式』の名神大社で、寛政7年（1795）造営の隠岐造の本殿は国の重要文化財。",
     "nameEn": "Mizuwakasu Jinja",
-    "prefEn": "Shimane"
+    "prefEn": "Shimane",
+    "provinceEn": "Oki Province",
+    "deityEn": "Mizuwakasu",
+    "reasonEn": "The ichinomiya of Oki Province and a former national shrine, listed as a Myojin Taisha in the Engishiki register. Its main hall, built in 1795 in the distinctive Oki style, is a nationally designated Important Cultural Property."
   },
   {
     "pref": "島根",
@@ -1242,7 +1488,10 @@
     "deity": "宇摩志麻遅命",
     "reason": "石見国一宮。旧国幣大社。物部氏の祖神を祀る。出雲・石見の文化圏を代表する古社。",
     "nameEn": "Mononobe Jinja",
-    "prefEn": "Shimane"
+    "prefEn": "Shimane",
+    "provinceEn": "Iwami Province",
+    "deityEn": "Umashimaji",
+    "reasonEn": "The ichinomiya of Iwami Province and a former imperial shrine, enshrining the ancestral god of the Mononobe clan. A leading ancient shrine of the Izumo-Iwami cultural sphere."
   },
   {
     "pref": "島根",
@@ -1256,7 +1505,10 @@
     "deity": "由良比女命",
     "reason": "隠岐国一宮。『延喜式』の名神大社。承和9年（842）に官社となった古社で、由良の浜にイカが押し寄せたという伝説が残る。",
     "nameEn": "Yurahime Jinja",
-    "prefEn": "Shimane"
+    "prefEn": "Shimane",
+    "provinceEn": "Oki Province",
+    "deityEn": "Yurahime",
+    "reasonEn": "The ichinomiya of Oki Province, listed as a Myojin Taisha in the Engishiki register. It became an officially recognised shrine in 842, and a legend tells of squid washing up en masse on Yura beach here."
   },
   {
     "pref": "広島",
@@ -1271,7 +1523,10 @@
     "deity": "宗像三女神（市杵島姫命ほか）",
     "reason": "旧官幣中社。世界遺産登録（1996年）。海上に立つ大鳥居と社殿が日本三景のひとつ。平清盛ゆかりの社。",
     "nameEn": "Itsukushima Jinja",
-    "prefEn": "Hiroshima"
+    "prefEn": "Hiroshima",
+    "provinceEn": "Aki Province",
+    "deityEn": "The three Munakata goddesses (Ichikishimahime and others)",
+    "reasonEn": "A former imperial shrine and World Heritage Site (1996). Its great torii gate and buildings standing over the sea form one of Japan's Three Scenic Views. A shrine closely associated with Taira no Kiyomori."
   },
   {
     "pref": "広島",
@@ -1285,7 +1540,10 @@
     "deity": "大吉備津彦命",
     "reason": "備後国一宮。大同元年（806）創建と伝わり、本殿は国の重要文化財。節分の「ほら吹き神事」でも知られる。",
     "nameEn": "Kibitsu Jinja",
-    "prefEn": "Hiroshima"
+    "prefEn": "Hiroshima",
+    "provinceEn": "Bingo Province",
+    "deityEn": "Okibitsuhiko",
+    "reasonEn": "The ichinomiya of Bingo Province, said to have been founded in 806. Its main hall is an Important Cultural Property, and it is also known for its Setsubun 'conch-blowing rite'."
   },
   {
     "pref": "広島",
@@ -1299,7 +1557,10 @@
     "deity": "飽速玉男命",
     "reason": "安芸国一宮。旧国幣中社。「車を買ったら速谷さん」といわれる交通安全の守護神で、安芸国の総鎮守として崇敬される。",
     "nameEn": "Hayatani Jinja",
-    "prefEn": "Hiroshima"
+    "prefEn": "Hiroshima",
+    "provinceEn": "Aki Province",
+    "deityEn": "Akihayatamao",
+    "reasonEn": "The ichinomiya of Aki Province and a former national shrine. Known for the saying 'buy a car, then visit Hayatani', it is revered as a guardian of road safety and of Aki Province as a whole."
   },
   {
     "pref": "徳島",
@@ -1313,7 +1574,10 @@
     "deity": "大麻比古神・猿田彦神",
     "reason": "阿波国一宮。旧国幣中社。阿波忌部氏の祖が麻・楮を植えて国を開いた由緒を伝え、殖産興業の神として信仰される。",
     "nameEn": "Oasahiko Jinja",
-    "prefEn": "Tokushima"
+    "prefEn": "Tokushima",
+    "provinceEn": "Awa Province (Tokushima)",
+    "deityEn": "Oasahiko and Sarutahiko",
+    "reasonEn": "The ichinomiya of Awa Province (Tokushima) and a former national shrine. Tradition holds that the ancestor of the Awa Imbe clan opened up the province by planting hemp and paper mulberry, and it is worshipped as a god of industry."
   },
   {
     "pref": "愛媛",
@@ -1327,7 +1591,10 @@
     "deity": "大山積神",
     "reason": "伊予国一宮。旧国幣大社。大山積神を祀る全国の大山祇・三島神社の総本社で、古くから「日本総鎮守」と称される。",
     "nameEn": "Oyamazumi Jinja",
-    "prefEn": "Ehime"
+    "prefEn": "Ehime",
+    "provinceEn": "Iyo Province",
+    "deityEn": "Oyamatsumi",
+    "reasonEn": "The ichinomiya of Iyo Province and a former imperial shrine, enshrining Oyamatsumi. It is the head shrine of all Oyamazumi and Mishima shrines nationwide, and has long been called the 'guardian shrine of all Japan'."
   },
   {
     "pref": "愛知",
@@ -1341,7 +1608,10 @@
     "deity": "天火明命",
     "reason": "尾張国一宮。旧国幣中社。尾張開拓の祖とされる天火明命を祀り、一宮市の地名の由来となった古社。",
     "nameEn": "Masumida Jinja",
-    "prefEn": "Aichi"
+    "prefEn": "Aichi",
+    "provinceEn": "Owari Province",
+    "deityEn": "Amenohoakari",
+    "reasonEn": "The ichinomiya of Owari Province and a former national shrine, enshrining Amenohoakari, regarded as the ancestor who opened up Owari. An ancient shrine that gave its name to the city of Ichinomiya."
   },
   {
     "pref": "愛知",
@@ -1356,7 +1626,10 @@
     "deity": "大己貴命",
     "reason": "三河国一宮。旧国幣中社。本宮は本宮山（標高789m）山頂に鎮座する山岳信仰の社。",
     "nameEn": "Toga Jinja",
-    "prefEn": "Aichi"
+    "prefEn": "Aichi",
+    "provinceEn": "Mikawa Province",
+    "deityEn": "Onamuchi",
+    "reasonEn": "The ichinomiya of Mikawa Province and a former national shrine. Its Honmiya stands atop the 789-metre Mount Honguyama as a centre of mountain worship."
   },
   {
     "pref": "新潟",
@@ -1370,7 +1643,10 @@
     "deity": "大己貴命・奴奈川姫命・建御名方命",
     "reason": "越後国一宮。旧県社。越後へ配流された親鸞が上陸後最初に参拝したと伝わり、「片葉の葦」の伝説が残る。",
     "nameEn": "Koda Jinja",
-    "prefEn": "Niigata"
+    "prefEn": "Niigata",
+    "provinceEn": "Echigo Province",
+    "deityEn": "Onamuchi, Nunakawahime and Takeminakata",
+    "reasonEn": "The ichinomiya of Echigo Province and a former prefectural shrine. The monk Shinran is said to have visited it first on landing after his exile to Echigo, and a legend of one-sided reeds survives here."
   },
   {
     "pref": "新潟",
@@ -1385,7 +1661,10 @@
     "deity": "五十猛命",
     "reason": "佐渡国一宮。旧国幣中社。佐渡島を代表する格式ある古社。",
     "nameEn": "Watatsu Jinja",
-    "prefEn": "Niigata"
+    "prefEn": "Niigata",
+    "provinceEn": "Sado Province",
+    "deityEn": "Isotakeru",
+    "reasonEn": "The ichinomiya of Sado Province and a former national shrine, a leading ancient shrine of Sado Island."
   },
   {
     "pref": "新潟",
@@ -1399,7 +1678,10 @@
     "deity": "天香山命",
     "reason": "越後国一宮。旧国幣中社。「おやひこさま」と親しまれ、越後開拓の祖神とされる天香山命を祀る。",
     "nameEn": "Yahiko Jinja",
-    "prefEn": "Niigata"
+    "prefEn": "Niigata",
+    "provinceEn": "Echigo Province",
+    "deityEn": "Amenokaguyama",
+    "reasonEn": "The ichinomiya of Echigo Province and a former national shrine, affectionately known as 'Oyahiko-sama'. It enshrines Amenokaguyama, regarded as the ancestral god who opened up Echigo."
   },
   {
     "pref": "東京",
@@ -1413,7 +1695,10 @@
     "deity": "天下春命",
     "reason": "武蔵国一宮を称する式内社論社。旧郷社。多摩市一ノ宮に鎮座し、天下春命を祀る。",
     "nameEn": "Ono Jinja",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Amenoshitaharu",
+    "reasonEn": "A shrine listed in the Engishiki register, one of several claimants to the title of ichinomiya of Musashi Province. A former village shrine standing in the Ichinomiya district of Tama, enshrining Amenoshitaharu."
   },
   {
     "pref": "栃木",
@@ -1427,7 +1712,10 @@
     "deity": "豊城入彦命",
     "reason": "下野国一宮。旧国幣中社。豊城入彦命を祀り、宇都宮市の中心部に鎮座する古社。",
     "nameEn": "Utsunomiya Futarayama Jinja",
-    "prefEn": "Tochigi"
+    "prefEn": "Tochigi",
+    "provinceEn": "Shimotsuke Province",
+    "deityEn": "Toyokiirihiko",
+    "reasonEn": "The ichinomiya of Shimotsuke Province and a former national shrine, enshrining Toyokiirihiko. An ancient shrine standing in the centre of Utsunomiya city."
   },
   {
     "pref": "栃木",
@@ -1441,7 +1729,10 @@
     "deity": "大己貴命・田心姫命・味耜高彦根命",
     "reason": "下野国一宮。旧国幣中社。男体山を御神体とする日光山信仰の古社で、境内は世界遺産「日光の社寺」を構成する。",
     "nameEn": "Nikko Futarasan Jinja",
-    "prefEn": "Tochigi"
+    "prefEn": "Tochigi",
+    "provinceEn": "Shimotsuke Province",
+    "deityEn": "Onamuchi, Tagorihime and Ajisukitakahikone",
+    "reasonEn": "The ichinomiya of Shimotsuke Province and a former national shrine, an ancient centre of Nikko mountain worship taking Mount Nantai as its sacred object. Its grounds form part of the World Heritage Site 'Shrines and Temples of Nikko'."
   },
   {
     "pref": "沖縄",
@@ -1455,7 +1746,10 @@
     "deity": "熊野三所権現",
     "reason": "琉球国一宮。旧官幣小社。琉球八社の第一に位置づけられ、那覇港を望む崖上で航海安全の信仰を集めてきた。",
     "nameEn": "Naminoue Gu",
-    "prefEn": "Okinawa"
+    "prefEn": "Okinawa",
+    "provinceEn": "Ryukyu",
+    "deityEn": "The three Kumano avatars",
+    "reasonEn": "The ichinomiya of the Ryukyu Kingdom and a former imperial shrine, ranked first among the Eight Shrines of Ryukyu. Standing on a cliff overlooking Naha harbour, it has long drawn worship for safety at sea."
   },
   {
     "pref": "熊本",
@@ -1469,7 +1763,10 @@
     "deity": "健磐龍命ほか十二神",
     "reason": "肥後国一宮。旧官幣大社。阿蘇開拓の祖・健磐龍命ら十二神を祀る。熊本地震で被災した楼門は令和5年に復旧した。",
     "nameEn": "Aso Jinja",
-    "prefEn": "Kumamoto"
+    "prefEn": "Kumamoto",
+    "provinceEn": "Higo Province",
+    "deityEn": "Takeiwatatsu and twelve other deities",
+    "reasonEn": "The ichinomiya of Higo Province and a former imperial shrine, enshrining Takeiwatatsu, ancestor who opened up the Aso region, along with eleven other deities. Its two-storey gate, damaged in the Kumamoto earthquake, was restored in 2023."
   },
   {
     "pref": "石川",
@@ -1483,7 +1780,10 @@
     "deity": "白山比咩大神・伊弉諾尊・伊弉冉尊",
     "reason": "加賀国一宮。旧国幣中社。白山を神体山とし、全国三千余社の白山神社の総本宮として「白山さん」と親しまれる。",
     "nameEn": "Shirayamahime Jinja",
-    "prefEn": "Ishikawa"
+    "prefEn": "Ishikawa",
+    "provinceEn": "Kaga Province",
+    "deityEn": "Shirayamahime Okami, Izanagi and Izanami",
+    "reasonEn": "The ichinomiya of Kaga Province and a former national shrine, taking Mount Hakusan as its sacred mountain. As the head shrine of more than 3,000 Hakusan shrines nationwide, it is affectionately known as 'Hakusan-san'."
   },
   {
     "pref": "神奈川",
@@ -1497,7 +1797,10 @@
     "deity": "寒川比古命・寒川比女命",
     "reason": "相模国一宮。旧国幣中社。寒川比古命・寒川比女命を祀り、全国唯一とされる「八方除」の守護神として信仰される。",
     "nameEn": "Samukawa Jinja",
-    "prefEn": "Kanagawa"
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Samukawahiko and Samukawahime",
+    "reasonEn": "The ichinomiya of Sagami Province and a former national shrine, enshrining Samukawahiko and Samukawahime. Worshipped as the only shrine in Japan offering protection from misfortune in all eight directions."
   },
   {
     "pref": "福井",
@@ -1511,7 +1814,10 @@
     "deity": "若狭彦大神（彦火火出見尊）",
     "reason": "若狭国一宮・旧国幣中社。上社に山幸彦こと彦火火出見尊を祀り、本殿・神門・随神門は福井県指定文化財。",
     "nameEn": "Wakasahiko Jinja",
-    "prefEn": "Fukui"
+    "prefEn": "Fukui",
+    "provinceEn": "Wakasa Province",
+    "deityEn": "Wakasahiko Okami (Hikohohodemi)",
+    "reasonEn": "The ichinomiya of Wakasa Province and a former national shrine. Its upper shrine enshrines Hikohohodemi, known as Yamasachihiko; its main hall, sacred gate and guardian gate are all designated cultural properties of Fukui Prefecture."
   },
   {
     "pref": "福岡",
@@ -1525,7 +1831,10 @@
     "deity": "表筒男神・中筒男神・底筒男神",
     "reason": "筑前国一宮。住吉三神を祀り、現在の本殿は黒田長政が元和9年（1623）に再建した住吉造で国重要文化財。",
     "nameEn": "Sumiyoshi Jinja",
-    "prefEn": "Fukuoka"
+    "prefEn": "Fukuoka",
+    "provinceEn": "Chikuzen Province",
+    "deityEn": "Uwatsutsunoo, Nakatsutsunoo and Sokotsutsunoo",
+    "reasonEn": "The ichinomiya of Chikuzen Province, enshrining the three Sumiyoshi deities. Its present main hall, rebuilt in the Sumiyoshi style by the feudal lord Kuroda Nagamasa in 1623, is an Important Cultural Property."
   },
   {
     "pref": "福岡",
@@ -1540,7 +1849,10 @@
     "deity": "応神天皇・神功皇后・玉依姫命",
     "reason": "日本三大八幡宮の一。醍醐天皇の勅願で創建。蒙古襲来の際の「敵国降伏」の扁額で知られる。",
     "nameEn": "Hakozaki Gu",
-    "prefEn": "Fukuoka"
+    "prefEn": "Fukuoka",
+    "provinceEn": "Chikuzen Province",
+    "deityEn": "Emperor Ojin, Empress Jingu and Tamayorihime",
+    "reasonEn": "One of the three great Hachiman shrines of Japan, founded by imperial decree of Emperor Daigo. Known for the wooden tablet reading 'Subjugation of the Enemy Nation', hung during the Mongol invasions."
   },
   {
     "pref": "福島",
@@ -1554,7 +1866,10 @@
     "deity": "伊弉諾尊・伊弉冉尊ほか",
     "reason": "岩代国一宮・旧国幣中社・名神大社。会津総鎮守として、保科正之をはじめ歴代会津藩主の崇敬を受けた。",
     "nameEn": "Isasumi Jinja",
-    "prefEn": "Fukushima"
+    "prefEn": "Fukushima",
+    "provinceEn": "Iwashiro Province",
+    "deityEn": "Izanagi and Izanami, the creator gods, and others",
+    "reasonEn": "The ichinomiya of Iwashiro Province, a former national shrine and Myojin Taisha. As guardian of the whole Aizu region, it was revered by successive lords of the Aizu domain, beginning with Hoshina Masayuki."
   },
   {
     "pref": "福島",
@@ -1569,7 +1884,10 @@
     "deity": "味耜高彦根神",
     "reason": "陸奥国一宮。大同2年（807）に坂上田村麻呂が棚倉城の地へ遷したと伝わり、明治6年に国幣中社となった。",
     "nameEn": "Baba Tsutsukowake Jinja",
-    "prefEn": "Fukushima"
+    "prefEn": "Fukushima",
+    "provinceEn": "Iwashiro Province",
+    "deityEn": "Ajisukitakahikone",
+    "reasonEn": "The ichinomiya of Mutsu Province. The general Sakanoue no Tamuramaro is said to have moved it to the site of Tanagura Castle in 807, and it became a national shrine in 1873."
   },
   {
     "pref": "秋田",
@@ -1583,7 +1901,10 @@
     "deity": "三吉霊神・大己貴神・少彦名神",
     "reason": "全国の三吉神社・太平山講の総本宮。太平山頂に奥宮、秋田市広面に里宮を置き、三吉霊神を勝利成功・事業繁栄の守護神として祀る。",
     "nameEn": "Taiheizan Sankichi Jinja",
-    "prefEn": "Akita"
+    "prefEn": "Akita",
+    "provinceEn": "Dewa Province",
+    "deityEn": "Miyoshi Reijin, Onamuchi and Sukunahikona",
+    "reasonEn": "The head shrine of all Sankichi shrines and Taiheizan devotional groups nationwide. It has an inner shrine atop Mount Taihei and an outer shrine at Hiromo in Akita city, enshrining Miyoshi Reijin as guardian of victory and business success."
   },
   {
     "pref": "群馬",
@@ -1597,7 +1918,10 @@
     "deity": "経津主神・姫大神",
     "reason": "上野国一宮。総門から石段を下る「くだり参道」が特徴で、徳川家光造営の本殿・拝殿・楼門は国重要文化財。",
     "nameEn": "Nukisaki Jinja",
-    "prefEn": "Gunma"
+    "prefEn": "Gunma",
+    "provinceEn": "Kozuke Province",
+    "deityEn": "Futsunushi and Himeokami",
+    "reasonEn": "The ichinomiya of Kozuke Province, distinctive for its approach that descends a stone stairway from the main gate. Its main hall, offering hall and two-storey gate, built for the shogun Tokugawa Iemitsu, are Important Cultural Properties."
   },
   {
     "pref": "長崎",
@@ -1611,7 +1935,10 @@
     "deity": "天手長男命",
     "reason": "壱岐国一宮。137段の苔むした石段の先に社殿があり、境内出土の延久2年銘石造弥勒如来坐像は国重要文化財。",
     "nameEn": "Amenotajikarao Jinja",
-    "prefEn": "Nagasaki"
+    "prefEn": "Nagasaki",
+    "provinceEn": "Iki Province",
+    "deityEn": "Amenotanagao",
+    "reasonEn": "The ichinomiya of Iki Province, its buildings standing beyond a flight of 137 moss-covered stone steps. A stone statue of Miroku Buddha dated 1070, excavated on the grounds, is an Important Cultural Property."
   },
   {
     "pref": "長崎",
@@ -1625,7 +1952,10 @@
     "deity": "綿津見神",
     "reason": "対馬国一宮・旧国幣中社。かつて八幡本宮・対馬本宮と称され、明治4年に海神神社へ改称した。",
     "nameEn": "Watatsumi Jinja",
-    "prefEn": "Nagasaki"
+    "prefEn": "Nagasaki",
+    "provinceEn": "Tsushima Province",
+    "deityEn": "Watatsumi",
+    "reasonEn": "The ichinomiya of Tsushima Province and a former national shrine. Once known as Hachiman Hongu or Tsushima Hongu, it was renamed Watatsumi Jinja in 1871."
   },
   {
     "pref": "長崎",
@@ -1639,7 +1969,10 @@
     "deity": "足仲彦命（仲哀天皇）・気長足姫命（神功皇后）ほか",
     "reason": "社記によれば弘仁2年（811）創建。壱岐国府があったと考えられる湯岳興触に鎮座し、かつて壱岐国一宮とされた。",
     "nameEn": "Oki Jinja",
-    "prefEn": "Nagasaki"
+    "prefEn": "Nagasaki",
+    "provinceEn": "Iki Province",
+    "deityEn": "Tarashinakatsuhiko (Emperor Chuai), Okinagatarashihime (Empress Jingu) and others",
+    "reasonEn": "According to its own records, founded in 811. It stands at Yudake Okifure, thought to be the site of the Iki provincial government, and was once considered the ichinomiya of Iki Province."
   },
   {
     "pref": "青森",
@@ -1653,7 +1986,10 @@
     "deity": "顕国魂神・多都比姫神ほか",
     "reason": "津軽国一宮。津軽富士と呼ばれる岩木山を御神体と仰ぐ山岳信仰の古社で、山頂に奥宮、百沢に里宮がある。",
     "nameEn": "Iwakiyama Jinja",
-    "prefEn": "Aomori"
+    "prefEn": "Aomori",
+    "provinceEn": "Tsugaru (in Mutsu Province)",
+    "deityEn": "Utsushikunitama, Tatsuhime and others",
+    "reasonEn": "The ichinomiya of the Tsugaru region, an ancient centre of mountain worship venerating Mount Iwaki, known as the 'Fuji of Tsugaru', as its sacred object. It has an inner shrine on the summit and an outer shrine at Hyakuzawa."
   },
   {
     "pref": "静岡",
@@ -1669,7 +2005,10 @@
     "deity": "己等乃麻知比売命・誉田別命ほか",
     "reason": "遠江国一宮（一説）。「ことのまま」の言霊信仰で願い事が叶う縁結びの社。枕草子にも記される古社。",
     "nameEn": "Kotonomama Hachimangu",
-    "prefEn": "Shizuoka"
+    "prefEn": "Shizuoka",
+    "provinceEn": "Totomi Province",
+    "deityEn": "Kotonomachihime, Hondawake and others",
+    "reasonEn": "By one tradition the ichinomiya of Totomi Province. Its name, meaning 'as spoken', reflects a belief in the power of words to grant wishes, and it is worshipped for good relationships. An ancient shrine mentioned in The Pillow Book."
   },
   {
     "pref": "静岡",
@@ -1683,7 +2022,10 @@
     "deity": "大己貴命",
     "reason": "遠江国一宮。大己貴命を祀り、創建から1470年以上と伝わる古社。境内の事待池には縁結びの信仰が伝わる。",
     "nameEn": "Okuni Jinja",
-    "prefEn": "Shizuoka"
+    "prefEn": "Shizuoka",
+    "provinceEn": "Totomi Province",
+    "deityEn": "Onamuchi",
+    "reasonEn": "The ichinomiya of Totomi Province, enshrining Onamuchi, said to have been founded more than 1,470 years ago. Its pond, Kotomachi-ike, carries a tradition of bringing good relationships."
   },
   {
     "pref": "香川",
@@ -1697,7 +2039,10 @@
     "deity": "倭迹迹日百襲姫命ほか五柱",
     "reason": "讃岐国一宮。社記によれば和銅2年（709）に社殿を創建。奥殿床下には深淵があると伝わる水の信仰の古社。",
     "nameEn": "Tamura Jinja",
-    "prefEn": "Kagawa"
+    "prefEn": "Kagawa",
+    "provinceEn": "Sanuki Province",
+    "deityEn": "Yamatototohimomosohime and five other deities",
+    "reasonEn": "The ichinomiya of Sanuki Province, its buildings said by its own records to have been erected in 709. An ancient centre of water worship, said to have a deep pool beneath the floor of its inner hall."
   },
   {
     "pref": "高知",
@@ -1711,7 +2056,10 @@
     "deity": "味鋤高彦根神・一言主神",
     "reason": "土佐国一宮・旧国幣中社。現在の本殿・幣殿・拝殿は長宗我部元親が元亀元年（1570）に再建した。",
     "nameEn": "Tosa Jinja",
-    "prefEn": "Kochi"
+    "prefEn": "Kochi",
+    "provinceEn": "Tosa Province",
+    "deityEn": "Ajisukitakahikone and Hitokotonushi",
+    "reasonEn": "The ichinomiya of Tosa Province and a former national shrine. Its present main hall, offering hall and worship hall were rebuilt by the warlord Chosokabe Motochika in 1570."
   },
   {
     "pref": "鳥取",
@@ -1725,7 +2073,10 @@
     "deity": "建葉槌命・下照姫命",
     "reason": "伯耆国一宮。下照姫命を祀り、古くから安産の神として信仰される。境内の経塚から国宝の銅経筒などが出土。",
     "nameEn": "Shitori Jinja",
-    "prefEn": "Tottori"
+    "prefEn": "Tottori",
+    "provinceEn": "Hoki Province",
+    "deityEn": "Takehazuchi and Shitateruhime",
+    "reasonEn": "The ichinomiya of Hoki Province, enshrining Shitateruhime, long worshipped as a god of safe childbirth. Bronze sutra containers now designated National Treasures were excavated from a sutra mound on its grounds."
   },
   {
     "pref": "鳥取",
@@ -1739,7 +2090,10 @@
     "deity": "武内宿禰命",
     "reason": "因幡国一宮。武内宿禰命を祀り、大化4年（648）創建と伝わる。古くから長寿や金運に縁のある神として崇敬される。",
     "nameEn": "Ube Jinja",
-    "prefEn": "Tottori"
+    "prefEn": "Tottori",
+    "provinceEn": "Inaba Province",
+    "deityEn": "Takeshiuchi no Sukune",
+    "reasonEn": "The ichinomiya of Inaba Province, enshrining Takeshiuchi no Sukune, said to have been founded in 648. Long revered as a god associated with long life and financial fortune."
   },
   {
     "pref": "鹿児島",
@@ -1753,7 +2107,10 @@
     "deity": "天津日高彦穂穂出見命",
     "reason": "薩摩国一宮。神亀山に鎮座し、祭神・瓊瓊杵尊の陵とされる可愛山陵を背後に擁する。島津氏の崇敬も篤かった。",
     "nameEn": "Nitta Jinja",
-    "prefEn": "Kagoshima"
+    "prefEn": "Kagoshima",
+    "provinceEn": "Satsuma Province",
+    "deityEn": "Hikohohodemi",
+    "reasonEn": "The ichinomiya of Satsuma Province, standing on Mount Shinki, with the Ejinoyama tomb of its deity Ninigi, said to be his burial mound, rising behind it. It was also deeply revered by the Shimazu clan."
   },
   {
     "pref": "鹿児島",
@@ -1768,7 +2125,10 @@
     "deity": "大日孁貴命",
     "reason": "薩摩国一宮（一説）。旧官幣中社。開聞岳を御神体とする。南九州の航海守護として崇められてきた。",
     "nameEn": "Hirakiki Jinja",
-    "prefEn": "Kagoshima"
+    "prefEn": "Kagoshima",
+    "provinceEn": "Satsuma Province",
+    "deityEn": "Oohirumemuchi (an old name for Amaterasu)",
+    "reasonEn": "By one tradition the ichinomiya of Satsuma Province, and a former imperial shrine. It takes Mount Kaimon as its sacred object, and has long been revered as a guardian of seafaring in southern Kyushu."
   },
   {
     "pref": "京都",
@@ -1782,7 +2142,10 @@
     "deity": "大宮売神・若宮売神",
     "reason": "式内名神大社で丹後国二宮。境内から古代祭祀に関わる遺物が出土し、古い祭祀の場を伝える。",
     "nameEn": "Omiyame Jinja",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Tango Province",
+    "deityEn": "Omiyanome and Wakamiyame",
+    "reasonEn": "A Myojin Taisha listed in the Engishiki register, and the ninomiya of Tango Province. Artefacts linked to ancient ritual have been excavated on its grounds, testifying to its age as a place of worship."
   },
   {
     "pref": "兵庫",
@@ -1796,7 +2159,10 @@
     "deity": "天照国照彦火明命",
     "reason": "播磨三大社の一社。天照国照彦火明命を祀り、地元では「りゅうざ神社」と呼ばれる。創建は推古天皇2年（594）と伝わる。",
     "nameEn": "Iibonimasu Amateru Jinja",
-    "prefEn": "Hyogo"
+    "prefEn": "Hyogo",
+    "provinceEn": "Harima Province",
+    "deityEn": "Amaterukunateruhikohoakari",
+    "reasonEn": "One of the three great shrines of Harima, enshrining Amaterukunateruhikohoakari, and known locally as 'Ryuza Jinja'. Said to have been founded in 594."
   },
   {
     "pref": "千葉",
@@ -1810,7 +2176,10 @@
     "deity": "瓊瓊杵尊・木花開耶媛命・彦火火出見尊",
     "reason": "下総国二宮。香取郡多古町に鎮座。旧郷社。天孫降臨の神を祀る古社で、多古町の総鎮守として地域に根ざす。",
     "nameEn": "Ninomiya Jinja (Tako)",
-    "prefEn": "Chiba"
+    "prefEn": "Chiba",
+    "provinceEn": "Shimosa Province",
+    "deityEn": "Ninigi, Konohanasakuyahime and Hikohohodemi",
+    "reasonEn": "The ninomiya of Shimosa Province, standing in the town of Tako, Katori District. A former village shrine enshrining the deity of the heavenly descent myth, rooted in the area as guardian of the whole town."
   },
   {
     "pref": "和歌山",
@@ -1824,7 +2193,10 @@
     "deity": "彦五瀬命",
     "reason": "神武天皇の長兄・彦五瀬命を祀る古社。神武東征で負傷した彦五瀬命がこの地で亡くなり葬られたと伝わる。",
     "nameEn": "Kamayama Jinja",
-    "prefEn": "Wakayama"
+    "prefEn": "Wakayama",
+    "provinceEn": "Kii Province",
+    "deityEn": "Hikoitsuse",
+    "reasonEn": "An ancient shrine enshrining Hikoitsuse, eldest brother of Emperor Jinmu. Wounded during Jinmu's eastern campaign, Hikoitsuse is said to have died and been buried here."
   },
   {
     "pref": "埼玉",
@@ -1838,7 +2210,10 @@
     "deity": "天照大御神・素戔嗚尊",
     "reason": "武蔵国二宮・旧官幣中社。御室山を神体山として本殿を置かず、多宝塔は国重要文化財、鏡岩は国特別天然記念物。",
     "nameEn": "Kanasana Jinja",
-    "prefEn": "Saitama"
+    "prefEn": "Saitama",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Amaterasu and Susanoo",
+    "reasonEn": "The ninomiya of Musashi Province and a former imperial shrine. It has no main hall, taking Mount Mimuro as its sacred mountain; its two-storey pagoda is an Important Cultural Property, and its Mirror Rock a Special Natural Monument."
   },
   {
     "pref": "大阪",
@@ -1852,7 +2227,10 @@
     "deity": "大御食津彦命・大御食津姫命",
     "reason": "式内名神大社で、古くは河内国二宮と称された。食物神を祀り、豊作祈願や雨乞いの神として信仰を集めてきた。",
     "nameEn": "Onji Jinja",
-    "prefEn": "Osaka"
+    "prefEn": "Osaka",
+    "provinceEn": "Kawachi Province",
+    "deityEn": "Omiketsuhiko and Omiketsuhime",
+    "reasonEn": "A Myojin Taisha listed in the Engishiki register, once known as the ninomiya of Kawachi Province. It enshrines a food deity, and draws worship as a god of good harvests and rain."
   },
   {
     "pref": "宮城",
@@ -1866,7 +2244,10 @@
     "deity": "志波彦神",
     "reason": "延喜式内名神大社で、明治4年（1871）に国幣中社へ列格。志波彦大神は国土開発・殖産の神として信仰される。",
     "nameEn": "Shiwahiko Jinja",
-    "prefEn": "Miyagi"
+    "prefEn": "Miyagi",
+    "provinceEn": "Mutsu Province",
+    "deityEn": "Shihahiko",
+    "reasonEn": "A Myojin Taisha listed in the Engishiki register, raised to the rank of national shrine in 1871. Its deity, Shihahiko Okami, is worshipped as a god of land development and industry."
   },
   {
     "pref": "山形",
@@ -1880,7 +2261,10 @@
     "deity": "月読命",
     "reason": "出羽三山の一社で、標高1984mの月山山頂に月読命を祀る。明治期には官幣大社に列せられた。",
     "nameEn": "Gassan Jinja",
-    "prefEn": "Yamagata"
+    "prefEn": "Yamagata",
+    "provinceEn": "Dewa Province",
+    "deityEn": "Tsukuyomi",
+    "reasonEn": "One of the Three Mountains of Dewa, enshrining Tsukuyomi atop the 1,984-metre Mount Gassan. It was ranked as an imperial shrine during the Meiji era."
   },
   {
     "pref": "山梨",
@@ -1894,7 +2278,10 @@
     "deity": "大物主神",
     "reason": "甲斐国二宮。社記によれば、日本武尊の命で甲斐国造が大和の大神神社から大物主命を勧請したとされる。木造大物主神立像は国重要文化財。",
     "nameEn": "Miwa Jinja",
-    "prefEn": "Yamanashi"
+    "prefEn": "Yamanashi",
+    "provinceEn": "Kai Province",
+    "deityEn": "Omononushi",
+    "reasonEn": "The ninomiya of Kai Province. Its own records say the governor of Kai, on the order of Yamato Takeru, invited Omononushi here from Omiwa Jinja in Yamato. Its wooden standing statue of Omononushi is an Important Cultural Property."
   },
   {
     "pref": "岐阜",
@@ -1908,7 +2295,10 @@
     "deity": "多々美彦命",
     "reason": "式内社で美濃国二宮。伊吹山を背にして鎮座し、山の神・多々美彦命を祀ると伝わるが祭神には異説もある。",
     "nameEn": "Ibuki Jinja",
-    "prefEn": "Gifu"
+    "prefEn": "Gifu",
+    "provinceEn": "Mino Province",
+    "deityEn": "Tatamihiko",
+    "reasonEn": "A shrine listed in the Engishiki register, and the ninomiya of Mino Province. It stands with Mount Ibuki at its back and is said to enshrine the mountain god Tatamihiko, though other traditions name a different deity."
   },
   {
     "pref": "岡山",
@@ -1922,7 +2312,10 @@
     "deity": "遣霊彦命・大吉備津彦命・楽楽森彦命・高田姫命",
     "reason": "式内社で備中国二宮。境内の石造宝塔は南北朝期の作で国重要文化財。",
     "nameEn": "Tsuzumi Jinja",
-    "prefEn": "Okayama"
+    "prefEn": "Okayama",
+    "provinceEn": "Bicchu Province",
+    "deityEn": "Kentamahiko, Okibitsuhiko, Sasamorihiko and Takatahime",
+    "reasonEn": "A shrine listed in the Engishiki register, and the ninomiya of Bicchu Province. Its stone pagoda, made during the Nanboku-cho period, is an Important Cultural Property."
   },
   {
     "pref": "岡山",
@@ -1936,7 +2329,10 @@
     "deity": "鵜葺草葺不合尊",
     "reason": "美作国二宮。式内社に比定され、津山市二宮に鎮座する美作を代表する古社。",
     "nameEn": "Takano Jinja",
-    "prefEn": "Okayama"
+    "prefEn": "Okayama",
+    "provinceEn": "Mimasaka Province",
+    "deityEn": "Ugayafukiaezu",
+    "reasonEn": "The ninomiya of Mimasaka Province, identified with a shrine listed in the Engishiki register, and a leading ancient shrine of Mimasaka standing in the Ninomiya district of Tsuyama."
   },
   {
     "pref": "島根",
@@ -1950,7 +2346,10 @@
     "deity": "佐太大神",
     "reason": "出雲国二宮。佐太大神を祀る出雲三大社の一社で、旧暦10月に八百万の神を迎え送る「神在祭」が古式により行われる。",
     "nameEn": "Sada Jinja",
-    "prefEn": "Shimane"
+    "prefEn": "Shimane",
+    "provinceEn": "Izumo Province",
+    "deityEn": "Sada Okami",
+    "reasonEn": "The ninomiya of Izumo Province, one of the three great shrines of Izumo, enshrining Sada Okami. In the tenth month of the old lunar calendar it holds the Kamiari Festival, welcoming and sending off the myriad gods according to ancient rites."
   },
   {
     "pref": "徳島",
@@ -1963,7 +2362,9 @@
     "lng": 134.60032,
     "deity": "事代主命",
     "nameEn": "Kotoshironushi Jinja",
-    "prefEn": "Tokushima"
+    "prefEn": "Tokushima",
+    "provinceEn": "Awa Province (Tokushima)",
+    "deityEn": "Kotoshironushi"
   },
   {
     "pref": "愛媛",
@@ -1976,7 +2377,9 @@
     "lng": 133.10721,
     "deity": "大山積神",
     "nameEn": "Mishima Jinja",
-    "prefEn": "Ehime"
+    "prefEn": "Ehime",
+    "provinceEn": "Iyo Province",
+    "deityEn": "Oyamatsumi"
   },
   {
     "pref": "愛知",
@@ -1990,7 +2393,10 @@
     "deity": "大縣大神",
     "reason": "尾張国二宮。大縣大神を祀る式内名神大社で、現在の本殿は寛文元年（1661）に尾張藩主徳川光友が再建した。",
     "nameEn": "Ogata Jinja",
-    "prefEn": "Aichi"
+    "prefEn": "Aichi",
+    "provinceEn": "Owari Province",
+    "deityEn": "Oagata Okami",
+    "reasonEn": "The ninomiya of Owari Province, a Myojin Taisha listed in the Engishiki register, enshrining Oagata Okami. Its present main hall was rebuilt in 1661 by the feudal lord Tokugawa Mitsutomo."
   },
   {
     "pref": "愛知",
@@ -2005,7 +2411,10 @@
     "deity": "彦波瀲武鸕鶿草葺不合尊・神武天皇",
     "reason": "三河国二宮。旧称・池鯉鮒大明神。社伝では景行天皇の御代、日本武尊の東国平定にちなみ創建されたと伝わる。",
     "nameEn": "Chiryu Jinja",
-    "prefEn": "Aichi"
+    "prefEn": "Aichi",
+    "provinceEn": "Mikawa Province",
+    "deityEn": "Ugayafukiaezu and Emperor Jinmu",
+    "reasonEn": "The ninomiya of Mikawa Province, formerly known as Chiryu Daimyojin. Its own tradition says it was founded in the reign of Emperor Keiko, marking Yamato Takeru's pacification of the eastern provinces."
   },
   {
     "pref": "東京",
@@ -2019,7 +2428,10 @@
     "deity": "国常立尊",
     "reason": "武蔵国二宮とされるあきる野市の古社で、国常立尊を祀る。創建年代は不詳で、古くは小河大明神とも称された。",
     "nameEn": "Ninomiya Jinja",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Kunitokotachi",
+    "reasonEn": "An ancient shrine in Akiruno regarded as the ninomiya of Musashi Province, enshrining Kunitokotachi. Its founding date is unknown, and it was once known as Ogawa Daimyojin."
   },
   {
     "pref": "滋賀",
@@ -2033,7 +2445,10 @@
     "deity": "大国主命ほか",
     "reason": "延喜式神名帳に載る式内社。徳治3年（1308）造営の西本殿は国宝で、33年に一度の式年大祭を伝える。",
     "nameEn": "Namura Jinja",
-    "prefEn": "Shiga"
+    "prefEn": "Shiga",
+    "provinceEn": "Omi Province",
+    "deityEn": "Okuninushi and others",
+    "reasonEn": "A shrine listed in the Engishiki register of deities. Its West Main Hall, built in 1308, is a National Treasure, and it holds a grand festival once every 33 years."
   },
   {
     "pref": "熊本",
@@ -2047,7 +2462,10 @@
     "deity": "健磐龍命",
     "reason": "欽明天皇19年（558）創祀と伝わる。阿蘇四社の一社で、熊本市東区に鎮座する古社。",
     "nameEn": "Kengun Jinja",
-    "prefEn": "Kumamoto"
+    "prefEn": "Kumamoto",
+    "provinceEn": "Higo Province",
+    "deityEn": "Takeiwatatsu",
+    "reasonEn": "Said to have been founded in 558. One of the four great Aso shrines, standing in the Higashi ward of Kumamoto city."
   },
   {
     "pref": "石川",
@@ -2062,7 +2480,10 @@
     "deity": "菅生石部神",
     "reason": "加賀国二宮。旧国幣小社。毎年2月の御願神事「竹割まつり」で知られる。",
     "nameEn": "Sugao Isobe Jinja",
-    "prefEn": "Ishikawa"
+    "prefEn": "Ishikawa",
+    "provinceEn": "Kaga Province",
+    "deityEn": "Sugoisobe",
+    "reasonEn": "The ninomiya of Kaga Province and a former national shrine, known for its February 'Bamboo-Splitting Festival'."
   },
   {
     "pref": "神奈川",
@@ -2076,7 +2497,10 @@
     "deity": "大名牟遅命ほか",
     "reason": "相模国二宮。式内社。二宮町の町名は当社に由来し、相模国府祭に参加する古社。",
     "nameEn": "Kawawa Jinja",
-    "prefEn": "Kanagawa"
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Onamuchi and others",
+    "reasonEn": "The ninomiya of Sagami Province, listed in the Engishiki register. The town of Ninomiya takes its name from this shrine, which takes part in the Sagami provincial festival."
   },
   {
     "pref": "福井",
@@ -2090,7 +2514,10 @@
     "deity": "気比大神ほか",
     "reason": "越前国二宮。旧国幣小社。織田信長が氏神として崇敬し、祖先が当社神官を務めたと伝わる。",
     "nameEn": "Tsurugi Jinja",
-    "prefEn": "Fukui"
+    "prefEn": "Fukui",
+    "provinceEn": "Echizen Province",
+    "deityEn": "Kehi Okami and others",
+    "reasonEn": "The ninomiya of Echizen Province and a former national shrine. Oda Nobunaga revered it as his clan's tutelary shrine, and his ancestors are said to have served as its priests."
   },
   {
     "pref": "群馬",
@@ -2104,7 +2531,10 @@
     "deity": "大己貴命",
     "reason": "上野国二宮とされる二宮赤城神社。式内名神大社・赤城神社の論社の一つ。",
     "nameEn": "Akagi Jinja",
-    "prefEn": "Gunma"
+    "prefEn": "Gunma",
+    "provinceEn": "Kozuke Province",
+    "deityEn": "Onamuchi",
+    "reasonEn": "Ninomiya Akagi Jinja, regarded as the ninomiya of Kozuke Province, one of several shrines claiming to be the Myojin Taisha Akagi Jinja listed in the Engishiki register."
   },
   {
     "pref": "茨城",
@@ -2118,7 +2548,10 @@
     "deity": "建葉槌命",
     "reason": "常陸国二宮。『延喜式』の名神大社で、鹿島・香取と並ぶ東国の守護神として崇敬された古社。",
     "nameEn": "Shizu Jinja",
-    "prefEn": "Ibaraki"
+    "prefEn": "Ibaraki",
+    "provinceEn": "Hitachi Province",
+    "deityEn": "Takehazuchi",
+    "reasonEn": "The ninomiya of Hitachi Province, a Myojin Taisha in the Engishiki register, revered alongside Kashima and Katori as a guardian of the eastern provinces."
   },
   {
     "pref": "長崎",
@@ -2132,7 +2565,10 @@
     "deity": "上筒男命ほか",
     "reason": "式内名神大社で旧国幣中社。住吉三神を祀り、壱岐で唯一の官社として「日本四大住吉」の一社と称される。",
     "nameEn": "Sumiyoshi Jinja",
-    "prefEn": "Nagasaki"
+    "prefEn": "Nagasaki",
+    "provinceEn": "Iki Province",
+    "deityEn": "Uwatsutsunoo and others",
+    "reasonEn": "A Myojin Taisha in the Engishiki register and a former national shrine, enshrining the three Sumiyoshi deities. As the only officially recognised shrine on Iki, it is called one of the 'Four Great Sumiyoshi Shrines of Japan'."
   },
   {
     "pref": "長野",
@@ -2146,7 +2582,10 @@
     "deity": "金山彦命",
     "reason": "木曽町日義に鎮座。木曽義仲が屋敷を築いた際に現在地へ遷し、篤く崇敬したと伝わる。",
     "nameEn": "Nangu Jinja",
-    "prefEn": "Nagano"
+    "prefEn": "Nagano",
+    "provinceEn": "Shinano Province",
+    "deityEn": "Kanayamahiko",
+    "reasonEn": "Standing in the Hiyoshi district of Kiso town. Kiso Yoshinaka is said to have moved it to its present site when he built his residence there, and to have revered it deeply."
   },
   {
     "pref": "青森",
@@ -2160,7 +2599,10 @@
     "deity": "宇賀能売命",
     "reason": "青森総鎮守の旧県社。社伝では坂上田村麻呂の東北遠征期、大同2年（807）に再建されたと伝わる。",
     "nameEn": "Uto Jinja",
-    "prefEn": "Aomori"
+    "prefEn": "Aomori",
+    "provinceEn": "Tsugaru (in Mutsu Province)",
+    "deityEn": "Ukanome",
+    "reasonEn": "A former prefectural shrine, guardian of the whole of Aomori. Its own tradition says it was rebuilt in 807, during Sakanoue no Tamuramaro's campaign in the Tohoku region."
   },
   {
     "pref": "香川",
@@ -2174,7 +2616,10 @@
     "deity": "天太玉命",
     "reason": "坂出市高屋町に鎮座。崇徳上皇の葬送時、棺を置いた石から血が流れたという「血の宮」伝承が残る。",
     "nameEn": "Takaya Jinja",
-    "prefEn": "Kagawa"
+    "prefEn": "Kagawa",
+    "provinceEn": "Sanuki Province",
+    "deityEn": "Amenofutodama",
+    "reasonEn": "Standing in the Takaya district of Sakaide. A tradition survives that, when the retired Emperor Sutoku's coffin was set down here for his funeral, blood flowed from the stone beneath it, giving the shrine its nickname 'Shrine of Blood'."
   },
   {
     "pref": "高知",
@@ -2188,7 +2633,10 @@
     "deity": "国常立命",
     "reason": "土佐国二宮。国常立命を祀る古社で、国宝の金銅荘環頭大刀を社宝として伝える。",
     "nameEn": "Omura Jinja",
-    "prefEn": "Kochi"
+    "prefEn": "Kochi",
+    "provinceEn": "Tosa Province",
+    "deityEn": "Kunitokotachi",
+    "reasonEn": "The ninomiya of Tosa Province, an ancient shrine enshrining Kunitokotachi, which holds as a treasure a gilt-bronze ring-pommel sword designated a National Treasure."
   },
   {
     "pref": "高知",
@@ -2202,7 +2650,10 @@
     "deity": "朝倉太郎彦命",
     "reason": "土佐国二宮。現在の本殿は明暦3年（1657）に土佐藩2代藩主・山内忠義が再建した国指定重要文化財。",
     "nameEn": "Asakura Jinja",
-    "prefEn": "Kochi"
+    "prefEn": "Kochi",
+    "provinceEn": "Tosa Province",
+    "deityEn": "Asakura Tarohiko",
+    "reasonEn": "The ninomiya of Tosa Province. Its present main hall, rebuilt in 1657 by the second lord of Tosa domain, Yamauchi Tadayoshi, is a nationally designated Important Cultural Property."
   },
   {
     "pref": "鳥取",
@@ -2217,7 +2668,10 @@
     "deity": "大国主神",
     "reason": "伯耆国二宮。旧国幣小社。霊峰大山信仰の中心で、麓の本社と大山中腹の奥宮からなる。",
     "nameEn": "Ogamiyama Jinja",
-    "prefEn": "Tottori"
+    "prefEn": "Tottori",
+    "provinceEn": "Hoki Province",
+    "deityEn": "Okuninushi",
+    "reasonEn": "The ninomiya of Hoki Province and a former national shrine, a centre of worship for the sacred Mount Daisen. It comprises a main shrine at the foot of the mountain and an inner shrine partway up its slopes."
   },
   {
     "pref": "東京",
@@ -2231,7 +2685,10 @@
     "deity": "大己貴命・少彦名命・平将門命",
     "reason": "江戸総鎮守。旧府社・別表神社。江戸城・将軍家の守護として崇敬された。",
     "nameEn": "Kanda Jinja (Kanda Myojin)",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Onamuchi, Sukunahikona and Taira no Masakado",
+    "reasonEn": "Guardian shrine of the whole of Edo. A former prefectural shrine, revered as protector of Edo Castle and the shogunal family."
   },
   {
     "pref": "東京",
@@ -2245,7 +2702,10 @@
     "deity": "大山咋神",
     "reason": "勅祭社。旧官幣大社。江戸城（皇居）の産土神。山王祭は天下三大祭のひとつ。",
     "nameEn": "Hie Jinja",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Oyamakui",
+    "reasonEn": "An imperially-designated shrine and former imperial shrine, the tutelary deity of Edo Castle, now the Imperial Palace. Its Sanno Matsuri is one of Japan's three great festivals."
   },
   {
     "pref": "大阪",
@@ -2259,7 +2719,10 @@
     "deity": "菅原道真",
     "reason": "地名代表社。大阪の天神さん。天神祭（日本三大祭）で著名。学問の神として多くの受験生が参拝。",
     "nameEn": "Osaka Tenmangu",
-    "prefEn": "Osaka"
+    "prefEn": "Osaka",
+    "provinceEn": "Settsu Province",
+    "deityEn": "Sugawara no Michizane",
+    "reasonEn": "A shrine that lends its name to the surrounding district. Known affectionately as Osaka's 'Tenjin-san', and famous for the Tenjin Matsuri, one of Japan's three great festivals. Many students visit it as a god of learning."
   },
   {
     "pref": "大阪",
@@ -2273,7 +2736,10 @@
     "deity": "事代主命（えびす神）",
     "reason": "商売繁盛の象徴「十日戎」の総本社的存在。大阪市浪速区に鎮座。毎年1月9〜11日の十日戎には100万人以上が参拝し、商人の町大阪の金運・商売繁盛の守護神として君臨。",
     "nameEn": "Imamiya Ebisu Jinja",
-    "prefEn": "Osaka"
+    "prefEn": "Osaka",
+    "provinceEn": "Settsu Province",
+    "deityEn": "Kotoshironushi (the god Ebisu)",
+    "reasonEn": "The de facto head shrine of the Toka Ebisu festival, a symbol of business prosperity, standing in Naniwa ward, Osaka. More than a million people visit during the festival each January 9-11, and it reigns as guardian of financial fortune and trade in this city of merchants."
   },
   {
     "pref": "京都",
@@ -2287,7 +2753,10 @@
     "deity": "素戔嗚尊・奇稲田姫命・八柱御子神",
     "reason": "旧官幣大社。祇園祭の中心神社。全国約2,300社の祇園信仰の総本社。",
     "nameEn": "Yasaka Jinja",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Susanoo, Kushinadahime and their eight princely children",
+    "reasonEn": "A former imperial shrine, the central shrine of the Gion Matsuri and head shrine of around 2,300 Gion shrines nationwide."
   },
   {
     "pref": "愛知",
@@ -2302,7 +2771,10 @@
     "deity": "仁徳天皇",
     "reason": "旧県社。社伝では文武天皇の時代に創建。慶長15年に徳川家康が名古屋の総鎮守とし、例祭「若宮まつり」で知られる。",
     "nameEn": "Wakamiya Hachimansha",
-    "prefEn": "Aichi"
+    "prefEn": "Aichi",
+    "provinceEn": "Owari Province",
+    "deityEn": "Emperor Nintoku",
+    "reasonEn": "A former prefectural shrine, said by its own tradition to have been founded in the reign of Emperor Monmu. Tokugawa Ieyasu made it guardian of the whole of Nagoya in 1610, and it is known for its annual Wakamiya Festival."
   },
   {
     "pref": "福岡",
@@ -2316,7 +2788,10 @@
     "deity": "菅原道真",
     "reason": "旧官幣中社。北野天満宮と並ぶ天満宮の総本社。道真公の墓所に建立。年間約1,000万人が参拝。",
     "nameEn": "Dazaifu Tenmangu",
-    "prefEn": "Fukuoka"
+    "prefEn": "Fukuoka",
+    "provinceEn": "Chikuzen Province",
+    "deityEn": "Sugawara no Michizane",
+    "reasonEn": "A former imperial shrine, and alongside Kitano Tenmangu one of the two head shrines of all Tenmangu nationwide. Built on the burial site of Sugawara no Michizane, it receives around 10 million visitors a year."
   },
   {
     "pref": "福岡",
@@ -2330,7 +2805,10 @@
     "deity": "大幡主命・天照大神・素盞嗚尊",
     "reason": "博多の総鎮守として「お櫛田さん」と親しまれる。国の重要無形民俗文化財「博多祇園山笠」の奉納先として知られる。",
     "nameEn": "Kushida Jinja",
-    "prefEn": "Fukuoka"
+    "prefEn": "Fukuoka",
+    "provinceEn": "Chikuzen Province",
+    "deityEn": "Ohatanushi, Amaterasu and Susanoo",
+    "reasonEn": "Affectionately known as 'Okushida-san', guardian of the whole of Hakata. Known as the shrine to which the Hakata Gion Yamakasa, a nationally designated Important Intangible Folk Cultural Property, is dedicated."
   },
   {
     "pref": "神奈川",
@@ -2345,7 +2823,10 @@
     "deity": "応神天皇・比売神・神功皇后",
     "reason": "八幡宮。源頼朝が鎌倉幕府の守護神として創建。日本三大八幡宮の一。全国一の宮会加盟社で相模国一宮を称する（伝統的な一宮は寒川神社）。鎌倉の総鎮守として年間数百万人が参拝。",
     "nameEn": "Tsurugaoka Hachimangu",
-    "prefEn": "Kanagawa"
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Emperor Ojin, Himegami and Empress Jingu",
+    "reasonEn": "A Hachiman shrine founded by Minamoto no Yoritomo as guardian deity of the Kamakura shogunate, and one of the three great Hachiman shrines of Japan. As a member of the National Ichinomiya Association it calls itself the ichinomiya of Sagami Province, though tradition assigns that title to Samukawa Jinja. As guardian of the whole of Kamakura it receives several million visitors a year."
   },
   {
     "pref": "神奈川",
@@ -2359,7 +2840,10 @@
     "deity": "宇賀福神・弁財天",
     "reason": "銭洗い金運の代名詞。鎌倉市佐助の洞窟に鎮座。清水でお金を洗うと何倍にも増えるとされ、全国有数の金運スポットとして年間多数の参拝者が訪れる。",
     "nameEn": "Zeniarai Benzaiten Ugafuku Jinja",
-    "prefEn": "Kanagawa"
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Ugafuku and Benzaiten",
+    "reasonEn": "Synonymous with washing money for good fortune. It stands in a cave in the Sasuke district of Kamakura, where washing coins in the spring water is said to multiply their value many times over, drawing large numbers of visitors each year as one of Japan's leading spots for financial luck."
   },
   {
     "pref": "神奈川",
@@ -2373,7 +2857,10 @@
     "deity": "菅原道真",
     "reason": "関東最古の天神社（1104年創建）。鶴岡八幡宮境内の森に鎮座。絵筆塚など文化人の信仰が厚い。",
     "nameEn": "Egara Tenjinsha",
-    "prefEn": "Kanagawa"
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Sugawara no Michizane",
+    "reasonEn": "The oldest Tenjin shrine in the Kanto region, founded in 1104. It stands in the forest bordering Tsurugaoka Hachimangu, and is deeply revered by artists and writers, as reflected in its mound of old paintbrushes."
   },
   {
     "pref": "山梨",
@@ -2387,7 +2874,10 @@
     "deity": "木花開耶姫命・彦火瓊瓊杵命・大山祇神",
     "reason": "浅間神社系。富士山北口登山道の起点。日本最大の木造鳥居が有名。世界文化遺産・富士山の構成資産。",
     "nameEn": "Kitaguchi Hongu Fuji Sengen Jinja",
-    "prefEn": "Yamanashi"
+    "prefEn": "Yamanashi",
+    "provinceEn": "Kai Province",
+    "deityEn": "Konohanasakuyahime, Hikohoninigi and Oyamatsumi",
+    "reasonEn": "A Sengen shrine standing at the start of the northern climbing route up Mount Fuji. Famous for Japan's largest wooden torii gate, and part of the Mount Fuji World Heritage Site."
   },
   {
     "pref": "京都",
@@ -2401,7 +2891,10 @@
     "deity": "菅原道真",
     "reason": "旧官幣中社。全国約12,000社の天満宮・天神社の総本社。学問の神として全国的な信仰を集める。",
     "nameEn": "Kitano Tenmangu",
-    "prefEn": "Kyoto"
+    "prefEn": "Kyoto",
+    "provinceEn": "Yamashiro Province",
+    "deityEn": "Sugawara no Michizane",
+    "reasonEn": "A former imperial shrine, head shrine of around 12,000 Tenmangu and Tenjin shrines nationwide. Worshipped across Japan as a god of learning."
   },
   {
     "pref": "香川",
@@ -2415,7 +2908,10 @@
     "deity": "大物主神・崇徳天皇",
     "reason": "旧国幣中社。「こんぴらさん」として全国的に有名。海の守護神として船乗りの信仰を集めてきた。",
     "nameEn": "Kotohiragu",
-    "prefEn": "Kagawa"
+    "prefEn": "Kagawa",
+    "provinceEn": "Sanuki Province",
+    "deityEn": "Omononushi and Emperor Sutoku",
+    "reasonEn": "A former national shrine, famous nationwide as 'Konpira-san'. It has long drawn the worship of sailors as guardian of the sea."
   },
   {
     "pref": "静岡",
@@ -2429,7 +2925,10 @@
     "deity": "木花之佐久夜毘売命",
     "reason": "浅間神社系。富士山本宮浅間大社の前身・元宮。本殿を持たず富士山を直接拝む最古の形式。世界文化遺産構成資産。",
     "nameEn": "Yamamiya Sengen Jinja",
-    "prefEn": "Shizuoka"
+    "prefEn": "Shizuoka",
+    "provinceEn": "Suruga Province",
+    "deityEn": "Konohanasakuyahime",
+    "reasonEn": "A Sengen shrine, the original site that preceded Fujisan Hongu Sengen Taisha. It has no main hall, preserving the oldest form of worship in which Mount Fuji itself is venerated directly. Part of the Mount Fuji World Heritage Site."
   },
   {
     "pref": "岐阜",
@@ -2444,7 +2943,10 @@
     "deity": "八幡神・応神天皇",
     "reason": "旧県社。高山北部の総鎮守で、例祭は「秋の高山祭」として知られ、11台の祭屋台が曳き揃えられる。",
     "nameEn": "Sakurayama Hachimangu",
-    "prefEn": "Gifu"
+    "prefEn": "Gifu",
+    "provinceEn": "Hida Province",
+    "deityEn": "The god Hachiman and Emperor Ojin",
+    "reasonEn": "A former prefectural shrine, guardian of the northern half of Takayama. Its annual festival is known as the autumn Takayama Festival, when eleven ornate festival floats are paraded through the town."
   },
   {
     "pref": "三重",
@@ -2458,7 +2960,10 @@
     "deity": "猿田彦神",
     "reason": "猿田彦大神を祀り、直系の子孫とされる宇治土公家が代々宮司を務める。みちひらきの神として信仰される。",
     "nameEn": "Sarutahiko Jinja",
-    "prefEn": "Mie"
+    "prefEn": "Mie",
+    "provinceEn": "Ise Province",
+    "deityEn": "Sarutahiko",
+    "reasonEn": "Enshrines Sarutahiko Okami, and has been led for generations by chief priests of the Uji-Doko family, said to be his direct descendants. Worshipped as a god who opens the way forward."
   },
   {
     "pref": "東京",
@@ -2472,7 +2977,10 @@
     "deity": "大国魂大神（大己貴命）",
     "reason": "武蔵国総社。旧官幣小社。武蔵国内の神々を合祀する国の鎮守。",
     "nameEn": "Okunitama Jinja",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Okunitama, the god of the land (also known as Onamuchi)",
+    "reasonEn": "The sosha, or unifying shrine, of Musashi Province, and a former imperial shrine. It brings together the deities of all the shrines within the province as guardian of the province as a whole."
   },
   {
     "pref": "千葉",
@@ -2487,7 +2995,10 @@
     "deity": "誉田別命（応神天皇）・息長帯姫命（神功皇后）・玉依姫命",
     "reason": "「本八幡」の地名由来。寛平年間、宇多天皇の勅願で石清水八幡宮を勧請。下総国総鎮守。",
     "nameEn": "Katsushika Hachimangu",
-    "prefEn": "Chiba"
+    "prefEn": "Chiba",
+    "provinceEn": "Shimosa Province",
+    "deityEn": "Hondawake (Emperor Ojin), Okinagatarashihime (Empress Jingu) and Tamayorihime",
+    "reasonEn": "The shrine that gave the district of Motoyawata its name. Founded in the Kanpyo era (889-898) by imperial decree of Emperor Uda, inviting the deity of Iwashimizu Hachimangu. Guardian shrine of the whole of Shimosa Province."
   },
   {
     "pref": "神奈川",
@@ -2501,7 +3012,10 @@
     "deity": "天照大御神",
     "reason": "地名代表社。横浜の総鎮守。関東のお伊勢さんとも称される。幕末・明治に横浜が開港した地に鎮座。",
     "nameEn": "Iseyama Kotai Jingu",
-    "prefEn": "Kanagawa"
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Amaterasu, the sun goddess",
+    "reasonEn": "A shrine that lends its name to the surrounding district, guardian of the whole of Yokohama, sometimes called the 'Ise shrine of Kanto'. It stands in the area opened as Yokohama's port at the end of the Edo period and start of the Meiji era."
   },
   {
     "pref": "埼玉",
@@ -2515,7 +3029,10 @@
     "deity": "伊弉諾命・伊弉冉命",
     "reason": "秩父三社のひとつ。眷属に狼を持ち、強力な気が宿るとされる関東屈指のパワースポット。",
     "nameEn": "Mitsumine Jinja",
-    "prefEn": "Saitama"
+    "prefEn": "Saitama",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Izanagi and Izanami, the creator gods",
+    "reasonEn": "One of the three great shrines of Chichibu. Its messenger animal is the wolf, and it is regarded as one of the Kanto region's foremost spiritual power spots."
   },
   {
     "pref": "東京",
@@ -2529,7 +3046,10 @@
     "deity": "櫛真智命・大己貴命・少彦名命・日本武尊",
     "reason": "御岳山（標高929m）山頂に鎮座。関東一円の山岳信仰の中心。奥多摩随一の霊峰として全国から参拝者が訪れる古社。旧国幣小社。",
     "nameEn": "Musashi Mitake Jinja",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Kushimachi, Onamuchi, Sukunahikona and Yamato Takeru",
+    "reasonEn": "Standing atop the 929-metre Mount Mitake, a centre of mountain worship across the whole Kanto region. An ancient shrine and former national shrine, drawing visitors from across Japan to Okutama's foremost sacred peak."
   },
   {
     "pref": "神奈川",
@@ -2543,7 +3063,10 @@
     "deity": "大山祇大神・雷神・高龗神",
     "reason": "大山信仰の総本社。雨降山とも呼ばれ水・農業の神。江戸時代に「大山詣り」で大流行した山岳霊場。",
     "nameEn": "Oyama Afuri Jinja",
-    "prefEn": "Kanagawa"
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Oyamatsumi, the mountain god; Ikazuchi, the thunder god; Takaokami, the water god",
+    "reasonEn": "The head shrine of Mount Oyama worship. Also known as Amefuriyama, 'rain-falling mountain', it is a god of water and agriculture, and its sacred mountain became hugely popular for pilgrimage in the Edo period."
   },
   {
     "pref": "東京",
@@ -2557,7 +3080,10 @@
     "deity": "大物主神・崇徳天皇",
     "reason": "讃岐・金刀比羅宮の江戸幕府公認の出張所。港区虎ノ門に鎮座。金運・商売繁盛の神として江戸時代より信仰を集める都内屈指の金運神社。",
     "nameEn": "Toranomon Kotohiragu",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Omononushi and Emperor Sutoku",
+    "reasonEn": "A branch of Kotohiragu in Sanuki, officially authorised by the Edo shogunate, standing in Toranomon, Minato ward. Worshipped since the Edo period as a god of financial fortune and business prosperity, and one of Tokyo's foremost shrines for money luck."
   },
   {
     "pref": "東京",
@@ -2572,7 +3098,10 @@
     "deity": "倉稲魂命・日本武尊・稲荷大神",
     "reason": "新宿の総鎮守。新宿区に鎮座。商業・芸能・開運のご利益で有名。毎年11月の酉の市は新宿の風物詩として多くの熊手商が並ぶ。歌舞伎町に隣接する繁華街の守護神。",
     "nameEn": "Hanazono Jinja",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Ukanomitama, Yamato Takeru and Inari Okami",
+    "reasonEn": "Guardian shrine of the whole of Shinjuku. Famous for its blessings of business, the performing arts and good fortune. Its November Tori no Ichi fair, lined with stalls selling lucky rakes, is a fixture of the Shinjuku calendar, and it stands as guardian of the entertainment district beside Kabukicho."
   },
   {
     "pref": "千葉",
@@ -2586,7 +3115,10 @@
     "deity": "天之御中主神（妙見菩薩）",
     "reason": "地名代表社。千葉氏の守護神・妙見信仰の総本山。北辰（北極星）を祀る全国唯一の格式。",
     "nameEn": "Chiba Jinja",
-    "prefEn": "Chiba"
+    "prefEn": "Chiba",
+    "provinceEn": "Shimosa Province",
+    "deityEn": "Amenominakanushi (identified with the bodhisattva Myoken)",
+    "reasonEn": "A shrine that lends its name to the surrounding city, and the head shrine of Myoken worship, guardian deity of the Chiba clan. It holds the unique distinction nationwide of enshrining the North Star itself."
   },
   {
     "pref": "岐阜",
@@ -2600,7 +3132,10 @@
     "deity": "五十瓊敷入彦命",
     "reason": "美濃国三宮。五十瓊敷入彦命を主祭神に祀る古社。斎藤道三が稲葉山城築城に際し、現在地へ遷座したと伝わる。",
     "nameEn": "Inaba Jinja",
-    "prefEn": "Gifu"
+    "prefEn": "Gifu",
+    "provinceEn": "Mino Province",
+    "deityEn": "Ikishiiribiko",
+    "reasonEn": "The sannomiya of Mino Province, an ancient shrine whose chief deity is Ikishiiribiko. It is said to have moved to its present site when Saito Dosan built Inabayama Castle."
   },
   {
     "pref": "石川",
@@ -2614,7 +3149,10 @@
     "deity": "前田利家・芳春院",
     "reason": "地名代表社。加賀百万石の祖・前田利家を祀る。和漢洋折衷の神門（重文）がシンボル。金沢の歴史の象徴。",
     "nameEn": "Oyama Jinja",
-    "prefEn": "Ishikawa"
+    "prefEn": "Ishikawa",
+    "provinceEn": "Kaga Province",
+    "deityEn": "Maeda Toshiie and Hoshun-in",
+    "reasonEn": "A shrine that lends its name to the surrounding district, enshrining Maeda Toshiie, founder of the million-koku Kaga domain. Its sacred gate, blending Japanese, Chinese and Western styles and designated an Important Cultural Property, is a symbol of Kanazawa's history."
   },
   {
     "pref": "福岡",
@@ -2628,7 +3166,10 @@
     "deity": "玉依姫",
     "reason": "宝満山に上宮、山麓に下宮を構え、玉依姫命を主祭神とする。古くから宝満山信仰の中心となり、縁結びの神として信仰される。",
     "nameEn": "Kamado Jinja",
-    "prefEn": "Fukuoka"
+    "prefEn": "Fukuoka",
+    "provinceEn": "Chikuzen Province",
+    "deityEn": "Tamayorihime",
+    "reasonEn": "With an upper shrine on Mount Homan and a lower shrine at its foot, its chief deity is Tamayorihime. Long the centre of Mount Homan worship, and worshipped as a god of good relationships."
   },
   {
     "pref": "島根",
@@ -2642,7 +3183,10 @@
     "deity": "天照大神",
     "reason": "天照大御神を祀る日沉宮と素盞嗚尊を祀る神の宮からなり、「日の本の夜を守る」社として崇敬される。",
     "nameEn": "Hinomisaki Jinja",
-    "prefEn": "Shimane"
+    "prefEn": "Shimane",
+    "provinceEn": "Izumo Province",
+    "deityEn": "Amaterasu, the sun goddess",
+    "reasonEn": "Comprising the Hishizumi-no-miya, enshrining Amaterasu, and the Kami-no-miya, enshrining Susanoo, it is revered as the shrine that 'guards Japan through the night'."
   },
   {
     "pref": "島根",
@@ -2656,7 +3200,10 @@
     "deity": "素戔嗚尊・稲田姫命・大国主命ほか",
     "reason": "松江市に鎮座する縁結び・開運の名社。境内の「鏡の池」に紙を浮かべて縁を占う習わしが有名。素戔嗚尊が稲田姫を守った故事ゆかりのパワースポット。",
     "nameEn": "Yaegaki Jinja",
-    "prefEn": "Shimane"
+    "prefEn": "Shimane",
+    "provinceEn": "Izumo Province",
+    "deityEn": "Susanoo, Inadahime, Okuninushi and others",
+    "reasonEn": "A notable shrine for good relationships and good fortune, standing in Matsue. Famous for the custom of floating paper on its Mirror Pond to divine one's romantic fortune, and a power spot linked to the story of Susanoo protecting Princess Inada."
   },
   {
     "pref": "東京",
@@ -2670,7 +3217,10 @@
     "deity": "火産霊命",
     "reason": "慶長8年（1603）徳川家康が防火の神として創建。都心随一の高台・愛宕山山頂に鎮座し、出世の石段の故事で知られる。",
     "nameEn": "Atago Jinja",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Homusubi",
+    "reasonEn": "Founded in 1603 by Tokugawa Ieyasu as a god of protection against fire. It stands atop Mount Atago, the highest natural hill in central Tokyo, and is known for the story behind its Stone Steps of Success."
   },
   {
     "pref": "東京",
@@ -2685,7 +3235,10 @@
     "deity": "応神天皇",
     "reason": "建暦2年（1212）創建と伝わる代々木の総鎮守。境内に縄文時代の集落跡・代々木八幡遺跡があり、復元住居が公開されている。",
     "nameEn": "Yoyogi Hachimangu",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Emperor Ojin",
+    "reasonEn": "Guardian shrine of Yoyogi, said to have been founded in 1212. Its grounds contain the Yoyogi Hachiman archaeological site, a Jomon-period settlement, with a reconstructed dwelling open to visitors."
   },
   {
     "pref": "東京",
@@ -2699,6 +3252,9 @@
     "deity": "少彦名命・菅原道真公",
     "reason": "延喜式内社。旧郷社。調布の総鎮守で「五宿天神」とも称された。『ゲゲゲの鬼太郎』ゆかりの社としても知られる。",
     "nameEn": "Fuda Tenjinja",
-    "prefEn": "Tokyo"
+    "prefEn": "Tokyo",
+    "provinceEn": "Musashi Province",
+    "deityEn": "Sukunahikona and Sugawara no Michizane",
+    "reasonEn": "A shrine listed in the Engishiki register, and a former village shrine. Guardian of the whole of Chofu, once also known as the 'Tenjin of the Five Post Towns'. Also known for its links to the manga and anime GeGeGe no Kitaro."
   }
 ]

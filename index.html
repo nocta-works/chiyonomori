@@ -1143,7 +1143,10 @@ function initScrollSlideReveal() {
     var t = CHROME_TEXT[currentLang];
     var badges = s.tags.slice().sort(function(a,b){ return PRIORITY[b]-PRIORITY[a]; })
       .map(function(tag){ return '<span class="popup-badge ' + tag + '">' + TAG_CONFIG[tag].label[currentLang] + '</span>'; }).join('');
-    var reasonHtml = s.reason ? '<div class="popup-reason">' + s.reason + '</div>' : '';
+    // 本人指摘（2026-09-20）→「やってほしい」で対応：186社ぶんの旧国名・祭神・由緒の
+    // 英訳を用意し（provinceEn/deityEn/reasonEn）、EN表示ではそちらを使う
+    var displayReason = currentLang === 'en' ? s.reasonEn : s.reason;
+    var reasonHtml = displayReason ? '<div class="popup-reason">' + displayReason + '</div>' : '';
     var gmapsUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(s.name);
     var officialUrl = 'https://www.google.com/search?q=' + encodeURIComponent(s.name + ' 公式');
     var wikiUrl = 'https://ja.wikipedia.org/w/index.php?search=' + encodeURIComponent(s.name) + '&title=特別:検索&go=Go';
@@ -1153,19 +1156,18 @@ function initScrollSlideReveal() {
     var detailHtml = detailFile
       ? '<a href="' + detailFile + '" class="popup-link-detail"><span class="popup-link-icon">⛩</span>' + t.detail + '</a>'
       : '';
-    // 本人指摘（2026-09-20）：EN切替後もポップアップの社名・都道府県が日本語のまま
-    // だった。サイドバー一覧（buildShrineItem）と同じくnameEn/prefEnに差し替える。
-    // ⚠️旧国名（province）・祭神（deity）・由緒（reason）は186社ぶんの英訳が
-    // まだ無いため、この3項目は引き続き日本語のまま（従来からの既知の制約）
+    // サイドバー一覧（buildShrineItem）と同じくnameEn/prefEnに差し替える
     var displayName = currentLang === 'en' ? s.nameEn : s.name;
     var displayPref = currentLang === 'en' ? s.prefEn : s.pref;
+    var displayProvince = currentLang === 'en' ? s.provinceEn : s.province;
+    var displayDeity = currentLang === 'en' ? s.deityEn : s.deity;
     return '<div class="popup-content">' +
       '<div class="popup-badges">' + badges + '</div>' +
       '<div class="popup-name">' + displayName + '</div>' +
       '<div class="popup-pref">' + displayPref + '</div>' +
-      '<div class="popup-province">' + t.province + s.province + '</div>' +
+      '<div class="popup-province">' + t.province + displayProvince + '</div>' +
       reasonHtml +
-      '<div class="popup-deity">' + t.deity + s.deity + '</div>' +
+      '<div class="popup-deity">' + t.deity + displayDeity + '</div>' +
       detailHtml +
       '<div class="popup-links">' +
         '<a href="' + gmapsUrl + '" target="_blank" rel="noopener" class="popup-link gmaps"><span class="popup-link-icon">📍</span>' + t.map + '</a>' +
