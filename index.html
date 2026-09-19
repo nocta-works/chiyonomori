@@ -671,7 +671,6 @@
   <video class="intro-video-media" autoplay muted loop playsinline>
     <source src="assets/samukawa-sample.mp4" type="video/mp4">
   </video>
-  <div class="intro-video-label">🎥 仮素材（寒川神社・未編集からの簡易書き出し）</div>
   <div class="intro-video-caption" id="intro-video-caption"><span class="ivc-line" data-en="Jingu, Taisha, Ichinomiya, Ninomiya.">神宮、大社、一宮、二宮。</span><br><span class="ivc-line" data-en="A ranking set a thousand years ago, still visible on a map.">千年前に決められた序列が、いまも地図の上に残っている。</span></div>
   <div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>
 </section>
@@ -832,6 +831,19 @@
   // 同じスクロール対象にした。そのため②の文字が読み終わったら即#introを閉じ、
   // 後は本人が実際にスクロールして③動画→④写真3枚と辿る方式にしている
   setTimeout(finish, 1500 + taglineHoldMs);
+})();
+
+// 依頼AG-3（2026-09-19）：自動再生ループ動画はprefers-reduced-motion指定時、
+// 再生せず1フレーム目の静止画として止める（海外版の他6箇所と同じ流儀）
+(function(){
+  var video = document.querySelector('.intro-video-media');
+  if (!video) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced) return;
+  video.removeAttribute('autoplay');
+  video.removeAttribute('loop');
+  video.pause();
+  video.currentTime = 0;
 })();
 
 // ③動画のキャプションは、動画のスクロール枠が画面に入ったタイミングで表示する
