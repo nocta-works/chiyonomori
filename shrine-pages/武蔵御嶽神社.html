@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>武蔵御嶽神社｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Musashi Mitake Jinja | Shrine profile page prototype (design-lab)">武蔵御嶽神社｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/武蔵御嶽神社.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/武蔵御嶽神社/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/mitake-honden.jpg" alt="黒と金の社殿">
+  <img src="../assets/mitake-honden.jpg" alt="黒と金の社殿" data-alt-en="Black-and-gold shrine building">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">名社</span>
+    <span class="shrine-badge" data-en="Notable shrine">名社</span>
     <span class="shrine-name-en">Musashi Mitake Jinja</span>
-    <h1 class="shrine-name-ja">武蔵御嶽神社</h1>
+    <h1 class="shrine-name-ja" data-en="Musashi Mitake Jinja">武蔵御嶽神社</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>櫛真智命ほか</span></span>
-      <span><b>所在地</b><span>東京都青梅市</span></span>
+      <span><b data-en="Enshrined deities">御祭神</b><span data-en="Kushimachi and others">櫛真智命ほか</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Ome, Tokyo">東京都青梅市</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/武蔵御嶽神社" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=武蔵御嶽神社+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/武蔵御嶽神社" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=武蔵御嶽神社+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/武蔵御嶽神社" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,69 +164,69 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">櫛真智命・大己貴命・少彦名命・日本武尊</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">厄除・盗難除・愛犬祈願<span class="quick-fact-en">Protection, and prayers for dogs</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">崇神天皇の時代とされる</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR御嶽＋バス＋ケーブルカー＋石段330段</span></div>
+  <div><span class="quick-fact-label" data-en="Deities">祭神</span><span class="quick-fact-value" data-en="Kushimachi, Onamuchi, Sukunahikona and Yamato Takeru">櫛真智命・大己貴命・少彦名命・日本武尊</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">厄除・盗難除・愛犬祈願<span class="quick-fact-en">Protection, and prayers for dogs</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="Traditionally dated to the reign of Emperor Sujin">崇神天皇の時代とされる</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="JR Mitake + bus + cable car + 330 stone steps">JR御嶽＋バス＋ケーブルカー＋石段330段</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>標高929mの御岳山頂。崇神天皇の時代の創建と伝わる。江戸期に「御嶽講」が広がったとされる。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="On the 929-metre summit of Mount Mitake. Tradition dates the shrine to the reign of Emperor Sujin. Pilgrimage confraternities called Mitake-ko spread during the Edo period.">標高929mの御岳山頂。崇神天皇の時代の創建と伝わる。江戸期に「御嶽講」が広がったとされる。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/mitake-gate-sign.jpg" alt="「御岳山へようこそ」の看板">
-    <p class="photo-block-caption">「御岳山へようこそ」の看板。ここから参道が始まる。</p>
+    <img src="../assets/mitake-gate-sign.jpg" alt="「御岳山へようこそ」の看板" data-alt-en="The &quot;Welcome to Mount Mitake&quot; sign">
+    <p class="photo-block-caption" data-en="A sign reads &quot;Welcome to Mount Mitake&quot;. The approach begins here.">「御岳山へようこそ」の看板。ここから参道が始まる。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitake-torii.jpg" alt="苔むした石鳥居">
+    <img src="../assets/mitake-torii.jpg" alt="苔むした石鳥居" data-alt-en="Moss-covered stone torii">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitake-stairs-torii.jpg" alt="鳥居と石段の先に見える社殿">
+    <img src="../assets/mitake-stairs-torii.jpg" alt="鳥居と石段の先に見える社殿" data-alt-en="Shrine building seen beyond a torii and stone steps">
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>おいぬ様（三峯と同じく狼を神使とするとされる）／ケーブルカーと330段の石段／山上に宿坊の集落がある／ロックガーデン。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="Oinu-sama, wolves regarded as divine messengers as at Mitsumine / a cable car and 330 stone steps / a settlement of shukubo pilgrim lodgings on the mountain / the Rock Garden.">おいぬ様（三峯と同じく狼を神使とするとされる）／ケーブルカーと330段の石段／山上に宿坊の集落がある／ロックガーデン。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitake-haiden-front.jpg" alt="朱塗りの拝殿">
+    <img src="../assets/mitake-haiden-front.jpg" alt="朱塗りの拝殿" data-alt-en="Vermilion worship hall">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/mitake-carving.jpg" alt="拝殿の軒を飾る彫刻">
-    <p class="photo-block-caption">拝殿の軒を飾る龍・鳳凰・虎の彫刻。</p>
+    <img src="../assets/mitake-carving.jpg" alt="拝殿の軒を飾る彫刻" data-alt-en="Carvings under the eaves of the worship hall">
+    <p class="photo-block-caption" data-en="Carvings of a dragon, phoenix and tiger under the eaves of the worship hall.">拝殿の軒を飾る龍・鳳凰・虎の彫刻。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/mitake-honden-side.jpg" alt="黒と金の社殿群を側面から見た様子">
+    <img src="../assets/mitake-honden-side.jpg" alt="黒と金の社殿群を側面から見た様子" data-alt-en="Black-and-gold shrine buildings seen from the side">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitake-goshinboku.jpg" alt="御神木の大樹">
-    <p class="photo-block-caption">注連縄が結ばれた御神木の大樹。</p>
+    <img src="../assets/mitake-goshinboku.jpg" alt="御神木の大樹" data-alt-en="Large sacred tree">
+    <p class="photo-block-caption" data-en="A large sacred tree tied with shimenawa.">注連縄が結ばれた御神木の大樹。</p>
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>御師（おし）が講の人々を泊めた仕組みが、今も山上の集落として残っているとされる。人が住んでいる山岳霊場という珍しい形。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="Oshi guides once lodged members of pilgrimage confraternities. That system is said to survive in the settlement on the mountain today. A mountain sanctuary where people still live.">御師（おし）が講の人々を泊めた仕組みが、今も山上の集落として残っているとされる。人が住んでいる山岳霊場という珍しい形。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">同じ東京郊外の山岳霊場、三峯神社へ。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="Another mountain sanctuary on Tokyo's outer edge: Mitsumine Jinja.">同じ東京郊外の山岳霊場、三峯神社へ。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="三峯神社.html">
-      <span class="next-shrine-set">名社</span>
-      <span class="next-shrine-name">三峯神社</span>
+      <span class="next-shrine-set" data-en="Notable shrine">名社</span>
+      <span class="next-shrine-name" data-en="Mitsumine Jinja">三峯神社</span>
       <span class="next-shrine-en">Mitsumine Jinja</span>
-      <p class="next-shrine-why">狼を神使とする、もうひとつの山岳霊場。</p>
+      <p class="next-shrine-why" data-en="Another mountain sanctuary where wolves serve as divine messengers.">狼を神使とする、もうひとつの山岳霊場。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・武蔵御嶽神社 / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Musashi Mitake Jinja / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・武蔵御嶽神社 / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -244,6 +243,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

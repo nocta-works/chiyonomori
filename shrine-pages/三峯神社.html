@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>三峯神社｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Mitsumine Jinja | Shrine profile page prototype (design-lab)">三峯神社｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/三峯神社.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/三峯神社/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/mitsumine-torii.jpg" alt="白い大鳥居と狼の像">
+  <img src="../assets/mitsumine-torii.jpg" alt="白い大鳥居と狼の像" data-alt-en="Large white torii and wolf statues">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">名社</span>
+    <span class="shrine-badge" data-en="Notable shrine">名社</span>
     <span class="shrine-name-en">Mitsumine Jinja</span>
-    <h1 class="shrine-name-ja">三峯神社</h1>
+    <h1 class="shrine-name-ja" data-en="Mitsumine Jinja">三峯神社</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>伊弉諾命・伊弉冉命</span></span>
-      <span><b>所在地</b><span>埼玉県秩父市</span></span>
+      <span><b data-en="Enshrined deities">御祭神</b><span data-en="Izanagi and Izanami, the creator gods">伊弉諾命・伊弉冉命</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Chichibu, Saitama">埼玉県秩父市</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/三峯神社" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=三峯神社+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/三峯神社" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=三峯神社+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/三峯神社" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,87 +164,87 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">伊弉諾命・伊弉冉命</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">厄除・災難除<span class="quick-fact-en">Warding off calamity</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">日本武尊の東征伝説に由来とされる</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">最寄駅なし。西武秩父駅からバス約75分。車推奨</span></div>
+  <div><span class="quick-fact-label" data-en="Deities">祭神</span><span class="quick-fact-value" data-en="Izanagi and Izanami, the creator gods">伊弉諾命・伊弉冉命</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">厄除・災難除<span class="quick-fact-en">Warding off calamity</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="Linked by tradition to Yamato Takeru's eastern campaign">日本武尊の東征伝説に由来とされる</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="No nearby station. About 75 minutes by bus from Seibu-Chichibu Station. A car is recommended.">最寄駅なし。西武秩父駅からバス約75分。車推奨</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>日本武尊の東征伝説に由来するとされる。標高約1,100mの山中。秩父三社のひとつ。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="Tradition links the shrine to Yamato Takeru's eastern campaign. It stands in the mountains at about 1,100 metres. One of the three Chichibu shrines.">日本武尊の東征伝説に由来するとされる。標高約1,100mの山中。秩父三社のひとつ。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/mitsumine-torii.jpg" alt="白い大鳥居と狼の像">
-    <p class="photo-block-caption">白い大鳥居。両脇に控えるのは狛犬ではなく狼（山犬）。</p>
+    <img src="../assets/mitsumine-torii.jpg" alt="白い大鳥居と狼の像" data-alt-en="Large white torii and wolf statues">
+    <p class="photo-block-caption" data-en="A large white torii. The animals beside it are wolves, or mountain dogs, not komainu.">白い大鳥居。両脇に控えるのは狛犬ではなく狼（山犬）。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitsumine-zuijinmon.jpg" alt="「三峯山」の随神門">
+    <img src="../assets/mitsumine-zuijinmon.jpg" alt="「三峯山」の随神門" data-alt-en="Zuishinmon gate marked &quot;Mount Mitsumine&quot;">
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>三ツ鳥居（三つの鳥居が横に連なる珍しい形とされる）／狛犬ではなく狼（山犬＝大口真神を神使とする）／雲海／奥宮（妙法ヶ岳山頂）。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="The Mitsu-torii, an unusual form of three torii joined side by side / wolves instead of komainu. The wolf deity Okuchi no Makami is the shrine's messenger / seas of cloud / the Okumiya shrine on the summit of Mount Myohogatake.">三ツ鳥居（三つの鳥居が横に連なる珍しい形とされる）／狛犬ではなく狼（山犬＝大口真神を神使とする）／雲海／奥宮（妙法ヶ岳山頂）。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/mitsumine-ryukoku.jpg" alt="龍が彫られた社殿の軒">
+    <img src="../assets/mitsumine-ryukoku.jpg" alt="龍が彫られた社殿の軒" data-alt-en="Dragon carving under the eaves">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitsumine-honden.jpg" alt="彫刻が施された社殿">
+    <img src="../assets/mitsumine-honden.jpg" alt="彫刻が施された社殿" data-alt-en="Carved shrine building">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitsumine-goshinboku.jpg" alt="注連縄を巻いたご神木">
-    <p class="photo-block-caption">注連縄を巻いたご神木の杉。根元に小さな祠と石碑が並ぶ。</p>
+    <img src="../assets/mitsumine-goshinboku.jpg" alt="注連縄を巻いたご神木" data-alt-en="Sacred tree wrapped in shimenawa">
+    <p class="photo-block-caption" data-en="A sacred cedar wrapped in shimenawa. Small stone monuments and a tiny shrine stand at its base.">注連縄を巻いたご神木の杉。根元に小さな祠と石碑が並ぶ。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitsumine-sandou.jpg" alt="山中の参道">
-    <p class="photo-block-caption">山中の参道。標高約1,100mまで続く。</p>
+    <img src="../assets/mitsumine-sandou.jpg" alt="山中の参道" data-alt-en="Mountain approach">
+    <p class="photo-block-caption" data-en="The mountain approach. It runs up to about 1,100 metres.">山中の参道。標高約1,100mまで続く。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitsumine-sugi-sando.jpg" alt="杉の大木の間を抜ける石段">
+    <img src="../assets/mitsumine-sugi-sando.jpg" alt="杉の大木の間を抜ける石段" data-alt-en="Stone steps between tall cedars">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitsumine-hokora.jpg" alt="石灯籠に挟まれた小さな社殿">
+    <img src="../assets/mitsumine-hokora.jpg" alt="石灯籠に挟まれた小さな社殿" data-alt-en="A small shrine between stone lanterns">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/mitsumine-deer.jpg" alt="参道脇で草を食む鹿">
+    <img src="../assets/mitsumine-deer.jpg" alt="参道脇で草を食む鹿" data-alt-en="A deer grazing beside the approach">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/mitsumine-unkai.jpg" alt="雲海と秩父の山並み">
-    <p class="photo-block-caption">山頂から見渡す雲海と秩父の山並み。</p>
+    <img src="../assets/mitsumine-unkai.jpg" alt="雲海と秩父の山並み" data-alt-en="Sea of cloud and the Chichibu mountains">
+    <p class="photo-block-caption" data-en="A sea of cloud and the Chichibu mountains from the summit.">山頂から見渡す雲海と秩父の山並み。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/mitsumine-statue.jpg" alt="岩山の上に立つ人物像">
+    <img src="../assets/mitsumine-statue.jpg" alt="岩山の上に立つ人物像" data-alt-en="A human figure standing on a rocky summit">
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>山岳信仰と狼信仰。関東の山間部には狼を神使とする社が点在するとされる。修験道の拠点だった。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="Mountain worship and wolf worship. Shrines using the wolf as a divine messenger are scattered through the mountains of Kanto. Mitsumine was once a centre of Shugendo.">山岳信仰と狼信仰。関東の山間部には狼を神使とする社が点在するとされる。修験道の拠点だった。</p>
   </div>
   <div class="section">
     <span class="section-label">Visiting Tips</span>
-    <h2 class="section-title">参拝のポイント</h2>
-    <p>⚠️アクセスが悪い＝西武秩父駅からバスで約75分とされる。車でないと実質厳しい。</p>
+    <h2 class="section-title" data-en="Visiting notes">参拝のポイント</h2>
+    <p data-en="⚠️Access is poor. The bus from Seibu-Chichibu Station takes about 75 minutes. Without a car, the trip is difficult.">⚠️アクセスが悪い＝西武秩父駅からバスで約75分とされる。車でないと実質厳しい。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">同じ東京郊外の山岳霊場、武蔵御嶽神社へ。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="Another mountain sanctuary on Tokyo's outer edge: Musashi Mitake Jinja.">同じ東京郊外の山岳霊場、武蔵御嶽神社へ。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="武蔵御嶽神社.html">
-      <span class="next-shrine-set">名社</span>
-      <span class="next-shrine-name">武蔵御嶽神社</span>
+      <span class="next-shrine-set" data-en="Notable shrine">名社</span>
+      <span class="next-shrine-name" data-en="Musashi Mitake Jinja">武蔵御嶽神社</span>
       <span class="next-shrine-en">Musashi Mitake Jinja</span>
-      <p class="next-shrine-why">狼を神使とする、もうひとつの山岳霊場。</p>
+      <p class="next-shrine-why" data-en="Another mountain sanctuary where wolves serve as divine messengers.">狼を神使とする、もうひとつの山岳霊場。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・三峯神社 / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Mitsumine Jinja / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・三峯神社 / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -262,6 +261,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

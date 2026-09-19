@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>葛飾八幡宮｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Katsushika Hachimangu | Shrine profile page prototype (design-lab)">葛飾八幡宮｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/葛飾八幡宮.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/葛飾八幡宮/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/katsushika-sandou.jpg" alt="参道の松並木とイチョウの黄葉">
+  <img src="../assets/katsushika-sandou.jpg" alt="参道の松並木とイチョウの黄葉" data-alt-en="Pines and yellow ginkgo leaves along the approach">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">名社</span>
+    <span class="shrine-badge" data-en="Notable shrine">名社</span>
     <span class="shrine-name-en">Katsushika Hachimangu</span>
-    <h1 class="shrine-name-ja">葛飾八幡宮</h1>
+    <h1 class="shrine-name-ja" data-en="Katsushika Hachimangu">葛飾八幡宮</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>誉田別命ほか</span></span>
-      <span><b>所在地</b><span>千葉県市川市</span></span>
+      <span><b data-en="Enshrined deities">御祭神</b><span data-en="Hondawake, Emperor Ojin, and others">誉田別命ほか</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Ichikawa, Chiba">千葉県市川市</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/葛飾八幡宮" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=葛飾八幡宮+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/葛飾八幡宮" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=葛飾八幡宮+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/葛飾八幡宮" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,82 +164,82 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">誉田別命・息長帯姫命・玉依姫命</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">必勝・安産・子育て<span class="quick-fact-en">Victory, childbirth</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">寛平年間（889〜898）とされる</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR本八幡・京成八幡</span></div>
+  <div><span class="quick-fact-label" data-en="Deities">祭神</span><span class="quick-fact-value" data-en="Hondawake, Emperor Ojin; Okinagatarashihime, Empress Jingu; Tamayorihime">誉田別命・息長帯姫命・玉依姫命</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">必勝・安産・子育て<span class="quick-fact-en">Victory, childbirth</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="Said to date from 889–898">寛平年間（889〜898）とされる</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="JR Motoyawata / Keisei Yawata">JR本八幡・京成八幡</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>9世紀、宇多天皇の勅願により石清水八幡宮から勧請されたとされる。下総の八幡信仰の中心。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="In the 9th century, it is said to have received the deity of Iwashimizu Hachimangu by order of Emperor Uda. It became a centre of Hachiman worship in Shimosa.">9世紀、宇多天皇の勅願により石清水八幡宮から勧請されたとされる。下総の八幡信仰の中心。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/katsushika-sandou.jpg" alt="参道の松並木とイチョウの黄葉">
+    <img src="../assets/katsushika-sandou.jpg" alt="参道の松並木とイチョウの黄葉" data-alt-en="Pines and yellow ginkgo leaves along the approach">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/katsushika-entrance.jpg" alt="駐車場側から見た境内入口">
+    <img src="../assets/katsushika-entrance.jpg" alt="駐車場側から見た境内入口" data-alt-en="Entrance to the grounds from the car park">
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>千本公孫樹（国の天然記念物。樹齢1200年とされ、根元から何本もの幹が立ち上がっている）／随神門（もとは別当寺の仁王門で、神仏分離の名残）。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="The Sembon Ginkgo, a National Natural Monument. It is said to be 1,200 years old, with many trunks rising from its base / the Zuishinmon gate, originally the Nio gate of the shrine's former Buddhist temple. The building still carries the mark of the separation of Shinto and Buddhism.">千本公孫樹（国の天然記念物。樹齢1200年とされ、根元から何本もの幹が立ち上がっている）／随神門（もとは別当寺の仁王門で、神仏分離の名残）。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/katsushika-mon.jpg" alt="随神門">
+    <img src="../assets/katsushika-mon.jpg" alt="随神門" data-alt-en="Zuishinmon gate">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/katsushika-mon-inside.jpg" alt="境内側から見た随神門">
+    <img src="../assets/katsushika-mon-inside.jpg" alt="境内側から見た随神門" data-alt-en="The Zuishinmon gate seen from inside the grounds">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/katsushika-senbonicho.jpg" alt="千本公孫樹">
-    <p class="photo-block-caption">国の天然記念物「千本公孫樹」。樹齢1200年とされる大イチョウが黄金色に染まる。</p>
+    <img src="../assets/katsushika-senbonicho.jpg" alt="千本公孫樹" data-alt-en="Sembon Ginkgo">
+    <p class="photo-block-caption" data-en="The Sembon Ginkgo, a National Natural Monument. The tree is said to be 1,200 years old. Its leaves turn gold.">国の天然記念物「千本公孫樹」。樹齢1200年とされる大イチョウが黄金色に染まる。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/katsushika-haiden-icho.jpg" alt="拝殿とイチョウの黄葉">
+    <img src="../assets/katsushika-haiden-icho.jpg" alt="拝殿とイチョウの黄葉" data-alt-en="Worship hall and yellow ginkgo leaves">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/katsushika-shoro.jpg" alt="鐘楼">
-    <p class="photo-block-caption">鐘楼。紅葉した木々に囲まれている。</p>
+    <img src="../assets/katsushika-shoro.jpg" alt="鐘楼" data-alt-en="Bell tower">
+    <p class="photo-block-caption" data-en="The bell tower, surrounded by autumn foliage.">鐘楼。紅葉した木々に囲まれている。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/katsushika-itsukushima.jpg" alt="境内社・厳島社">
-    <p class="photo-block-caption">境内社・厳島社。小さな朱の太鼓橋を渡る。</p>
+    <img src="../assets/katsushika-itsukushima.jpg" alt="境内社・厳島社" data-alt-en="Auxiliary Itsukushima shrine">
+    <p class="photo-block-caption" data-en="The auxiliary Itsukushima shrine. A small vermilion drum bridge crosses to it.">境内社・厳島社。小さな朱の太鼓橋を渡る。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/katsushika-tenmangu.jpg" alt="境内社・葛飾天満宮の鳥居">
-    <p class="photo-block-caption">境内社・葛飾天満宮の鳥居。</p>
+    <img src="../assets/katsushika-tenmangu.jpg" alt="境内社・葛飾天満宮の鳥居" data-alt-en="Torii of the auxiliary Katsushika Tenmangu">
+    <p class="photo-block-caption" data-en="The torii of the auxiliary Katsushika Tenmangu.">境内社・葛飾天満宮の鳥居。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/katsushika-ishidan.jpg" alt="境内の石段">
+    <img src="../assets/katsushika-ishidan.jpg" alt="境内の石段" data-alt-en="Stone steps in the grounds">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/katsushika-hall-icho.jpg" alt="イチョウの黄葉と社殿の一つ">
+    <img src="../assets/katsushika-hall-icho.jpg" alt="イチョウの黄葉と社殿の一つ" data-alt-en="Yellow ginkgo leaves and one of the shrine buildings">
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>社殿より木の方が古い（→記事「鳥居と境内」）。随神門は、1,000年続いた神仏習合が明治に断ち切られた跡がそのまま建物に残っている例とされる。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="The tree is older than the shrine buildings (→ article &quot;Torii and the shrine grounds&quot;). The Zuishinmon is said to preserve the physical mark of the Meiji separation that ended more than 1,000 years of Shinto-Buddhist syncretism.">社殿より木の方が古い（→記事「鳥居と境内」）。随神門は、1,000年続いた神仏習合が明治に断ち切られた跡がそのまま建物に残っている例とされる。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">電車で一時間圏、西の大国魂神社へ。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="Within an hour by train: west to Okunitama Jinja.">電車で一時間圏、西の大国魂神社へ。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="大国魂神社.html">
-      <span class="next-shrine-set">名社</span>
-      <span class="next-shrine-name">大国魂神社</span>
+      <span class="next-shrine-set" data-en="Notable shrine">名社</span>
+      <span class="next-shrine-name" data-en="Okunitama Jinja">大国魂神社</span>
       <span class="next-shrine-en">Okunitama Jinja</span>
-      <p class="next-shrine-why">千葉・市川の東と、東京・府中の西。東京郊外を東西に挟む2社。</p>
+      <p class="next-shrine-why" data-en="Ichikawa to the east in Chiba, Fuchu to the west in Tokyo. Two shrines on opposite sides of the Tokyo suburbs.">千葉・市川の東と、東京・府中の西。東京郊外を東西に挟む2社。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・葛飾八幡宮 / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Katsushika Hachimangu / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・葛飾八幡宮 / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -257,6 +256,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

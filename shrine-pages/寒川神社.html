@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>寒川神社｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Samukawa Jinja | Shrine profile page prototype (design-lab)">寒川神社｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/寒川神社.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/寒川神社/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/samukawa-haiden.jpg" alt="拝殿">
+  <img src="../assets/samukawa-haiden.jpg" alt="拝殿" data-alt-en="Worship hall">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">一宮</span>
+    <span class="shrine-badge" data-en="Ichinomiya">一宮</span>
     <span class="shrine-name-en">Samukawa Jinja</span>
-    <h1 class="shrine-name-ja">寒川神社</h1>
+    <h1 class="shrine-name-ja" data-en="Samukawa Jinja">寒川神社</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>寒川比古命・寒川比女命</span></span>
-      <span><b>所在地</b><span>神奈川県寒川町</span></span>
+      <span><b data-en="Enshrined deities">御祭神</b><span data-en="Samukawahiko and Samukawahime">寒川比古命・寒川比女命</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Samukawa, Kanagawa">神奈川県寒川町</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/寒川神社" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=寒川神社+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/寒川神社" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=寒川神社+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/寒川神社" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,80 +164,80 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">寒川比古命・寒川比女命</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">八方除（全国唯一）<span class="quick-fact-en">Protection from all eight directions</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">1600年以上前とされる</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR宮山</span></div>
+  <div><span class="quick-fact-label" data-en="Deities">祭神</span><span class="quick-fact-value" data-en="Samukawahiko and Samukawahime">寒川比古命・寒川比女命</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">八方除（全国唯一）<span class="quick-fact-en">Protection from all eight directions</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="Said to be more than 1,600 years old">1600年以上前とされる</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="JR Miyayama">JR宮山</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>相模国一宮。全国で唯一、八方除の守護神とされる。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="Ichinomiya of Sagami Province. It is said to be Japan's only shrine devoted to happo-yoke, protection from misfortune in every direction.">相模国一宮。全国で唯一、八方除の守護神とされる。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/samukawa-shinmon.jpg" alt="神門">
-    <p class="photo-block-caption">神門。皇室の菊花紋の提灯が下がる。</p>
+    <img src="../assets/samukawa-shinmon.jpg" alt="神門" data-alt-en="Shinmon gate">
+    <p class="photo-block-caption" data-en="The shinmon gate. Lanterns bear the Imperial chrysanthemum crest.">神門。皇室の菊花紋の提灯が下がる。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/samukawa-shinmon-crowd.jpg" alt="神門を近くから見上げた様子">
+    <img src="../assets/samukawa-shinmon-crowd.jpg" alt="神門を近くから見上げた様子" data-alt-en="The shinmon gate seen from below">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/samukawa-shinbashi-torii.jpg" alt="神橋の先にそびえる鳥居">
+    <img src="../assets/samukawa-shinbashi-torii.jpg" alt="神橋の先にそびえる鳥居" data-alt-en="A torii beyond the sacred bridge">
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>神門（正月の迎春ねぶた）／方位盤／神嶽山神苑（参拝した人だけが入れる庭園とされる）。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="The shinmon gate, with a New Year nebuta display / the direction dial / Kanteizan Shinen, a garden said to be open only to those who have worshipped at the shrine.">神門（正月の迎春ねぶた）／方位盤／神嶽山神苑（参拝した人だけが入れる庭園とされる）。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/samukawa-haiden.jpg" alt="拝殿">
+    <img src="../assets/samukawa-haiden.jpg" alt="拝殿" data-alt-en="Worship hall">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/samukawa-haiden-front.jpg" alt="拝殿を正面から見た様子">
+    <img src="../assets/samukawa-haiden-front.jpg" alt="拝殿を正面から見た様子" data-alt-en="The worship hall seen head-on">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/samukawa-shinen.jpg" alt="神嶽山神苑の入口">
-    <p class="photo-block-caption">神嶽山神苑の入口。参拝者だけが入れる庭園。</p>
+    <img src="../assets/samukawa-shinen.jpg" alt="神嶽山神苑の入口" data-alt-en="Entrance to Kanteizan Shinen">
+    <p class="photo-block-caption" data-en="The entrance to Kanteizan Shinen. Only worshippers may enter the garden.">神嶽山神苑の入口。参拝者だけが入れる庭園。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/samukawa-shinen-path.jpg" alt="神苑の中を抜ける小径">
+    <img src="../assets/samukawa-shinen-path.jpg" alt="神苑の中を抜ける小径" data-alt-en="Path through the shrine garden">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/samukawa-shinen-gate.jpg" alt="神苑の奥にある苔葺き屋根の小さな門">
+    <img src="../assets/samukawa-shinen-gate.jpg" alt="神苑の奥にある苔葺き屋根の小さな門" data-alt-en="A small moss-roofed gate at the back of the garden">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/samukawa-shinen-waterfall.jpg" alt="神苑の池に流れ込む小さな滝">
+    <img src="../assets/samukawa-shinen-waterfall.jpg" alt="神苑の池に流れ込む小さな滝" data-alt-en="A small waterfall feeding the garden pond">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/samukawa-shinen-well.jpg" alt="神苑の池に浮かぶ井桁の意匠">
+    <img src="../assets/samukawa-shinen-well.jpg" alt="神苑の池に浮かぶ井桁の意匠" data-alt-en="A well-frame motif floating in the garden pond">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/samukawa-shinen-fountain.jpg" alt="神苑の池の噴水">
+    <img src="../assets/samukawa-shinen-fountain.jpg" alt="神苑の池の噴水" data-alt-en="Fountain in the garden pond">
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>八方除——方位・地相・家相・日柄など、あらゆる方角から来る災いを祓うとされる。建築・引越し・旅行の前に参る社。春分と秋分の日の出が富士山を通る線上にあるという伝承がある。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="Happo-yoke is protection from misfortune coming from any direction, including compass direction, land, house orientation and auspicious dates. People visit before building, moving house or travelling. Tradition says the shrine lies on a line where the equinox sunrise passes over Mount Fuji.">八方除——方位・地相・家相・日柄など、あらゆる方角から来る災いを祓うとされる。建築・引越し・旅行の前に参る社。春分と秋分の日の出が富士山を通る線上にあるという伝承がある。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">東京郊外の南端、大山阿夫利神社とも遠く繋がる。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="At the southern edge of the outer Tokyo ring. It also has a distant link to Oyama Afuri Jinja.">東京郊外の南端、大山阿夫利神社とも遠く繋がる。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="大山阿夫利神社.html">
-      <span class="next-shrine-set">名社</span>
-      <span class="next-shrine-name">大山阿夫利神社</span>
+      <span class="next-shrine-set" data-en="Notable shrine">名社</span>
+      <span class="next-shrine-name" data-en="Oyama Afuri Jinja">大山阿夫利神社</span>
       <span class="next-shrine-en">Oyama Afuri Jinja</span>
-      <p class="next-shrine-why">雨乞いの山岳霊場。同じ神奈川。</p>
+      <p class="next-shrine-why" data-en="A mountain sanctuary for prayers for rain. Also in Kanagawa.">雨乞いの山岳霊場。同じ神奈川。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・寒川神社 / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Samukawa Jinja / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・寒川神社 / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -255,6 +254,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

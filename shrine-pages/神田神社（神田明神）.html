@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>神田神社（神田明神）｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Kanda Jinja (Kanda Myojin) | Shrine profile page prototype (design-lab)">神田神社（神田明神）｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/神田神社（神田明神）.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/神田神社（神田明神）/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/kanda-honden.jpg" alt="朱塗りの社殿">
+  <img src="../assets/kanda-honden.jpg" alt="朱塗りの社殿" data-alt-en="Vermilion shrine buildings">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">名社</span>
+    <span class="shrine-badge" data-en="Notable shrine">名社</span>
     <span class="shrine-name-en">Kanda Jinja (Kanda Myojin)</span>
-    <h1 class="shrine-name-ja">神田神社（神田明神）</h1>
+    <h1 class="shrine-name-ja" data-en="Kanda Jinja (Kanda Myojin)">神田神社（神田明神）</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>大己貴命・少彦名命・平将門命</span></span>
-      <span><b>所在地</b><span>東京都千代田区</span></span>
+      <span><b data-en="Enshrined deities">御祭神</b><span data-en="Onamuchi, Sukunahikona and Taira no Masakado">大己貴命・少彦名命・平将門命</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Chiyoda, Tokyo">東京都千代田区</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/神田神社（神田明神）" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=神田神社（神田明神）+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/神田神社（神田明神）" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=神田神社（神田明神）+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/神田神社（神田明神）" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,83 +164,83 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">大己貴命・少彦名命・平将門命</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">商売繁盛・縁結び・IT情報安全<span class="quick-fact-en">Business, relationships, IT security</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">730年と伝わる</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">地下鉄末広町・JR御茶ノ水</span></div>
+  <div><span class="quick-fact-label" data-en="Deities">祭神</span><span class="quick-fact-value" data-en="Onamuchi, Sukunahikona and Taira no Masakado">大己貴命・少彦名命・平将門命</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">商売繁盛・縁結び・IT情報安全<span class="quick-fact-en">Business, relationships, IT security</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="Traditionally dated to 730">730年と伝わる</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="Suehirocho subway station / JR Ochanomizu">地下鉄末広町・JR御茶ノ水</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>730年の創建と伝わる江戸総鎮守。江戸城の表鬼門を守る位置に置かれた。平将門命は14世紀に合祀されたとされる——将門塚の祟りを鎮めるためとされる。明治に一度祭神から外され、1984年に復帰している。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="Traditionally founded in 730 as the guardian shrine of Edo. It stood on the omote-kimon, the unlucky north-east approach to Edo Castle. Taira no Masakado was enshrined here in the 14th century — tradition says this was to quiet the curse of his burial mound. He was removed as a deity in the Meiji period, then restored in 1984.">730年の創建と伝わる江戸総鎮守。江戸城の表鬼門を守る位置に置かれた。平将門命は14世紀に合祀されたとされる——将門塚の祟りを鎮めるためとされる。明治に一度祭神から外され、1984年に復帰している。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kanda-torii.jpg" alt="神田駅前の鳥居">
+    <img src="../assets/kanda-torii.jpg" alt="神田駅前の鳥居" data-alt-en="Torii by Kanda Station">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kanda-torii-backlit.jpg" alt="逆光の大鳥居">
+    <img src="../assets/kanda-torii-backlit.jpg" alt="逆光の大鳥居" data-alt-en="Large torii against the light">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kanda-zuijinmon.jpg" alt="随神門">
-    <p class="photo-block-caption">随神門を正面から見た一枚。「迎春」の幟が掲げられている。</p>
+    <img src="../assets/kanda-zuijinmon.jpg" alt="随神門" data-alt-en="Zuishinmon gate">
+    <p class="photo-block-caption" data-en="The Zuishinmon gate seen head-on. Banners read &quot;Welcome Spring&quot;.">随神門を正面から見た一枚。「迎春」の幟が掲げられている。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kanda-zuijinmon-eaves.jpg" alt="随神門の軒下">
+    <img src="../assets/kanda-zuijinmon-eaves.jpg" alt="随神門の軒下" data-alt-en="Under the eaves of the Zuishinmon gate">
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>朱塗りの随神門／鉄筋コンクリート造の社殿（1934年、関東大震災の後に建てられたため戦災を免れた）／秋葉原から数分という立地から、今はIT関係の成功祈願でも知られる。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="The vermilion Zuishinmon gate / the reinforced-concrete shrine buildings, built in 1934 after the Great Kanto Earthquake and spared in the wartime bombing / prayers for success in IT, now common here with Akihabara only minutes away.">朱塗りの随神門／鉄筋コンクリート造の社殿（1934年、関東大震災の後に建てられたため戦災を免れた）／秋葉原から数分という立地から、今はIT関係の成功祈願でも知られる。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kanda-temizuya.jpg" alt="龍の口から水が流れる手水舎">
+    <img src="../assets/kanda-temizuya.jpg" alt="龍の口から水が流れる手水舎" data-alt-en="Chozuya with water flowing from a dragon's mouth">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kanda-komainu.jpg" alt="狛犬越しに見る境内">
+    <img src="../assets/kanda-komainu.jpg" alt="狛犬越しに見る境内" data-alt-en="The grounds seen past a komainu">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kanda-wave.jpg" alt="波と魚をかたどった金色のオブジェ">
+    <img src="../assets/kanda-wave.jpg" alt="波と魚をかたどった金色のオブジェ" data-alt-en="A gold object shaped like waves and a fish">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kanda-massha.jpg" alt="境内社へ続く石鳥居">
-    <p class="photo-block-caption">境内社へ続く石鳥居。「神田明神」の社号標が立つ。</p>
+    <img src="../assets/kanda-massha.jpg" alt="境内社へ続く石鳥居" data-alt-en="Stone torii leading to the auxiliary shrines">
+    <p class="photo-block-caption" data-en="A stone torii leads to the auxiliary shrines. A stone marker bears the name &quot;Kanda Myojin&quot;.">境内社へ続く石鳥居。「神田明神」の社号標が立つ。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kanda-kobunacho.jpg" alt="境内社・小舟町八雲神社の石鳥居">
-    <p class="photo-block-caption">境内社・小舟町八雲神社の石鳥居。奥に本殿の屋根がのぞく。</p>
+    <img src="../assets/kanda-kobunacho.jpg" alt="境内社・小舟町八雲神社の石鳥居" data-alt-en="Stone torii of the auxiliary Kobunacho Yakumo shrine">
+    <p class="photo-block-caption" data-en="The stone torii of the auxiliary Kobunacho Yakumo shrine. The roof of the main sanctuary appears behind it.">境内社・小舟町八雲神社の石鳥居。奥に本殿の屋根がのぞく。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kanda-edojinja-torii.jpg" alt="境内社・江戸神社への鳥居">
-    <p class="photo-block-caption">境内社・江戸神社への鳥居。「江戸総鎮守 神田明神」の社号標が並ぶ。</p>
+    <img src="../assets/kanda-edojinja-torii.jpg" alt="境内社・江戸神社への鳥居" data-alt-en="Torii leading to the auxiliary Edo shrine">
+    <p class="photo-block-caption" data-en="A torii leads to the auxiliary Edo shrine. Beside it stands a marker reading &quot;Guardian of Edo, Kanda Myojin&quot;.">境内社・江戸神社への鳥居。「江戸総鎮守 神田明神」の社号標が並ぶ。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kanda-edojinja.jpg" alt="江戸神社の社殿">
-    <p class="photo-block-caption">江戸神社の社殿。登録有形文化財に指定されている。</p>
+    <img src="../assets/kanda-edojinja.jpg" alt="江戸神社の社殿" data-alt-en="The Edo shrine building">
+    <p class="photo-block-caption" data-en="The Edo shrine building. It is a Registered Tangible Cultural Property.">江戸神社の社殿。登録有形文化財に指定されている。</p>
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>敗者を神として祀る（→記事「神々と分類」）。朝廷に反乱を起こして討たれた将門が、江戸の守り神になった。神田祭は日本三大祭のひとつとされる。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="A defeated man became a god (→ article &quot;The gods and the map's classifications&quot;). Masakado rebelled against the imperial court and was killed. He became a guardian of Edo. The Kanda Matsuri is counted among Japan's three great festivals.">敗者を神として祀る（→記事「神々と分類」）。朝廷に反乱を起こして討たれた将門が、江戸の守り神になった。神田祭は日本三大祭のひとつとされる。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">同じ江戸の鎮守、日枝神社へ。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="Another guardian of Edo: Hie Jinja.">同じ江戸の鎮守、日枝神社へ。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="日枝神社.html">
-      <span class="next-shrine-set">名社</span>
-      <span class="next-shrine-name">日枝神社</span>
+      <span class="next-shrine-set" data-en="Notable shrine">名社</span>
+      <span class="next-shrine-name" data-en="Hie Jinja">日枝神社</span>
       <span class="next-shrine-en">Hie Jinja</span>
-      <p class="next-shrine-why">江戸城（皇居）の産土神。神田神社と並ぶ江戸の二大鎮守。</p>
+      <p class="next-shrine-why" data-en="The tutelary shrine of Edo Castle, now the Imperial Palace. One of Edo's two major guardian shrines, alongside Kanda Jinja.">江戸城（皇居）の産土神。神田神社と並ぶ江戸の二大鎮守。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・神田神社（神田明神） / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Kanda Jinja (Kanda Myojin) / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・神田神社（神田明神） / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -258,6 +257,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>鶴岡八幡宮｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Tsurugaoka Hachimangu | Shrine profile page prototype (design-lab)">鶴岡八幡宮｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/鶴岡八幡宮.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/鶴岡八幡宮/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/tsurugaoka-dankazura.jpg" alt="段葛の参道">
+  <img src="../assets/tsurugaoka-dankazura.jpg" alt="段葛の参道" data-alt-en="Dankazura approach">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">一宮</span>
+    <span class="shrine-badge" data-en="Ichinomiya">一宮</span>
     <span class="shrine-name-en">Tsurugaoka Hachimangu</span>
-    <h1 class="shrine-name-ja">鶴岡八幡宮</h1>
+    <h1 class="shrine-name-ja" data-en="Tsurugaoka Hachimangu">鶴岡八幡宮</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>応神天皇ほか</span></span>
-      <span><b>所在地</b><span>神奈川県鎌倉市</span></span>
+      <span><b data-en="Enshrined deities">御祭神</b><span data-en="Emperor Ojin and others">応神天皇ほか</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Kamakura, Kanagawa">神奈川県鎌倉市</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/鶴岡八幡宮" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=鶴岡八幡宮+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/鶴岡八幡宮" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=鶴岡八幡宮+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/鶴岡八幡宮" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,59 +164,59 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">応神天皇・比売神・神功皇后</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">必勝・出世・縁結び<span class="quick-fact-en">Victory, career</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">1063年（由比ヶ浜）／1180年に現在地</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR鎌倉</span></div>
+  <div><span class="quick-fact-label" data-en="Deities">祭神</span><span class="quick-fact-value" data-en="Emperor Ojin, Himegami and Empress Jingu">応神天皇・比売神・神功皇后</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">必勝・出世・縁結び<span class="quick-fact-en">Victory, career</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="1063 at Yuigahama / moved to the present site in 1180">1063年（由比ヶ浜）／1180年に現在地</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="JR Kamakura">JR鎌倉</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>1063年に源頼義が石清水八幡宮を由比ヶ浜へ勧請し、1180年に頼朝が現在地へ移したとされる。鎌倉幕府の中心。全国一の宮会加盟社で相模国一宮を称する（伝統的な一宮は寒川神社）——国によっては一宮が複数あり、異説が残ることの実例（→記事「神々と分類」の一宮の節）。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="Minamoto no Yoriyoshi is said to have brought Hachiman from Iwashimizu Hachimangu to Yuigahama in 1063. Minamoto no Yoritomo moved the shrine to its present site in 1180. It became the centre of the Kamakura shogunate. It is a member of the National Ichinomiya Association and calls itself the ichinomiya of Sagami Province. The traditional ichinomiya is Samukawa Jinja — one example of how some provinces have more than one claimant (→ &quot;Ichinomiya&quot; in the article &quot;The gods and the map's classifications&quot;).">1063年に源頼義が石清水八幡宮を由比ヶ浜へ勧請し、1180年に頼朝が現在地へ移したとされる。鎌倉幕府の中心。全国一の宮会加盟社で相模国一宮を称する（伝統的な一宮は寒川神社）——国によっては一宮が複数あり、異説が残ることの実例（→記事「神々と分類」の一宮の節）。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/tsurugaoka-ichinotorii.jpg" alt="一の鳥居">
-    <p class="photo-block-caption">一の鳥居。「八幡宮前」の交差点に立つ。</p>
+    <img src="../assets/tsurugaoka-ichinotorii.jpg" alt="一の鳥居" data-alt-en="First torii">
+    <p class="photo-block-caption" data-en="The first torii. It stands at the Hachimangu-mae junction.">一の鳥居。「八幡宮前」の交差点に立つ。</p>
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>段葛（海から社殿まで一直線に伸びる参道。これが町の背骨になっているとされる）／大石段／舞殿／源平池。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="Dankazura, the straight approach running from the sea to the shrine. It is said to form the spine of the town / the great stone steps / the Maiden stage / Genpei Ponds.">段葛（海から社殿まで一直線に伸びる参道。これが町の背骨になっているとされる）／大石段／舞殿／源平池。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/tsurugaoka-oishidan.jpg" alt="舞殿先の大石段">
-    <p class="photo-block-caption">舞殿の先の大石段。上りきると本宮に着く。</p>
+    <img src="../assets/tsurugaoka-oishidan.jpg" alt="舞殿先の大石段" data-alt-en="The great stone steps beyond the Maiden stage">
+    <p class="photo-block-caption" data-en="The great stone steps beyond the Maiden stage. The main shrine stands at the top.">舞殿の先の大石段。上りきると本宮に着く。</p>
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>武家と八幡（→記事「神々と分類」の八幡の節）。源氏が八幡を武神として担ぎ、武家政権とともに全国へ広がったとされる。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="The warrior class and Hachiman (→ &quot;Hachiman&quot; in the article &quot;The gods and the map's classifications&quot;). The Minamoto clan adopted Hachiman as a god of war. The cult then spread across Japan with warrior governments.">武家と八幡（→記事「神々と分類」の八幡の節）。源氏が八幡を武神として担ぎ、武家政権とともに全国へ広がったとされる。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">鎌倉の名社、銭洗弁財天・荏柄天神社へ。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="Two more Kamakura shrines: Zeniarai Benzaiten and Egara Tenjinsha.">鎌倉の名社、銭洗弁財天・荏柄天神社へ。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="銭洗弁財天宇賀福神社.html">
-      <span class="next-shrine-set">名社</span>
-      <span class="next-shrine-name">銭洗弁財天宇賀福神社</span>
+      <span class="next-shrine-set" data-en="Notable shrine">名社</span>
+      <span class="next-shrine-name" data-en="Zeniarai Benzaiten">銭洗弁財天宇賀福神社</span>
       <span class="next-shrine-en">Zeniarai Benzaiten</span>
-      <p class="next-shrine-why">洞窟の中の湧水で金運を願う社。</p>
+      <p class="next-shrine-why" data-en="A shrine where spring water in a cave is used in prayers for money.">洞窟の中の湧水で金運を願う社。</p>
     </a>
     <a class="next-shrine-card" href="荏柄天神社.html">
-      <span class="next-shrine-set">名社</span>
-      <span class="next-shrine-name">荏柄天神社</span>
+      <span class="next-shrine-set" data-en="Notable shrine">名社</span>
+      <span class="next-shrine-name" data-en="Egara Tenjinsha">荏柄天神社</span>
       <span class="next-shrine-en">Egara Tenjinsha</span>
-      <p class="next-shrine-why">日本三天神のひとつ。鶴岡八幡宮とは別の時間が流れる社。</p>
+      <p class="next-shrine-why" data-en="Counted among Japan's three great Tenjin shrines. A different pace from Tsurugaoka Hachimangu.">日本三天神のひとつ。鶴岡八幡宮とは別の時間が流れる社。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・鶴岡八幡宮 / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Tsurugaoka Hachimangu / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・鶴岡八幡宮 / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -234,6 +233,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

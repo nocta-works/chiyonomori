@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>日枝神社｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Hie Jinja | Shrine profile page prototype (design-lab)">日枝神社｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/日枝神社.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/日枝神社/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/hie-escalator.jpg" alt="山王男坂とエスカレーター">
+  <img src="../assets/hie-escalator.jpg" alt="山王男坂とエスカレーター" data-alt-en="Sanno Otokozaka and the escalator">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">名社</span>
+    <span class="shrine-badge" data-en="Notable shrine">名社</span>
     <span class="shrine-name-en">Hie Jinja</span>
-    <h1 class="shrine-name-ja">日枝神社</h1>
+    <h1 class="shrine-name-ja" data-en="Hie Jinja">日枝神社</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>大山咋神</span></span>
-      <span><b>所在地</b><span>東京都千代田区</span></span>
+      <span><b data-en="Enshrined deity">御祭神</b><span data-en="Oyamakui">大山咋神</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Chiyoda, Tokyo">東京都千代田区</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/日枝神社" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=日枝神社+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/日枝神社" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=日枝神社+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/日枝神社" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,83 +164,83 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">大山咋神</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">仕事運・厄除・安産<span class="quick-fact-en">Career, warding off misfortune, safe childbirth</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">太田道灌の勧請（15世紀）とされる</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">地下鉄赤坂・溜池山王</span></div>
+  <div><span class="quick-fact-label" data-en="Deity">祭神</span><span class="quick-fact-value" data-en="Oyamakui">大山咋神</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">仕事運・厄除・安産<span class="quick-fact-en">Career, warding off misfortune, safe childbirth</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="Said to have been brought here by Ota Dokan in the 15th century">太田道灌の勧請（15世紀）とされる</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="Akasaka / Tameike-sanno subway stations">地下鉄赤坂・溜池山王</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>江戸城（現在の皇居）の鎮守。太田道灌が川越から勧請したのが始まりとされ、徳川将軍家の氏神となった。勅祭社・旧官幣大社。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="Guardian shrine of Edo Castle, now the Imperial Palace. Ota Dokan is said to have brought the deity from Kawagoe. It later became the tutelary shrine of the Tokugawa shoguns. It is a Chokusai shrine and was formerly a Kanpei Taisha.">江戸城（現在の皇居）の鎮守。太田道灌が川越から勧請したのが始まりとされ、徳川将軍家の氏神となった。勅祭社・旧官幣大社。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-marker.jpg" alt="通り沿いの「山王日枝神社」石碑">
-    <p class="photo-block-caption">通り沿いに立つ「山王日枝神社」の石碑と石灯籠。</p>
+    <img src="../assets/hie-marker.jpg" alt="通り沿いの「山王日枝神社」石碑" data-alt-en="The &quot;Sanno Hie Jinja&quot; stone monument beside the road">
+    <p class="photo-block-caption" data-en="A stone monument reading &quot;Sanno Hie Jinja&quot; stands beside the road, with a stone lantern.">通り沿いに立つ「山王日枝神社」の石碑と石灯籠。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-sanno-torii.jpg" alt="山王鳥居の破風">
+    <img src="../assets/hie-sanno-torii.jpg" alt="山王鳥居の破風" data-alt-en="The gable of the Sanno torii">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-escalator.jpg" alt="山王男坂とエスカレーター">
-    <p class="photo-block-caption">山王男坂。石段の脇にエスカレーターが設置されている。</p>
+    <img src="../assets/hie-escalator.jpg" alt="山王男坂とエスカレーター" data-alt-en="Sanno Otokozaka and the escalator">
+    <p class="photo-block-caption" data-en="Sanno Otokozaka. An escalator runs beside the stone steps.">山王男坂。石段の脇にエスカレーターが設置されている。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-sandou-torii.jpg" alt="表参道の石段下の鳥居">
+    <img src="../assets/hie-sandou-torii.jpg" alt="表参道の石段下の鳥居" data-alt-en="Torii below the stone steps of the main approach">
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>山王鳥居（上部が三角形をした、山王信仰独特の形）／社殿へはエスカレーターで上がれる／神使は猿（「まさる」＝魔が去るに通じるとされる）／稲荷参道の朱の鳥居列。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="The Sanno torii, with the triangular top distinctive to Sanno worship / an escalator to the shrine buildings / monkeys as divine messengers, linked by wordplay to masaru, &quot;evil departs&quot; / rows of vermilion torii on the Inari approach.">山王鳥居（上部が三角形をした、山王信仰独特の形）／社殿へはエスカレーターで上がれる／神使は猿（「まさる」＝魔が去るに通じるとされる）／稲荷参道の朱の鳥居列。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-romon.jpg" alt="楼門">
+    <img src="../assets/hie-romon.jpg" alt="楼門" data-alt-en="Romon gate">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-haiden-steps.jpg" alt="拝殿前の階段">
+    <img src="../assets/hie-haiden-steps.jpg" alt="拝殿前の階段" data-alt-en="Steps in front of the worship hall">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-yumegoten.jpg" alt="山王夢御殿">
-    <p class="photo-block-caption">「山王夢御殿」と扁額に記された社殿。すぐ背後まで高層ビルが迫る。</p>
+    <img src="../assets/hie-yumegoten.jpg" alt="山王夢御殿" data-alt-en="Sanno Yume Goten">
+    <p class="photo-block-caption" data-en="A shrine building with &quot;Sanno Yume Goten&quot; on its plaque. High-rise buildings press close behind it.">「山王夢御殿」と扁額に記された社殿。すぐ背後まで高層ビルが迫る。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/hie-inari.jpg" alt="稲荷参道の鳥居列">
-    <p class="photo-block-caption">山王稲荷神社へ続く朱の鳥居のトンネル。</p>
+    <img src="../assets/hie-inari.jpg" alt="稲荷参道の鳥居列" data-alt-en="Rows of torii on the Inari approach">
+    <p class="photo-block-caption" data-en="A tunnel of vermilion torii leads to Sanno Inari shrine.">山王稲荷神社へ続く朱の鳥居のトンネル。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/hie-inari-torii.jpg" alt="山王稲荷神社の鳥居の扁額">
+    <img src="../assets/hie-inari-torii.jpg" alt="山王稲荷神社の鳥居の扁額" data-alt-en="Plaque on the torii of Sanno Inari shrine">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-haiden.jpg" alt="拝殿前の広場">
+    <img src="../assets/hie-haiden.jpg" alt="拝殿前の広場" data-alt-en="The square in front of the worship hall">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/hie-wisteria.jpg" alt="回廊を覆う藤棚">
-    <p class="photo-block-caption">回廊を覆う藤棚。花期を過ぎても青々とした葉が回廊全体を包む。</p>
+    <img src="../assets/hie-wisteria.jpg" alt="回廊を覆う藤棚" data-alt-en="Wisteria trellis over the corridor">
+    <p class="photo-block-caption" data-en="A wisteria trellis covers the corridor. Green leaves still wrap the whole passage after the flowers have gone.">回廊を覆う藤棚。花期を過ぎても青々とした葉が回廊全体を包む。</p>
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>総本社は滋賀の日吉大社で、比叡山の守護神とされる。神仏習合の代表例（→記事「日本と神社」）。山王祭は天下三大祭のひとつとされる。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="The head shrine is Hiyoshi Taisha in Shiga, regarded as the guardian of Mount Hiei. It is a standard example of Shinto-Buddhist syncretism (→ article &quot;Japan and shrines&quot;). The Sanno Matsuri is counted among Japan's three great festivals.">総本社は滋賀の日吉大社で、比叡山の守護神とされる。神仏習合の代表例（→記事「日本と神社」）。山王祭は天下三大祭のひとつとされる。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">同じ江戸の鎮守、神田神社へ。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="Another guardian of Edo: Kanda Jinja.">同じ江戸の鎮守、神田神社へ。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="神田神社（神田明神）.html">
-      <span class="next-shrine-set">名社</span>
-      <span class="next-shrine-name">神田神社（神田明神）</span>
+      <span class="next-shrine-set" data-en="Notable shrine">名社</span>
+      <span class="next-shrine-name" data-en="Kanda Jinja (Kanda Myojin)">神田神社（神田明神）</span>
       <span class="next-shrine-en">Kanda Myojin</span>
-      <p class="next-shrine-why">江戸総鎮守。日枝神社と並ぶ江戸の二大鎮守。</p>
+      <p class="next-shrine-why" data-en="Guardian shrine of Edo. One of Edo's two major guardian shrines, alongside Hie Jinja.">江戸総鎮守。日枝神社と並ぶ江戸の二大鎮守。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・日枝神社 / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Hie Jinja / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・日枝神社 / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -258,6 +257,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

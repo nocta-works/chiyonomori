@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>千葉神社｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Chiba Jinja | Shrine profile page prototype (design-lab)">千葉神社｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/千葉神社.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/千葉神社/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/chiba-honden.jpg" alt="重層社殿">
+  <img src="../assets/chiba-honden.jpg" alt="重層社殿" data-alt-en="Two-storey shrine building">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">名社</span>
+    <span class="shrine-badge" data-en="Notable shrine">名社</span>
     <span class="shrine-name-en">Chiba Jinja</span>
-    <h1 class="shrine-name-ja">千葉神社</h1>
+    <h1 class="shrine-name-ja" data-en="Chiba Jinja">千葉神社</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>天之御中主神（妙見菩薩）</span></span>
-      <span><b>所在地</b><span>千葉県千葉市</span></span>
+      <span><b data-en="Enshrined deity">御祭神</b><span data-en="Amenominakanushi, identified here with Myoken Bosatsu">天之御中主神（妙見菩薩）</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Chiba, Chiba">千葉県千葉市</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/千葉神社" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=千葉神社+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/千葉神社" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=千葉神社+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/千葉神社" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,77 +164,77 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">天之御中主神</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">厄除（方位・八方）・開運<span class="quick-fact-en">Protection from every direction</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">1000年</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR千葉・京成千葉中央</span></div>
+  <div><span class="quick-fact-label" data-en="Deity">祭神</span><span class="quick-fact-value" data-en="Amenominakanushi">天之御中主神</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">厄除（方位・八方）・開運<span class="quick-fact-en">Protection from every direction</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="1000">1000年</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="JR Chiba / Keisei Chiba-chuo">JR千葉・京成千葉中央</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>1000年創建とされる。千葉氏の守護神。妙見信仰——北極星と北斗七星を神格化したもの。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="Said to have been founded in 1000. Guardian shrine of the Chiba clan. Its Myoken worship deifies the North Star and the Big Dipper.">1000年創建とされる。千葉氏の守護神。妙見信仰——北極星と北斗七星を神格化したもの。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/chiba-torii.jpg" alt="石鳥居越しの社殿">
+    <img src="../assets/chiba-torii.jpg" alt="石鳥居越しの社殿" data-alt-en="Shrine building seen through a stone torii">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/chiba-myokenike.jpg" alt="妙見池に架かる太鼓橋">
-    <p class="photo-block-caption">妙見池に架かる朱塗りの太鼓橋。奥に社殿の屋根がのぞく。</p>
+    <img src="../assets/chiba-myokenike.jpg" alt="妙見池に架かる太鼓橋" data-alt-en="Drum bridge over Myoken Pond">
+    <p class="photo-block-caption" data-en="A vermilion drum bridge crosses Myoken Pond. The roof of a shrine building appears behind it.">妙見池に架かる朱塗りの太鼓橋。奥に社殿の屋根がのぞく。</p>
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>重層社殿（上下2階がそれぞれ別の拝殿になっている珍しい構造）／尊星殿（楼門でありながら社殿を兼ねるとされる）／妙見池。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="The two-storey shrine building, with a separate worship hall on each floor / Sonjoden, said to serve as both tower gate and shrine building / Myoken Pond.">重層社殿（上下2階がそれぞれ別の拝殿になっている珍しい構造）／尊星殿（楼門でありながら社殿を兼ねるとされる）／妙見池。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/chiba-sonseiden-inner.jpg" alt="尊星殿内の八角形の社殿">
-    <p class="photo-block-caption">尊星殿の中に据えられた八角形の社殿。干支を描いた板がめぐらされている。</p>
+    <img src="../assets/chiba-sonseiden-inner.jpg" alt="尊星殿内の八角形の社殿" data-alt-en="Octagonal shrine building inside Sonjoden">
+    <p class="photo-block-caption" data-en="An octagonal shrine building inside Sonjoden. Panels around it show the twelve zodiac animals.">尊星殿の中に据えられた八角形の社殿。干支を描いた板がめぐらされている。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/chiba-sonseiden-plaque.jpg" alt="尊星殿の扁額">
+    <img src="../assets/chiba-sonseiden-plaque.jpg" alt="尊星殿の扁額" data-alt-en="Plaque on Sonjoden">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/chiba-koro.jpg" alt="朱塗りの覆屋に収まる香炉">
-    <p class="photo-block-caption">朱塗りの覆屋に収まる香炉。奥に社殿が見える。</p>
+    <img src="../assets/chiba-koro.jpg" alt="朱塗りの覆屋に収まる香炉" data-alt-en="Incense burner under a vermilion shelter">
+    <p class="photo-block-caption" data-en="An incense burner under a vermilion shelter. A shrine building stands behind it.">朱塗りの覆屋に収まる香炉。奥に社殿が見える。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/chiba-tenjin.jpg" alt="境内社・千葉天神">
-    <p class="photo-block-caption">境内社・千葉天神。合格祈願の絵馬が並ぶ。</p>
+    <img src="../assets/chiba-tenjin.jpg" alt="境内社・千葉天神" data-alt-en="Auxiliary Chiba Tenjin">
+    <p class="photo-block-caption" data-en="The auxiliary Chiba Tenjin. Ema plaques for exam success line the shrine.">境内社・千葉天神。合格祈願の絵馬が並ぶ。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/chiba-tree.jpg" alt="境内の大樹">
+    <img src="../assets/chiba-tree.jpg" alt="境内の大樹" data-alt-en="Large tree in the grounds">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/chiba-taiju.jpg" alt="境内の大木と小さな社">
+    <img src="../assets/chiba-taiju.jpg" alt="境内の大木と小さな社" data-alt-en="Large tree and small shrine in the grounds">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/chiba-kameiwa.jpg" alt="福授けの亀岩">
-    <p class="photo-block-caption">「福授けの亀岩」。妙見様の神使・玄武を形どったとされる岩。</p>
+    <img src="../assets/chiba-kameiwa.jpg" alt="福授けの亀岩" data-alt-en="Kameiwa of Good Fortune">
+    <p class="photo-block-caption" data-en="The &quot;Kameiwa of Good Fortune&quot;. The rock is said to represent Genbu, the tortoise-serpent divine messenger of Myoken.">「福授けの亀岩」。妙見様の神使・玄武を形どったとされる岩。</p>
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>妙見はもともと仏教の菩薩とされる。明治の神仏分離で祭神が「天之御中主神」に改められた（→記事「日本と神社」）。名前を変えられた神の実例。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="Myoken was originally a Buddhist bodhisattva. During the Meiji separation of Shinto and Buddhism, the enshrined deity was changed to Amenominakanushi (→ article &quot;Japan and shrines&quot;). A god whose name was changed.">妙見はもともと仏教の菩薩とされる。明治の神仏分離で祭神が「天之御中主神」に改められた（→記事「日本と神社」）。名前を変えられた神の実例。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">東京郊外の東端、鹿島神宮・香取神宮へも足を延ばせる。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="At the eastern edge of the Tokyo suburbs. Kashima Jingu and Katori Jingu are within reach from here.">東京郊外の東端、鹿島神宮・香取神宮へも足を延ばせる。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="香取神宮.html">
-      <span class="next-shrine-set">神宮</span>
-      <span class="next-shrine-name">香取神宮</span>
+      <span class="next-shrine-set" data-en="Jingu">神宮</span>
+      <span class="next-shrine-name" data-en="Katori Jingu">香取神宮</span>
       <span class="next-shrine-en">Katori Jingu</span>
-      <p class="next-shrine-why">同じ千葉県内、利根川水系の要にある神宮。</p>
+      <p class="next-shrine-why" data-en="Another Jingu in Chiba, at a key point in the Tone River system.">同じ千葉県内、利根川水系の要にある神宮。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・千葉神社 / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Chiba Jinja / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・千葉神社 / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -252,6 +251,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

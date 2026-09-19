@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>鹿島神宮｜神社マップ 日本版プレビュー（仮）</title>
+<title data-en="Kashima Jingu | Shrine profile page prototype (design-lab)">鹿島神宮｜個別神社紹介ページ プロトタイプ（design-lab）</title>
 <style>
   /* design-lab/shrine-pages/鹿島神宮.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
      実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/鹿島神宮/の採用済み分から
@@ -138,26 +137,26 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link">← 地図に戻る</a>
+<a href="../index.html#mock-app" class="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
 </div>
 
 <div class="shrine-hero">
-  <img src="../assets/kashima-otorii.jpg" alt="巨大な木造の大鳥居">
+  <img src="../assets/kashima-otorii.jpg" alt="巨大な木造の大鳥居" data-alt-en="Huge wooden torii">
   <div class="shrine-hero-overlay"></div>
   <div class="shrine-hero-content">
-    <span class="shrine-badge">神宮</span>
+    <span class="shrine-badge" data-en="Jingu">神宮</span>
     <span class="shrine-name-en">Kashima Jingu</span>
-    <h1 class="shrine-name-ja">鹿島神宮</h1>
+    <h1 class="shrine-name-ja" data-en="Kashima Jingu">鹿島神宮</h1>
     <div class="shrine-meta">
-      <span><b>御祭神</b><span>武甕槌大神</span></span>
-      <span><b>所在地</b><span>茨城県鹿嶋市</span></span>
+      <span><b data-en="Enshrined deity">御祭神</b><span data-en="Takemikazuchi">武甕槌大神</span></span>
+      <span><b data-en="Location">所在地</b><span data-en="Kashima, Ibaraki">茨城県鹿嶋市</span></span>
     </div>
     <div class="shrine-links">
-      <a href="https://www.google.com/maps/search/鹿島神宮" target="_blank" rel="noopener" class="shrine-link gmaps">📍 地図</a>
-      <a href="https://www.google.com/search?q=鹿島神宮+公式" target="_blank" rel="noopener" class="shrine-link official">🌐 公式</a>
+      <a href="https://www.google.com/maps/search/鹿島神宮" target="_blank" rel="noopener" class="shrine-link gmaps" data-en="📍 Map">📍 地図</a>
+      <a href="https://www.google.com/search?q=鹿島神宮+公式" target="_blank" rel="noopener" class="shrine-link official" data-en="🌐 Official site">🌐 公式</a>
       <a href="https://ja.wikipedia.org/wiki/鹿島神宮" target="_blank" rel="noopener" class="shrine-link wiki">📖 Wiki</a>
     </div>
   </div>
@@ -165,85 +164,85 @@
 
 <div class="content">
   <div class="quick-facts">
-  <div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">武甕槌大神</span></div>
-  <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">武運・勝負・旅立ち<span class="quick-fact-en">Martial arts, decisive moments</span></span></div>
-  <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">神武天皇元年と伝わる</span></div>
-  <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR鹿島神宮</span></div>
+  <div><span class="quick-fact-label" data-en="Deity">祭神</span><span class="quick-fact-value" data-en="Takemikazuchi">武甕槌大神</span></div>
+  <div><span class="quick-fact-label" data-en="Blessings">ご利益</span><span class="quick-fact-value">武運・勝負・旅立ち<span class="quick-fact-en">Martial arts, decisive moments</span></span></div>
+  <div><span class="quick-fact-label" data-en="Founded">創建</span><span class="quick-fact-value" data-en="Traditionally dated to the first year of Emperor Jimmu">神武天皇元年と伝わる</span></div>
+  <div><span class="quick-fact-label" data-en="Nearest station">最寄駅</span><span class="quick-fact-value" data-en="JR Kashima-Jingu">JR鹿島神宮</span></div>
 </div>
 
   <div class="section">
     <span class="section-label">History</span>
-    <h2 class="section-title">由緒・創建</h2>
-    <p>常陸国一宮。国譲り神話で大国主に交渉を迫った神を祀るとされる。全国約600の鹿島神社の総本社。</p>
+    <h2 class="section-title" data-en="Origins and founding">由緒・創建</h2>
+    <p data-en="Ichinomiya of Hitachi Province. It enshrines the god said to have forced Okuninushi to negotiate the transfer of the land. It is the head shrine of about 600 Kashima shrines across Japan.">常陸国一宮。国譲り神話で大国主に交渉を迫った神を祀るとされる。全国約600の鹿島神社の総本社。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kashima-otorii.jpg" alt="巨大な木造の大鳥居">
-    <p class="photo-block-caption">巨大な木造の大鳥居。この先に奥参道の杉並木が続く。</p>
+    <img src="../assets/kashima-otorii.jpg" alt="巨大な木造の大鳥居" data-alt-en="Huge wooden torii">
+    <p class="photo-block-caption" data-en="A huge wooden torii. Beyond it, the cedar-lined inner approach continues.">巨大な木造の大鳥居。この先に奥参道の杉並木が続く。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kashima-marker.jpg" alt="「鹿嶋神宮」の社号標と石鳥居">
+    <img src="../assets/kashima-marker.jpg" alt="「鹿嶋神宮」の社号標と石鳥居" data-alt-en="The &quot;Kashima Jingu&quot; shrine-name marker and stone torii">
   </div>
   <div class="section">
     <span class="section-label">Highlights</span>
-    <h2 class="section-title">見どころ</h2>
-    <p>奥参道（杉並木が700m続くとされる）／要石（地震を起こす大鯰を押さえる石。地上に出ているのはごく一部とされる）／御手洗池（湧水）／鹿園——神使は鹿で、奈良の春日大社へ鹿を分けたのがこことされる。</p>
+    <h2 class="section-title" data-en="What to see">見どころ</h2>
+    <p data-en="The inner approach, said to run for 700 metres through cedars / the Kaname-ishi stone, said to pin down the giant catfish that causes earthquakes. Only a tiny part appears above ground / Mitarashi Pond, fed by a spring / the deer enclosure — deer are divine messengers here, and tradition says the deer of Kasuga Taisha in Nara came from Kashima.">奥参道（杉並木が700m続くとされる）／要石（地震を起こす大鯰を押さえる石。地上に出ているのはごく一部とされる）／御手洗池（湧水）／鹿園——神使は鹿で、奈良の春日大社へ鹿を分けたのがこことされる。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kashima-okusando.jpg" alt="杉の大木が並ぶ奥参道">
+    <img src="../assets/kashima-okusando.jpg" alt="杉の大木が並ぶ奥参道" data-alt-en="Inner approach lined with large cedars">
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kashima-mitarashi.jpg" alt="御手洗池">
-    <p class="photo-block-caption">御手洗池。鳥居が水面に映る。</p>
+    <img src="../assets/kashima-mitarashi.jpg" alt="御手洗池" data-alt-en="Mitarashi Pond">
+    <p class="photo-block-caption" data-en="Mitarashi Pond. A torii is reflected in the water.">御手洗池。鳥居が水面に映る。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kashima-kaname.jpg" alt="要石を囲う玉垣">
-    <p class="photo-block-caption">要石を囲う玉垣と鳥居。地上に出ているのはごくわずかとされる。</p>
+    <img src="../assets/kashima-kaname.jpg" alt="要石を囲う玉垣" data-alt-en="Tamagaki fence around the Kaname-ishi">
+    <p class="photo-block-caption" data-en="A torii and tamagaki fence surround the Kaname-ishi. Only a tiny part is said to show above ground.">要石を囲う玉垣と鳥居。地上に出ているのはごくわずかとされる。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kashima-namazu.jpg" alt="大鯰を押さえつける武人を描いた石彫">
-    <p class="photo-block-caption">大鯰を押さえつける武人を描いた石彫。要石の伝説を表す。</p>
+    <img src="../assets/kashima-namazu.jpg" alt="大鯰を押さえつける武人を描いた石彫" data-alt-en="Stone carving of a warrior pinning down a giant catfish">
+    <p class="photo-block-caption" data-en="A stone carving of a warrior pinning down a giant catfish. It depicts the Kaname-ishi legend.">大鯰を押さえつける武人を描いた石彫。要石の伝説を表す。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kashima-okumiya.jpg" alt="奥宮の社殿">
-    <p class="photo-block-caption">奥宮の社殿。萱葺きの屋根に金色の紋がめぐらされている。</p>
+    <img src="../assets/kashima-okumiya.jpg" alt="奥宮の社殿" data-alt-en="Okumiya shrine building">
+    <p class="photo-block-caption" data-en="The Okumiya shrine building. Gold crests run along the edge of its thatched roof.">奥宮の社殿。萱葺きの屋根に金色の紋がめぐらされている。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kashima-okumiya-tree.jpg" alt="奥宮の屋根際に立つ大木">
+    <img src="../assets/kashima-okumiya-tree.jpg" alt="奥宮の屋根際に立つ大木" data-alt-en="A large tree beside the roof of the Okumiya">
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kashima-haiden-torii.jpg" alt="拝殿前の石鳥居">
-    <p class="photo-block-caption">拝殿前の石鳥居。白い幔幕と、祭事に用いる青竹が奉納されている。</p>
+    <img src="../assets/kashima-haiden-torii.jpg" alt="拝殿前の石鳥居" data-alt-en="Stone torii in front of the worship hall">
+    <p class="photo-block-caption" data-en="A stone torii in front of the worship hall. White curtains and green bamboo for ritual use have been dedicated here.">拝殿前の石鳥居。白い幔幕と、祭事に用いる青竹が奉納されている。</p>
   </div>
   <div class="photo-block portrait">
-    <img src="../assets/kashima-inari.jpg" alt="末社・稲荷社の鳥居">
-    <p class="photo-block-caption">末社・稲荷社の鳥居。「稲荷大明神」の幟が並ぶ。</p>
+    <img src="../assets/kashima-inari.jpg" alt="末社・稲荷社の鳥居" data-alt-en="Torii of the subsidiary Inari shrine">
+    <p class="photo-block-caption" data-en="The torii of the subsidiary Inari shrine. Banners read &quot;Inari Daimyojin&quot;.">末社・稲荷社の鳥居。「稲荷大明神」の幟が並ぶ。</p>
   </div>
   <div class="photo-block landscape">
-    <img src="../assets/kashima-sandou-torii.jpg" alt="表参道にそびえる大鳥居">
+    <img src="../assets/kashima-sandou-torii.jpg" alt="表参道にそびえる大鳥居" data-alt-en="Large torii on the main approach">
   </div>
   <div class="section">
     <span class="section-label">Background</span>
-    <h2 class="section-title">文化的背景</h2>
-    <p>武甕槌大神は建御名方神を諏訪へ追った神とされる（→記事「神々と分類」の国譲り）。諏訪大社と対になる。</p>
+    <h2 class="section-title" data-en="Cultural context">文化的背景</h2>
+    <p data-en="Takemikazuchi is said to have driven Takeminakata to Suwa (→ the &quot;Transfer of the land&quot; section in &quot;The gods and the map's classifications&quot;). Kashima forms a pair with Suwa Taisha.">武甕槌大神は建御名方神を諏訪へ追った神とされる（→記事「神々と分類」の国譲り）。諏訪大社と対になる。</p>
   </div>
 
 </div>
 
 <div class="next-shrines">
-  <div class="next-shrines-title">次の一社</div>
-  <p class="next-shrines-lead">国譲りで対になる社、香取神宮へ。</p>
+  <div class="next-shrines-title" data-en="Next shrine">次の一社</div>
+  <p class="next-shrines-lead" data-en="The other shrine paired in the transfer-of-the-land myth: Katori Jingu.">国譲りで対になる社、香取神宮へ。</p>
   <div class="next-shrine-grid">
     <a class="next-shrine-card" href="香取神宮.html">
-      <span class="next-shrine-set">神宮</span>
-      <span class="next-shrine-name">香取神宮</span>
+      <span class="next-shrine-set" data-en="Jingu">神宮</span>
+      <span class="next-shrine-name" data-en="Katori Jingu">香取神宮</span>
       <span class="next-shrine-en">Katori Jingu</span>
-      <p class="next-shrine-why">鹿島と対で国譲りに遣わされた神を祀る。要石も対になっている。</p>
+      <p class="next-shrine-why" data-en="It enshrines the god sent with Kashima's deity in the transfer-of-the-land myth. Its Kaname-ishi forms a pair with Kashima's.">鹿島と対で国譲りに遣わされた神を祀る。要石も対になっている。</p>
     </a>
   </div>
-  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+  <a class="next-shrine-card" href="../area-pages/東京.html" style="margin-top:14px"><span class="next-shrine-set" data-en="This area">この地域</span><span class="next-shrine-name" data-en="Shrines around Tokyo">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why" data-en="From central shrines within walking distance to suburban shrines that take half a day.">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
 </div>
 
-<div class="page-footer">個別神社紹介ページ プロトタイプ・鹿島神宮 / design-lab（本番未反映・写真の採用は暫定）</div>
+<div class="page-footer" data-en="Shrine profile page prototype: Kashima Jingu / design-lab (not live; photo selection provisional)">個別神社紹介ページ プロトタイプ・鹿島神宮 / design-lab（本番未反映・写真の採用は暫定）</div>
 
 <script>
 (function(){
@@ -260,6 +259,14 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });
