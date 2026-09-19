@@ -1153,10 +1153,16 @@ function initScrollSlideReveal() {
     var detailHtml = detailFile
       ? '<a href="' + detailFile + '" class="popup-link-detail"><span class="popup-link-icon">⛩</span>' + t.detail + '</a>'
       : '';
+    // 本人指摘（2026-09-20）：EN切替後もポップアップの社名・都道府県が日本語のまま
+    // だった。サイドバー一覧（buildShrineItem）と同じくnameEn/prefEnに差し替える。
+    // ⚠️旧国名（province）・祭神（deity）・由緒（reason）は186社ぶんの英訳が
+    // まだ無いため、この3項目は引き続き日本語のまま（従来からの既知の制約）
+    var displayName = currentLang === 'en' ? s.nameEn : s.name;
+    var displayPref = currentLang === 'en' ? s.prefEn : s.pref;
     return '<div class="popup-content">' +
       '<div class="popup-badges">' + badges + '</div>' +
-      '<div class="popup-name">' + s.name + '</div>' +
-      '<div class="popup-pref">' + s.pref + '</div>' +
+      '<div class="popup-name">' + displayName + '</div>' +
+      '<div class="popup-pref">' + displayPref + '</div>' +
       '<div class="popup-province">' + t.province + s.province + '</div>' +
       reasonHtml +
       '<div class="popup-deity">' + t.deity + s.deity + '</div>' +
