@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chiyo no Mori — Shrines of Japan</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
   /* ══════════════════════════════════════════════════════════════
@@ -99,23 +100,6 @@
   }
   @keyframes introFadeIn { to { opacity: 1; } }
 
-  .intro-hero { position: absolute; inset: 0; z-index: 1; opacity: 1; }
-  .intro-hero-media {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-    background: radial-gradient(ellipse at center, var(--bg-header-1), var(--bg-body) 70%);
-  }
-  .intro-shrine-name {
-    position: absolute; left: 50%; bottom: calc(14% + 38px); transform: translateX(-50%);
-    z-index: 1; text-align: center; white-space: nowrap;
-    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
-    color: var(--gold); font-size: 24px; letter-spacing: 0.14em;
-    text-shadow: 0 2px 14px rgba(0,0,0,0.7), 0 0 24px rgba(var(--gold-glow-rgb),0.35);
-  }
-  .intro-shrine-name::after {
-    content: ''; display: block; width: 26px; height: 1px; margin: 10px auto 0;
-    background: var(--gold); opacity: 0; transition: opacity 0.6s ease 1s;
-  }
-  .intro-shrine-name.intro-shrine-name-show::after { opacity: 0.55; }
 
   /* ③動画（本人指定・2026-09-11：④の写真3枚と同じくスクロール対象の
      .scroll-slideとして表示。ズームアウト演出（scale 1.18→1）も写真と揃える） */
@@ -155,15 +139,13 @@
   /* ②③共通：文字を1文字ずつ順番にゆっくり表示する演出（本人指定・2026-09-08）。
      「絶対に見せる」演出ではなく、自然に読み進めるうちに次（④3枚の写真）へ
      気持ちが向くようにするための間（ま）。JSがテキストを1文字ずつ<span>に
-     分割し、transition-delayをずらして設定する（wrapCharsReveal関数）。
-     ②の鳥居写真の神社名（.intro-shrine-name）にも同じ演出を適用。 */
-  .intro-tagline .char, .intro-video-caption .char, .intro-shrine-name .char {
+     分割し、transition-delayをずらして設定する（wrapCharsReveal関数）。 */
+  .intro-tagline .char, .intro-video-caption .char {
     display: inline-block; opacity: 0; transform: translateY(8px);
     transition: opacity 1.1s ease, transform 1.1s ease;
   }
   .intro-tagline.intro-tagline-show .char,
-  .intro-video-caption.intro-video-caption-show .char,
-  .intro-shrine-name.intro-shrine-name-show .char {
+  .intro-video-caption.intro-video-caption-show .char {
     opacity: 1; transform: translateY(0);
   }
 
@@ -644,10 +626,6 @@
 <div id="hover-cursor-tag"></div>
 
 <div id="intro">
-  <div class="intro-hero">
-    <img class="intro-hero-media" alt="">
-    <div class="intro-shrine-name" id="intro-shrine-name"></div>
-  </div>
   <div class="intro-overlay"></div>
   <div class="intro-tagline" data-en="A country with 80,000 shrines. Here are 189.">八万の社がある国から、百八十九。</div>
   <div class="intro-gate intro-gate-left"></div>
@@ -762,20 +740,6 @@
   var CHAR_FADE = 1100;  // 1文字のフェード時間(ms)。CSSの.char transitionと合わせる（同じく倍増）
   var READ_BUFFER = 2500; // 全文字が表示され終わってから、読む余裕として追加する時間(ms)
 
-  // ②鳥居の静止画＋神社名（自動送り版と同一の仕組み）
-  var heroImg = document.querySelector('.intro-hero-media');
-  var shrineNameEl = document.getElementById('intro-shrine-name');
-  fetch('assets/torii-manifest.json')
-    .then(function(res){ return res.json(); })
-    .then(function(list){
-      if (!list.length) return;
-      var pick = list[Math.floor(Math.random() * list.length)];
-      heroImg.src = pick.file;
-      shrineNameEl.textContent = pick.name;
-      wrapCharsReveal(shrineNameEl, CHAR_STEP); // 神社名も他の文字と同じ1文字ずつ表示に揃える
-    })
-    .catch(function(){});
-
   var intro = document.getElementById('intro');
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var alreadyShown = sessionStorage.getItem('introShown') === '1';
@@ -790,7 +754,12 @@
   var percentEl = document.getElementById('intro-percent');
   var finished = false;
 
-  var taglineCharCount = wrapCharsReveal(tagline, CHAR_STEP);
+  // 本人指定（2026-09-19）：一番始めのローディング（①ロード画面）だけを2倍長く。
+  // ②動画キャプションの文字送り速度（CHAR_STEP）は共有定数なので触らない
+  // （触ると③以降の速度も一緒に変わってしまう）——①専用のステップ・バッファを別に持つ
+  var INTRO_SPEED = 2;
+  var INTRO_CHAR_STEP = CHAR_STEP * INTRO_SPEED;
+  var taglineCharCount = wrapCharsReveal(tagline, INTRO_CHAR_STEP);
   // ③動画のキャプションは後段でスクロール到達時に表示（下部の別IIFE参照）。
   // ⚠️2行がそれぞれ独自のdata-en（依頼AE-5）を持つ.ivc-line spanのため、
   // 親divのinnerHTMLをまとめてwrapCharsRevealに渡すとdata-en属性ごと
@@ -801,9 +770,9 @@
       idx = wrapCharsReveal(line, CHAR_STEP, idx);
     });
   })();
-  var taglineHoldMs = Math.max(5000, (taglineCharCount - 1) * CHAR_STEP + CHAR_FADE + READ_BUFFER);
+  var taglineHoldMs = Math.max(5000 * INTRO_SPEED, (taglineCharCount - 1) * INTRO_CHAR_STEP + CHAR_FADE + READ_BUFFER * INTRO_SPEED);
 
-  var RING_MS = 1400;
+  var RING_MS = 1400 * INTRO_SPEED;
   var start = performance.now();
   function tickPercent(now) {
     var p = Math.min(100, Math.round((now - start) / RING_MS * 100));
@@ -823,14 +792,13 @@
     gateLeft.classList.add('intro-gate-open');
     gateRight.classList.add('intro-gate-open');
     tagline.classList.add('intro-tagline-show');
-    document.getElementById('intro-shrine-name').classList.add('intro-shrine-name-show');
   }
   intro.addEventListener('click', finish);
-  setTimeout(openGates, 1500);                // ①ロード(1.4s)完了→gateが開く
+  setTimeout(openGates, 1500 * INTRO_SPEED);   // ①ロード完了→gateが開く（2026-09-19：2倍長くした）
   // ②→③：本人指定・2026-09-11：③動画をタイマーの自動送りから外し、④の写真3枚と
   // 同じスクロール対象にした。そのため②の文字が読み終わったら即#introを閉じ、
   // 後は本人が実際にスクロールして③動画→④写真3枚と辿る方式にしている
-  setTimeout(finish, 1500 + taglineHoldMs);
+  setTimeout(finish, 1500 * INTRO_SPEED + taglineHoldMs);
 })();
 
 // 依頼AG-3（2026-09-19）：自動再生ループ動画はprefers-reduced-motion指定時、
