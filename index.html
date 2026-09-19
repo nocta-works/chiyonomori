@@ -1077,6 +1077,9 @@ function initScrollSlideReveal() {
   // 実行順A（依頼R-1＋S-1・2026-09-13）：名社26社の選定が済み、地図データにも
   // 追加したため、ここから正式にフィルター対象へ。「準備中」のダミー表示は撤去。
   var TAG_ORDER = ['jingu', 'taisha', 'ichi', 'ni', 'meisha'];
+  // 本人指摘（2026-09-19）：初期表示のアイコンが多すぎる。神宮・一宮・名社の
+  // 3タグだけを初期表示にし、大社・二宮はタグフィルターボタンで足す形にする
+  var DEFAULT_TAGS = ['jingu', 'ichi', 'meisha'];
   var TAG_CONFIG = {
     jingu:   { label:{ja:'神宮',en:'Jingu'},        char:{ja:'神',en:'J'},  color:'#c47a08', border:'#f5c842', bg:'rgba(212,134,10,0.18)' },
     taisha:  { label:{ja:'大社',en:'Taisha'},       char:{ja:'大',en:'T'},  color:'#6d28d9', border:'#c4a8ff', bg:'rgba(124,58,237,0.18)' },
@@ -1100,10 +1103,10 @@ function initScrollSlideReveal() {
     var wanted = raw.split(',').filter(function(t){ return TAG_ORDER.indexOf(t) !== -1; });
     return wanted.length ? new Set(wanted) : null;
   }
-  var activeFilters = readTagsFromUrl() || new Set(TAG_ORDER);
+  var activeFilters = readTagsFromUrl() || new Set(DEFAULT_TAGS);
   function syncTagsUrl() {
     var url = new URL(location.href);
-    var isDefault = activeFilters.size === TAG_ORDER.length && TAG_ORDER.every(function(t){ return activeFilters.has(t); });
+    var isDefault = activeFilters.size === DEFAULT_TAGS.length && DEFAULT_TAGS.every(function(t){ return activeFilters.has(t); });
     if (isDefault) {
       url.searchParams.delete(TAG_URL_PARAM);
     } else {
@@ -1115,13 +1118,22 @@ function initScrollSlideReveal() {
   // 記事ページ・個別紹介ページへ移動するリンクに、今選んでいるタグ状態を
   // 引き継ぐ（デフォルト＝全タグ選択時はパラメータを付けずURLを短く保つ）
   function withTagsQuery(path) {
-    var isDefault = activeFilters.size === TAG_ORDER.length && TAG_ORDER.every(function(t){ return activeFilters.has(t); });
+    var isDefault = activeFilters.size === DEFAULT_TAGS.length && DEFAULT_TAGS.every(function(t){ return activeFilters.has(t); });
     if (isDefault) return path;
     var ordered = TAG_ORDER.filter(function(t){ return activeFilters.has(t); });
     return path + '?' + TAG_URL_PARAM + '=' + encodeURIComponent(ordered.join(','));
   }
   function topTag(tags) {
     return tags.reduce(function(b,t){ return PRIORITY[t] > PRIORITY[b] ? t : b; }, tags[0]);
+  }
+  // 本人指摘（2026-09-19）：初期表示を神宮・一宮・名社の3タグに絞った際、
+  // 大社・一宮など複数タグを持つ社（例：三嶋大社＝ichi+taisha）が、非表示のはずの
+  // 大社色（紫）アイコンのまま表示される不具合が発覚。マーカーの色は「その社が
+  // 持つ全タグ中の最優先」ではなく「現在アクティブなタグの中での最優先」で
+  // 決めるべきなので専用ヘルパーを用意する
+  function activeTopTag(tags) {
+    var shown = tags.filter(function(t){ return activeFilters.has(t); });
+    return topTag(shown.length ? shown : tags);
   }
   // 依頼Z-0/Z-2③：マーカーのホバー社名・エリアラベルなど、表示言語に応じた
   // 社名が要る箇所で共通利用する。nameEnは186社すべてに入っている（欠落0）。
@@ -1701,6 +1713,19 @@ function initScrollSlideReveal() {
     markerList.forEach(function(item){
       var show = passesFilter(item.shrine);
       var onMap = map.hasLayer(item.marker);
+      // 複数タグを持つ社（例：三嶋大社＝ichi+taisha）は、フィルターの足し引きで
+      // 「今アクティブなタグの中の最優先」が変わることがある。表示・非表示に
+      // 関わらず、色が変わる時だけsetIconし直す（毎回全社ぶん引き直すと
+      // ホバー名・アニメーション中のクラスが不要に消えるため、変化時のみに絞る）
+      if (show) {
+        var tag = activeTopTag(item.shrine.tags);
+        if (tag !== item._iconTag) {
+          var prevName = item.marker._icon ? item.marker._icon.dataset.name : null;
+          item.marker.setIcon(getIcon(tag));
+          item._iconTag = tag;
+          if (item.marker._icon) item.marker._icon.dataset.name = prevName || shrineName(item.shrine);
+        }
+      }
       if (show && item._removeTimer) {
         clearTimeout(item._removeTimer);
         item._removeTimer = null;
@@ -1749,7 +1774,7 @@ function initScrollSlideReveal() {
     updateStats();
     renderSidebarList();
     markerList.forEach(function(item){
-      item.marker.setIcon(getIcon(topTag(item.shrine.tags)));
+      item.marker.setIcon(getIcon(activeTopTag(item.shrine.tags)));
       // 依頼Z-2③：setIconはアイコンのDOM要素を作り直すため、直前に付けた
       // dataset.name（ホバー時の社名表示用）も消える。言語切替のたびに
       // 全マーカーぶん再設定する
@@ -1847,13 +1872,14 @@ function initScrollSlideReveal() {
       map.on('click', function(){ clearAreaEnclosure(); });
       var bounds = [];
       shrines.forEach(function(s){
-        var marker = L.marker([s.lat, s.lng], { icon: getIcon(topTag(s.tags)) })
+        var initialTag = activeTopTag(s.tags);
+        var marker = L.marker([s.lat, s.lng], { icon: getIcon(initialTag) })
           .bindPopup(buildPopupContent(s), { className: 'shrine-popup' });
         if (passesFilter(s)) {
           marker.addTo(map);
           if (marker._icon) marker._icon.dataset.name = shrineName(s);
         }
-        markerList.push({ marker: marker, shrine: s });
+        markerList.push({ marker: marker, shrine: s, _iconTag: initialTag });
         bounds.push([s.lat, s.lng]);
       });
       updateStats();
