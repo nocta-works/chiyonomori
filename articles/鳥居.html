@@ -256,9 +256,17 @@
   if (toggle) {
     toggle.addEventListener('click', function(e){
       var btn = e.target.closest('.lang-btn');
-      if (btn) applyLang(btn.getAttribute('data-lang'));
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
     });
   }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+    if (localStorage.getItem('siteLang') === 'en') applyLang('en');
+  } catch(err){}
 })();
 </script>
 </body>

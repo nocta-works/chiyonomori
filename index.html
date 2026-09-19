@@ -998,7 +998,12 @@ function initScrollSlideReveal() {
 // 英語に切り替えて見比べられる試作を追加。個別社データ（由緒・祭神など、
 // shrines-jingu-taisha.jsonの中身）は翻訳コストが別次元のため対象外（日本語のまま）。
 (function(){
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // shrine-pages等と同じキー（siteLang）でlocalStorageに保存・復元する
   var currentLang = 'ja';
+  try {
+    if (localStorage.getItem('siteLang') === 'en') currentLang = 'en';
+  } catch(err){}
   var HEADER_TITLE = { ja: '千代の杜', en: 'Chiyo no Mori' };
   var CHROME_TEXT = {
     ja: {
@@ -1775,9 +1780,17 @@ function initScrollSlideReveal() {
   if (langToggle) {
     langToggle.addEventListener('click', function(e){
       var btn = e.target.closest('.lang-btn');
-      if (btn) applyLang(btn.getAttribute('data-lang'));
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
     });
   }
+  // localStorageの保存値がenなら、静的HTMLの日本語文言（タグライン・動画キャプション等の
+  // data-en属性・mock-title・lang-btnの見た目）をこの時点で英語へ揃える。マーカー等の
+  // currentLang依存部分は上でcurrentLangを先に'en'にしているため、この後の非同期処理
+  // （fetch('assets/shrines-overseas.json')）で自然に英語のまま作られる
+  if (currentLang === 'en') applyLang('en');
   var enclosureCtaClose = document.getElementById('area-enclosure-cta-close');
   if (enclosureCtaClose) {
     enclosureCtaClose.addEventListener('click', function(e){
