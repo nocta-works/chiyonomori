@@ -214,6 +214,25 @@
     opacity: 0; transition: opacity 1s ease;
   }
   .fixed-caption.fixed-caption-show { opacity: 1; }
+
+  /* 依頼AE-2④（2026-09-19確定）：写真区画を抜けた直後・地図に入る直前に置く
+     「一過性の宣言」。他のscroll-slideと同じreveal-slide機構でフェードインする */
+  #declaration-slide {
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-body);
+  }
+  .declaration-text {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    color: var(--gold); font-size: clamp(24px, 4.4vw, 44px); letter-spacing: 0.06em;
+    text-align: center; padding: 0 24px;
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 1.1s ease, transform 1.1s ease;
+  }
+  #declaration-slide.revealed .declaration-text { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .declaration-text { transition: none; }
+  }
+
   .scroll-slide-hint {
     position: absolute; left: 50%; bottom: 44px; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -630,7 +649,7 @@
     <div class="intro-shrine-name" id="intro-shrine-name"></div>
   </div>
   <div class="intro-overlay"></div>
-  <div class="intro-tagline">分けて探して、次の一社へ</div>
+  <div class="intro-tagline" data-en="A country with 80,000 shrines. Here are 189.">八万の社がある国から、百八十九。</div>
   <div class="intro-gate intro-gate-left"></div>
   <div class="intro-gate intro-gate-right"></div>
   <div class="intro-loader">
@@ -653,13 +672,20 @@
     <source src="assets/samukawa-sample.mp4" type="video/mp4">
   </video>
   <div class="intro-video-label">🎥 仮素材（寒川神社・未編集からの簡易書き出し）</div>
-  <div class="intro-video-caption" id="intro-video-caption">格式も、系統も、ご利益も。<br>切り口を変えるたびに、知らなかった一社に出会う。</div>
+  <div class="intro-video-caption" id="intro-video-caption"><span class="ivc-line" data-en="Jingu, Taisha, Ichinomiya, Ninomiya.">神宮、大社、一宮、二宮。</span><br><span class="ivc-line" data-en="A ranking set a thousand years ago, still visible on a map.">千年前に決められた序列が、いまも地図の上に残っている。</span></div>
   <div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>
 </section>
 
-<div class="fixed-caption" id="fixed-caption">その一つ一つに、実際に足を運んだ。</div>
+<div class="fixed-caption" id="fixed-caption" data-en="One step off the street, and the sound changes.">通りから一歩で、音が変わる。</div>
 
 <div id="scroll-slides"></div>
+
+<!-- 依頼AE-2④（2026-09-19確定）：一過性の宣言。写真区画を抜けた直後、
+     地図（mock-app）へ入る直前に置く。この直後にAA-1の初期ズーム
+     （日本全体→関東）が起きる想定で、文言と演出を揃えてある -->
+<section class="scroll-slide reveal-slide" id="declaration-slide">
+  <div class="declaration-text" data-en="For now, we begin with Tokyo.">いまは、東京から。</div>
+</section>
 
 <div class="mock-app" id="mock-app">
   <div class="mock-header">
@@ -722,8 +748,8 @@
   // ずらして「順番にゆっくり表示される」演出にする（本人指定・2026-09-08）。
   // fetchのコールバックは reduced/alreadyShown の早期returnと無関係に実行される
   // ため、CHAR_STEPはここで最初に定義しておく。
-  function wrapCharsReveal(el, stepMs) {
-    var i = 0;
+  function wrapCharsReveal(el, stepMs, startIndex) {
+    var i = startIndex || 0;
     el.innerHTML = el.innerHTML.split('<br>').map(function(line){
       return Array.from(line).map(function(ch){
         var span = '<span class="char" style="transition-delay:' + (i * stepMs) + 'ms">' + ch + '</span>';
@@ -766,7 +792,16 @@
   var finished = false;
 
   var taglineCharCount = wrapCharsReveal(tagline, CHAR_STEP);
-  wrapCharsReveal(videoCaption, CHAR_STEP); // ③動画のキャプションは後段でスクロール到達時に表示（下部の別IIFE参照）
+  // ③動画のキャプションは後段でスクロール到達時に表示（下部の別IIFE参照）。
+  // ⚠️2行がそれぞれ独自のdata-en（依頼AE-5）を持つ.ivc-line spanのため、
+  // 親divのinnerHTMLをまとめてwrapCharsRevealに渡すとdata-en属性ごと
+  // 文字ばらしされてしまう。行ごとに個別へ渡し、stepの連番だけ引き継ぐ
+  (function(){
+    var idx = 0;
+    videoCaption.querySelectorAll('.ivc-line').forEach(function(line){
+      idx = wrapCharsReveal(line, CHAR_STEP, idx);
+    });
+  })();
   var taglineHoldMs = Math.max(5000, (taglineCharCount - 1) * CHAR_STEP + CHAR_FADE + READ_BUFFER);
 
   var RING_MS = 1400;
@@ -926,9 +961,14 @@ function initScrollSlideReveal() {
           '<img src="../' + path + '" alt="">' +
           '</div>';
       }).join('') +
-      '<div class="triptych-caption">その一つ一つに、実際に足を運んだ。</div>' +
+      '<div class="triptych-caption" data-en="One step off the street, and the sound changes.">通りから一歩で、音が変わる。</div>' +
       '<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>' +
       '</section>';
+    // トリプティック経路はこの関数専用のIntersectionObserver（下記）しか回さないため、
+    // 静的HTML側に置いた#declaration-slide（依頼AE-2④）が別途initScrollSlideReveal()
+    // を呼ばないと永久にrevealされない。フォールバック経路（renderSlides）は既に
+    // 呼んでいるので、ここでも同じ関数を呼んで両経路を揃える
+    initScrollSlideReveal();
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var section = container.querySelector('.triptych-section');
     var cols = container.querySelectorAll('.triptych-col');
@@ -1598,6 +1638,41 @@ function initScrollSlideReveal() {
       cta.classList.add('visible');
     }
   }
+  // 依頼AA-1（2026-09-19）：起動時、日本全体表示（上のfitBounds）から数秒後に
+  // 関東（東京エリア）へ自動でクローズする。本人指定「理想はデフォルトは日本全体を
+  // 表示させた後、数秒後に関東にクローズしていくアクション」への対応。
+  // ⚠️依頼X-1（マーカーアニメーションのtransform全廃）が前提——flyTo中に
+  // transformベースのアニメーションが走ると09-11に幹で起きたマーカー位置ズレ・
+  // 発光異常と同型の不具合になる。X-1は完了済みなのでこの順序で実装できる。
+  // ⚠️focusArea()をそのまま呼ばない＝あれは囲い線を描き・他エリアの社を
+  // 減光し・CTAピルを出す「エリア選択」の演出まで含む。本人指定「全国の神社
+  // アイコンは載せたまま」に反するため、ここではカメラを動かすだけにする。
+  function startKantoAutoZoom() {
+    var def = AREA_SHRINES['area-pages/東京.html'];
+    if (!def || !def.layers) return;
+    var idents = [];
+    def.layers.forEach(function(l){ idents = idents.concat(l.shrines); });
+    var shape = computeAreaShape(idents);
+    if (!shape) return;
+    function fly(duration) {
+      if (shape.type === 'rect') {
+        map.flyToBounds(shape.bounds, { padding:[40,40], duration: duration });
+      } else {
+        map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration: duration });
+      }
+    }
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { fly(0); return; }
+    if (sessionStorage.getItem('kantoZoomShown') === '1') return;
+    sessionStorage.setItem('kantoZoomShown', '1');
+    // ユーザーが自分で地図をドラッグしたら即座に諦める（自発的なflyTo自身は
+    // dragstartを発火しないため、self/user操作の混同が起きない）
+    var interrupted = false;
+    map.once('dragstart', function(){ interrupted = true; map.stop(); });
+    setTimeout(function(){
+      if (!interrupted) fly(2.5);
+    }, 1800);
+  }
   function dimOutOfArea(idents) {
     var inArea = {};
     idents.forEach(function(id){ inArea[id] = true; });
@@ -1659,6 +1734,14 @@ function initScrollSlideReveal() {
     currentLang = lang;
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    // 依頼AE-5（2026-09-19）：オープニング区画（タグライン・動画キャプション・
+    // 固定/トリプティックキャプション・④の宣言）は、この関数の他の処理と違い
+    // JS辞書ではなくdata-en属性で持たせた（原稿がAC-1経由の翻訳委託ではなく
+    // 確定文言の直書きのため）。他の詳細ページと同じ汎用スイッチをここにも足す
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
     });
     document.getElementById('mock-title').textContent = HEADER_TITLE[lang];
     renderShrineDropdown();
@@ -1804,6 +1887,7 @@ function initScrollSlideReveal() {
             focusShrine(focusedShrine);
           } else {
             map.fitBounds(bounds, { padding: [30,30] });
+            startKantoAutoZoom();
           }
         } else {
           requestAnimationFrame(function(){ fitWhenReady(attempts + 1); });
