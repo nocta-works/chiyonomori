@@ -522,15 +522,16 @@
     display: flex; justify-content: center; pointer-events: none;
   }
   .area-enclosure-cta {
-    display: none; align-items: center; gap: 8px; pointer-events: auto;
-    padding: 9px 16px; border-radius: 24px; border: 1px solid var(--gold);
-    background: rgba(20,14,6,0.92); color: var(--gold); font-size: 13px;
+    /* 本人指摘（2026-09-20）：浮かび上がる東京ページアイコンを前より大きく */
+    display: none; align-items: center; gap: 10px; pointer-events: auto;
+    padding: 13px 24px; border-radius: 28px; border: 1px solid var(--gold);
+    background: rgba(20,14,6,0.92); color: var(--gold); font-size: 17px;
     letter-spacing: 0.03em; text-decoration: none; cursor: pointer;
     box-shadow: 0 6px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity var(--dur-slower) ease;
   }
   .area-enclosure-cta.visible { display: flex; opacity: 1; }
   .area-enclosure-cta:hover { background: rgba(var(--gold-glow-rgb),0.22); }
-  .area-enclosure-cta-close { opacity: 0.6; font-size: 14px; line-height: 1; padding-left: 2px; }
+  .area-enclosure-cta-close { opacity: 0.6; font-size: 18px; line-height: 1; padding-left: 2px; }
   .area-enclosure-cta-close:hover { opacity: 1; }
   /* 依頼Z-2①（2026-09-14）：エリアのLv表示を、カーソル追従のtooltipから
      枠の内側左上に常時表示する固定ラベルへ変更。理由＝マーカーホバーの社名表示
@@ -1373,9 +1374,11 @@ function initScrollSlideReveal() {
   });
   document.getElementById('area-dropdown-toggle').addEventListener('click', function(e){
     e.stopPropagation();
-    // 依頼AH-5：エリアが1つだけの間は、開閉せず直接そのページへ移動する
+    // 本人指摘（2026-09-20）：「東京エリア」クリックは直接ページ遷移ではなく、
+    // 従来のドロップダウン項目クリックと同じ表現（囲い線を描いてズーム→
+    // 浮かび上がるCTAピルをクリックして初めてページへ）に戻す
     var singleFile = this.getAttribute('data-single-area-file');
-    if (singleFile) { location.href = withTagsQuery(singleFile); return; }
+    if (singleFile) { closeAllDropdowns(); focusArea(singleFile); return; }
     var d = document.getElementById('area-dropdown');
     var willOpen = !d.classList.contains('open');
     closeAllDropdowns();
