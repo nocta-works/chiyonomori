@@ -125,7 +125,13 @@
     "prefEn": "Chiba",
     "provinceEn": "Shimosa Province",
     "deityEn": "Futsunushi Okami",
-    "reasonEn": "The ichinomiya of Shimosa Province and a former imperial shrine. It is the head shrine of all Katori shrines nationwide, enshrining Futsunushi Okami, and forms the Three Shrines of the East with Kashima Jingu and Ikisu Jinja."
+    "reasonEn": "The ichinomiya of Shimosa Province and a former imperial shrine. It is the head shrine of all Katori shrines nationwide, enshrining Futsunushi Okami, and forms the Three Shrines of the East with Kashima Jingu and Ikisu Jinja.",
+    "blessing": "武運・勝負・縁結び",
+    "blessingEn": "Martial arts, decisive moments",
+    "founded": "神武天皇18年と伝わる",
+    "foundedEn": "Traditionally dated to the 18th year of Emperor Jimmu",
+    "station": "JR佐原＋バス／車",
+    "stationEn": "JR Sawara + bus / car"
   },
   {
     "pref": "和歌山",
@@ -320,7 +326,13 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Emperor Meiji and Empress Shoken",
-    "reasonEn": "Founded in 1920, enshrining Emperor Meiji and Empress Shoken. Its 700,000-square-metre forest is an entirely artificial woodland, planted when the shrine was built."
+    "reasonEn": "Founded in 1920, enshrining Emperor Meiji and Empress Shoken. Its 700,000-square-metre forest is an entirely artificial woodland, planted when the shrine was built.",
+    "blessing": "家内安全・縁結び",
+    "blessingEn": "Family harmony, relationships",
+    "founded": "1920年",
+    "foundedEn": "1920",
+    "station": "JR原宿・地下鉄明治神宮前",
+    "stationEn": "JR Harajuku / Meiji-jingumae subway station"
   },
   {
     "pref": "滋賀",
@@ -393,7 +405,13 @@
     "prefEn": "Ibaraki",
     "provinceEn": "Hitachi Province",
     "deityEn": "Takemikazuchi Okami",
-    "reasonEn": "The ichinomiya of Hitachi Province, an ancient shrine enshrining Takemikazuchi Okami. Its Mifune Matsuri boat festival is held once every twelve years, in the Year of the Horse."
+    "reasonEn": "The ichinomiya of Hitachi Province, an ancient shrine enshrining Takemikazuchi Okami. Its Mifune Matsuri boat festival is held once every twelve years, in the Year of the Horse.",
+    "blessing": "武運・勝負・旅立ち",
+    "blessingEn": "Martial arts, decisive moments",
+    "founded": "神武天皇元年と伝わる",
+    "foundedEn": "Traditionally dated to the first year of Emperor Jimmu",
+    "station": "JR鹿島神宮",
+    "stationEn": "JR Kashima-Jingu"
   },
   {
     "pref": "鹿児島",
@@ -1159,7 +1177,13 @@
     "prefEn": "Saitama",
     "provinceEn": "Musashi Province",
     "deityEn": "Susanoo, Inadahime and Onamuchi",
-    "reasonEn": "The ichinomiya of Musashi Province and a former imperial shrine. An ancient shrine that gave its name to the district of Omiya, and the head shrine of around 280 Hikawa shrines concentrated in the Kanto region."
+    "reasonEn": "The ichinomiya of Musashi Province and a former imperial shrine. An ancient shrine that gave its name to the district of Omiya, and the head shrine of around 280 Hikawa shrines concentrated in the Kanto region.",
+    "blessing": "縁結び・厄除",
+    "blessingEn": "Relationships, warding off misfortune",
+    "founded": "2000年以上前と伝わる",
+    "foundedEn": "Traditionally more than 2,000 years old",
+    "station": "JR大宮（参道は約2km。歩いて30分）",
+    "stationEn": "JR Omiya. The approach is about 2 kilometres and takes 30 minutes on foot."
   },
   {
     "pref": "大分",
@@ -1800,7 +1824,13 @@
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
     "deityEn": "Samukawahiko and Samukawahime",
-    "reasonEn": "The ichinomiya of Sagami Province and a former national shrine, enshrining Samukawahiko and Samukawahime. Worshipped as the only shrine in Japan offering protection from misfortune in all eight directions."
+    "reasonEn": "The ichinomiya of Sagami Province and a former national shrine, enshrining Samukawahiko and Samukawahime. Worshipped as the only shrine in Japan offering protection from misfortune in all eight directions.",
+    "blessing": "八方除（全国唯一）",
+    "blessingEn": "Protection from all eight directions",
+    "founded": "1600年以上前とされる",
+    "foundedEn": "Said to be more than 1,600 years old",
+    "station": "JR宮山",
+    "stationEn": "JR Miyayama"
   },
   {
     "pref": "福井",
@@ -2688,7 +2718,13 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Onamuchi, Sukunahikona and Taira no Masakado",
-    "reasonEn": "Guardian shrine of the whole of Edo. A former prefectural shrine, revered as protector of Edo Castle and the shogunal family."
+    "reasonEn": "Guardian shrine of the whole of Edo. A former prefectural shrine, revered as protector of Edo Castle and the shogunal family.",
+    "blessing": "商売繁盛・縁結び・IT情報安全",
+    "blessingEn": "Business, relationships, IT security",
+    "founded": "730年と伝わる",
+    "foundedEn": "Traditionally dated to 730",
+    "station": "地下鉄末広町・JR御茶ノ水",
+    "stationEn": "Suehirocho subway station / JR Ochanomizu"
   },
   {
     "pref": "東京",
@@ -2705,7 +2741,13 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Oyamakui",
-    "reasonEn": "An imperially-designated shrine and former imperial shrine, the tutelary deity of Edo Castle, now the Imperial Palace. Its Sanno Matsuri is one of Japan's three great festivals."
+    "reasonEn": "An imperially-designated shrine and former imperial shrine, the tutelary deity of Edo Castle, now the Imperial Palace. Its Sanno Matsuri is one of Japan's three great festivals.",
+    "blessing": "仕事運・厄除・安産",
+    "blessingEn": "Career, warding off misfortune, safe childbirth",
+    "founded": "太田道灌の勧請（15世紀）とされる",
+    "foundedEn": "Said to have been brought here by Ota Dokan in the 15th century",
+    "station": "地下鉄赤坂・溜池山王",
+    "stationEn": "Akasaka / Tameike-sanno subway stations"
   },
   {
     "pref": "大阪",
@@ -2826,7 +2868,13 @@
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
     "deityEn": "Emperor Ojin, Himegami and Empress Jingu",
-    "reasonEn": "A Hachiman shrine founded by Minamoto no Yoritomo as guardian deity of the Kamakura shogunate, and one of the three great Hachiman shrines of Japan. As a member of the National Ichinomiya Association it calls itself the ichinomiya of Sagami Province, though tradition assigns that title to Samukawa Jinja. As guardian of the whole of Kamakura it receives several million visitors a year."
+    "reasonEn": "A Hachiman shrine founded by Minamoto no Yoritomo as guardian deity of the Kamakura shogunate, and one of the three great Hachiman shrines of Japan. As a member of the National Ichinomiya Association it calls itself the ichinomiya of Sagami Province, though tradition assigns that title to Samukawa Jinja. As guardian of the whole of Kamakura it receives several million visitors a year.",
+    "blessing": "必勝・出世・縁結び",
+    "blessingEn": "Victory, career",
+    "founded": "1063年（由比ヶ浜）／1180年に現在地",
+    "foundedEn": "1063 at Yuigahama / moved to the present site in 1180",
+    "station": "JR鎌倉",
+    "stationEn": "JR Kamakura"
   },
   {
     "pref": "神奈川",
@@ -2843,7 +2891,13 @@
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
     "deityEn": "Ugafuku and Benzaiten",
-    "reasonEn": "Synonymous with washing money for good fortune. It stands in a cave in the Sasuke district of Kamakura, where washing coins in the spring water is said to multiply their value many times over, drawing large numbers of visitors each year as one of Japan's leading spots for financial luck."
+    "reasonEn": "Synonymous with washing money for good fortune. It stands in a cave in the Sasuke district of Kamakura, where washing coins in the spring water is said to multiply their value many times over, drawing large numbers of visitors each year as one of Japan's leading spots for financial luck.",
+    "blessing": "金運",
+    "blessingEn": "Money (wash your coins here)",
+    "founded": "1185年とされる",
+    "foundedEn": "Traditionally dated to 1185",
+    "station": "JR鎌倉から徒歩25分。駅から遠く坂とトンネル",
+    "stationEn": "25 minutes on foot from JR Kamakura. The shrine is far from the station, up a slope and through a tunnel."
   },
   {
     "pref": "神奈川",
@@ -2860,7 +2914,13 @@
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
     "deityEn": "Sugawara no Michizane",
-    "reasonEn": "The oldest Tenjin shrine in the Kanto region, founded in 1104. It stands in the forest bordering Tsurugaoka Hachimangu, and is deeply revered by artists and writers, as reflected in its mound of old paintbrushes."
+    "reasonEn": "The oldest Tenjin shrine in the Kanto region, founded in 1104. It stands in the forest bordering Tsurugaoka Hachimangu, and is deeply revered by artists and writers, as reflected in its mound of old paintbrushes.",
+    "blessing": "学業",
+    "blessingEn": "Study and exams",
+    "founded": "1104年とされる",
+    "foundedEn": "Traditionally dated to 1104",
+    "station": "JR鎌倉から徒歩20分",
+    "stationEn": "20 minutes on foot from JR Kamakura"
   },
   {
     "pref": "山梨",
@@ -2980,7 +3040,13 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Okunitama, the god of the land (also known as Onamuchi)",
-    "reasonEn": "The sosha, or unifying shrine, of Musashi Province, and a former imperial shrine. It brings together the deities of all the shrines within the province as guardian of the province as a whole."
+    "reasonEn": "The sosha, or unifying shrine, of Musashi Province, and a former imperial shrine. It brings together the deities of all the shrines within the province as guardian of the province as a whole.",
+    "blessing": "厄除・縁結び・方位除",
+    "blessingEn": "Warding off misfortune, relationships",
+    "founded": "111年と伝わる",
+    "foundedEn": "Traditionally dated to 111",
+    "station": "京王府中・JR府中本町",
+    "stationEn": "Keio Fuchu / JR Fuchuhommachi"
   },
   {
     "pref": "千葉",
@@ -2998,7 +3064,13 @@
     "prefEn": "Chiba",
     "provinceEn": "Shimosa Province",
     "deityEn": "Hondawake (Emperor Ojin), Okinagatarashihime (Empress Jingu) and Tamayorihime",
-    "reasonEn": "The shrine that gave the district of Motoyawata its name. Founded in the Kanpyo era (889-898) by imperial decree of Emperor Uda, inviting the deity of Iwashimizu Hachimangu. Guardian shrine of the whole of Shimosa Province."
+    "reasonEn": "The shrine that gave the district of Motoyawata its name. Founded in the Kanpyo era (889-898) by imperial decree of Emperor Uda, inviting the deity of Iwashimizu Hachimangu. Guardian shrine of the whole of Shimosa Province.",
+    "blessing": "必勝・安産・子育て",
+    "blessingEn": "Victory, childbirth",
+    "founded": "寛平年間（889〜898）とされる",
+    "foundedEn": "Said to date from 889–898",
+    "station": "JR本八幡・京成八幡",
+    "stationEn": "JR Motoyawata / Keisei Yawata"
   },
   {
     "pref": "神奈川",
@@ -3015,7 +3087,13 @@
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
     "deityEn": "Amaterasu, the sun goddess",
-    "reasonEn": "A shrine that lends its name to the surrounding district, guardian of the whole of Yokohama, sometimes called the 'Ise shrine of Kanto'. It stands in the area opened as Yokohama's port at the end of the Edo period and start of the Meiji era."
+    "reasonEn": "A shrine that lends its name to the surrounding district, guardian of the whole of Yokohama, sometimes called the 'Ise shrine of Kanto'. It stands in the area opened as Yokohama's port at the end of the Edo period and start of the Meiji era.",
+    "blessing": "開運・新しい事の始まり",
+    "blessingEn": "New beginnings",
+    "founded": "1870年",
+    "foundedEn": "1870",
+    "station": "JR桜木町",
+    "stationEn": "JR Sakuragicho"
   },
   {
     "pref": "埼玉",
@@ -3032,7 +3110,13 @@
     "prefEn": "Saitama",
     "provinceEn": "Musashi Province",
     "deityEn": "Izanagi and Izanami, the creator gods",
-    "reasonEn": "One of the three great shrines of Chichibu. Its messenger animal is the wolf, and it is regarded as one of the Kanto region's foremost spiritual power spots."
+    "reasonEn": "One of the three great shrines of Chichibu. Its messenger animal is the wolf, and it is regarded as one of the Kanto region's foremost spiritual power spots.",
+    "blessing": "厄除・災難除",
+    "blessingEn": "Warding off calamity",
+    "founded": "日本武尊の東征伝説に由来とされる",
+    "foundedEn": "Linked by tradition to Yamato Takeru's eastern campaign",
+    "station": "最寄駅なし。西武秩父駅からバス約75分。車推奨",
+    "stationEn": "No nearby station. About 75 minutes by bus from Seibu-Chichibu Station. A car is recommended."
   },
   {
     "pref": "東京",
@@ -3049,7 +3133,13 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Kushimachi, Onamuchi, Sukunahikona and Yamato Takeru",
-    "reasonEn": "Standing atop the 929-metre Mount Mitake, a centre of mountain worship across the whole Kanto region. An ancient shrine and former national shrine, drawing visitors from across Japan to Okutama's foremost sacred peak."
+    "reasonEn": "Standing atop the 929-metre Mount Mitake, a centre of mountain worship across the whole Kanto region. An ancient shrine and former national shrine, drawing visitors from across Japan to Okutama's foremost sacred peak.",
+    "blessing": "厄除・盗難除・愛犬祈願",
+    "blessingEn": "Protection, and prayers for dogs",
+    "founded": "崇神天皇の時代とされる",
+    "foundedEn": "Traditionally dated to the reign of Emperor Sujin",
+    "station": "JR御嶽＋バス＋ケーブルカー＋石段330段",
+    "stationEn": "JR Mitake + bus + cable car + 330 stone steps"
   },
   {
     "pref": "神奈川",
@@ -3066,7 +3156,13 @@
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
     "deityEn": "Oyamatsumi, the mountain god; Ikazuchi, the thunder god; Takaokami, the water god",
-    "reasonEn": "The head shrine of Mount Oyama worship. Also known as Amefuriyama, 'rain-falling mountain', it is a god of water and agriculture, and its sacred mountain became hugely popular for pilgrimage in the Edo period."
+    "reasonEn": "The head shrine of Mount Oyama worship. Also known as Amefuriyama, 'rain-falling mountain', it is a god of water and agriculture, and its sacred mountain became hugely popular for pilgrimage in the Edo period.",
+    "blessing": "雨乞い・水・商売繁盛",
+    "blessingEn": "Rain and water, business",
+    "founded": "崇神天皇の時代とされる",
+    "foundedEn": "Traditionally dated to the reign of Emperor Sujin",
+    "station": "小田急伊勢原＋バス＋ケーブルカー",
+    "stationEn": "Odakyu Isehara + bus + cable car"
   },
   {
     "pref": "東京",
@@ -3083,7 +3179,13 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Omononushi and Emperor Sutoku",
-    "reasonEn": "A branch of Kotohiragu in Sanuki, officially authorised by the Edo shogunate, standing in Toranomon, Minato ward. Worshipped since the Edo period as a god of financial fortune and business prosperity, and one of Tokyo's foremost shrines for money luck."
+    "reasonEn": "A branch of Kotohiragu in Sanuki, officially authorised by the Edo shogunate, standing in Toranomon, Minato ward. Worshipped since the Edo period as a god of financial fortune and business prosperity, and one of Tokyo's foremost shrines for money luck.",
+    "blessing": "金運・商売繁盛・海上安全",
+    "blessingEn": "Prosperity, safe voyage",
+    "founded": "1660年",
+    "foundedEn": "1660",
+    "station": "地下鉄虎ノ門",
+    "stationEn": "Toranomon subway station"
   },
   {
     "pref": "東京",
@@ -3101,7 +3203,13 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Ukanomitama, Yamato Takeru and Inari Okami",
-    "reasonEn": "Guardian shrine of the whole of Shinjuku. Famous for its blessings of business, the performing arts and good fortune. Its November Tori no Ichi fair, lined with stalls selling lucky rakes, is a fixture of the Shinjuku calendar, and it stands as guardian of the entertainment district beside Kabukicho."
+    "reasonEn": "Guardian shrine of the whole of Shinjuku. Famous for its blessings of business, the performing arts and good fortune. Its November Tori no Ichi fair, lined with stalls selling lucky rakes, is a fixture of the Shinjuku calendar, and it stands as guardian of the entertainment district beside Kabukicho.",
+    "blessing": "商売繁盛・芸能・開運",
+    "blessingEn": "Business, performing arts",
+    "founded": "江戸入府（1590年）以前とされる",
+    "foundedEn": "Said to predate Tokugawa Ieyasu's arrival in Edo in 1590",
+    "station": "地下鉄新宿三丁目",
+    "stationEn": "Shinjuku-sanchome subway station"
   },
   {
     "pref": "千葉",
@@ -3118,7 +3226,13 @@
     "prefEn": "Chiba",
     "provinceEn": "Shimosa Province",
     "deityEn": "Amenominakanushi (identified with the bodhisattva Myoken)",
-    "reasonEn": "A shrine that lends its name to the surrounding city, and the head shrine of Myoken worship, guardian deity of the Chiba clan. It holds the unique distinction nationwide of enshrining the North Star itself."
+    "reasonEn": "A shrine that lends its name to the surrounding city, and the head shrine of Myoken worship, guardian deity of the Chiba clan. It holds the unique distinction nationwide of enshrining the North Star itself.",
+    "blessing": "厄除（方位・八方）・開運",
+    "blessingEn": "Protection from every direction",
+    "founded": "1000年",
+    "foundedEn": "1000",
+    "station": "JR千葉・京成千葉中央",
+    "stationEn": "JR Chiba / Keisei Chiba-chuo"
   },
   {
     "pref": "岐阜",

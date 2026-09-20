@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chiyo no Mori — Shrines of Japan</title>
+<meta name="description" content="A map of more than a hundred shrines, with Tokyo covered in depth.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
@@ -274,6 +275,15 @@
     opacity: 0; transition: opacity 1s ease 300ms;
   }
   .triptych-caption.triptych-caption-show { opacity: 1; }
+  /* 依頼AH-2（2026-09-20）：静止画にどの神社か分かるよう社名を出す。画像には
+     焼き込まず、HTMLオーバーレイのdata-enで言語切替に乗せる。3列（または
+     3枚のフォールバック写真）とも同じ位置＝各写真の左下に揃える */
+  .photo-shrine-name {
+    position: absolute; left: 10px; bottom: 10px; z-index: 5;
+    font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text);
+    background: rgba(0,0,0,0.4); padding: 4px 9px; border-radius: 3px;
+    pointer-events: none;
+  }
   @media (max-width: 480px) {
     .triptych-caption { font-size: clamp(15px, 4.4vw, 22px); bottom: 12%; }
   }
@@ -613,11 +623,7 @@
   .popup-link.official:hover { background: rgba(var(--tag-jingu-rgb),0.28); color: var(--gold); }
   .popup-link.wiki { background: rgba(150,150,165,0.14); border: 1px solid rgba(150,150,165,0.35); color: var(--color-wiki); }
   .popup-link.wiki:hover { background: rgba(150,150,165,0.28); color: var(--color-wiki-hover); }
-  #replay-btn {
-    position: fixed; right: 14px; bottom: 14px; z-index: 4000;
-    background: rgba(0,0,0,0.5); color: var(--tan-text); border: 1px solid var(--border-4);
-    border-radius: 20px; padding: 8px 14px; font-size: 12px; cursor: pointer;
-  }
+  .mock-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -627,7 +633,7 @@
 
 <div id="intro">
   <div class="intro-overlay"></div>
-  <div class="intro-tagline" data-en="A country with 80,000 shrines. Here are 189.">八万の社がある国から、百八十九。</div>
+  <div class="intro-tagline" data-en="A country with 80,000 shrines. More than a hundred of them here.">八万の社がある国から、百余社。</div>
   <div class="intro-gate intro-gate-left"></div>
   <div class="intro-gate intro-gate-right"></div>
   <div class="intro-loader">
@@ -661,13 +667,15 @@
      地図（mock-app）へ入る直前に置く。この直後にAA-1の初期ズーム
      （日本全体→関東）が起きる想定で、文言と演出を揃えてある -->
 <section class="scroll-slide reveal-slide" id="declaration-slide">
-  <div class="declaration-text" data-en="For now, we begin with Tokyo.">いまは、東京から。</div>
+  <div class="declaration-text" data-en="From Japan, down to one city.">日本から、ひとつの街へ。</div>
 </section>
 
 <div class="mock-app" id="mock-app">
   <div class="mock-header">
-    <div class="torii-icon">⛩</div>
-    <h1 id="mock-title">千代の杜</h1>
+    <div class="mock-logo" id="mock-logo" title="Reload from the top">
+      <div class="torii-icon">⛩</div>
+      <h1 id="mock-title">千代の杜</h1>
+    </div>
     <div class="lang-toggle" id="lang-toggle">
       <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
       <button type="button" class="lang-btn" data-lang="en">EN</button>
@@ -715,8 +723,6 @@
     </div>
   </div>
 </div>
-
-<button id="replay-btn" onclick="sessionStorage.removeItem('introShown'); location.reload();">🔄 演出をやり直す</button>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -891,6 +897,10 @@ function initScrollSlideReveal() {
     { file: 'assets/samukawa-sakura.jpg', alt: '寒川神社' },
   ];
   var SLIDE_COUNT = 3;
+  // 依頼AH-2：フォールバック経路の写真は`alt`に社名が入っているものだけ社名を
+  // 出せる（zoomout-manifest.jsonの大半はalt空欄＝どの社か特定できない写真の
+  // ため、その場合はラベルを出さない＝本人指定の「無難」な扱い）
+  var FALLBACK_NAME_EN = { '香取神宮': 'Katori Jingu', '鹿島神宮': 'Kashima Jingu', '寒川神社': 'Samukawa Jinja' };
 
   function pickRandom(list, n) {
     var pool = list.slice();
@@ -906,6 +916,36 @@ function initScrollSlideReveal() {
     return list[Math.floor(Math.random() * list.length)];
   }
 
+  // このIIFEは地図本体のapplyLang()と別クロージャで、写真は非同期fetch完了後に
+  // 挿入されるため、挿入前に既にEN選択済みだった場合そのまま日本語で残ってしまう。
+  // localStorageの保存値を直接見て、挿入直後だけその場でdata-enへ差し替える
+  function applyStoredLangTo(root) {
+    var lang;
+    try { lang = localStorage.getItem('siteLang'); } catch(err) { lang = null; }
+    if (lang !== 'en') return;
+    root.querySelectorAll('[data-en]').forEach(function(el){
+      el.textContent = el.getAttribute('data-en');
+    });
+  }
+
+  // 依頼AH-2：トリプティックの写真パス（例＝写真動画/香取神宮/IMG_1337.jpeg）の
+  // 親フォルダ名は社名そのものなので、shrines-overseas.jsonのnameEnを引ければ
+  // 英語ラベルが作れる。1回だけfetchしてキャッシュする（地図本体のIIFEとは
+  // 別クロージャなので、そちらのfetch結果は再利用できない）
+  var shrineNameLookupCache = null;
+  function loadShrineNameLookup() {
+    if (shrineNameLookupCache) return Promise.resolve(shrineNameLookupCache);
+    return fetch('assets/shrines-overseas.json')
+      .then(function(res){ return res.json(); })
+      .then(function(list){
+        var map = {};
+        list.forEach(function(s){ map[s.name] = s.nameEn; });
+        shrineNameLookupCache = map;
+        return map;
+      })
+      .catch(function(){ shrineNameLookupCache = {}; return shrineNameLookupCache; });
+  }
+
   // フォールバック経路（従来のまま・変更なし）
   function renderSlides(list) {
     var container = document.getElementById('scroll-slides');
@@ -913,11 +953,17 @@ function initScrollSlideReveal() {
     var picked = pickRandom(list, SLIDE_COUNT);
     container.innerHTML = picked.map(function(item, i){
       var idAttr = i === picked.length - 1 ? ' id="last-scroll-slide"' : '';
+      var nameEn = item.alt ? FALLBACK_NAME_EN[item.alt] : null;
+      var nameHtml = (item.alt && nameEn)
+        ? '<div class="photo-shrine-name" data-en="' + nameEn + '">' + item.alt + '</div>'
+        : '';
       return '<section class="scroll-slide reveal-slide"' + idAttr + '>' +
         '<img src="' + item.file + '" alt="' + (item.alt || '') + '">' +
+        nameHtml +
         '<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>' +
         '</section>';
     }).join('');
+    applyStoredLangTo(container);
     initScrollSlideReveal();
     var fixedCaption = document.getElementById('fixed-caption');
     if (fixedCaption) fixedCaption.style.display = '';
@@ -948,11 +994,31 @@ function initScrollSlideReveal() {
     // 静的HTML側に置いた#declaration-slide（依頼AE-2④）が別途initScrollSlideReveal()
     // を呼ばないと永久にrevealされない。フォールバック経路（renderSlides）は既に
     // 呼んでいるので、ここでも同じ関数を呼んで両経路を揃える
+    applyStoredLangTo(container);
     initScrollSlideReveal();
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var section = container.querySelector('.triptych-section');
     var cols = container.querySelectorAll('.triptych-col');
     var caption = container.querySelector('.triptych-caption');
+    // 依頼AH-2：列ごとに社名ラベルを追加する。写真パスの親フォルダ名＝社名から
+    // shrines-overseas.jsonのnameEnを引く。掲載社の外の写真（フォルダ名が
+    // データに無い）は、本人指定の「無難」に倣いラベルを出さない
+    loadShrineNameLookup().then(function(lookup){
+      photos.forEach(function(path, i){
+        var parts = path.split('/');
+        var folderName = parts.length >= 2 ? parts[parts.length - 2] : null;
+        var nameEn = folderName ? lookup[folderName] : null;
+        if (!folderName || !nameEn) return;
+        var col = cols[i];
+        if (!col) return;
+        var label = document.createElement('div');
+        label.className = 'photo-shrine-name';
+        label.setAttribute('data-en', nameEn);
+        label.textContent = folderName;
+        col.appendChild(label);
+        applyStoredLangTo(col);
+      });
+    });
     function reveal(){
       cols.forEach(function(el){ el.classList.add('revealed'); });
       if (caption) caption.classList.add('triptych-caption-show');
@@ -1008,12 +1074,14 @@ function initScrollSlideReveal() {
   var CHROME_TEXT = {
     ja: {
       province: '旧国：', deity: '祭神：', map: '地図', official: '公式', wiki: 'Wiki', detail: '詳しく見る',
+      blessing: 'ご利益：', founded: '創建：', station: '最寄駅：',
       listTitle: '神社リスト',
       shownFmt: function(n){ return '表示中 ' + n + ' 社'; },
       countFmt: function(n){ return n + '社'; },
     },
     en: {
       province: 'Province: ', deity: 'Deity: ', map: 'Map', official: 'Official', wiki: 'Wiki', detail: 'Read more',
+      blessing: 'Blessings: ', founded: 'Founded: ', station: 'Nearest station: ',
       listTitle: 'Shrine List',
       shownFmt: function(n){ return 'Showing ' + n + ' shrine' + (n === 1 ? '' : 's'); },
       countFmt: function(n){ return n + ' shrine' + (n === 1 ? '' : 's'); },
@@ -1161,6 +1229,16 @@ function initScrollSlideReveal() {
     var displayPref = currentLang === 'en' ? s.prefEn : s.pref;
     var displayProvince = currentLang === 'en' ? s.provinceEn : s.province;
     var displayDeity = currentLang === 'en' ? s.deityEn : s.deity;
+    // 依頼AH-6（2026-09-20）：地図タイルが日本語表記のままなので、その代わりに
+    // ポップアップを手厚くする。東京19社ぶんは依頼W-6のQuick Facts
+    // （ご利益・創建・最寄駅）が既にあるので、それを流用する（新規データ収集なし）。
+    // 19社以外は元々この3項目を持たないため、undefinedのままなら何も出ない
+    var displayBlessing = currentLang === 'en' ? s.blessingEn : s.blessing;
+    var displayFounded = currentLang === 'en' ? s.foundedEn : s.founded;
+    var displayStation = currentLang === 'en' ? s.stationEn : s.station;
+    var blessingHtml = displayBlessing ? '<div class="popup-deity">' + t.blessing + displayBlessing + '</div>' : '';
+    var foundedHtml = displayFounded ? '<div class="popup-deity">' + t.founded + displayFounded + '</div>' : '';
+    var stationHtml = displayStation ? '<div class="popup-deity">' + t.station + displayStation + '</div>' : '';
     return '<div class="popup-content">' +
       '<div class="popup-badges">' + badges + '</div>' +
       '<div class="popup-name">' + displayName + '</div>' +
@@ -1168,6 +1246,7 @@ function initScrollSlideReveal() {
       '<div class="popup-province">' + t.province + displayProvince + '</div>' +
       reasonHtml +
       '<div class="popup-deity">' + t.deity + displayDeity + '</div>' +
+      blessingHtml + foundedHtml + stationHtml +
       detailHtml +
       '<div class="popup-links">' +
         '<a href="' + gmapsUrl + '" target="_blank" rel="noopener" class="popup-link gmaps"><span class="popup-link-icon">📍</span>' + t.map + '</a>' +
@@ -1196,10 +1275,14 @@ function initScrollSlideReveal() {
   // 7エリアはドロップダウンと地図の囲いから外す（＝V-1）が、area-pagesファイル
   // 自体・詳細ページ・地図データ（183社）は削除しない。戻す時にそのまま使う。
   var AREA_PAGES = [
-    { name:{ja:'東京',en:'Tokyo'}, file:'area-pages/東京.html' },
-    { name:{ja:'大阪',en:'Osaka'}, file:'area-pages/大阪.html' },
-    { name:{ja:'京都',en:'Kyoto'}, file:'area-pages/京都.html' },
+    { name:{ja:'東京',en:'Tokyo'}, areaLabel:{ja:'東京エリア',en:'Tokyo Area'}, file:'area-pages/東京.html' },
+    { name:{ja:'大阪',en:'Osaka'}, areaLabel:{ja:'大阪エリア',en:'Osaka Area'}, file:'area-pages/大阪.html' },
+    { name:{ja:'京都',en:'Kyoto'}, areaLabel:{ja:'京都エリア',en:'Kyoto Area'}, file:'area-pages/京都.html' },
   ];
+  // 依頼AH-5（2026-09-20）：今はエリアが東京しかないので、ドロップダウンではなく
+  // 単独タグとして出す。AREA_PAGES自体は消さない（他エリアが戻った時にそのまま
+  // 使うため）——ここに増やすだけで自動的にドロップダウン表示へ戻る作りにする
+  var VISIBLE_AREA_FILES = ['area-pages/東京.html'];
   // 実行順F（依頼P-2＋R-4・2026-09-13）：エリアを地図上で囲うための、エリア→
   // 所属社リスト。⚠️依頼R-5の教訓＝名前だけでは同名他県の社と衝突する
   // （日枝神社が富山を返した実例）ため、必ず「県|名前」で持ち、marker側の
@@ -1246,11 +1329,27 @@ function initScrollSlideReveal() {
     }).join('');
   }
   function renderAreaDropdown(){
+    var visible = AREA_PAGES.filter(function(a){ return VISIBLE_AREA_FILES.indexOf(a.file) !== -1; });
     var label = document.getElementById('area-dropdown-label');
-    if (label) label.textContent = '📍 ' + AREA_LABEL[currentLang];
+    var toggle = document.getElementById('area-dropdown-toggle');
+    var caret = toggle ? toggle.querySelector('.shrine-dropdown-caret') : null;
     var panel = document.getElementById('area-dropdown-panel');
+    // 依頼AH-5：見えているエリアが1つだけなら、ドロップダウンではなく単独タグに
+    // する（クリックで直接そのエリアページへ）。2つ以上に戻ったら自動的に
+    // 通常のドロップダウン表示へ戻る
+    if (visible.length === 1) {
+      var only = visible[0];
+      if (label) label.textContent = '📍 ' + only.areaLabel[currentLang];
+      if (caret) caret.style.display = 'none';
+      if (toggle) toggle.setAttribute('data-single-area-file', only.file);
+      if (panel) panel.innerHTML = '';
+      return;
+    }
+    if (caret) caret.style.display = '';
+    if (toggle) toggle.removeAttribute('data-single-area-file');
+    if (label) label.textContent = '📍 ' + AREA_LABEL[currentLang];
     if (!panel) return;
-    panel.innerHTML = AREA_PAGES.map(function(s){
+    panel.innerHTML = visible.map(function(s){
       return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '" data-area-file="' + s.file + '">' +
         '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">📍</span>' +
         '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
@@ -1274,6 +1373,9 @@ function initScrollSlideReveal() {
   });
   document.getElementById('area-dropdown-toggle').addEventListener('click', function(e){
     e.stopPropagation();
+    // 依頼AH-5：エリアが1つだけの間は、開閉せず直接そのページへ移動する
+    var singleFile = this.getAttribute('data-single-area-file');
+    if (singleFile) { location.href = withTagsQuery(singleFile); return; }
     var d = document.getElementById('area-dropdown');
     var willOpen = !d.classList.contains('open');
     closeAllDropdowns();
@@ -1782,6 +1884,16 @@ function initScrollSlideReveal() {
       if (!el) return;
       var inner = el.querySelector('.area-level-label');
       if (inner) inner.textContent = areaLevelLabelText(item.areaFile, item.levelKey);
+    });
+  }
+  // 本人指定（2026-09-20・依頼AH-4）：「千代の杜」をトップへのリロードリンクにする。
+  // 単なるリロードだとオープニング演出（introShown済み）が再生されないため、
+  // 旧「演出をやり直す」ボタンと同じ処理をここへ統合し、そのボタンは撤去した
+  var mockLogo = document.getElementById('mock-logo');
+  if (mockLogo) {
+    mockLogo.addEventListener('click', function(){
+      sessionStorage.removeItem('introShown');
+      location.reload();
     });
   }
   var langToggle = document.getElementById('lang-toggle');
