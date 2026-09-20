@@ -123,12 +123,25 @@
     background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.35));
   }
   .intro-tagline {
-    position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%); white-space: nowrap;
-    z-index: 1;
+    position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%);
+    z-index: 1; text-align: center; max-width: 85vw;
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
-    color: var(--tan-text); font-size: 15px; letter-spacing: 0.06em;
+    color: var(--tan-text); font-size: clamp(18px, 3vw, 28px); letter-spacing: 0.06em;
     text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   }
+  /* 本人指定（2026-09-20）：オープニング②を待てない人向けのスキップ表示。
+     #intro自体が既にクリックでfinish()する作りだが、見えるアフォーダンスが
+     無かったため、明示的なアイコンを画面上部に置く */
+  .intro-skip {
+    position: absolute; top: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 4; display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 20px; cursor: pointer;
+    background: rgba(0,0,0,0.35); border: 1px solid rgba(var(--gold-glow-rgb),0.4);
+    color: var(--tan-text); font-size: 12px; letter-spacing: 0.1em;
+    opacity: 0.75; transition: opacity 0.2s ease, background 0.2s ease;
+  }
+  .intro-skip:hover { opacity: 1; background: rgba(0,0,0,0.5); }
+  .intro-skip-icon { font-size: 13px; line-height: 1; }
   /* ③動画だけのキャッチコピー（本人指定・2026-09-06：コラージュ見出し用の一文をここへ移動） */
   .intro-video-caption {
     position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%);
@@ -675,6 +688,10 @@
 
 <div id="intro">
   <div class="intro-overlay"></div>
+  <button type="button" class="intro-skip" id="intro-skip">
+    <span data-en="Skip">スキップ</span>
+    <span class="intro-skip-icon">›</span>
+  </button>
   <div class="intro-tagline" data-en="A country with 80,000 shrines. More than a hundred of them here.">八万の社がある国から、百余社。</div>
   <div class="intro-gate intro-gate-left"></div>
   <div class="intro-gate intro-gate-right"></div>
@@ -777,7 +794,16 @@
   // （触ると③以降の速度も一緒に変わってしまう）——①専用のステップ・バッファを別に持つ
   var INTRO_SPEED = 2;
   var INTRO_CHAR_STEP = CHAR_STEP * INTRO_SPEED;
-  var taglineCharCount = wrapCharsReveal(tagline, INTRO_CHAR_STEP);
+  // 本人指摘（2026-09-20・EN版で確認）：英語訳は文字数が日本語よりずっと多く
+  // （例＝JA15文字に対しEN64文字）、固定の文字間隔（INTRO_CHAR_STEP）のままだと
+  // 文字が出そろうまでの時間が文字数に比例して伸び、EN版だけ極端に長くなって
+  // いた（64文字×240ms＝15秒超）。文字数に関わらず「全文字が出そろうまで」の
+  // 目標時間をほぼ一定にし、文字数が多いほど1文字あたりの間隔を自動的に詰める
+  // （短い文言ではINTRO_CHAR_STEPが上限になるので、従来どおりの間隔を保つ）
+  var TAGLINE_SPREAD_MS = 2500;
+  var taglineLen = Array.from(tagline.textContent).length;
+  var taglineStep = taglineLen > 1 ? Math.min(INTRO_CHAR_STEP, TAGLINE_SPREAD_MS / (taglineLen - 1)) : INTRO_CHAR_STEP;
+  var taglineCharCount = wrapCharsReveal(tagline, taglineStep);
   // ③動画のキャプションは後段でスクロール到達時に表示（下部の別IIFE参照）。
   // ⚠️2行がそれぞれ独自のdata-en（依頼AE-5）を持つ.ivc-line spanのため、
   // 親divのinnerHTMLをまとめてwrapCharsRevealに渡すとdata-en属性ごと
@@ -795,7 +821,7 @@
   // なっていた。文字が出るスピード自体（INTRO_CHAR_STEP）は①の演出の
   // 一部として維持しつつ、フロア値とREAD_BUFFERはINTRO_SPEEDを
   // 掛けない形に戻す（最低5秒・実質約7秒に短縮）
-  var taglineHoldMs = Math.max(5000, (taglineCharCount - 1) * INTRO_CHAR_STEP + CHAR_FADE + READ_BUFFER);
+  var taglineHoldMs = Math.max(5000, (taglineCharCount - 1) * taglineStep + CHAR_FADE + READ_BUFFER);
 
   var RING_MS = 1400 * INTRO_SPEED;
   var start = performance.now();
