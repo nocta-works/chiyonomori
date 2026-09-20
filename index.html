@@ -276,13 +276,24 @@
   }
   .triptych-caption.triptych-caption-show { opacity: 1; }
   /* 依頼AH-2（2026-09-20）：静止画にどの神社か分かるよう社名を出す。画像には
-     焼き込まず、HTMLオーバーレイのdata-enで言語切替に乗せる。3列（または
-     3枚のフォールバック写真）とも同じ位置＝各写真の左下に揃える */
+     焼き込まず、HTMLオーバーレイのdata-enで言語切替に乗せる。位置＝真ん中より
+     やや上（本人指摘・2026-09-20：左下は目立たず読み飛ばされるため中央寄りへ
+     変更）。⚠️本人指定（2026-09-20）＝トリプティック（3列同時表示）には使わず、
+     フォールバック（1枚ずつのスクロール、公開プレビューで実際に使われる経路）
+     専用。3枚のうち一部しか社名を引けず不揃いになるため、トリプティック側の
+     ラベル付与は撤去した。
+     ⚠️`left:50%+transform`で中央寄せしていた旧実装は、幅autoの絶対配置要素の
+     shrink-to-fit計算が「containing block幅 − left」に縮んでしまい、日本語
+     テキストが1文字ずつ縦積みで折り返すバグを引いた（狭い列幅の.triptych-col
+     で発覚）。`left:0; right:0`で幅を確定させ、text-alignで中央寄せする形に
+     修正。背景の黒帯も外し、他のキャプション（.fixed-caption等）と同じ
+     縁取り文字（text-shadow）の流儀に揃えた */
   .photo-shrine-name {
-    position: absolute; left: 10px; bottom: 10px; z-index: 5;
-    font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text);
-    background: rgba(0,0,0,0.4); padding: 4px 9px; border-radius: 3px;
-    pointer-events: none;
+    position: absolute; left: 0; right: 0; top: 40%; transform: translateY(-50%);
+    z-index: 5; text-align: center; padding: 0 10px; pointer-events: none;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(20px, 3.2vw, 30px); letter-spacing: 0.1em; color: var(--gold);
+    text-shadow: 0 4px 20px rgba(0,0,0,0.8);
   }
   @media (max-width: 480px) {
     .triptych-caption { font-size: clamp(15px, 4.4vw, 22px); bottom: 12%; }
@@ -938,24 +949,6 @@ function initScrollSlideReveal() {
     });
   }
 
-  // 依頼AH-2：トリプティックの写真パス（例＝写真動画/香取神宮/IMG_1337.jpeg）の
-  // 親フォルダ名は社名そのものなので、shrines-overseas.jsonのnameEnを引ければ
-  // 英語ラベルが作れる。1回だけfetchしてキャッシュする（地図本体のIIFEとは
-  // 別クロージャなので、そちらのfetch結果は再利用できない）
-  var shrineNameLookupCache = null;
-  function loadShrineNameLookup() {
-    if (shrineNameLookupCache) return Promise.resolve(shrineNameLookupCache);
-    return fetch('assets/shrines-overseas.json')
-      .then(function(res){ return res.json(); })
-      .then(function(list){
-        var map = {};
-        list.forEach(function(s){ map[s.name] = s.nameEn; });
-        shrineNameLookupCache = map;
-        return map;
-      })
-      .catch(function(){ shrineNameLookupCache = {}; return shrineNameLookupCache; });
-  }
-
   // フォールバック経路（従来のまま・変更なし）
   function renderSlides(list) {
     var container = document.getElementById('scroll-slides');
@@ -1010,25 +1003,10 @@ function initScrollSlideReveal() {
     var section = container.querySelector('.triptych-section');
     var cols = container.querySelectorAll('.triptych-col');
     var caption = container.querySelector('.triptych-caption');
-    // 依頼AH-2：列ごとに社名ラベルを追加する。写真パスの親フォルダ名＝社名から
-    // shrines-overseas.jsonのnameEnを引く。掲載社の外の写真（フォルダ名が
-    // データに無い）は、本人指定の「無難」に倣いラベルを出さない
-    loadShrineNameLookup().then(function(lookup){
-      photos.forEach(function(path, i){
-        var parts = path.split('/');
-        var folderName = parts.length >= 2 ? parts[parts.length - 2] : null;
-        var nameEn = folderName ? lookup[folderName] : null;
-        if (!folderName || !nameEn) return;
-        var col = cols[i];
-        if (!col) return;
-        var label = document.createElement('div');
-        label.className = 'photo-shrine-name';
-        label.setAttribute('data-en', nameEn);
-        label.textContent = folderName;
-        col.appendChild(label);
-        applyStoredLangTo(col);
-      });
-    });
+    // 本人指定（2026-09-20）：トリプティック（3列同時表示）には社名ラベルを
+    // 載せない。フォールバック（1枚ずつのスクロール）側だけに残す——依頼AH-2
+    // 当初はここにも列ごとの社名ラベルを付けていたが、3枚のうち一部しか
+    // ラベルを引けない（掲載社の外の写真が混ざる）ため見た目が不揃いになる
     function reveal(){
       cols.forEach(function(el){ el.classList.add('revealed'); });
       if (caption) caption.classList.add('triptych-caption-show');
@@ -1974,10 +1952,14 @@ function initScrollSlideReveal() {
   // 本人指定（2026-09-20・依頼AH-4）：「千代の杜」をトップへのリロードリンクにする。
   // 単なるリロードだとオープニング演出（introShown済み）が再生されないため、
   // 旧「演出をやり直す」ボタンと同じ処理をここへ統合し、そのボタンは撤去した
+  // 2026-09-20発見：kantoZoomShownを消し忘れていたため、ここでオープニング
+  // 演出（①〜④）だけやり直されてAH-7のマーカー段階演出は再生されない
+  // （2回目以降の既定＝3タグ即表示のまま）という不整合があった。あわせて消す
   var mockLogo = document.getElementById('mock-logo');
   if (mockLogo) {
     mockLogo.addEventListener('click', function(){
       sessionStorage.removeItem('introShown');
+      sessionStorage.removeItem('kantoZoomShown');
       location.reload();
     });
   }
