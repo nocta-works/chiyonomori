@@ -133,15 +133,15 @@
      #intro自体が既にクリックでfinish()する作りだが、見えるアフォーダンスが
      無かったため、明示的なアイコンを画面上部に置く */
   .intro-skip {
-    position: absolute; top: 24px; left: 50%; transform: translateX(-50%);
-    z-index: 4; display: flex; align-items: center; gap: 6px;
-    padding: 8px 16px; border-radius: 20px; cursor: pointer;
-    background: rgba(0,0,0,0.35); border: 1px solid rgba(var(--gold-glow-rgb),0.4);
-    color: var(--tan-text); font-size: 12px; letter-spacing: 0.1em;
-    opacity: 0.75; transition: opacity 0.2s ease, background 0.2s ease;
+    position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+    z-index: 4; display: flex; align-items: center; gap: 8px;
+    padding: 13px 26px; border-radius: 26px; cursor: pointer;
+    background: rgba(0,0,0,0.4); border: 1px solid rgba(var(--gold-glow-rgb),0.45);
+    color: var(--tan-text); font-size: 15px; letter-spacing: 0.1em;
+    opacity: 0.85; transition: opacity 0.2s ease, background 0.2s ease;
   }
-  .intro-skip:hover { opacity: 1; background: rgba(0,0,0,0.5); }
-  .intro-skip-icon { font-size: 13px; line-height: 1; }
+  .intro-skip:hover { opacity: 1; background: rgba(0,0,0,0.55); }
+  .intro-skip-icon { font-size: 17px; line-height: 1; }
   /* ③動画だけのキャッチコピー（本人指定・2026-09-06：コラージュ見出し用の一文をここへ移動） */
   .intro-video-caption {
     position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%);
@@ -762,7 +762,12 @@
     var i = startIndex || 0;
     el.innerHTML = el.innerHTML.split('<br>').map(function(line){
       return Array.from(line).map(function(ch){
-        var span = '<span class="char" style="transition-delay:' + (i * stepMs) + 'ms">' + ch + '</span>';
+        // 本人指摘（2026-09-20・EN版で発覚）：半角スペースをそのまま
+        // <span class="char">の中身にすると、display:inline-blockの
+        // 単独スペースはブラウザに幅0へ折りたたまれ、英単語同士が
+        // 隙間なくくっついて見える不具合があった。&nbsp;に置き換えて解消
+        var display = ch === ' ' ? '&nbsp;' : ch;
+        var span = '<span class="char" style="transition-delay:' + (i * stepMs) + 'ms">' + display + '</span>';
         i++;
         return span;
       }).join('');
