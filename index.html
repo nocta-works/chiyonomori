@@ -721,10 +721,25 @@
 </section>
 
 <script>
+// 本人指摘（2026-09-20）：マップとオープニングを別ページに分離した際、静的HTML
+// （タグライン・動画キャプション・宣言文言・「地図へ進む」等）へ保存済み言語
+// 設定（EN）を反映する処理が、旧・単一ページ時代はmap.html側のapplyLang()に
+// 一本化されていたため、opening-intro.html単体では働かなくなっていた
+// （EN選択中でもオープニングが日本語のまま表示される回帰）。ページ読み込み
+// 直後・文字を1文字ずつ<span>に分割するwrapCharsReveal()より前に、ここで
+// 静的HTML側のdata-en要素を先に英語へ差し替えておく
+(function(){
+  var lang;
+  try { lang = localStorage.getItem('siteLang'); } catch(err) { lang = null; }
+  if (lang !== 'en') return;
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    el.textContent = el.getAttribute('data-en');
+  });
+})();
 (function(){
   // ②③のキャッチコピー・神社名を1文字ずつ<span>に分割し、transition-delayを
   // ずらして「順番にゆっくり表示される」演出にする（本人指定・2026-09-08）。
-  // fetchのコールバックは reduced/alreadyShown の早期returnと無関係に実行される
+  // fetchのコールバックは reduced の早期returnと無関係に実行される
   // ため、CHAR_STEPはここで最初に定義しておく。
   function wrapCharsReveal(el, stepMs, startIndex) {
     var i = startIndex || 0;
@@ -743,9 +758,11 @@
 
   var intro = document.getElementById('intro');
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var alreadyShown = sessionStorage.getItem('introShown') === '1';
-  if (reduced || alreadyShown) { intro.style.display = 'none'; return; }
-  sessionStorage.setItem('introShown', '1');
+  // 本人指定（2026-09-20）：以前は`sessionStorage`の`introShown`フラグで
+  // 「1セッションに1回だけ」演出（①ロード→②鳥居→gates開く）を見せていたが、
+  // AH-7と同じ理由（セッション状態がタブをまたいで混乱を招く）で撤廃。
+  // リロードや「千代の杜」からの再訪でも毎回演出が流れるようにする
+  if (reduced) { intro.style.display = 'none'; return; }
 
   var loader = intro.querySelector('.intro-loader');
   var tagline = intro.querySelector('.intro-tagline');

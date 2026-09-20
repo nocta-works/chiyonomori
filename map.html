@@ -1451,7 +1451,7 @@
   // 発火しないため、self/user操作の混同が起きない）
   function startStagedReveal() {
     var STAGES = TAG_ORDER; // ['jingu','taisha','ichi','ni','meisha']——優先順位の降順と一致
-    var STEP_MS = 500;
+    var STEP_MS = 800; // 本人指定（2026-09-20）：0.5秒→0.8秒に間隔を拡大
     var stageIndex = 0;
     var interrupted = false;
     var timer = null;
