@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How to visit a shrine — Chiyo no Mori</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <style>
   /* design-lab/articles/参拝の作法.html — 実装キュー依頼N-3：
@@ -114,7 +115,7 @@
 </head>
 <body>
 
-<a href="../index.html#mock-app" class="back-link" id="back-link" data-en="← Back to map">← 地図に戻る</a>
+<a href="../map.html#mock-app" class="back-link" id="back-link" data-en="← Back to map">← 地図に戻る</a>
 <div class="lang-toggle" id="lang-toggle">
   <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
   <button type="button" class="lang-btn" data-lang="en">EN</button>
@@ -228,7 +229,7 @@
   var tags = new URLSearchParams(location.search).get('tags');
   var back = document.getElementById('back-link');
   if (back && tags) {
-    back.setAttribute('href', '../index.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+    back.setAttribute('href', '../map.html?tags=' + encodeURIComponent(tags) + '#mock-app');
   }
   function applyLang(lang){
     document.querySelectorAll('[data-en]').forEach(function(el){

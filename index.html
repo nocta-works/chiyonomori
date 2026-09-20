@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chiyo no Mori — Shrines of Japan</title>
+<meta name="robots" content="noindex, nofollow">
 <meta name="description" content="A map of more than a hundred shrines, with Tokyo covered in depth.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -198,10 +199,13 @@
   }
   .fixed-caption.fixed-caption-show { opacity: 1; }
 
-  /* 依頼AE-2④（2026-09-19確定）：写真区画を抜けた直後・地図に入る直前に置く
-     「一過性の宣言」。他のscroll-slideと同じreveal-slide機構でフェードインする */
+  /* 依頼AE-2④（2026-09-19確定）：写真区画を抜けた直後に置く「一過性の宣言」。
+     他のscroll-slideと同じreveal-slide機構でフェードインする。
+     本人指定（2026-09-20）：マップとオープニングを別ページに分離したため、
+     このスライドがオープニング側の最後の画面になる。地図へはスクロール
+     継続ではなく、このボタンのクリックで別ページ（map.html）へ遷移する */
   #declaration-slide {
-    display: flex; align-items: center; justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px;
     background: var(--bg-body);
   }
   .declaration-text {
@@ -212,8 +216,21 @@
     transition: opacity 1.1s ease, transform 1.1s ease;
   }
   #declaration-slide.revealed .declaration-text { opacity: 1; transform: translateY(0); }
+  .enter-map-prompt {
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+    padding: 14px 30px; border-radius: 32px;
+    background: transparent; border: 1px solid rgba(var(--gold-glow-rgb),0.5);
+    color: var(--gold); font-size: 15px; font-weight: 700; letter-spacing: 0.15em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 1.1s ease 0.4s, transform 1.1s ease 0.4s, background 0.2s ease, border-color 0.2s ease;
+  }
+  #declaration-slide.revealed .enter-map-prompt { opacity: 1; transform: translateY(0); }
+  .enter-map-prompt:hover { background: rgba(var(--gold-glow-rgb),0.14); border-color: var(--gold); }
+  .enter-map-prompt-arrow { font-size: 18px; transition: transform 0.2s ease; }
+  .enter-map-prompt:hover .enter-map-prompt-arrow { transform: translateX(4px); }
   @media (prefers-reduced-motion: reduce) {
-    .declaration-text { transition: none; }
+    .declaration-text, .enter-map-prompt { transition: none; }
   }
 
   .scroll-slide-hint {
@@ -236,6 +253,20 @@
     0%, 100% { box-shadow: 0 0 14px rgba(var(--gold-glow-rgb),0.2); }
     50% { box-shadow: 0 0 34px rgba(var(--gold-glow-rgb),0.5); }
   }
+  /* 本人指定（2026-09-20）：動画が自動再生されない環境（reduced-motion指定・
+     一部端末の節電モード等）のための、クリックを促す表示。JSが必要な時だけ
+     .showを付ける（既定は非表示） */
+  .video-play-prompt {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    z-index: 6; display: none; align-items: center; gap: 10px;
+    padding: 14px 28px; border-radius: 32px; cursor: pointer;
+    background: rgba(0,0,0,0.5); border: 1px solid rgba(var(--gold-glow-rgb),0.5);
+    color: var(--gold); font-size: 15px; font-weight: 700; letter-spacing: 0.1em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    animation: scrollHintPulse 1.6s ease-in-out infinite;
+  }
+  .video-play-prompt.show { display: flex; }
+  .video-play-prompt-icon { font-size: 18px; }
   /* ── トリプティック（実装キュー実行順7・2026-09-13戦略セッション確定仕様）：
      ④を縦写真1枚ずつのスクロールから、縦写真3枚を等幅3列で同時に見せる形へ
      置き換える。`_選定.json`のtriptychs配列が空（モードB未実行）の間は、
@@ -642,9 +673,6 @@
 </head>
 <body>
 
-<!-- 依頼Z-2②：本番index.htmlと同じホバーカーソル演出の受け皿（PC限定でJS側が有効化） -->
-<div id="hover-cursor-tag"></div>
-
 <div id="intro">
   <div class="intro-overlay"></div>
   <div class="intro-tagline" data-en="A country with 80,000 shrines. More than a hundred of them here.">八万の社がある国から、百余社。</div>
@@ -669,6 +697,10 @@
   <video class="intro-video-media" autoplay muted loop playsinline>
     <source src="assets/samukawa-sample.mp4" type="video/mp4">
   </video>
+  <button type="button" class="video-play-prompt" id="video-play-prompt">
+    <span class="video-play-prompt-icon">▶</span>
+    <span data-en="Tap to play">タップして再生</span>
+  </button>
   <div class="intro-video-caption" id="intro-video-caption"><span class="ivc-line" data-en="Jingu, Taisha, Ichinomiya, Ninomiya.">神宮、大社、一宮、二宮。</span><br><span class="ivc-line" data-en="A ranking set a thousand years ago, still visible on a map.">千年前に決められた序列が、いまも地図の上に残っている。</span></div>
   <div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>
 </section>
@@ -682,63 +714,12 @@
      （日本全体→関東）が起きる想定で、文言と演出を揃えてある -->
 <section class="scroll-slide reveal-slide" id="declaration-slide">
   <div class="declaration-text" data-en="From Japan, down to one city.">日本から、ひとつの街へ。</div>
+  <button type="button" class="enter-map-prompt" id="enter-map-prompt">
+    <span data-en="Enter the map">地図へ進む</span>
+    <span class="enter-map-prompt-arrow">→</span>
+  </button>
 </section>
 
-<div class="mock-app" id="mock-app">
-  <div class="mock-header">
-    <div class="mock-logo" id="mock-logo" title="Reload from the top">
-      <div class="torii-icon">⛩</div>
-      <h1 id="mock-title">千代の杜</h1>
-    </div>
-    <div class="lang-toggle" id="lang-toggle">
-      <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
-      <button type="button" class="lang-btn" data-lang="en">EN</button>
-    </div>
-  </div>
-  <div class="mock-toolbar">
-    <!-- 実行順B（依頼P-1・2026-09-13）：1つに詰め込みすぎていたドロップダウンを
-         「神社の基礎知識」と「エリア」の2つに分割 -->
-    <div class="shrine-dropdown" id="basics-dropdown">
-      <button type="button" class="shrine-dropdown-toggle" id="basics-dropdown-toggle">
-        <span id="basics-dropdown-label"></span><span class="shrine-dropdown-caret">▾</span>
-      </button>
-      <div class="shrine-dropdown-panel" id="basics-dropdown-panel"></div>
-    </div>
-    <div class="shrine-dropdown" id="area-dropdown">
-      <button type="button" class="shrine-dropdown-toggle" id="area-dropdown-toggle">
-        <span id="area-dropdown-label"></span><span class="shrine-dropdown-caret">▾</span>
-      </button>
-      <div class="shrine-dropdown-panel" id="area-dropdown-panel"></div>
-    </div>
-    <div class="mock-controls" id="mock-controls"></div>
-  </div>
-  <div class="rank-modal" id="rank-modal">
-    <div class="rank-modal-content">
-      <button type="button" class="rank-modal-close" id="rank-modal-close">✕</button>
-      <h2 class="rank-modal-title" id="rank-modal-title"></h2>
-      <div id="rank-modal-rows"></div>
-      <a class="rank-modal-more" id="rank-modal-more" href="#"></a>
-    </div>
-  </div>
-  <div id="map-area">
-    <div id="shrine-map"></div>
-    <div class="area-enclosure-cta-wrap">
-      <a href="#" class="area-enclosure-cta" id="area-enclosure-cta">
-        <span id="area-enclosure-cta-text"></span>
-        <span class="area-enclosure-cta-close" id="area-enclosure-cta-close">✕</span>
-      </a>
-    </div>
-    <div id="sidebar">
-      <div class="sidebar-top">
-        <span class="sidebar-title" id="sidebar-title"></span>
-        <span class="sidebar-count" id="sidebar-count"></span>
-      </div>
-      <div id="sidebar-list"></div>
-    </div>
-  </div>
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
   // ②③のキャッチコピー・神社名を1文字ずつ<span>に分割し、transition-delayを
@@ -822,16 +803,35 @@
 })();
 
 // 依頼AG-3（2026-09-19）：自動再生ループ動画はprefers-reduced-motion指定時、
-// 再生せず1フレーム目の静止画として止める（海外版の他6箇所と同じ流儀）
+// 再生せず1フレーム目の静止画として止める（海外版の他6箇所と同じ流儀）。
+// 2026-09-20追加（本人指定）：reduced-motion時、または一部端末（節電モード等）
+// で自動再生そのものがブロックされた時のために、クリックで再生を促す表示を出す
 (function(){
   var video = document.querySelector('.intro-video-media');
+  var prompt = document.getElementById('video-play-prompt');
   if (!video) return;
+  function showPrompt(){ if (prompt) prompt.classList.add('show'); }
+  function hidePrompt(){ if (prompt) prompt.classList.remove('show'); }
+  if (prompt) {
+    prompt.addEventListener('click', function(){
+      video.setAttribute('loop', '');
+      var p = video.play();
+      if (p && p.then) { p.then(hidePrompt).catch(function(){}); } else { hidePrompt(); }
+    });
+    video.addEventListener('playing', hidePrompt);
+  }
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduced) return;
-  video.removeAttribute('autoplay');
-  video.removeAttribute('loop');
-  video.pause();
-  video.currentTime = 0;
+  if (reduced) {
+    video.removeAttribute('autoplay');
+    video.removeAttribute('loop');
+    video.pause();
+    video.currentTime = 0;
+    showPrompt();
+    return;
+  }
+  // 通常時：自動再生が実際に始まったか少し待って確認し、始まっていなければ
+  // （一部端末で自動再生がブロックされた場合）クリック促進表示を出す
+  setTimeout(function(){ if (video.paused) showPrompt(); }, 1200);
 })();
 
 // ③動画のキャプションは、動画のスクロール枠が画面に入ったタイミングで表示する
@@ -872,6 +872,17 @@
     });
   }, { threshold: 0.2 });
   io2.observe(photoArea);
+})();
+
+// 本人指定（2026-09-20）：マップとオープニングを別ページに分離。地図へは
+// このボタンのクリックで実際のページ遷移をする（スクロール継続ではない）。
+// URLに?shrine=や?tags=が付いていた場合はそのままmap.htmlへ引き継ぐ
+(function(){
+  var btn = document.getElementById('enter-map-prompt');
+  if (!btn) return;
+  btn.addEventListener('click', function(){
+    location.href = 'map.html' + location.search;
+  });
 })();
 
 // ④スクロール連動のズームアウト：画面に入った写真だけ.revealedを付与
@@ -949,11 +960,13 @@ function initScrollSlideReveal() {
     });
   }
 
-  // フォールバック経路（従来のまま・変更なし）
+  // フォールバック経路：呼び出し側（startFallback）で既に3枚・順序込みで
+  // 確定済みのlistをそのまま描画する（本人指定・2026-09-20＝3枚目を必ず
+  // トリプティック合成画像にするため、ここで改めてシャッフルしてはいけない）
   function renderSlides(list) {
     var container = document.getElementById('scroll-slides');
     if (!container) return;
-    var picked = pickRandom(list, SLIDE_COUNT);
+    var picked = list;
     container.innerHTML = picked.map(function(item, i){
       var idAttr = i === picked.length - 1 ? ' id="last-scroll-slide"' : '';
       var nameEn = item.alt ? FALLBACK_NAME_EN[item.alt] : null;
@@ -1027,13 +1040,20 @@ function initScrollSlideReveal() {
     fetch('assets/zoomout-manifest.json')
       .then(function(res){ return res.json(); })
       .then(function(list){
-        // 本人指摘（2026-09-20・依頼AH-2の続き）：zoomout-manifest.jsonの26枚中
-        // 23枚はaltが空欄（社名を特定できない写真）で、そのままランダムに3枚
+        list = list || [];
+        // 本人指定（2026-09-20）：静止画3枚目には必ずトリプティック（複数写真を
+        // 1枚に合成した横長画像。ファイル名がtriptych-で始まる3件）を出す。
+        // 単体版と混ざるとランダム抽選で出たり出なかったりしていたため固定する
+        var triptychs = list.filter(function(item){ return /triptych-/.test(item.file); });
+        // 1・2枚目＝本人指摘（2026-09-20・依頼AH-2の続き）：zoomout-manifest.json
+        // の26枚中23枚はaltが空欄（社名を特定できない写真）で、そのままランダムに
         // 選ぶと社名ラベルが1枚も出ない確率の方が高かった。alt付きの候補だけに
-        // 絞り込み、それが3枚に満たない場合だけ従来のFALLBACK（3枚とも社名あり）
-        // へ落とす
-        var labeled = (list || []).filter(function(item){ return item.alt; });
-        renderSlides(labeled.length >= SLIDE_COUNT ? labeled : FALLBACK);
+        // 絞り込む（トリプティック合成画像は元々alt空欄＝ラベルは出ない）
+        var labeled = list.filter(function(item){ return item.alt; });
+        var firstTwo = labeled.length >= 2 ? pickRandom(labeled, 2) : labeled.slice();
+        var third = triptychs.length ? pickOne(triptychs) : null;
+        var slides = third ? firstTwo.concat([third]) : firstTwo;
+        renderSlides(slides.length === SLIDE_COUNT ? slides : FALLBACK);
       })
       .catch(function(){ renderSlides(FALLBACK); });
   }
@@ -1053,1083 +1073,6 @@ function initScrollSlideReveal() {
     .catch(function(){ startFallback(); });
 })();
 
-// ⑤本体：神宮・大社タグの神社のみ（48社）を表示する簡易地図
-// マーカー・アイコン・ポップアップは本番index.htmlの実装をそのまま移植（フィルタ・サイドバー・参拝記録は含まない）
-// 言語切替（本人指摘・2026-09-08）：「漢字1文字のタグ・神社名バッジは海外版では
-// 意味をなさない」との指摘を受け、タグ・神社名・UI文言（チップ・見出し）を
-// 英語に切り替えて見比べられる試作を追加。個別社データ（由緒・祭神など、
-// shrines-jingu-taisha.jsonの中身）は翻訳コストが別次元のため対象外（日本語のまま）。
-(function(){
-  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
-  // shrine-pages等と同じキー（siteLang）でlocalStorageに保存・復元する
-  var currentLang = 'ja';
-  try {
-    if (localStorage.getItem('siteLang') === 'en') currentLang = 'en';
-  } catch(err){}
-  var HEADER_TITLE = { ja: '千代の杜', en: 'Chiyo no Mori' };
-  var CHROME_TEXT = {
-    ja: {
-      province: '旧国：', deity: '祭神：', map: '地図', official: '公式', wiki: 'Wiki', detail: '詳しく見る',
-      blessing: 'ご利益：', founded: '創建：', station: '最寄駅：',
-      listTitle: '神社リスト',
-      shownFmt: function(n){ return '表示中 ' + n + ' 社'; },
-      countFmt: function(n){ return n + '社'; },
-    },
-    en: {
-      province: 'Province: ', deity: 'Deity: ', map: 'Map', official: 'Official', wiki: 'Wiki', detail: 'Read more',
-      blessing: 'Blessings: ', founded: 'Founded: ', station: 'Nearest station: ',
-      listTitle: 'Shrine List',
-      shownFmt: function(n){ return 'Showing ' + n + ' shrine' + (n === 1 ? '' : 's'); },
-      countFmt: function(n){ return n + ' shrine' + (n === 1 ? '' : 's'); },
-    },
-  };
-  // 詳細ページ（巡礼記録層）を持つ社の一覧（実装キュー依頼N-2・2026-09-13）：
-  // 地図のポップアップ・サイドバーに、外部リンクより上に内部リンクを
-  // 必ず1本以上置く（本人指摘：外部リンクだけで内部への導線が無かった）。
-  // 依頼Dで名前が地図データに載っていない社（山宮浅間神社・北口本宮冨士浅間神社・
-  // 水無神社・桜山八幡宮・猿田彦神社）も先に登録しておく＝載った時点で自動的に効く
-  var DETAIL_PAGES = {
-    '伊勢神宮（内宮）': 'shrine-pages/伊勢神宮.html',
-    '伊勢神宮（外宮）': 'shrine-pages/伊勢神宮.html',
-    '明治神宮': 'shrine-pages/明治神宮.html',
-    '富士山本宮浅間大社': 'shrine-pages/富士山本宮浅間大社.html',
-    '山宮浅間神社': 'shrine-pages/山宮浅間神社.html',
-    '北口本宮冨士浅間神社': 'shrine-pages/北口本宮冨士浅間神社.html',
-    '水無神社': 'shrine-pages/水無神社.html',
-    '桜山八幡宮': 'shrine-pages/桜山八幡宮.html',
-    '猿田彦神社': 'shrine-pages/猿田彦神社.html',
-    // 実行順D（依頼T・2026-09-13）：東京エリア18社を追加
-    '神田神社（神田明神）': 'shrine-pages/神田神社（神田明神）.html',
-    '日枝神社': 'shrine-pages/日枝神社.html',
-    '虎ノ門金刀比羅宮': 'shrine-pages/虎ノ門金刀比羅宮.html',
-    '花園神社': 'shrine-pages/花園神社.html',
-    '大国魂神社': 'shrine-pages/大国魂神社.html',
-    '葛飾八幡宮': 'shrine-pages/葛飾八幡宮.html',
-    '伊勢山皇大神宮': 'shrine-pages/伊勢山皇大神宮.html',
-    '武蔵一宮氷川神社': 'shrine-pages/武蔵一宮氷川神社.html',
-    '千葉神社': 'shrine-pages/千葉神社.html',
-    '鶴岡八幡宮': 'shrine-pages/鶴岡八幡宮.html',
-    '銭洗弁財天宇賀福神社': 'shrine-pages/銭洗弁財天宇賀福神社.html',
-    '荏柄天神社': 'shrine-pages/荏柄天神社.html',
-    '三峯神社': 'shrine-pages/三峯神社.html',
-    '武蔵御嶽神社': 'shrine-pages/武蔵御嶽神社.html',
-    '大山阿夫利神社': 'shrine-pages/大山阿夫利神社.html',
-    '鹿島神宮': 'shrine-pages/鹿島神宮.html',
-    '香取神宮': 'shrine-pages/香取神宮.html',
-    '寒川神社': 'shrine-pages/寒川神社.html',
-    // 依頼Y-2/Y-4（2026-09-13）：幹のデータ変更（東京3社追加）を反映
-    '愛宕神社': 'shrine-pages/愛宕神社.html',
-    '代々木八幡宮': 'shrine-pages/代々木八幡宮.html',
-    '布多天神社': 'shrine-pages/布多天神社.html',
-  };
-  var PRIORITY = { jingu:10, taisha:9, ichi:8, ni:7, meisha:6, meisha2:5, hachiman:4, inari:3, meisha3:2 };
-  // 実行順A（依頼R-1＋S-1・2026-09-13）：名社26社の選定が済み、地図データにも
-  // 追加したため、ここから正式にフィルター対象へ。「準備中」のダミー表示は撤去。
-  var TAG_ORDER = ['jingu', 'taisha', 'ichi', 'ni', 'meisha'];
-  // 本人指摘（2026-09-19）：初期表示のアイコンが多すぎる。神宮・一宮・名社の
-  // 3タグだけを初期表示にし、大社・二宮はタグフィルターボタンで足す形にする
-  var DEFAULT_TAGS = ['jingu', 'ichi', 'meisha'];
-  var TAG_CONFIG = {
-    jingu:   { label:{ja:'神宮',en:'Jingu'},        char:{ja:'神',en:'J'},  color:'#c47a08', border:'#f5c842', bg:'rgba(212,134,10,0.18)' },
-    taisha:  { label:{ja:'大社',en:'Taisha'},       char:{ja:'大',en:'T'},  color:'#6d28d9', border:'#c4a8ff', bg:'rgba(124,58,237,0.18)' },
-    ichi:    { label:{ja:'一宮',en:'Ichinomiya (1st)'}, char:{ja:'一',en:'1'}, color:'#c41810', border:'#ff9a8a', bg:'rgba(232,48,32,0.18)' },
-    ni:      { label:{ja:'二宮',en:'Ninomiya (2nd)'},   char:{ja:'二',en:'2'}, color:'#1540c0', border:'#88b4ff', bg:'rgba(26,80,216,0.18)' },
-    meisha:  { label:{ja:'名社',en:'Notable'}, char:{ja:'名',en:'N'}, color:'#047857', border:'#6ee7b7', bg:'rgba(4,120,87,0.18)' },
-    meisha2: { label:{ja:'名社２',en:'Notable β'}, char:{ja:'社',en:'β'}, color:'#0369a1', border:'#7dd3fc' },
-    meisha3: { label:{ja:'名社３',en:'Notable γ'}, char:{ja:'奉',en:'γ'}, color:'#92400e', border:'#fcd34d' },
-    hachiman:{ label:{ja:'八幡',en:'Hachiman'},     char:{ja:'八',en:'H'},  color:'#be185d', border:'#f9a8d4' },
-    inari:   { label:{ja:'稲荷',en:'Inari'},        char:{ja:'稲',en:'In'}, color:'#0d9488', border:'#5eead4' },
-  };
-  // URLでの状態保持（実装キュー実行順5・依頼H＋依頼Mの前提。2026-09-13）：
-  // 記事ページ（依頼M）から地図に戻った時に選択中のタグが消えないよう、
-  // ?tags=jingu,ichi のようにURLへ反映する。依頼Cの?shrine=と同じ考え方。
-  // ドロップダウン（記事一覧）やタグボタンの?リンクからも参照するため、
-  // activeFiltersの初期化はタグ設定の直後・ドロップダウン構築より前に置く。
-  var TAG_URL_PARAM = 'tags';
-  function readTagsFromUrl() {
-    var raw = new URLSearchParams(location.search).get(TAG_URL_PARAM);
-    if (!raw) return null;
-    var wanted = raw.split(',').filter(function(t){ return TAG_ORDER.indexOf(t) !== -1; });
-    return wanted.length ? new Set(wanted) : null;
-  }
-  var activeFilters = readTagsFromUrl() || new Set(DEFAULT_TAGS);
-  function syncTagsUrl() {
-    var url = new URL(location.href);
-    var isDefault = activeFilters.size === DEFAULT_TAGS.length && DEFAULT_TAGS.every(function(t){ return activeFilters.has(t); });
-    if (isDefault) {
-      url.searchParams.delete(TAG_URL_PARAM);
-    } else {
-      var ordered = TAG_ORDER.filter(function(t){ return activeFilters.has(t); });
-      url.searchParams.set(TAG_URL_PARAM, ordered.join(','));
-    }
-    history.replaceState(null, '', url.pathname + url.search + url.hash);
-  }
-  // 記事ページ・個別紹介ページへ移動するリンクに、今選んでいるタグ状態を
-  // 引き継ぐ（デフォルト＝全タグ選択時はパラメータを付けずURLを短く保つ）
-  function withTagsQuery(path) {
-    var isDefault = activeFilters.size === DEFAULT_TAGS.length && DEFAULT_TAGS.every(function(t){ return activeFilters.has(t); });
-    if (isDefault) return path;
-    var ordered = TAG_ORDER.filter(function(t){ return activeFilters.has(t); });
-    return path + '?' + TAG_URL_PARAM + '=' + encodeURIComponent(ordered.join(','));
-  }
-  function topTag(tags) {
-    return tags.reduce(function(b,t){ return PRIORITY[t] > PRIORITY[b] ? t : b; }, tags[0]);
-  }
-  // 本人指摘（2026-09-19）：初期表示を神宮・一宮・名社の3タグに絞った際、
-  // 大社・一宮など複数タグを持つ社（例：三嶋大社＝ichi+taisha）が、非表示のはずの
-  // 大社色（紫）アイコンのまま表示される不具合が発覚。マーカーの色は「その社が
-  // 持つ全タグ中の最優先」ではなく「現在アクティブなタグの中での最優先」で
-  // 決めるべきなので専用ヘルパーを用意する
-  function activeTopTag(tags) {
-    var shown = tags.filter(function(t){ return activeFilters.has(t); });
-    return topTag(shown.length ? shown : tags);
-  }
-  // 依頼Z-0/Z-2③：マーカーのホバー社名・エリアラベルなど、表示言語に応じた
-  // 社名が要る箇所で共通利用する。nameEnは186社すべてに入っている（欠落0）。
-  function shrineName(shrine) {
-    return currentLang === 'en' ? shrine.nameEn : shrine.name;
-  }
-  var iconCache = {};
-  function getIcon(tag) {
-    var key = currentLang + '_' + tag;
-    if (iconCache[key]) return iconCache[key];
-    var c = TAG_CONFIG[tag];
-    var ch = c.char[currentLang];
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="34" height="42" viewBox="0 0 34 42">' +
-      '<path d="M17 2C9 2 2 9 2 17c0 10 15 23 15 23S32 27 32 17C32 9 25 2 17 2z" fill="' + c.color + '" fill-opacity="0.9" stroke="' + c.border + '" stroke-width="1.5"/>' +
-      '<circle cx="17" cy="17" r="9" fill="rgba(255,255,255,0.13)"/>' +
-      '<text x="17" y="22" text-anchor="middle" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',serif" font-size="' + (ch.length > 1 ? 10 : 12) + '" font-weight="bold" fill="white">' + ch + '</text>' +
-      '</svg>';
-    iconCache[key] = L.divIcon({ html: svg, className: '', iconSize: [34,42], iconAnchor: [17,40], popupAnchor: [0,-42] });
-    return iconCache[key];
-  }
-  function buildPopupContent(s) {
-    var t = CHROME_TEXT[currentLang];
-    var badges = s.tags.slice().sort(function(a,b){ return PRIORITY[b]-PRIORITY[a]; })
-      .map(function(tag){ return '<span class="popup-badge ' + tag + '">' + TAG_CONFIG[tag].label[currentLang] + '</span>'; }).join('');
-    // 本人指摘（2026-09-20）→「やってほしい」で対応：186社ぶんの旧国名・祭神・由緒の
-    // 英訳を用意し（provinceEn/deityEn/reasonEn）、EN表示ではそちらを使う
-    var displayReason = currentLang === 'en' ? s.reasonEn : s.reason;
-    var reasonHtml = displayReason ? '<div class="popup-reason">' + displayReason + '</div>' : '';
-    var gmapsUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(s.name);
-    var officialUrl = 'https://www.google.com/search?q=' + encodeURIComponent(s.name + ' 公式');
-    var wikiUrl = 'https://ja.wikipedia.org/w/index.php?search=' + encodeURIComponent(s.name) + '&title=特別:検索&go=Go';
-    // 詳細ページ（巡礼記録層）がある社だけ、外部3本より上に内部リンクを出す
-    // （実装キュー依頼N-2）。持たない社には出さない＝リンク切れを作らない
-    var detailFile = DETAIL_PAGES[s.name];
-    var detailHtml = detailFile
-      ? '<a href="' + detailFile + '" class="popup-link-detail"><span class="popup-link-icon">⛩</span>' + t.detail + '</a>'
-      : '';
-    // サイドバー一覧（buildShrineItem）と同じくnameEn/prefEnに差し替える
-    var displayName = currentLang === 'en' ? s.nameEn : s.name;
-    var displayPref = currentLang === 'en' ? s.prefEn : s.pref;
-    var displayProvince = currentLang === 'en' ? s.provinceEn : s.province;
-    var displayDeity = currentLang === 'en' ? s.deityEn : s.deity;
-    // 依頼AH-6（2026-09-20）：地図タイルが日本語表記のままなので、その代わりに
-    // ポップアップを手厚くする。東京19社ぶんは依頼W-6のQuick Facts
-    // （ご利益・創建・最寄駅）が既にあるので、それを流用する（新規データ収集なし）。
-    // 19社以外は元々この3項目を持たないため、undefinedのままなら何も出ない
-    var displayBlessing = currentLang === 'en' ? s.blessingEn : s.blessing;
-    var displayFounded = currentLang === 'en' ? s.foundedEn : s.founded;
-    var displayStation = currentLang === 'en' ? s.stationEn : s.station;
-    var blessingHtml = displayBlessing ? '<div class="popup-deity">' + t.blessing + displayBlessing + '</div>' : '';
-    var foundedHtml = displayFounded ? '<div class="popup-deity">' + t.founded + displayFounded + '</div>' : '';
-    var stationHtml = displayStation ? '<div class="popup-deity">' + t.station + displayStation + '</div>' : '';
-    return '<div class="popup-content">' +
-      '<div class="popup-badges">' + badges + '</div>' +
-      '<div class="popup-name">' + displayName + '</div>' +
-      '<div class="popup-pref">' + displayPref + '</div>' +
-      '<div class="popup-province">' + t.province + displayProvince + '</div>' +
-      reasonHtml +
-      '<div class="popup-deity">' + t.deity + displayDeity + '</div>' +
-      blessingHtml + foundedHtml + stationHtml +
-      detailHtml +
-      '<div class="popup-links">' +
-        '<a href="' + gmapsUrl + '" target="_blank" rel="noopener" class="popup-link gmaps"><span class="popup-link-icon">📍</span>' + t.map + '</a>' +
-        '<a href="' + officialUrl + '" target="_blank" rel="noopener" class="popup-link official"><span class="popup-link-icon">🌐</span>' + t.official + '</a>' +
-        '<a href="' + wikiUrl + '" target="_blank" rel="noopener" class="popup-link wiki"><span class="popup-link-icon">📖</span>' + t.wiki + '</a>' +
-      '</div></div>';
-  }
-
-  // 根本の紹介・記事一覧への導線（実装キュー実行順6・依頼M・2026-09-13）：
-  // 個別社ページ2本のドロップダウンから、日本と神社の基礎を扱う記事の
-  // ドロップダウンへ差し替え。個別社ページ（伊勢神宮・明治神宮ほか）はここから
-  // 外れるが削除はしない＝巡礼記録層として地域ページ・「次の一社」から辿れる。
-  // 普段は閉じていてクリックで開く縦の収納型ドロップダウンの構造自体は変えない）
-  // 🔴依頼N-3（2026-09-13・本人指摘）：9項目は多すぎるため4項目へ合併。
-  // 1+7／2+5／3+4／6+8+9 の組み合わせで記事ファイル自体を4枚に統合済み
-  // （design-lab/articles/、旧9枚は削除済み）。
-  // 実行順B（依頼P-1・2026-09-13・本人指摘）：「左の『見る・知る』アイコンに
-  // 詰め込みすぎ」との指摘を受け、1つのドロップダウンに同居していた記事4本と
-  // エリア14件を、独立した2つのドロップダウンへ分割する。
-  // 一番左＝神社の基礎知識（記事）、その隣＝エリア（依頼O-1で追加した入口）。
-  var BASICS_LABEL = { ja: '神社の基礎知識', en: 'Basics' };
-  var AREA_LABEL = { ja: 'エリア', en: 'Areas' };
-  // 依頼V（2026-09-13・本人指定「作業の幅が膨らみすぎているのは抑えたい。
-  // まずは東京京都大阪のみをこだわる」）：対象を東京・京都・大阪の3エリアに
-  // 絞る。伊勢神宮・富士山本宮浅間大社・出雲大社・広島・名古屋・富士吉田・福岡の
-  // 7エリアはドロップダウンと地図の囲いから外す（＝V-1）が、area-pagesファイル
-  // 自体・詳細ページ・地図データ（183社）は削除しない。戻す時にそのまま使う。
-  var AREA_PAGES = [
-    { name:{ja:'東京',en:'Tokyo'}, areaLabel:{ja:'東京エリア',en:'Tokyo Area'}, ctaPhrase:{ja:'東京の神社　厳選紹介',en:'Tokyo — Curated Shrines'}, file:'area-pages/東京.html' },
-    { name:{ja:'大阪',en:'Osaka'}, areaLabel:{ja:'大阪エリア',en:'Osaka Area'}, ctaPhrase:{ja:'大阪の神社　厳選紹介',en:'Osaka — Curated Shrines'}, file:'area-pages/大阪.html' },
-    { name:{ja:'京都',en:'Kyoto'}, areaLabel:{ja:'京都エリア',en:'Kyoto Area'}, ctaPhrase:{ja:'京都の神社　厳選紹介',en:'Kyoto — Curated Shrines'}, file:'area-pages/京都.html' },
-  ];
-  // 依頼AH-5（2026-09-20）：今はエリアが東京しかないので、ドロップダウンではなく
-  // 単独タグとして出す。AREA_PAGES自体は消さない（他エリアが戻った時にそのまま
-  // 使うため）——ここに増やすだけで自動的にドロップダウン表示へ戻る作りにする
-  var VISIBLE_AREA_FILES = ['area-pages/東京.html'];
-  // 実行順F（依頼P-2＋R-4・2026-09-13）：エリアを地図上で囲うための、エリア→
-  // 所属社リスト。⚠️依頼R-5の教訓＝名前だけでは同名他県の社と衝突する
-  // （日枝神社が富山を返した実例）ため、必ず「県|名前」で持ち、marker側の
-  // shrine.pref+shrine.nameと突き合わせる。実行順I（依頼S-2）で東京以外も
-  // 2〜3層のlayers構成に統一（京都・大阪・名古屋・福岡・広島・伊勢神宮・
-  // 出雲大社）。富士2エリアは層を持たない単純な所属社リストのまま。
-  var AREA_SHRINES = {
-    'area-pages/東京.html': { layers: [
-      // 依頼Y-2（2026-09-13）：幹の追加3社を反映。愛宕神社・代々木八幡宮はL1、
-      // 布多天神社（調布）は府中と新宿の間なのでL2へ
-      { key:'L1', shrines:['東京|明治神宮','東京|神田神社（神田明神）','東京|日枝神社','東京|虎ノ門金刀比羅宮','東京|花園神社','東京|愛宕神社','東京|代々木八幡宮'] },
-      { key:'L2', shrines:['東京|大国魂神社','千葉|葛飾八幡宮','神奈川|伊勢山皇大神宮','埼玉|武蔵一宮氷川神社','千葉|千葉神社','東京|布多天神社'] },
-      { key:'L3', shrines:['神奈川|鶴岡八幡宮','神奈川|銭洗弁財天宇賀福神社','神奈川|荏柄天神社','埼玉|三峯神社','東京|武蔵御嶽神社','神奈川|大山阿夫利神社','茨城|鹿島神宮','千葉|香取神宮','神奈川|寒川神社'] }
-    ]},
-    'area-pages/京都.html': { layers: [
-      { key:'L1', shrines:['京都|伏見稲荷大社','京都|八坂神社','京都|下鴨神社','京都|上賀茂神社','京都|北野天満宮','京都|松尾大社','京都|平安神宮'] },
-      { key:'L2', shrines:['滋賀|日吉大社','滋賀|建部大社','滋賀|多賀大社','滋賀|近江神宮'] }
-    ]},
-    'area-pages/大阪.html': { layers: [
-      { key:'L1', shrines:['大阪|住吉大社','大阪|大阪天満宮','大阪|今宮戎神社'] },
-      { key:'L2', shrines:['奈良|大神神社','奈良|春日大社','奈良|石上神宮','兵庫|伊弉諾神宮','兵庫|伊和神社'] }
-    ]}
-    // 依頼V-1（2026-09-13）：名古屋・福岡・伊勢神宮・富士山本宮浅間大社・
-    // 出雲大社・広島・富士吉田の7エリアぶんはここから削除（ドロップダウン・
-    // 地図の囲みから外す）。データそのものは消していないので、戻す時は
-    // 実装キュー.mdの「完了済み」欄（実行順I）に定義をそのまま残してある。
-  };
-  var ARTICLE_PAGES = [
-    { num: 1, name:{ja:'日本と神社',     en:'Japan & Shrines'},   file:'articles/日本と神社.html' },
-    { num: 2, name:{ja:'参拝の作法',     en:'How to Visit'},      file:'articles/参拝の作法.html' },
-    { num: 3, name:{ja:'鳥居と境内',     en:'Torii & Grounds'},   file:'articles/鳥居.html' },
-    { num: 4, name:{ja:'神々と分類',     en:'Kami & Ranks'},      file:'articles/神々.html' },
-  ];
-  function renderBasicsDropdown(){
-    var label = document.getElementById('basics-dropdown-label');
-    if (label) label.textContent = '⛩ ' + BASICS_LABEL[currentLang];
-    var panel = document.getElementById('basics-dropdown-panel');
-    if (!panel) return;
-    panel.innerHTML = ARTICLE_PAGES.map(function(s){
-      return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '">' +
-        '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">' + s.num + '</span>' +
-        '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
-        '</a>';
-    }).join('');
-  }
-  function renderAreaDropdown(){
-    var visible = AREA_PAGES.filter(function(a){ return VISIBLE_AREA_FILES.indexOf(a.file) !== -1; });
-    var label = document.getElementById('area-dropdown-label');
-    var toggle = document.getElementById('area-dropdown-toggle');
-    var caret = toggle ? toggle.querySelector('.shrine-dropdown-caret') : null;
-    var panel = document.getElementById('area-dropdown-panel');
-    // 依頼AH-5：見えているエリアが1つだけなら、ドロップダウンではなく単独タグに
-    // する（クリックで直接そのエリアページへ）。2つ以上に戻ったら自動的に
-    // 通常のドロップダウン表示へ戻る
-    if (visible.length === 1) {
-      var only = visible[0];
-      if (label) label.textContent = '📍 ' + only.areaLabel[currentLang];
-      if (caret) caret.style.display = 'none';
-      if (toggle) toggle.setAttribute('data-single-area-file', only.file);
-      if (panel) panel.innerHTML = '';
-      return;
-    }
-    if (caret) caret.style.display = '';
-    if (toggle) toggle.removeAttribute('data-single-area-file');
-    if (label) label.textContent = '📍 ' + AREA_LABEL[currentLang];
-    if (!panel) return;
-    panel.innerHTML = visible.map(function(s){
-      return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '" data-area-file="' + s.file + '">' +
-        '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">📍</span>' +
-        '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
-        '</a>';
-    }).join('');
-  }
-  function renderShrineDropdown(){ renderBasicsDropdown(); renderAreaDropdown(); }
-  renderShrineDropdown();
-  // 2つのドロップダウンをそれぞれ独立して開閉できるようにする（片方を開くと
-  // もう片方は閉じる。外側クリックでどちらも閉じる）
-  var dropdowns = [document.getElementById('basics-dropdown'), document.getElementById('area-dropdown')];
-  function closeAllDropdowns(except){
-    dropdowns.forEach(function(d){ if (d && d !== except) d.classList.remove('open'); });
-  }
-  document.getElementById('basics-dropdown-toggle').addEventListener('click', function(e){
-    e.stopPropagation();
-    var d = document.getElementById('basics-dropdown');
-    var willOpen = !d.classList.contains('open');
-    closeAllDropdowns();
-    d.classList.toggle('open', willOpen);
-  });
-  document.getElementById('area-dropdown-toggle').addEventListener('click', function(e){
-    e.stopPropagation();
-    // 本人指摘（2026-09-20）：「東京エリア」クリックは直接ページ遷移ではなく、
-    // 従来のドロップダウン項目クリックと同じ表現（囲い線を描いてズーム→
-    // 浮かび上がるCTAピルをクリックして初めてページへ）に戻す
-    var singleFile = this.getAttribute('data-single-area-file');
-    if (singleFile) { closeAllDropdowns(); focusArea(singleFile); return; }
-    var d = document.getElementById('area-dropdown');
-    var willOpen = !d.classList.contains('open');
-    closeAllDropdowns();
-    d.classList.toggle('open', willOpen);
-  });
-  document.addEventListener('click', function(e){
-    dropdowns.forEach(function(d){
-      if (d && d.classList.contains('open') && !d.contains(e.target)) d.classList.remove('open');
-    });
-  });
-  // 実行順F（依頼P-2・2026-09-13・本人指摘「選んだエリアを選択した時、地図上で
-  // そのエリアが囲われる表現は可能か」）：エリア項目のクリックは即座にページ遷移
-  // させず、まず地図上に囲いを描いてズームし、上部に出てくるCTAピルから
-  // 実際のエリアページへ進めるようにする（focusAreaは下でmap/markerList定義後に宣言）
-  document.getElementById('area-dropdown-panel').addEventListener('click', function(e){
-    var item = e.target.closest('[data-area-file]');
-    if (!item) return;
-    e.preventDefault();
-    closeAllDropdowns();
-    focusArea(item.getAttribute('data-area-file'));
-  });
-
-  // タグフィルター（本人指定・2026-09-10：神宮・大社・一宮・二宮の4タグのみ。
-  // 本番と違い候補タグがこの4つで全部なので「その他のタグ」展開パネルは作らない）
-  function passesFilter(shrine) {
-    return shrine.tags.some(function(t){ return activeFilters.has(t); });
-  }
-  // サイドバーでの振り分け先：有効フィルタの中で最優先のタグ
-  function displayTag(shrine) {
-    var tags = shrine.tags.filter(function(t){ return activeFilters.has(t); });
-    if (!tags.length) return null;
-    return tags.reduce(function(b,t){ return PRIORITY[t] > PRIORITY[b] ? t : b; }, tags[0]);
-  }
-  function renderFilterButtons() {
-    var container = document.getElementById('mock-controls');
-    if (!container) return;
-    var buttonsHtml = TAG_ORDER.map(function(tag){
-      var c = TAG_CONFIG[tag];
-      var active = activeFilters.has(tag) ? ' active' : '';
-      return '<button type="button" class="filter-btn ' + tag + active + '" data-tag="' + tag + '">' +
-        '<span class="dot" style="background:' + c.border + ';box-shadow:0 0 5px ' + c.border + '"></span>' +
-        c.label[currentLang] + '</button>';
-    }).join('');
-    // 格式の?リンク（実装キュー依頼N-1・2026-09-13修正）：タグ1つにつき1つずつ
-    // 出していたのを撤回し、タグ列全体に1つだけにした。格式は5つを比べて
-    // 初めて意味が分かるものなので、個別記事へ飛ばさず窓（モーダル）で
-    // 5つ並べて見せる（本人指定）
-    var rankHelpTitle = currentLang === 'ja' ? '格式について' : 'About shrine ranks';
-    var rankHelpHtml = '<button type="button" class="rank-help-btn" id="rank-help-btn" title="' + rankHelpTitle + '">?</button>';
-    container.innerHTML = buttonsHtml + rankHelpHtml + '<div class="ctrl-divider"></div><div class="mock-stats" id="mock-stats"></div>';
-  }
-  renderFilterButtons();
-  document.getElementById('mock-controls').addEventListener('click', function(e){
-    if (e.target.closest('#rank-help-btn')) { openRankModal(); return; }
-    var btn = e.target.closest('.filter-btn');
-    if (!btn) return;
-    var tag = btn.getAttribute('data-tag');
-    activeFilters.has(tag) ? activeFilters.delete(tag) : activeFilters.add(tag);
-    syncTagsUrl();
-    // ボタンのactive表示だけでなく、記事ドロップダウンのリンク
-    // （withTagsQueryで現在のタグ状態を埋め込んでいる）も作り直す必要が
-    // あるため、classList.toggleの部分更新ではなく両方を再描画する
-    // （2026-09-13・依頼M実装で変更）
-    renderFilterButtons();
-    renderShrineDropdown();
-    redrawMarkers();
-  });
-
-  // 格式の窓（モーダル）（実装キュー依頼N-1・2026-09-13）：5タグを縦に並べて
-  // 比較できる形。件数は現行データ（神宮24・大社24・一宮91・二宮35）と一致
-  // 確認済み。名社の14件は依頼D（164社への絞り込み）実施後の数で、まだ
-  // 現行データには反映されていない（本キュー依頼Dの節を参照）
-  var RANK_INFO = [
-    { tag: 'jingu', label: { ja: '神宮', en: 'Jingu' }, count: 24, desc: { ja: '皇室にゆかりのある神、または天皇を祀る社。勅許で与えられる社号。ただ「神宮」とだけ呼ぶのは伊勢神宮ひとつ。古さではなく皇室との関係で決まる。', en: 'Shrines enshrining kami connected to the imperial line, or an emperor. Granted by imperial sanction — only Ise Jingu is called simply "Jingu."' } },
-    { tag: 'taisha', label: { ja: '大社', en: 'Taisha' }, count: 24, desc: { ja: '2つの意味がある。戦前の社格（官幣大社・国幣大社）と、名前としての「〇〇大社」。戦前は出雲大社ただ一社を指した。', en: 'Two meanings: a pre-war state rank, and the name "Taisha" itself. Before the war, "Taisha" meant only Izumo Taisha.' } },
-    { tag: 'ichi', label: { ja: '一宮', en: 'Ichinomiya' }, count: 92, desc: { ja: '律令時代の国（全国約70国）ごとの筆頭社。朝廷が決めた一覧ではなく、国司が最初に参る社が定着したもの。だから国によって異説がある。', en: 'The top-ranked shrine of each historical province (~70 nationwide). Not an official decree — the shrine a new governor visited first, settled by custom.' } },
-    { tag: 'ni', label: { ja: '二宮', en: 'Ninomiya' }, count: 35, desc: { ja: '同じ序列の2番目。一宮に次ぐ社。', en: 'Second in the same provincial ranking, after the ichinomiya.' } },
-    // 名社33社（実行順A・依頼R-1+S-1で26社確定→実行順I・依頼S-2で5社追加→
-    // 依頼Y-1で鶴岡八幡宮が一宮へ移り-1→依頼Y-2で愛宕神社・代々木八幡宮・
-    // 布多天神社を追加+3＝2026-09-13）。件数はここに固定値で持つ＝地図データ上は
-    // 一部の格式社（例：富士山本宮浅間大社）や、meisha2/meisha3から統合した社
-    // （例：水無神社）も副次的にmeishaタグを帯びているため、tagsを数えるだけでは
-    // 33からずれる（tags.includes('meisha')の生カウントは57）
-    { tag: 'meisha', label: { ja: '名社', en: 'Notable' }, count: 33, desc: { ja: '上の4つと違い、制度ではなくこのサイトが選んだ社。格式に入らないが、その土地を語るとき外せない社。', en: 'Unlike the four above, this is an editorial choice, not an official rank — shrines essential to a place’s story despite no formal rank.' } },
-  ];
-  function openRankModal() {
-    var modal = document.getElementById('rank-modal');
-    if (!modal) return;
-    var t = currentLang === 'ja'
-      ? { title: '格式——5つの色の意味', more: 'もっと読む（神々と、この地図の分類）' }
-      : { title: 'Shrine Ranks — What the 5 Colors Mean', more: 'Read more (Kami & Ranks)' };
-    document.getElementById('rank-modal-title').textContent = t.title;
-    document.getElementById('rank-modal-rows').innerHTML = RANK_INFO.map(function(r){
-      var c = TAG_CONFIG[r.tag];
-      return '<div class="rank-modal-row">' +
-        '<span class="rank-modal-badge" style="background:' + c.color + ';border-color:' + c.border + ';">' + c.char[currentLang] + '</span>' +
-        '<div class="rank-modal-text"><div class="rank-modal-row-title">' + r.label[currentLang] + '<span class="rank-modal-count">' + r.count + '</span></div>' +
-        '<p>' + r.desc[currentLang] + '</p></div></div>';
-    }).join('');
-    var moreLink = document.getElementById('rank-modal-more');
-    moreLink.textContent = t.more;
-    moreLink.href = withTagsQuery('articles/神々.html');
-    modal.classList.add('open');
-  }
-  function closeRankModal() {
-    var modal = document.getElementById('rank-modal');
-    if (modal) modal.classList.remove('open');
-  }
-  document.getElementById('rank-modal-close').addEventListener('click', closeRankModal);
-  document.getElementById('rank-modal').addEventListener('click', function(e){
-    if (e.target.id === 'rank-modal') closeRankModal();
-  });
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape') closeRankModal();
-  });
-
-  function updateStats() {
-    var el = document.getElementById('mock-stats');
-    if (!el) return;
-    var n = markerList.filter(function(item){ return passesFilter(item.shrine); }).length;
-    el.textContent = CHROME_TEXT[currentLang].shownFmt(n);
-  }
-
-  function buildShrineItem(shrine, dotColor) {
-    var item = document.createElement('div');
-    item.className = 'shrine-item';
-    // 依頼X-3（2026-09-13）：マーカー（速い・主役）に対してサイドバーの
-    // リスト項目はやや遅れて追従させる（parallax as hierarchy、幹から移植）
-    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduced) {
-      item.classList.add('list-item-in');
-      item.style.animationDelay = (Math.random() * 375).toFixed(0) + 'ms';
-    }
-    // サイドバー一覧の英語対応（本人指定・2026-09-10）：社名・都道府県名を
-    // shrines-overseas.jsonのnameEn/prefEnに差し替える。祭神・由緒などの
-    // 個別社データは従来どおり翻訳対象外（ポップアップは日本語のまま）
-    var name = currentLang === 'en' ? shrine.nameEn : shrine.name;
-    var pref = currentLang === 'en' ? shrine.prefEn : shrine.pref;
-    item.innerHTML =
-      '<div class="shrine-item-dot" style="background:' + dotColor + ';box-shadow:0 0 5px ' + dotColor + '80;"></div>' +
-      '<div class="shrine-item-name">' + name + '</div>' +
-      '<div class="shrine-item-pref">' + pref + '</div>';
-    item.addEventListener('click', function(){ focusShrine(shrine); });
-    return item;
-  }
-
-  function renderSidebarList() {
-    var list = document.getElementById('sidebar-list');
-    if (!list) return;
-    list.innerHTML = '';
-    var total = 0;
-    TAG_ORDER.forEach(function(tag){
-      if (!activeFilters.has(tag)) return;
-      var items = markerList.filter(function(item){ return displayTag(item.shrine) === tag; });
-      if (!items.length) return;
-      var cfg = TAG_CONFIG[tag];
-      var sec = document.createElement('div');
-      sec.className = 'sidebar-section';
-      var title = document.createElement('div');
-      title.className = 'sidebar-section-title';
-      title.style.cssText = 'background:' + cfg.bg + '; border-left:3px solid ' + cfg.border + '; color:' + cfg.border + ';';
-      title.innerHTML = '<span>' + cfg.label[currentLang] + '</span><span class="sidebar-section-count">' + CHROME_TEXT[currentLang].countFmt(items.length) + '</span>';
-      sec.appendChild(title);
-      items.forEach(function(item){ sec.appendChild(buildShrineItem(item.shrine, cfg.color)); });
-      list.appendChild(sec);
-      total += items.length;
-    });
-    var countEl = document.getElementById('sidebar-count');
-    if (countEl) countEl.textContent = CHROME_TEXT[currentLang].countFmt(total);
-    var titleEl = document.getElementById('sidebar-title');
-    if (titleEl) titleEl.textContent = CHROME_TEXT[currentLang].listTitle;
-  }
-
-  function focusShrine(shrine) {
-    var entry = markerList.filter(function(item){ return item.shrine === shrine; })[0];
-    if (!entry) return;
-    if (!map.hasLayer(entry.marker)) entry.marker.addTo(map);
-    if (entry.marker._icon) entry.marker._icon.dataset.name = shrineName(shrine);
-    map.flyTo([shrine.lat, shrine.lng], Math.max(map.getZoom(), 9), { duration: 0.7 });
-    setTimeout(function(){ entry.marker.openPopup(); }, 650);
-  }
-
-  // 実行順F（依頼P-2＋R-4・2026-09-13）：エリアの囲い。
-  // 「県|名前」identifierをmarkerListの実座標に引き当てる。⚠️依頼R-5の教訓＝
-  // 名前だけで引くと同名他県の社と衝突する（日枝神社が富山を返した実例）ため、
-  // 必ずpref+nameの両方で一致させる。データにまだ無い社（依頼D未実施分など）は
-  // nullを返し、呼び出し側で読み飛ばす。
-  function findShrineLatLng(prefName) {
-    var sep = prefName.indexOf('|');
-    if (sep === -1) return null;
-    var pref = prefName.slice(0, sep), name = prefName.slice(sep + 1);
-    var entry = markerList.filter(function(item){
-      return item.shrine.pref === pref && item.shrine.name === name;
-    })[0];
-    return entry ? [entry.shrine.lat, entry.shrine.lng] : null;
-  }
-  // 実装の形（依頼P-2）＝bounds＋余白の矩形。1点しかない場合は固定半径8kmの円に
-  // フォールバックする。
-  // ⚠️余白は当初「範囲の15%か最低0.05°」だったが、本人指摘（2026-09-15）＝
-  // 「Lvごとの範囲が拡大している。Lv1は山手線を意識したいのでもう少し縮小。
-  // Lv2は西は府中、北は大宮、東は千葉神社、南は伊勢山皇大神宮までにもう少し縮小。
-  // Lv3は北西は三峯神社、南は鎌倉、東は鹿島まで」を受けて「範囲の8%か最低0.02°」に
-  // 縮小→さらに「Lv2・3はまだ余白が多い」を受けて「範囲の3%か最低0.01°」に再縮小。
-  // L1のような狭いクラスタ（東京都心）は床（0.01°）側が支配的で変化がほぼ無く、
-  // L2・L3のような広いクラスタは割合（3%）側が支配的なため、この2段目の縮小で
-  // 狙いどおりL2・L3だけがさらに縮む。床を下げても名指しされた最外周の社
-  // （大国魂神社・武蔵一宮氷川神社・千葉神社・伊勢山皇大神宮／三峯神社・鎌倉3社・
-  // 鹿島神宮）は必ずmin/maxそのものを構成するため箱の外には出ない。
-  function computeAreaShape(idents) {
-    var pts = idents.map(findShrineLatLng).filter(function(p){ return p; });
-    if (pts.length === 0) return null;
-    if (pts.length === 1) return { type:'circle', center: pts[0], radius: 8000 };
-    var lats = pts.map(function(p){ return p[0]; }), lngs = pts.map(function(p){ return p[1]; });
-    var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
-    var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs);
-    var padLat = Math.max(0.01, (maxLat - minLat) * 0.03);
-    var padLng = Math.max(0.01, (maxLng - minLng) * 0.03);
-    return { type:'rect', bounds: [[minLat - padLat, minLng - padLng], [maxLat + padLat, maxLng + padLng]] };
-  }
-  var areaEnclosureLayers = [];
-  var areaDimmedIcons = [];
-  var areaLevelLabels = []; // { marker, areaFile, levelKey } — 言語切替時にテキストを再計算するため保持
-  var currentFocusedAreaPage = null; // focusArea()中のCTAピル言語切替時にテキストを再計算するため保持
-  function clearAreaEnclosure() {
-    if (!map) return;
-    areaEnclosureLayers.forEach(function(l){ map.removeLayer(l); });
-    areaEnclosureLayers = [];
-    areaLevelLabels = [];
-    areaDimmedIcons.forEach(function(icon){ icon.classList.remove('marker-dimmed'); });
-    areaDimmedIcons = [];
-    var cta = document.getElementById('area-enclosure-cta');
-    if (cta) cta.classList.remove('visible');
-    currentFocusedAreaPage = null;
-  }
-  function drawAreaShape(shape, style) {
-    var layer;
-    if (shape.type === 'circle') {
-      var circleOpts = { radius: shape.radius };
-      for (var k in style) circleOpts[k] = style[k];
-      layer = L.circle(shape.center, circleOpts);
-    } else {
-      layer = L.rectangle(shape.bounds, style);
-    }
-    layer.addTo(map);
-    areaEnclosureLayers.push(layer);
-    return layer;
-  }
-  // 依頼Z-2①（2026-09-14）：エリアのLv表示を、カーソル追従のtooltipから
-  // 枠の内側左上に常時表示する固定ラベルへ変更（本人指定＝マーカーホバーの
-  // 社名表示とカーソル上の表示先が競合するため）。矩形・円のどちらも
-  // Leafletのgetbounds()でbounds化できるので、形によらず同じ処理で置ける。
-  // offsetPx＝東京の3層のように複数ラベルが同じ内側隅に近い位置へ集まる場合の
-  // 縦方向の重なり回避（L1=0px・L2=+20px・L3=+40pxずつ下へ）。
-  function areaLevelLabelText(areaFile, levelKey) {
-    var areaPage = AREA_PAGES.filter(function(a){ return a.file === areaFile; })[0];
-    var areaName = areaPage ? areaPage.name[currentLang] : '';
-    if (!levelKey) return areaName;
-    var levelNum = { L1:1, L2:2, L3:3 };
-    return areaName + ' Lv' + levelNum[levelKey];
-  }
-  function addAreaLevelLabel(layer, areaFile, levelKey, offsetPx) {
-    if (!map) return;
-    var nw = layer.getBounds().getNorthWest();
-    var icon = L.divIcon({
-      className: 'area-level-label-icon',
-      html: '<div class="area-level-label">' + areaLevelLabelText(areaFile, levelKey) + '</div>',
-      iconSize: null,
-      // [8,8]＝枠の「内側」へ8pxオフセット（本人指定）。offsetPxはさらに
-      // 縦方向へ重ねて逃がす分
-      iconAnchor: [-8, -(8 + offsetPx)]
-    });
-    var label = L.marker(nw, { icon: icon, interactive: false, keyboard: false, zIndexOffset: 1000 }).addTo(map);
-    areaEnclosureLayers.push(label);
-    areaLevelLabels.push({ marker: label, areaFile: areaFile, levelKey: levelKey });
-  }
-  function focusArea(file) {
-    if (!map) return;
-    var def = AREA_SHRINES[file];
-    if (!def) return;
-    clearAreaEnclosure();
-    var areaPage = AREA_PAGES.filter(function(a){ return a.file === file; })[0];
-    var goUrl = withTagsQuery(file);
-    // 東京＝3層を同心で描く（本人指定・依頼R-4「同心の3つの囲いを描く。
-    // 読者が『今日どこまで行く気か』を円で選べる」）。外側から先に描き、
-    // 内側のL1を最後に描くことでクリック判定も内側が優先される
-    if (def.layers) {
-      // ⚠️def.layersはAREA_SHRINESの定義順＝L1→L2→L3（内側→外側）。
-      // 描画とクリック判定は逆順（外側から）でないと、外側L3が最後に描かれて
-      // 内側L1の上に乗ってしまい、L1の領域をクリックしてもL3が反応してしまう。
-      // そのため描画直前にreverse()してL3→L2→L1の順にする
-      // 本人指摘（2026-09-13）＝「囲いの中が少し違いが分かるような表現、色が
-      // 濃くなるなど」。不透明度の差だけでは分かりにくいため、色調そのものも
-      // 内側ほど鮮やかな金・外側ほど落ち着いた金に変えた（サイトの配色トークン
-      // --gold/--gold-2/--gold-mutedをそのまま流用し、配色の統一感は保つ）
-      var layerStyles = {
-        L1: { color:'#f5d08a', weight:3,   opacity:1,    fillColor:'#f5d08a', fillOpacity:0.16 },
-        L2: { color:'#e0b060', weight:2,   opacity:0.75, fillColor:'#e0b060', fillOpacity:0.09 },
-        L3: { color:'#907040', weight:1.5, opacity:0.45, fillColor:'#907040', fillOpacity:0.05 }
-      };
-      // 本人指摘（2026-09-15）：ホバーで表示するカーソル追従テキストは不要、
-      // 「エリアの色が変わる」方が良いとのこと。囲いにmouseover/mouseoutで
-      // setStyle()し、塗り・線を一段濃くする（触れているLvがどれかが一目で
-      // 分かる）。内側ほど最後に描く＝ホバー判定も内側が優先されるのは
-      // クリック判定と同じ理屈。
-      var layerHoverStyles = {
-        L1: { weight:4,   opacity:1,    fillOpacity:0.30 },
-        L2: { weight:3,   opacity:1,    fillOpacity:0.20 },
-        L3: { weight:2.5, opacity:0.85, fillOpacity:0.14 }
-      };
-      // 依頼Z-2①（2026-09-14）＝カーソル追従のLv表示は廃止し、枠の内側左上に
-      // 常時表示の固定ラベルを置く（マーカーホバーの社名表示とカーソル上の
-      // 表示先が競合するため。本人指定）。
-      var levelNum = { L1:1, L2:2, L3:3 };
-      var allIdents = [];
-      var drawOrder = def.layers.slice().reverse();
-      drawOrder.forEach(function(layerDef){
-        var shape = computeAreaShape(layerDef.shrines);
-        allIdents = allIdents.concat(layerDef.shrines);
-        if (!shape) return;
-        var layer = drawAreaShape(shape, layerStyles[layerDef.key]);
-        addAreaLevelLabel(layer, file, layerDef.key, (levelNum[layerDef.key] - 1) * 20);
-        layer.on('mouseover', function(){ layer.setStyle(layerHoverStyles[layerDef.key]); });
-        layer.on('mouseout', function(){ layer.setStyle(layerStyles[layerDef.key]); });
-        layer.on('click', function(e){
-          L.DomEvent.stopPropagation(e);
-          if (shape.type === 'rect') {
-            map.flyToBounds(shape.bounds, { padding:[40,40], duration:0.6 });
-          } else {
-            map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration:0.6 });
-          }
-        });
-      });
-      dimOutOfArea(allIdents);
-      // ⚠️外側の層（最も広いはず）が1点しかない場合、その層はrectでなくcircleに
-      // フォールバックするため、層ごとのshapeだけを見て全体のズーム先を決めると
-      // 「外側がrectの時しかズームしない」というバグになる（広島のL2＝吉備津神社
-      // 1社のみで実際に発生・2026-09-13）。全社をまとめて計算した1つのshapeを
-      // 別に使うことで、層の内訳に関係なく必ずズームする
-      var overallShape = computeAreaShape(allIdents);
-      if (overallShape) {
-        if (overallShape.type === 'rect') {
-          map.flyToBounds(overallShape.bounds, { padding:[40,40], duration:0.8 });
-        } else {
-          map.flyTo(overallShape.center, Math.max(map.getZoom(), 9), { duration:0.8 });
-        }
-      }
-    } else {
-      var shape = computeAreaShape(def.shrines);
-      if (!shape) return;
-      var style = { color:'#f5d08a', weight:2.5, opacity:0.85, fillColor:'#f5d08a', fillOpacity:0.08 };
-      var hoverStyle = { weight:3.5, opacity:1, fillOpacity:0.20 };
-      var layer = drawAreaShape(shape, style);
-      addAreaLevelLabel(layer, file, null, 0);
-      layer.on('mouseover', function(){ layer.setStyle(hoverStyle); });
-      layer.on('mouseout', function(){ layer.setStyle(style); });
-      layer.on('click', function(e){ L.DomEvent.stopPropagation(e); location.href = goUrl; });
-      dimOutOfArea(def.shrines);
-      if (shape.type === 'rect') {
-        map.flyToBounds(shape.bounds, { padding:[40,40], duration:0.8 });
-      } else {
-        map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration:0.8 });
-      }
-    }
-    var cta = document.getElementById('area-enclosure-cta');
-    var ctaText = document.getElementById('area-enclosure-cta-text');
-    if (cta && ctaText && areaPage) {
-      // 本人指摘（2026-09-20）：ピルの中身が「Tokyo」だけだと何が起きるのか
-      // 分からないので、一言添えた確定フレーズ（ctaPhrase）を使う
-      ctaText.textContent = '⛩ ' + areaPage.ctaPhrase[currentLang];
-      cta.href = goUrl;
-      cta.classList.add('visible');
-      currentFocusedAreaPage = areaPage;
-    }
-  }
-  // 依頼AA-1（2026-09-19）：起動時、日本全体表示（上のfitBounds）から数秒後に
-  // 関東（東京エリア）へ自動でクローズする。本人指定「理想はデフォルトは日本全体を
-  // 表示させた後、数秒後に関東にクローズしていくアクション」への対応。
-  // ⚠️依頼X-1（マーカーアニメーションのtransform全廃）が前提——flyTo中に
-  // transformベースのアニメーションが走ると09-11に幹で起きたマーカー位置ズレ・
-  // 発光異常と同型の不具合になる。X-1は完了済みなのでこの順序で実装できる。
-  // ⚠️focusArea()をそのまま呼ばない＝あれは囲い線を描き・他エリアの社を
-  // 減光し・CTAピルを出す「エリア選択」の演出まで含む。本人指定「全国の神社
-  // アイコンは載せたまま」に反するため、ここではカメラを動かすだけにする。
-  // 東京エリア（L1〜L3・22社）の範囲へカメラを動かすだけの純関数（囲い線・
-  // 減光・CTAピルは描かない＝focusArea()と違い「全国の神社アイコンは載せた
-  // まま」を崩さない）。依頼AA-1のreduced-motion即時表示と、依頼AH-7の
-  // 段階演出の両方から呼ぶ共通処理として切り出した
-  function flyToKanto(duration) {
-    var def = AREA_SHRINES['area-pages/東京.html'];
-    if (!def || !def.layers) return;
-    var idents = [];
-    def.layers.forEach(function(l){ idents = idents.concat(l.shrines); });
-    var shape = computeAreaShape(idents);
-    if (!shape) return;
-    if (shape.type === 'rect') {
-      map.flyToBounds(shape.bounds, { padding:[40,40], duration: duration });
-    } else {
-      map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration: duration });
-    }
-  }
-  // 依頼AH-7（2026-09-20・本人確認＝演出後は5タグ全部表示のまま）：
-  // 起動時、日本全体表示のまま神宮→大社→一宮→（ズーム開始）二宮→名社の順に
-  // 0.5秒おきでタグをactiveFiltersへ積み上げ、そのつどredrawMarkers()で
-  // マーカーを増やしていく。1社が複数タグを持っていても、優先順位の高い方から
-  // 追加していく（PRIORITY順＝jingu>taisha>ichi>ni>meisha）ため、
-  // passesFilter()の「いずれかのタグが有効なら表示」だけで自然に「最優先の
-  // 段階で1回だけ出る」という条件を満たす（特別な重複排除は不要）。
-  // ユーザーが地図をドラッグしたら即座に演出を中断し、残りを一括で出す
-  // （依頼AA-1のズーム中断と同じ考え方＝自発的なflyTo自身はdragstartを
-  // 発火しないため、self/user操作の混同が起きない）
-  function startStagedReveal() {
-    var STAGES = TAG_ORDER; // ['jingu','taisha','ichi','ni','meisha']——優先順位の降順と一致
-    var STEP_MS = 500;
-    var stageIndex = 0;
-    var interrupted = false;
-    var timer = null;
-    function addStageTags(tags) {
-      tags.forEach(function(t){ activeFilters.add(t); });
-      renderFilterButtons();
-      renderShrineDropdown();
-      redrawMarkers();
-    }
-    function finishAll() {
-      if (timer) clearTimeout(timer);
-      addStageTags(STAGES.slice(stageIndex));
-      stageIndex = STAGES.length;
-    }
-    map.once('dragstart', function(){
-      if (interrupted || stageIndex >= STAGES.length) return;
-      interrupted = true;
-      map.stop();
-      finishAll();
-    });
-    function nextStage() {
-      if (interrupted || stageIndex >= STAGES.length) return;
-      var tag = STAGES[stageIndex];
-      addStageTags([tag]);
-      if (tag === 'ni') flyToKanto(2.5); // 二宮の表示と同時にズーム開始
-      stageIndex++;
-      if (stageIndex < STAGES.length) timer = setTimeout(nextStage, STEP_MS);
-    }
-    timer = setTimeout(nextStage, STEP_MS);
-  }
-  // 本人指摘（2026-09-20）：段階演出がページ読み込み直後に始まってしまい、
-  // オープニング（鳥居→動画→写真→④の宣言）をスクロールしている間に誰も
-  // 見ていない状態で終わっていた。動画キャプション・固定キャプションと同じ
-  // IntersectionObserverの流儀で、#mock-appが実際に画面へ入ってから始める
-  // ⚠️reducedMotionForRevealはfetch().then()内のローカル変数で、この関数は
-  // 外側スコープに定義しているため直接参照できない（実機テストで
-  // ReferenceErrorとして発覚）。呼び出し側から引数として渡す
-  function triggerRevealWhenVisible(reducedMotionForReveal) {
-    function fire() {
-      if (reducedMotionForReveal) flyToKanto(0); else startStagedReveal();
-    }
-    var target = document.getElementById('mock-app');
-    if (!target || !('IntersectionObserver' in window)) { fire(); return; }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting) { io.unobserve(entry.target); fire(); }
-      });
-    }, { threshold: 0.3 });
-    io.observe(target);
-  }
-  function dimOutOfArea(idents) {
-    var inArea = {};
-    idents.forEach(function(id){ inArea[id] = true; });
-    markerList.forEach(function(item){
-      var id = item.shrine.pref + '|' + item.shrine.name;
-      var icon = item.marker._icon;
-      if (!icon) return;
-      if (inArea[id]) {
-        icon.classList.remove('marker-dimmed');
-      } else {
-        icon.classList.add('marker-dimmed');
-        areaDimmedIcons.push(icon);
-      }
-    });
-  }
-
-  // マーカーの出現/消滅アニメーション再生。本番index.htmlの2026-09-09の修正
-  // （animationendに頼らずsetTimeoutで確実にクラスを外す）をそのまま踏襲する
-  function playMarkerAnim(icon, addClass, removeClass, totalMs) {
-    icon.classList.remove(removeClass);
-    icon.classList.add(addClass);
-    setTimeout(function(){ icon.classList.remove(addClass); }, totalMs);
-  }
-
-  function redrawMarkers() {
-    markerList.forEach(function(item){
-      var show = passesFilter(item.shrine);
-      var onMap = map.hasLayer(item.marker);
-      // 複数タグを持つ社（例：三嶋大社＝ichi+taisha）は、フィルターの足し引きで
-      // 「今アクティブなタグの中の最優先」が変わることがある。表示・非表示に
-      // 関わらず、色が変わる時だけsetIconし直す（毎回全社ぶん引き直すと
-      // ホバー名・アニメーション中のクラスが不要に消えるため、変化時のみに絞る）
-      if (show) {
-        var tag = activeTopTag(item.shrine.tags);
-        if (tag !== item._iconTag) {
-          var prevName = item.marker._icon ? item.marker._icon.dataset.name : null;
-          item.marker.setIcon(getIcon(tag));
-          item._iconTag = tag;
-          if (item.marker._icon) item.marker._icon.dataset.name = prevName || shrineName(item.shrine);
-        }
-      }
-      if (show && item._removeTimer) {
-        clearTimeout(item._removeTimer);
-        item._removeTimer = null;
-        var stayIcon = item.marker._icon;
-        if (stayIcon) stayIcon.classList.remove('marker-pop-out');
-        return;
-      }
-      if (show && !onMap) {
-        item.marker.addTo(map);
-        var inIcon = item.marker._icon;
-        if (inIcon) {
-          inIcon.dataset.name = shrineName(item.shrine);
-          playMarkerAnim(inIcon, 'marker-pop-in', 'marker-pop-out', 250);
-        }
-      } else if (!show && onMap && !item._removeTimer) {
-        var outIcon = item.marker._icon;
-        if (outIcon) playMarkerAnim(outIcon, 'marker-pop-out', 'marker-pop-in', 150);
-        item._removeTimer = setTimeout(function(){
-          item._removeTimer = null;
-          if (map.hasLayer(item.marker) && !passesFilter(item.shrine)) map.removeLayer(item.marker);
-        }, 130);
-      }
-    });
-    updateStats();
-    renderSidebarList();
-  }
-
-  var markerList = [];
-  var map; // fetch内で代入。redrawMarkers/focusShrineから参照するため外側スコープで宣言
-  function applyLang(lang) {
-    currentLang = lang;
-    document.querySelectorAll('.lang-btn').forEach(function(b){
-      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
-    });
-    // 依頼AE-5（2026-09-19）：オープニング区画（タグライン・動画キャプション・
-    // 固定/トリプティックキャプション・④の宣言）は、この関数の他の処理と違い
-    // JS辞書ではなくdata-en属性で持たせた（原稿がAC-1経由の翻訳委託ではなく
-    // 確定文言の直書きのため）。他の詳細ページと同じ汎用スイッチをここにも足す
-    document.querySelectorAll('[data-en]').forEach(function(el){
-      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
-      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
-    });
-    document.getElementById('mock-title').textContent = HEADER_TITLE[lang];
-    renderShrineDropdown();
-    renderFilterButtons();
-    updateStats();
-    renderSidebarList();
-    markerList.forEach(function(item){
-      item.marker.setIcon(getIcon(activeTopTag(item.shrine.tags)));
-      // 依頼Z-2③：setIconはアイコンのDOM要素を作り直すため、直前に付けた
-      // dataset.name（ホバー時の社名表示用）も消える。言語切替のたびに
-      // 全マーカーぶん再設定する
-      if (item.marker._icon) item.marker._icon.dataset.name = shrineName(item.shrine);
-      if (item.marker.getPopup()) item.marker.getPopup().setContent(buildPopupContent(item.shrine));
-    });
-    // 本人指摘（2026-09-14）：エリア選択中に言語を切り替えても「東京Lv1」等の
-    // 固定ラベルが日本語のまま残っていた。ラベルは形を作り直さずテキストだけ
-    // その場で更新する（囲いの再描画・再ズームは不要なため）
-    areaLevelLabels.forEach(function(item){
-      var el = item.marker.getElement();
-      if (!el) return;
-      var inner = el.querySelector('.area-level-label');
-      if (inner) inner.textContent = areaLevelLabelText(item.areaFile, item.levelKey);
-    });
-    // 2026-09-20発見：CTAピル表示中に言語を切り替えても文言が固定されたまま
-    // だったバグの修正。フォーカス中のエリアを覚えておき、その場でテキストだけ差し替える
-    if (currentFocusedAreaPage) {
-      var ctaTextEl = document.getElementById('area-enclosure-cta-text');
-      if (ctaTextEl) ctaTextEl.textContent = '⛩ ' + currentFocusedAreaPage.ctaPhrase[currentLang];
-    }
-  }
-  // 本人指定（2026-09-20・依頼AH-4）：「千代の杜」をトップへのリロードリンクにする。
-  // 単なるリロードだとオープニング演出（introShown済み）が再生されないため、
-  // 旧「演出をやり直す」ボタンと同じ処理をここへ統合し、そのボタンは撤去した
-  // 2026-09-20発見：kantoZoomShownを消し忘れていたため、ここでオープニング
-  // 演出（①〜④）だけやり直されてAH-7のマーカー段階演出は再生されない
-  // （2回目以降の既定＝3タグ即表示のまま）という不整合があった。あわせて消す
-  var mockLogo = document.getElementById('mock-logo');
-  if (mockLogo) {
-    mockLogo.addEventListener('click', function(){
-      sessionStorage.removeItem('introShown');
-      sessionStorage.removeItem('kantoZoomShown');
-      location.reload();
-    });
-  }
-  var langToggle = document.getElementById('lang-toggle');
-  if (langToggle) {
-    langToggle.addEventListener('click', function(e){
-      var btn = e.target.closest('.lang-btn');
-      if (btn) {
-        applyLang(btn.getAttribute('data-lang'));
-        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
-      }
-    });
-  }
-  // localStorageの保存値がenなら、静的HTMLの日本語文言（タグライン・動画キャプション等の
-  // data-en属性・mock-title・lang-btnの見た目）をこの時点で英語へ揃える。マーカー等の
-  // currentLang依存部分は上でcurrentLangを先に'en'にしているため、この後の非同期処理
-  // （fetch('assets/shrines-overseas.json')）で自然に英語のまま作られる
-  if (currentLang === 'en') applyLang('en');
-  var enclosureCtaClose = document.getElementById('area-enclosure-cta-close');
-  if (enclosureCtaClose) {
-    enclosureCtaClose.addEventListener('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      clearAreaEnclosure();
-    });
-  }
-
-  // 依頼Z-2②（2026-09-14）：本番index.htmlの`initHoverCursorTag()`（枝2-B3）を
-  // ほぼそのまま移植。hover:hover かつ pointer:fine（実マウスを持つ環境）でのみ
-  // 有効化——タッチ端末はhoverが不安定に発火するため対象外（本番と同じ授業料）。
-  (function initHoverCursorTag() {
-    if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    var tag = document.getElementById('hover-cursor-tag');
-    if (!tag) return;
-    var current = null;
-
-    function show(label) {
-      if (current === label) return;
-      current = label;
-      tag.textContent = label;
-      tag.classList.add('visible');
-    }
-    function hide() {
-      if (current === null) return;
-      current = null;
-      tag.classList.remove('visible');
-    }
-
-    document.addEventListener('mousemove', function(e){
-      tag.style.left = e.clientX + 'px';
-      tag.style.top = e.clientY + 'px';
-    });
-    document.addEventListener('mouseover', function(e){
-      var markerEl = e.target.closest('.leaflet-marker-icon');
-      if (markerEl) { show(markerEl.dataset.name || (currentLang === 'en' ? 'View' : '見る')); return; }
-      if (e.target.closest('.shrine-item')) { show(currentLang === 'en' ? 'To the map' : '地図へ'); return; }
-      hide();
-    });
-  })();
-
-  fetch('assets/shrines-overseas.json')
-    .then(function(res){ return res.json(); })
-    .then(function(shrines){
-      // scrollWheelZoom:false で開始し、ページスクロールで地図の上を通過した
-      // 最初の一撃だけ誤ズームを防ぐ。ただしその後は地図をスクロール操作で
-      // 触りたいという本人要望があるため、地図上でのスクロールがいったん
-      // 止まった時点（＝勢いで通過し終えたと判断できる時点）で自動的に
-      // scrollWheelZoomを有効化する（本人指摘・2026-09-08）。
-      map = L.map('shrine-map', { center: [36.0,136.5], zoom: 5, scrollWheelZoom: false });
-      (function(){
-        var mapEl = document.getElementById('shrine-map');
-        var armTimer = null;
-        function arm() {
-          map.scrollWheelZoom.enable();
-          mapEl.removeEventListener('wheel', onWheel);
-        }
-        function onWheel() {
-          clearTimeout(armTimer);
-          armTimer = setTimeout(arm, 500);
-        }
-        mapEl.addEventListener('wheel', onWheel, { passive: true });
-      })();
-      L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
-        attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">地理院タイル</a>',
-        maxZoom: 18
-      }).addTo(map);
-      // 実行順F（依頼P-2・2026-09-13）：地図の何もない場所をクリックしたら
-      // エリアの囲いを解除する（囲い自体のクリックはstopPropagationしてあるので
-      // ここには来ない）
-      map.on('click', function(){ clearAreaEnclosure(); });
-      // 社を指定して地図を開く口（本人指定・2026-09-12・実装キュー依頼C／
-      // 2026-09-13・依頼Hで識別子を?shrine=<県>|<名前>に変更）：
-      // 地域ページ／個別ページの「次の一社」カードから遷移してきた場合、
-      // その社を選択済みの状態で開く。一致しなければ
-      // （まだ地図のデータに載っていない社を指す場合など）通常どおり全体を表示する。
-      // ⚠️同名の社が複数存在する（住吉神社3社・吉備津神社2社など）ため、
-      // 名前だけの一致では区別できない→県|名前で判定する。旧形式（名前のみ）の
-      // リンクが万一残っていた場合は、名前だけでの一致にフォールバックする。
-      var wantedShrineParam = new URLSearchParams(location.search).get('shrine');
-      var focusedShrine = null;
-      if (wantedShrineParam) {
-        var sepIndex = wantedShrineParam.indexOf('|');
-        if (sepIndex !== -1) {
-          var wantedPref = wantedShrineParam.slice(0, sepIndex);
-          var wantedName = wantedShrineParam.slice(sepIndex + 1);
-          focusedShrine = shrines.filter(function(s){ return s.pref === wantedPref && s.name === wantedName; })[0] || null;
-        } else {
-          focusedShrine = shrines.filter(function(s){ return s.name === wantedShrineParam; })[0] || null;
-        }
-      }
-      // 依頼AH-7（2026-09-20・本人確認＝演出後は5タグ全部表示のまま）：
-      // 初回訪問（?shrine=直リンクでなく、まだ演出を見せていないセッション）だけ、
-      // 神宮→大社→一宮→（ズーム開始）二宮→名社の順で0.5秒おきに積み上げる。
-      // ⚠️マーカー生成より前にactiveFiltersを空にしておく必要があるため、
-      // ここで判定してから下のshrines.forEachへ入る（2回目以降・?shrine=直リンク
-      // 時は従来どおりDEFAULT_TAGSのまま＝3タグ限定で即座に表示）
-      var reducedMotionForReveal = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var isFirstReveal = !wantedShrineParam && sessionStorage.getItem('kantoZoomShown') !== '1';
-      if (isFirstReveal) {
-        sessionStorage.setItem('kantoZoomShown', '1');
-        if (reducedMotionForReveal) {
-          // reduced-motion時は演出せず、最初から最終状態（全5タグ）で表示する
-          TAG_ORDER.forEach(function(t){ activeFilters.add(t); });
-        } else {
-          activeFilters.clear(); // 段階0＝0件から始める
-        }
-        // タグボタン・ドロップダウンは初期化時に3タグ状態で一度描画済みなので、
-        // ここで変更後のactiveFiltersに合わせて描き直しておく（段階1が始まる
-        // 0.5秒後まで見た目が3タグ有効のまま残らないように）
-        renderFilterButtons();
-        renderShrineDropdown();
-      }
-      var bounds = [];
-      shrines.forEach(function(s){
-        var initialTag = activeTopTag(s.tags);
-        var marker = L.marker([s.lat, s.lng], { icon: getIcon(initialTag) })
-          .bindPopup(buildPopupContent(s), { className: 'shrine-popup' });
-        if (passesFilter(s)) {
-          marker.addTo(map);
-          if (marker._icon) marker._icon.dataset.name = shrineName(s);
-        }
-        markerList.push({ marker: marker, shrine: s, _iconTag: initialTag });
-        bounds.push([s.lat, s.lng]);
-      });
-      updateStats();
-      renderSidebarList();
-      function fitWhenReady(attempts) {
-        attempts = attempts || 0;
-        map.invalidateSize();
-        var size = map.getSize();
-        if ((size.x > 0 && size.y > 0) || attempts >= 30) {
-          if (focusedShrine) {
-            focusShrine(focusedShrine);
-          } else {
-            map.fitBounds(bounds, { padding: [30,30] });
-            if (isFirstReveal) {
-              // 本人指摘（2026-09-20）：ページ読み込み直後に演出が終わってしまい、
-              // オープニング（鳥居→動画→写真→④）をスクロールで辿っている間に
-              // 誰も見ていない状態で完了していた。地図（#mock-app）が実際に
-              // 画面に入ってきた瞬間まで演出の開始を遅らせる
-              triggerRevealWhenVisible(reducedMotionForReveal);
-            }
-          }
-        } else {
-          requestAnimationFrame(function(){ fitWhenReady(attempts + 1); });
-        }
-      }
-      fitWhenReady();
-    });
-})();
 </script>
 </body>
 </html>
