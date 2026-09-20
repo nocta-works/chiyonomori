@@ -1754,31 +1754,65 @@ function initScrollSlideReveal() {
   // ⚠️focusArea()をそのまま呼ばない＝あれは囲い線を描き・他エリアの社を
   // 減光し・CTAピルを出す「エリア選択」の演出まで含む。本人指定「全国の神社
   // アイコンは載せたまま」に反するため、ここではカメラを動かすだけにする。
-  function startKantoAutoZoom() {
+  // 東京エリア（L1〜L3・22社）の範囲へカメラを動かすだけの純関数（囲い線・
+  // 減光・CTAピルは描かない＝focusArea()と違い「全国の神社アイコンは載せた
+  // まま」を崩さない）。依頼AA-1のreduced-motion即時表示と、依頼AH-7の
+  // 段階演出の両方から呼ぶ共通処理として切り出した
+  function flyToKanto(duration) {
     var def = AREA_SHRINES['area-pages/東京.html'];
     if (!def || !def.layers) return;
     var idents = [];
     def.layers.forEach(function(l){ idents = idents.concat(l.shrines); });
     var shape = computeAreaShape(idents);
     if (!shape) return;
-    function fly(duration) {
-      if (shape.type === 'rect') {
-        map.flyToBounds(shape.bounds, { padding:[40,40], duration: duration });
-      } else {
-        map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration: duration });
-      }
+    if (shape.type === 'rect') {
+      map.flyToBounds(shape.bounds, { padding:[40,40], duration: duration });
+    } else {
+      map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration: duration });
     }
-    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) { fly(0); return; }
-    if (sessionStorage.getItem('kantoZoomShown') === '1') return;
-    sessionStorage.setItem('kantoZoomShown', '1');
-    // ユーザーが自分で地図をドラッグしたら即座に諦める（自発的なflyTo自身は
-    // dragstartを発火しないため、self/user操作の混同が起きない）
+  }
+  // 依頼AH-7（2026-09-20・本人確認＝演出後は5タグ全部表示のまま）：
+  // 起動時、日本全体表示のまま神宮→大社→一宮→（ズーム開始）二宮→名社の順に
+  // 0.5秒おきでタグをactiveFiltersへ積み上げ、そのつどredrawMarkers()で
+  // マーカーを増やしていく。1社が複数タグを持っていても、優先順位の高い方から
+  // 追加していく（PRIORITY順＝jingu>taisha>ichi>ni>meisha）ため、
+  // passesFilter()の「いずれかのタグが有効なら表示」だけで自然に「最優先の
+  // 段階で1回だけ出る」という条件を満たす（特別な重複排除は不要）。
+  // ユーザーが地図をドラッグしたら即座に演出を中断し、残りを一括で出す
+  // （依頼AA-1のズーム中断と同じ考え方＝自発的なflyTo自身はdragstartを
+  // 発火しないため、self/user操作の混同が起きない）
+  function startStagedReveal() {
+    var STAGES = TAG_ORDER; // ['jingu','taisha','ichi','ni','meisha']——優先順位の降順と一致
+    var STEP_MS = 500;
+    var stageIndex = 0;
     var interrupted = false;
-    map.once('dragstart', function(){ interrupted = true; map.stop(); });
-    setTimeout(function(){
-      if (!interrupted) fly(2.5);
-    }, 1800);
+    var timer = null;
+    function addStageTags(tags) {
+      tags.forEach(function(t){ activeFilters.add(t); });
+      renderFilterButtons();
+      renderShrineDropdown();
+      redrawMarkers();
+    }
+    function finishAll() {
+      if (timer) clearTimeout(timer);
+      addStageTags(STAGES.slice(stageIndex));
+      stageIndex = STAGES.length;
+    }
+    map.once('dragstart', function(){
+      if (interrupted || stageIndex >= STAGES.length) return;
+      interrupted = true;
+      map.stop();
+      finishAll();
+    });
+    function nextStage() {
+      if (interrupted || stageIndex >= STAGES.length) return;
+      var tag = STAGES[stageIndex];
+      addStageTags([tag]);
+      if (tag === 'ni') flyToKanto(2.5); // 二宮の表示と同時にズーム開始
+      stageIndex++;
+      if (stageIndex < STAGES.length) timer = setTimeout(nextStage, STEP_MS);
+    }
+    timer = setTimeout(nextStage, STEP_MS);
   }
   function dimOutOfArea(idents) {
     var inArea = {};
@@ -1983,6 +2017,48 @@ function initScrollSlideReveal() {
       // エリアの囲いを解除する（囲い自体のクリックはstopPropagationしてあるので
       // ここには来ない）
       map.on('click', function(){ clearAreaEnclosure(); });
+      // 社を指定して地図を開く口（本人指定・2026-09-12・実装キュー依頼C／
+      // 2026-09-13・依頼Hで識別子を?shrine=<県>|<名前>に変更）：
+      // 地域ページ／個別ページの「次の一社」カードから遷移してきた場合、
+      // その社を選択済みの状態で開く。一致しなければ
+      // （まだ地図のデータに載っていない社を指す場合など）通常どおり全体を表示する。
+      // ⚠️同名の社が複数存在する（住吉神社3社・吉備津神社2社など）ため、
+      // 名前だけの一致では区別できない→県|名前で判定する。旧形式（名前のみ）の
+      // リンクが万一残っていた場合は、名前だけでの一致にフォールバックする。
+      var wantedShrineParam = new URLSearchParams(location.search).get('shrine');
+      var focusedShrine = null;
+      if (wantedShrineParam) {
+        var sepIndex = wantedShrineParam.indexOf('|');
+        if (sepIndex !== -1) {
+          var wantedPref = wantedShrineParam.slice(0, sepIndex);
+          var wantedName = wantedShrineParam.slice(sepIndex + 1);
+          focusedShrine = shrines.filter(function(s){ return s.pref === wantedPref && s.name === wantedName; })[0] || null;
+        } else {
+          focusedShrine = shrines.filter(function(s){ return s.name === wantedShrineParam; })[0] || null;
+        }
+      }
+      // 依頼AH-7（2026-09-20・本人確認＝演出後は5タグ全部表示のまま）：
+      // 初回訪問（?shrine=直リンクでなく、まだ演出を見せていないセッション）だけ、
+      // 神宮→大社→一宮→（ズーム開始）二宮→名社の順で0.5秒おきに積み上げる。
+      // ⚠️マーカー生成より前にactiveFiltersを空にしておく必要があるため、
+      // ここで判定してから下のshrines.forEachへ入る（2回目以降・?shrine=直リンク
+      // 時は従来どおりDEFAULT_TAGSのまま＝3タグ限定で即座に表示）
+      var reducedMotionForReveal = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var isFirstReveal = !wantedShrineParam && sessionStorage.getItem('kantoZoomShown') !== '1';
+      if (isFirstReveal) {
+        sessionStorage.setItem('kantoZoomShown', '1');
+        if (reducedMotionForReveal) {
+          // reduced-motion時は演出せず、最初から最終状態（全5タグ）で表示する
+          TAG_ORDER.forEach(function(t){ activeFilters.add(t); });
+        } else {
+          activeFilters.clear(); // 段階0＝0件から始める
+        }
+        // タグボタン・ドロップダウンは初期化時に3タグ状態で一度描画済みなので、
+        // ここで変更後のactiveFiltersに合わせて描き直しておく（段階1が始まる
+        // 0.5秒後まで見た目が3タグ有効のまま残らないように）
+        renderFilterButtons();
+        renderShrineDropdown();
+      }
       var bounds = [];
       shrines.forEach(function(s){
         var initialTag = activeTopTag(s.tags);
@@ -1997,26 +2073,6 @@ function initScrollSlideReveal() {
       });
       updateStats();
       renderSidebarList();
-      // 社を指定して地図を開く口（本人指定・2026-09-12・実装キュー依頼C／
-      // 2026-09-13・依頼Hで識別子を?shrine=<県>|<名前>に変更）：
-      // 地域ページ／個別ページの「次の一社」カードから遷移してきた場合、
-      // その社を選択済みの状態で開く。一致しなければ
-      // （まだ地図のデータに載っていない社を指す場合など）通常どおり全体を表示する。
-      // ⚠️同名の社が複数存在する（住吉神社3社・吉備津神社2社など）ため、
-      // 名前だけの一致では区別できない→県|名前で判定する。旧形式（名前のみ）の
-      // リンクが万一残っていた場合は、名前だけでの一致にフォールバックする。
-      var focusedShrine = null;
-      var wantedShrineParam = new URLSearchParams(location.search).get('shrine');
-      if (wantedShrineParam) {
-        var sepIndex = wantedShrineParam.indexOf('|');
-        if (sepIndex !== -1) {
-          var wantedPref = wantedShrineParam.slice(0, sepIndex);
-          var wantedName = wantedShrineParam.slice(sepIndex + 1);
-          focusedShrine = shrines.filter(function(s){ return s.pref === wantedPref && s.name === wantedName; })[0] || null;
-        } else {
-          focusedShrine = shrines.filter(function(s){ return s.name === wantedShrineParam; })[0] || null;
-        }
-      }
       function fitWhenReady(attempts) {
         attempts = attempts || 0;
         map.invalidateSize();
@@ -2026,7 +2082,13 @@ function initScrollSlideReveal() {
             focusShrine(focusedShrine);
           } else {
             map.fitBounds(bounds, { padding: [30,30] });
-            startKantoAutoZoom();
+            if (isFirstReveal) {
+              if (reducedMotionForReveal) {
+                flyToKanto(0);
+              } else {
+                startStagedReveal();
+              }
+            }
           }
         } else {
           requestAnimationFrame(function(){ fitWhenReady(attempts + 1); });
