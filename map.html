@@ -1718,15 +1718,18 @@
         }
       }
       // 依頼AH-7（2026-09-20・本人確認＝演出後は5タグ全部表示のまま）：
-      // 初回訪問（?shrine=直リンクでなく、まだ演出を見せていないセッション）だけ、
-      // 神宮→大社→一宮→（ズーム開始）二宮→名社の順で0.5秒おきに積み上げる。
+      // ?shrine=直リンクでない限り、神宮→大社→一宮→（ズーム開始）二宮→名社の
+      // 順で0.5秒おきに積み上げる。
       // ⚠️マーカー生成より前にactiveFiltersを空にしておく必要があるため、
-      // ここで判定してから下のshrines.forEachへ入る（2回目以降・?shrine=直リンク
-      // 時は従来どおりDEFAULT_TAGSのまま＝3タグ限定で即座に表示）
+      // ここで判定してから下のshrines.forEachへ入る
+      // 🔴2026-09-20改訂（本人指定）：以前は`sessionStorage`の`kantoZoomShown`
+      // フラグで「1セッション（タブ）に1回だけ」に制限していたが、この
+      // セッション管理がブラウザ仕様（新規タブへの引き継ぎ等）と絡んで
+      // 「違うブラウザ・タブなのに演出が再生されない」という混乱を繰り返し
+      // 招いたため撤廃。ページを開くたび、毎回再生する
       var reducedMotionForReveal = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var isFirstReveal = !wantedShrineParam && sessionStorage.getItem('kantoZoomShown') !== '1';
+      var isFirstReveal = !wantedShrineParam;
       if (isFirstReveal) {
-        sessionStorage.setItem('kantoZoomShown', '1');
         if (reducedMotionForReveal) {
           // reduced-motion時は演出せず、最初から最終状態（全5タグ）で表示する
           TAG_ORDER.forEach(function(t){ activeFilters.add(t); });
