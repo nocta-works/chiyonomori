@@ -788,7 +788,14 @@
       idx = wrapCharsReveal(line, CHAR_STEP, idx);
     });
   })();
-  var taglineHoldMs = Math.max(5000 * INTRO_SPEED, (taglineCharCount - 1) * INTRO_CHAR_STEP + CHAR_FADE + READ_BUFFER * INTRO_SPEED);
+  // 本人指摘（2026-09-20）：②で鳥居が開いてから③動画に移るまでが「異様に
+  // 時間がかかる」との報告。原因＝ここのフロア値とREAD_BUFFERにまで
+  // INTRO_SPEEDが掛かっており、「①ロード画面だけを2倍長く」という本来の
+  // 意図（直上のコメント）に反して②の待ち時間まで2倍（最低10秒）に
+  // なっていた。文字が出るスピード自体（INTRO_CHAR_STEP）は①の演出の
+  // 一部として維持しつつ、フロア値とREAD_BUFFERはINTRO_SPEEDを
+  // 掛けない形に戻す（最低5秒・実質約7秒に短縮）
+  var taglineHoldMs = Math.max(5000, (taglineCharCount - 1) * INTRO_CHAR_STEP + CHAR_FADE + READ_BUFFER);
 
   var RING_MS = 1400 * INTRO_SPEED;
   var start = performance.now();
