@@ -67,24 +67,28 @@
   .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
   .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
 
-  /* 依頼W-4（2026-09-13）：手順図・比較図はSVGで描く（AI生成は日本語の文字を
-     まともに描けないため）。文字はHTMLのキャプションに置き、SVGは図のみを
-     担当する。ラスタ画像と違い、言語を増やしてもキャプションのdata-enを
-     差し替えるだけで済む */
+  /* 依頼AJ（2026-09-21）：AI生成イラスト（単体・背景なし・平坦な塗り）を
+     部品として組み立てる方式に変更（旧SVG手描きは不採用）。文字は引き続き
+     HTML側のdata-enで持たせ、画像そのものには焼き込まない */
   .diagram { margin: 30px 0 38px; }
   .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
-  .diagram-steps { display: flex; flex-wrap: wrap; gap: 2px; align-items: flex-start; justify-content: center; }
-  .diagram-step { display: flex; flex-direction: column; align-items: center; width: 94px; text-align: center; }
-  .diagram-step-num { font-size: 10px; color: var(--gold); opacity: 0.7; margin-bottom: 4px; letter-spacing: 0.05em; }
-  .diagram-step-circle {
-    width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid var(--gold);
-    display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
-    background: rgba(255,255,255,0.02); flex-shrink: 0;
-  }
-  .diagram-step-circle svg { width: 26px; height: 26px; }
-  .diagram-step-label { font-size: 11px; line-height: 1.5; color: var(--tan-text); opacity: 0.85; }
-  .diagram-arrow { color: var(--gold-muted); font-size: 14px; opacity: 0.5; padding-top: 18px; }
   .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+  .diagram-illust-row { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 18px; }
+  .diagram-illust-wide { width: 130px; height: auto; }
+  .diagram-illust-wide.diagram-illust-hishaku { width: 100px; }
+  /* 🔴10-bow・11-clapはサイト背景（ほぼ黒）に極めて近い暗色シルエットで、
+     そのままだと沈んで見えない（実測RGB≈45,38,34／58,47,40 vs 背景#1a1209）。
+     img要素ではなく、透過PNGをmask-imageとして使い--tan-textで塗り直す */
+  .diagram-pose { width: 78px; height: 117px; background-color: var(--tan-text); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: bottom center; mask-position: bottom center; }
+  .diagram-pose-bow { -webkit-mask-image: url('../assets/illustrations/10-bow.png'); mask-image: url('../assets/illustrations/10-bow.png'); }
+  .diagram-pose-clap { -webkit-mask-image: url('../assets/illustrations/11-clap.png'); mask-image: url('../assets/illustrations/11-clap.png'); }
+  .diagram-steps-text { display: flex; flex-direction: column; gap: 8px; max-width: 420px; margin: 0 auto 4px; padding: 0; list-style: none; }
+  .diagram-steps-text li { font-size: 12.5px; line-height: 1.6; color: var(--tan-text); opacity: 0.9; }
+  .diagram-compare { display: flex; align-items: center; justify-content: center; gap: 20px; }
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 170px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 150px; }
+  .diagram-illust-label { font-size: 13px; color: var(--tan-text); letter-spacing: 0.05em; }
+  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 90px; }
 
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -142,72 +146,51 @@
 
 <div class="diagram">
   <p class="diagram-title" data-en="How to use the chozuya — one ladleful does everything">手水の手順——柄杓1杯で全部やる</p>
-  <div class="diagram-steps">
-    <div class="diagram-step">
-      <span class="diagram-step-num">1</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="13" cy="14" rx="9" ry="6"/><line x1="20" y1="11" x2="28" y2="5"/></svg></div>
-      <span class="diagram-step-label" data-en="Pour over left hand">左手を洗う</span>
-    </div>
-    <span class="diagram-arrow">→</span>
-    <div class="diagram-step">
-      <span class="diagram-step-num">2</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="19" cy="14" rx="9" ry="6"/><line x1="12" y1="11" x2="4" y2="5"/></svg></div>
-      <span class="diagram-step-label" data-en="Pour over right hand">右手を洗う</span>
-    </div>
-    <span class="diagram-arrow">→</span>
-    <div class="diagram-step">
-      <span class="diagram-step-num">3</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="13" cy="14" rx="9" ry="6"/><path d="M20 11 Q24 13 23 18"/></svg></div>
-      <span class="diagram-step-label" data-en="Rinse mouth from left hand (never touch the ladle to your lips)">左手に受けて口をすすぐ</span>
-    </div>
-    <span class="diagram-arrow">→</span>
-    <div class="diagram-step">
-      <span class="diagram-step-num">4</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><ellipse cx="13" cy="14" rx="9" ry="6"/><line x1="20" y1="11" x2="28" y2="5"/></svg></div>
-      <span class="diagram-step-label" data-en="Pour over left hand once more">もう一度左手</span>
-    </div>
-    <span class="diagram-arrow">→</span>
-    <div class="diagram-step">
-      <span class="diagram-step-num">5</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><line x1="16" y1="4" x2="16" y2="24"/><ellipse cx="16" cy="26" rx="8" ry="3"/></svg></div>
-      <span class="diagram-step-label" data-en="Stand the ladle upright to rinse the handle">柄を立てて柄杓の柄を流す</span>
-    </div>
+  <div class="diagram-illust-row">
+    <img class="diagram-illust-wide" src="../assets/illustrations/03-temizuya.png" alt="">
+    <img class="diagram-illust-wide diagram-illust-hishaku" src="../assets/illustrations/07-hishaku.png" alt="">
   </div>
+  <ol class="diagram-steps-text">
+    <li data-en="① Pour over the left hand">①左手を洗う</li>
+    <li data-en="② Pour over the right hand">②右手を洗う</li>
+    <li data-en="③ Rinse the mouth from water in the left hand (never touch the ladle to your lips)">③左手に受けて口をすすぐ（柄杓に直接口をつけない）</li>
+    <li data-en="④ Pour over the left hand once more">④もう一度左手を洗う</li>
+    <li data-en="⑤ Stand the ladle upright to rinse the handle">⑤柄を立てて柄杓の柄を流す</li>
+  </ol>
 </div>
 
 <div class="diagram">
   <p class="diagram-title" data-en="At the worship hall — two bows, two claps, one bow">拝殿での作法——二礼二拍手一礼</p>
-  <div class="diagram-steps">
-    <div class="diagram-step">
-      <span class="diagram-step-num">1</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><circle cx="16" cy="12" r="7"/><line x1="16" y1="6" x2="16" y2="18"/><line x1="10" y1="24" x2="22" y2="24"/></svg></div>
-      <span class="diagram-step-label" data-en="Offer a coin">賽銭</span>
-    </div>
-    <span class="diagram-arrow">→</span>
-    <div class="diagram-step">
-      <span class="diagram-step-num">2</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><path d="M8 24 L18 24 L26 9"/><circle cx="26" cy="6" r="2.4" fill="var(--gold)" stroke="none"/></svg></div>
-      <span class="diagram-step-label" data-en="Bow twice">2回お辞儀</span>
-    </div>
-    <span class="diagram-arrow">→</span>
-    <div class="diagram-step">
-      <span class="diagram-step-num">3</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><path d="M11 9 Q8 17 12 25"/><path d="M21 9 Q24 17 20 25"/></svg></div>
-      <span class="diagram-step-label" data-en="Clap twice">2回拍手</span>
-    </div>
-    <span class="diagram-arrow">→</span>
-    <div class="diagram-step">
-      <span class="diagram-step-num">4</span>
-      <div class="diagram-step-circle"><svg viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"><path d="M8 24 L18 24 L26 9"/><circle cx="26" cy="6" r="2.4" fill="var(--gold)" stroke="none"/></svg></div>
-      <span class="diagram-step-label" data-en="Bow once, after your wish">願って1回お辞儀</span>
-    </div>
+  <div class="diagram-illust-row">
+    <div class="diagram-pose diagram-pose-bow"></div>
+    <div class="diagram-pose diagram-pose-clap"></div>
+    <div class="diagram-pose diagram-pose-bow"></div>
   </div>
+  <ol class="diagram-steps-text">
+    <li data-en="① Offer a coin">①賽銭を入れる</li>
+    <li data-en="② Bow twice">②二礼</li>
+    <li data-en="③ Clap twice">③二拍手</li>
+    <li data-en="④ Bow once, after your wish">④一礼（願いごとの後）</li>
+  </ol>
   <p class="diagram-note" data-en="⚠️Exception: Izumo Taisha and Usa Jingu use four claps instead of two.">⚠️出雲大社と宇佐神宮だけ、拍手は4回。</p>
 </div>
 
 <p data-en="Better not: photographing a ritual in progress / taking photographs where signs forbid it / entering the shrine buildings. The last is usually impossible anyway."><strong data-en="What not to do">やらない方がいいこと</strong>＝神事の最中の撮影／禁止表示のある場所での撮影／社殿の中へ立ち入ること（<strong data-en="Some places are simply off limits.">そもそも入れない</strong>）</p>
 <p class="article-bridge" data-en="After worship, what is received and what is taken home?">参拝を終えたあと、何を受け取り、何を持ち帰るか。</p>
 <h2 data-en="Goshuin and amulets — received, not bought">御朱印とお守り——買うものではなく、受けるもの</h2>
+<div class="diagram">
+  <div class="diagram-compare">
+    <div class="diagram-compare-col">
+      <img class="diagram-illust" src="../assets/illustrations/08-goshuincho.png" alt="">
+      <span class="diagram-illust-label" data-en="Goshuin">御朱印</span>
+    </div>
+    <div class="diagram-compare-divider"></div>
+    <div class="diagram-compare-col">
+      <img class="diagram-illust" src="../assets/illustrations/09-omamori.png" alt="">
+      <span class="diagram-illust-label" data-en="Omamori">お守り</span>
+    </div>
+  </div>
+</div>
 <p data-en="None of these are treated as goods for sale. They have prices, but the shrine says &quot;receive&quot;, not &quot;buy&quot;; &quot;bestow&quot;, not &quot;sell&quot;. It looks like a wording choice. It changes how the objects are treated.">どれも売り物として扱われていない。値段は付いているが、<strong data-en="The shrine's language is &quot;receive&quot;, not &quot;buy&quot;; &quot;bestow&quot;, not &quot;sell&quot;.">「買う」ではなく「受ける」、「売る」ではなく「授ける」</strong>と言う。言い換えの問題に見えて、扱い方が変わってくる。</p>
 <ul>
 <li data-en="Goshuin: a calligraphed record of a shrine visit, written in ink and stamped in vermilion. ⚠️This is not a stamp rally. Worship first, then receive the goshuin. A dedicated goshuincho book is needed and can be obtained at many shrines. Usually ¥300–500. At busy times, or when no calligrapher is present, it may be kakioki — a sheet prepared in advance."><strong data-en="Goshuin">御朱印</strong>＝参拝した証として、その場で墨と朱印で書いてもらうもの。<strong data-en="⚠️This is not a stamp rally. Worship first, then receive the goshuin.">⚠️スタンプラリーではない。必ず先に参拝してから受ける。</strong>専用の御朱印帳が要る（多くの社で買える）。300〜500円程度。<strong data-en="At busy times, or when no calligrapher is present, a goshuin may be kakioki: a sheet prepared in advance.">混雑時や書き手がいない社は「書き置き」（あらかじめ書かれた紙）になる</strong></li>
