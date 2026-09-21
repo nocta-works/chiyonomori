@@ -73,6 +73,10 @@
   .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
   .diagram-svg-wrap { display: flex; justify-content: center; }
   .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+  .diagram-compare { display: flex; align-items: flex-start; justify-content: center; gap: 20px; }
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 170px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 150px; }
+  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 90px; }
 
   .diagram-path-arrow { color: var(--gold-muted); font-size: 14px; opacity: 0.5; padding-top: 40px; }
   /* 依頼AJ（2026-09-21）：境内の順路はAI生成イラストの部品を並べる方式に変更
@@ -87,6 +91,19 @@
      （本人指定・依頼AI-4／AJ-3の必須要素） */
   .diagram-route-limitline { width: 0; align-self: stretch; border-left: 1.5px dashed var(--gold-muted); opacity: 0.7; margin: 6px 4px; min-height: 76px; }
   .diagram-illust-label { font-size: 11px; line-height: 1.5; color: var(--tan-text); opacity: 0.85; }
+
+  /* 依頼AJ-4（2026-09-21）：神明鳥居と明神鳥居の見分け方。150px幅の画像に
+     「笠木 — 最上部の横木」のような長い英訳をそのまま引き出し線で乗せると
+     文字が収まらないため、画像上は番号マーカーのみに留め、部位名の全文
+     （日英とも）は画像の下の凡例（.torii-legend）にまとめて置く方式にした */
+  .diagram-compare-torii .diagram-compare-col { max-width: 190px; }
+  .diagram-torii-frame { position: relative; width: 100%; }
+  .torii-marker-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .torii-marker circle { fill: var(--gold); }
+  .torii-marker text { fill: var(--bg-body); font-size: 64px; font-weight: 700; text-anchor: middle; }
+  .torii-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 16px 0 4px; }
+  .torii-legend-row { display: flex; align-items: baseline; gap: 6px; font-size: 11.5px; color: var(--tan-text); opacity: 0.85; }
+  .torii-legend-num { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 50%; background: var(--gold); color: var(--bg-body); font-size: 9.5px; font-weight: 700; flex-shrink: 0; }
 
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -143,40 +160,40 @@
 
 <div class="diagram">
   <p class="diagram-title" data-en="Shinmei and Myojin torii — how to tell them apart">神明鳥居と明神鳥居——見分け方</p>
-  <div class="diagram-svg-wrap">
-    <svg viewBox="0 -16 360 246" width="100%" style="max-width:520px;">
-      <g stroke="var(--gold)" stroke-width="3" fill="none" stroke-linecap="round">
-        <line x1="40" y1="45" x2="40" y2="195"/>
-        <line x1="110" y1="45" x2="110" y2="195"/>
-        <line x1="25" y1="45" x2="125" y2="45"/>
-        <line x1="40" y1="95" x2="110" y2="95"/>
-      </g>
-      <text x="75" y="222" text-anchor="middle" fill="var(--tan-text)" font-size="13" data-en="Shinmei torii">神明鳥居</text>
-
-      <g stroke="var(--gold)" stroke-width="3" fill="none" stroke-linecap="round">
-        <line x1="250" y1="58" x2="250" y2="195"/>
-        <line x1="320" y1="58" x2="320" y2="195"/>
-        <path d="M223 48 Q285 26 347 48"/>
-        <path d="M235 61 Q285 44 335 61"/>
-        <line x1="250" y1="108" x2="320" y2="108"/>
-        <line x1="285" y1="61" x2="285" y2="82"/>
-      </g>
-      <text x="285" y="222" text-anchor="middle" fill="var(--tan-text)" font-size="13" data-en="Myojin torii">明神鳥居</text>
-
-      <line x1="285" y1="20" x2="285" y2="0" stroke="var(--gold-muted)" stroke-width="1"/>
-      <text x="285" y="-6" text-anchor="middle" fill="var(--gold-muted)" font-size="10.5" data-en="Kasagi (curved)">笠木</text>
-
-      <line x1="335" y1="55" x2="352" y2="45" stroke="var(--gold-muted)" stroke-width="1"/>
-      <text x="356" y="42" text-anchor="start" fill="var(--gold-muted)" font-size="10.5" data-en="Shimagi">島木</text>
-
-      <line x1="320" y1="108" x2="352" y2="108" stroke="var(--gold-muted)" stroke-width="1"/>
-      <text x="356" y="112" text-anchor="start" fill="var(--gold-muted)" font-size="10.5" data-en="Nuki">貫</text>
-
-      <line x1="320" y1="160" x2="352" y2="160" stroke="var(--gold-muted)" stroke-width="1"/>
-      <text x="356" y="164" text-anchor="start" fill="var(--gold-muted)" font-size="10.5" data-en="Hashira (posts)">柱</text>
-    </svg>
+  <div class="diagram-compare diagram-compare-torii">
+    <div class="diagram-compare-col">
+      <div class="diagram-torii-frame">
+        <img class="diagram-illust" src="../assets/illustrations/12-torii-shinmei.png" alt="">
+        <svg class="torii-marker-svg" viewBox="0 0 1254 1254">
+          <g class="torii-marker"><circle cx="1000" cy="170" r="56"/><text x="1000" y="192">1</text></g>
+          <g class="torii-marker"><circle cx="700" cy="390" r="56"/><text x="700" y="412">3</text></g>
+          <g class="torii-marker"><circle cx="959" cy="700" r="56"/><text x="959" y="722">4</text></g>
+        </svg>
+      </div>
+      <span class="diagram-illust-label" data-en="Shinmei torii">神明鳥居</span>
+    </div>
+    <div class="diagram-compare-divider"></div>
+    <div class="diagram-compare-col">
+      <div class="diagram-torii-frame">
+        <img class="diagram-illust" src="../assets/illustrations/01-torii.png" alt="">
+        <svg class="torii-marker-svg" viewBox="0 0 1254 1254">
+          <g class="torii-marker"><circle cx="1000" cy="155" r="56"/><text x="1000" y="177">1</text></g>
+          <g class="torii-marker"><circle cx="940" cy="260" r="56"/><text x="940" y="282">2</text></g>
+          <g class="torii-marker"><circle cx="1030" cy="424" r="56"/><text x="1030" y="446">3</text></g>
+          <g class="torii-marker"><circle cx="918" cy="700" r="56"/><text x="918" y="722">4</text></g>
+        </svg>
+      </div>
+      <span class="diagram-illust-label" data-en="Myojin torii">明神鳥居</span>
+    </div>
+  </div>
+  <div class="torii-legend">
+    <div class="torii-legend-row"><span class="torii-legend-num">1</span><span data-en="Kasagi — top lintel">笠木</span></div>
+    <div class="torii-legend-row"><span class="torii-legend-num">2</span><span data-en="Shimagi — second beam (Myojin only)">島木（明神のみ）</span></div>
+    <div class="torii-legend-row"><span class="torii-legend-num">3</span><span data-en="Nuki — tie beam">貫</span></div>
+    <div class="torii-legend-row"><span class="torii-legend-num">4</span><span data-en="Hashira — pillars">柱</span></div>
   </div>
   <p class="diagram-note" data-en="Shinmei: straight beams, no ornament (Ise Jingu's lineage). Myojin: the top beam curves upward and a second beam (shimagi) sits below it — most torii nationwide are this type.">神明＝直線・装飾なし（伊勢神宮の系統）。明神＝笠木が反り、島木が入る。数の上ではこちらが大半。</p>
+  <p class="diagram-note" data-en="Colour is not the distinction. Shinmei gates can be vermilion, Myojin gates plain wood.">色は見分けの基準ではない。朱塗りの神明鳥居も、素木の明神鳥居もある。</p>
 </div>
 
 <p class="article-bridge" data-en="After the torii, what is actually worth looking at inside the grounds?">鳥居をくぐった先、境内で実際に何を見ればいいか。</p>
