@@ -69,16 +69,18 @@
   /* 依頼AI-2（2026-09-21）：AI生成は全廃・SVG線画のみへ統一（他3記事の
      .diagram一式と同じ規則をそのまま流用） */
   .diagram { margin: 30px 0 38px; }
-  .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-title { font-size: 13.5px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
   .diagram-svg-wrap { display: flex; justify-content: center; }
-  .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+  .diagram-note { font-size: 13px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
   /* 依頼AJ（2026-09-21）：AI生成イラスト（単体・背景なし・平坦な塗り）を
-     部品として組み立てる方式。SVG手描きから差し替え */
+     部品として組み立てる方式。SVG手描きから差し替え。
+     2026-09-21追記：本人指摘「イラストと文字が小さすぎる」を受け、
+     画像・ラベルとも約2割拡大（他2記事のイラスト系サイズも同時に統一） */
   .diagram-compare { display: flex; align-items: center; justify-content: center; gap: 20px; }
-  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 170px; }
-  .diagram-illust { width: 100%; height: auto; max-width: 150px; }
-  .diagram-illust-label { font-size: 13px; color: var(--tan-text); letter-spacing: 0.05em; }
-  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 90px; }
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 205px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 185px; }
+  .diagram-illust-label { font-size: 14px; color: var(--tan-text); letter-spacing: 0.05em; }
+  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 105px; }
 
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }

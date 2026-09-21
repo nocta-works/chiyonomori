@@ -70,40 +70,44 @@
      出す文字はインラインSVGの<text>に置き、data-enで言語切替に対応する
      （外部ファイル参照のimgにすると文字にJSが届かないため不可） */
   .diagram { margin: 30px 0 38px; }
-  .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-title { font-size: 13.5px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
   .diagram-svg-wrap { display: flex; justify-content: center; }
-  .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+  .diagram-note { font-size: 13px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
   .diagram-compare { display: flex; align-items: flex-start; justify-content: center; gap: 20px; }
-  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 170px; }
-  .diagram-illust { width: 100%; height: auto; max-width: 150px; }
-  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 90px; }
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 205px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 185px; }
+  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 105px; }
 
   .diagram-path-arrow { color: var(--gold-muted); font-size: 14px; opacity: 0.5; padding-top: 40px; }
   /* 依頼AJ（2026-09-21）：境内の順路はAI生成イラストの部品を並べる方式に変更
-     （旧SVGアイコンは不採用）。文字は引き続きHTML側data-enで持たせる */
+     （旧SVGアイコンは不採用）。文字は引き続きHTML側data-enで持たせる。
+     2026-09-21追記：本人指摘「イラストと文字が小さすぎる」を受け約2割拡大 */
   .diagram-route { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; justify-content: center; }
-  .diagram-route-node { display: flex; flex-direction: column; align-items: center; width: 84px; text-align: center; }
-  .diagram-illust-route { width: 68px; height: 68px; object-fit: contain; margin-bottom: 8px; }
+  .diagram-route-node { display: flex; flex-direction: column; align-items: center; width: 100px; text-align: center; }
+  .diagram-illust-route { width: 84px; height: 84px; object-fit: contain; margin-bottom: 8px; }
   .diagram-illust-flip { transform: scaleX(-1); }
   .diagram-route-komainu-pair { display: flex; gap: 2px; margin-bottom: 8px; }
-  .diagram-route-komainu-pair .diagram-illust-route { width: 40px; height: 68px; margin-bottom: 0; }
+  .diagram-route-komainu-pair .diagram-illust-route { width: 49px; height: 84px; margin-bottom: 0; }
   /* 拝殿→本殿の間に「参拝者が立てるのはここまで」の縦線を1本入れる
      （本人指定・依頼AI-4／AJ-3の必須要素） */
-  .diagram-route-limitline { width: 0; align-self: stretch; border-left: 1.5px dashed var(--gold-muted); opacity: 0.7; margin: 6px 4px; min-height: 76px; }
-  .diagram-illust-label { font-size: 11px; line-height: 1.5; color: var(--tan-text); opacity: 0.85; }
+  .diagram-route-limitline { width: 0; align-self: stretch; border-left: 1.5px dashed var(--gold-muted); opacity: 0.7; margin: 6px 4px; min-height: 92px; }
+  .diagram-illust-label { font-size: 14px; line-height: 1.5; color: var(--tan-text); opacity: 0.85; }
 
   /* 依頼AJ-4（2026-09-21）：神明鳥居と明神鳥居の見分け方。150px幅の画像に
      「笠木 — 最上部の横木」のような長い英訳をそのまま引き出し線で乗せると
      文字が収まらないため、画像上は番号マーカーのみに留め、部位名の全文
-     （日英とも）は画像の下の凡例（.torii-legend）にまとめて置く方式にした */
-  .diagram-compare-torii .diagram-compare-col { max-width: 190px; }
-  .diagram-torii-frame { position: relative; width: 100%; }
+     （日英とも）は画像の下の凡例（.torii-legend）にまとめて置く方式にした。
+     .diagram-torii-frameはwidth:100%ではなくdisplay:inline-blockにして
+     画像の実寸に自動で合わせる——width:100%のままだと列の最大幅
+     （.diagram-compare-col）と画像の実寸（max-width）がズレたとき、
+     枠と画像の間に隙間ができてSVGマーカーの座標が画像とずれてしまう */
+  .diagram-torii-frame { position: relative; display: inline-block; }
   .torii-marker-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .torii-marker circle { fill: var(--gold); }
   .torii-marker text { fill: var(--bg-body); font-size: 64px; font-weight: 700; text-anchor: middle; }
-  .torii-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 16px 0 4px; }
-  .torii-legend-row { display: flex; align-items: baseline; gap: 6px; font-size: 11.5px; color: var(--tan-text); opacity: 0.85; }
-  .torii-legend-num { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 50%; background: var(--gold); color: var(--bg-body); font-size: 9.5px; font-weight: 700; flex-shrink: 0; }
+  .torii-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin: 16px 0 4px; }
+  .torii-legend-row { display: flex; align-items: baseline; gap: 6px; font-size: 13px; color: var(--tan-text); opacity: 0.85; }
+  .torii-legend-num { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); color: var(--bg-body); font-size: 11px; font-weight: 700; flex-shrink: 0; }
 
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
