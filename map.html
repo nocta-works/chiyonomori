@@ -621,9 +621,12 @@
   }
   .shrine-popup .leaflet-popup-tip { background: var(--border-header); }
   .shrine-popup .leaflet-popup-close-button { color: var(--gold-muted) !important; }
-  .popup-content { min-width: 190px; }
+  /* 本人指摘（2026-09-21）：EN表示時、ポップアップ内の最小サイズの文字が
+     小さすぎる。バッジ・旧国名・祭神・由緒・外部リンク等の「最小tier」の
+     文字サイズを1〜2段階（+2px）拡大し、窓幅も少し広げて詰まりを防ぐ */
+  .popup-content { min-width: 220px; }
   .popup-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
-  .popup-badge { display:inline-block; padding:2px 9px; border-radius:10px; font-size:11px; letter-spacing:0.06em; border:1px solid; }
+  .popup-badge { display:inline-block; padding:2px 9px; border-radius:10px; font-size:13px; letter-spacing:0.06em; border:1px solid; }
   .popup-badge.jingu    { background:rgba(var(--tag-jingu-rgb),0.22);    border-color:var(--tag-jingu);    color:var(--tag-jingu-light); }
   .popup-badge.taisha   { background:rgba(var(--tag-taisha-rgb),0.22);   border-color:var(--tag-taisha);   color:var(--tag-taisha-light); }
   .popup-badge.ichi     { background:rgba(var(--tag-ichi-rgb),0.22);     border-color:var(--tag-ichi);     color:var(--tag-ichi-light); }
@@ -634,23 +637,23 @@
   .popup-badge.hachiman { background:rgba(var(--tag-hachiman-rgb),0.22); border-color:var(--tag-hachiman); color:var(--tag-hachiman-light); }
   .popup-badge.inari    { background:rgba(var(--tag-inari-rgb),0.22);    border-color:var(--tag-inari);    color:var(--tag-inari-light); }
   .popup-name { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif; font-size:16px; font-weight:bold; color:var(--gold); margin-bottom:3px; text-shadow:0 0 8px rgba(var(--gold-glow-rgb),0.3); }
-  .popup-pref { font-size:11px; color:var(--gold-muted); margin-bottom:7px; }
-  .popup-province { font-size:11px; color:var(--tan-text-2); padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px; margin-bottom:5px; }
-  .popup-reason { font-size:11px; color:var(--color-popup-reason); padding:3px 8px; background:rgba(0,255,128,0.04); border-radius:4px; margin-bottom:5px; }
-  .popup-deity { font-size:11px; color:var(--color-popup-deity); line-height:1.6; margin-bottom:8px; }
+  .popup-pref { font-size:13px; color:var(--gold-muted); margin-bottom:7px; }
+  .popup-province { font-size:13px; color:var(--tan-text-2); padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px; margin-bottom:5px; }
+  .popup-reason { font-size:13px; color:var(--color-popup-reason); padding:3px 8px; background:rgba(0,255,128,0.04); border-radius:4px; margin-bottom:5px; }
+  .popup-deity { font-size:13px; color:var(--color-popup-deity); line-height:1.6; margin-bottom:8px; }
   /* サイト内への導線（実装キュー依頼N-2・2026-09-13）：外部3本（地図・公式・Wiki）
      より上に置く。外部リンクを置く画面には必ずサイト内への導線を上に置く、
      という今後の規則の最初の適用箇所 */
   .popup-link-detail {
     display: flex; align-items: center; justify-content: center; gap: 5px;
-    padding: 6px 8px; border-radius: 6px; font-size: 11.5px; text-decoration: none;
+    padding: 6px 8px; border-radius: 6px; font-size: 13px; text-decoration: none;
     letter-spacing: 0.03em; margin-bottom: 6px;
     background: rgba(var(--gold-glow-rgb),0.16); border: 1px solid rgba(var(--gold-glow-rgb),0.4); color: var(--gold);
   }
   .popup-link-detail:hover { background: rgba(var(--gold-glow-rgb),0.3); }
   .popup-links { display: flex; gap: 5px; margin-top: 6px; }
-  .popup-link { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1; min-width: 0; padding: 5px 6px; border-radius: 6px; font-size: 10.5px; text-decoration: none; letter-spacing: 0.03em; white-space: nowrap; }
-  .popup-link-icon { font-size: 12px; }
+  .popup-link { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1; min-width: 0; padding: 5px 6px; border-radius: 6px; font-size: 12.5px; text-decoration: none; letter-spacing: 0.03em; white-space: nowrap; }
+  .popup-link-icon { font-size: 13px; }
   .popup-link.gmaps { background: rgba(66,133,244,0.14); border: 1px solid rgba(66,133,244,0.35); color: var(--color-link); }
   .popup-link.gmaps:hover { background: rgba(66,133,244,0.28); color: var(--color-link-hover); }
   .popup-link.official { background: rgba(var(--tag-jingu-rgb),0.14); border: 1px solid rgba(var(--tag-jingu-rgb),0.35); color: var(--gold-2); }
