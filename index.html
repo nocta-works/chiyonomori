@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chiyo no Mori — Shrines of Japan</title>
-<meta name="robots" content="noindex, nofollow">
 <meta name="description" content="A map of more than a hundred shrines, with Tokyo covered in depth.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -755,6 +754,7 @@
 (function(){
   var lang;
   try { lang = localStorage.getItem('siteLang'); } catch(err) { lang = null; }
+  document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
   if (lang !== 'en') return;
   document.querySelectorAll('[data-en]').forEach(function(el){
     el.textContent = el.getAttribute('data-en');

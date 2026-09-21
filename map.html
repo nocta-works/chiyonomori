@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chiyo no Mori — Shrines of Japan</title>
-<meta name="robots" content="noindex, nofollow">
 <meta name="description" content="A map of more than a hundred shrines, with Tokyo covered in depth.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -1567,6 +1566,7 @@
   var map; // fetch内で代入。redrawMarkers/focusShrineから参照するため外側スコープで宣言
   function applyLang(lang) {
     currentLang = lang;
+    document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

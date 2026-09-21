@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chiba Jinja, Chiba — Chiyo no Mori</title>
-<meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <style>
   /* design-lab/shrine-pages/千葉神社.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
@@ -261,6 +260,7 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
+    document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
     document.querySelectorAll('[data-en]').forEach(function(el){
       if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
       el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;

@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>伊勢神宮｜個別神社紹介ページ — Chiyo no Mori</title>
-<meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <style>
   /* ══════════════════════════════════════════════════════════════
@@ -305,6 +304,7 @@
 // キャッシュしてから入れ替える。alt属性はdata-alt-enで別途対応。
 (function(){
   function applyLang(lang){
+    document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
     document.querySelectorAll('[data-en]').forEach(function(el){
       if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
       el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
