@@ -67,6 +67,13 @@
   .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
   .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
 
+  /* 依頼AI-2（2026-09-21）：AI生成は全廃・SVG線画のみへ統一（他3記事の
+     .diagram一式と同じ規則をそのまま流用） */
+  .diagram { margin: 30px 0 38px; }
+  .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
@@ -120,6 +127,33 @@
 <li data-en="The object of prayer is different. Shrines deal with this life — health, work, exams, safe childbirth. Temples deal with the dead and ancestors. That is why shrines have no graves."><strong data-en="The object of prayer is different.">祈る対象が違う。</strong> 神社は今生きているこの世のこと——健康、仕事、合格、安産。<strong data-en="Temples deal with death and ancestors.">寺は死後と先祖。</strong>だから神社に墓は無い</li>
 <li data-en="⚠️One thing that makes shrine visits easier for travellers: anyone can enter. Almost no shrines charge admission. Belief is not required. There is no dress code, and tattoos are not treated as an offence — unlike at some onsen."><strong data-en="⚠️One thing that makes shrine visits easier for travellers">⚠️旅行者が知っておくと楽になること</strong>＝神社は誰でも入れる。拝観料が要る社はほとんどない。信仰の有無も問われない。<strong data-en="There is no dress code, and tattoos are not treated as an offence.">服装の制限もなく、タトゥーも咎められない</strong>（温泉とは違う）</li>
 </ul>
+
+<div class="diagram">
+  <p class="diagram-title" data-en="Shrine or temple — how to tell">神社と寺——見分け方</p>
+  <div class="diagram-svg-wrap">
+    <svg viewBox="0 0 480 200" width="100%" style="max-width:460px;">
+      <line x1="240" y1="18" x2="240" y2="182" stroke="var(--border-4)" stroke-width="1.2" stroke-dasharray="3,4"/>
+
+      <g stroke="var(--tan-text)" stroke-width="1.5" stroke-linecap="round" fill="none">
+        <line x1="95" y1="70" x2="95" y2="168"/>
+        <line x1="145" y1="70" x2="145" y2="168"/>
+        <path d="M75,72 L80,65 L160,65 L165,72"/>
+        <line x1="95" y1="93" x2="145" y2="93"/>
+      </g>
+      <text x="120" y="188" text-anchor="middle" fill="var(--tan-text)" font-size="13" data-en="Shrine">神社</text>
+
+      <g stroke="var(--tan-text)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <path d="M290,100 L360,52 L430,100"/>
+        <line x1="290" y1="100" x2="290" y2="112"/>
+        <line x1="430" y1="100" x2="430" y2="112"/>
+        <line x1="290" y1="112" x2="430" y2="112"/>
+      </g>
+      <path d="M340,168 Q340,132 360,132 Q380,132 380,168 Z" fill="var(--tan-text)" fill-opacity="0.18" stroke="var(--tan-text)" stroke-width="1.2"/>
+      <text x="360" y="188" text-anchor="middle" fill="var(--tan-text)" font-size="13" data-en="Temple">寺</text>
+    </svg>
+  </div>
+  <p class="diagram-note" data-en="A torii means a shrine; a Buddhist statue means a temple. The shrine's frame stands open; the temple's eaves enclose.">鳥居があれば神社、仏像があれば寺。神社は柱だけで開いており、寺は深い軒に囲われている。</p>
+</div>
 <p class="article-bridge" data-en="The reason becomes clearer 1,500 years back.">なぜそうなったのかは、1,500年さかのぼると見えてくる。</p>
 <h2 data-en="History — how shrines were tied to the state, then untied">歴史——神社が国家と結ばれ、ほどかれるまで</h2>
 <p data-en="Most of the shrine system seen today was put in place from the Meiji period onwards. The buildings may be old. The system is new.">今ある神社の姿は、<strong data-en="Most of the present system was put in place from the Meiji period onwards.">ほとんどが明治以降に整えられたもの。</strong>建物は古くても、制度は新しい。</p>
