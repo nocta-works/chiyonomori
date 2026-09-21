@@ -547,9 +547,12 @@
   .marker-dimmed { opacity: 0.22 !important; }
   .area-enclosure-cta-wrap {
     /* 本人指摘（2026-09-20）：中央だとサイドバーも含めた全幅の真ん中になり
-       ゴチャつくため、左寄せにする */
+       ゴチャつくため、左寄せにする。
+       🔴2026-09-21追記：左寄せの結果、Leafletのズームコントロール
+       （左上・幅34px＋left:10px）とCTAピルが重なる不具合が発覚。
+       ズームコントロールの右端（約44px）をよけるpadding-leftに変更 */
     position: absolute; top: 14px; left: 0; right: 0; z-index: 900;
-    display: flex; justify-content: flex-start; padding-left: 16px; pointer-events: none;
+    display: flex; justify-content: flex-start; padding-left: 60px; pointer-events: none;
   }
   .area-enclosure-cta {
     /* 本人指摘（2026-09-20）：浮かび上がる東京ページアイコンを前より大きく */
