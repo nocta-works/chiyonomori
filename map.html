@@ -914,20 +914,31 @@
   var iconCache = {};
   // 依頼AM-3（2026-09-23）：本人「東京エリアにズームアップしたとき、明治神宮が
   // 名社アイコンで被ってる。神宮、一宮、大社だけ少しだけ大きいアイコンで
-  // 目立たせれないか」。この3タグだけiconSizeを約1.18倍（34×42→40×50）にする。
+  // 目立たせれないか」。当初は3タグとも同じ大きさ（34×42→40×50）にしていたが、
+  // 微修正（2026-09-23・本人指摘）＝「神宮は更に2段階、一宮・大社は1段階、
+  // 大きくしてほしい。神宮＞一宮・大社＞二宮・名社とサイズが明らかに違うと
+  // 分かるように」を受けて3段階に分ける。1段階＝最初の拡大幅（+6px幅／+8px高さ）
+  // と同じ刻みをそのまま踏襲。
   // 🔴transform:scale()は使わない（09-11の幹バグ＝LeafletのtransformとCSSの
   // transformが衝突してマーカー位置がズレる件が依頼X-1で解消済み。再発させない）
   // ので、SVGのviewBoxはそのままでwidth/height属性だけ変えて大きさを出す。
   // サイズはタグで一意に決まるため、既存のキー（currentLang+'_'+tag）で
   // サイズも自動的に区別される（tagが同じなら常に同じサイズになる）
-  var BIG_ICON_TAGS = { jingu: true, taisha: true, ichi: true };
+  var ICON_BASE_W = 34, ICON_BASE_H = 42;
+  var ICON_STEP_W = 6, ICON_STEP_H = 8;
+  // 34×42基準からの累計段階数。jingu＝3段階（最初の1段階＋今回の2段階）、
+  // taisha/ichi＝2段階（最初の1段階＋今回の1段階）
+  var ICON_SIZE_STEPS = { jingu: 3, taisha: 2, ichi: 2 };
   function getIcon(tag) {
     var key = currentLang + '_' + tag;
     if (iconCache[key]) return iconCache[key];
-    var big = !!BIG_ICON_TAGS[tag];
-    var w = big ? 40 : 34, h = big ? 50 : 42;
-    var anchor = big ? [20, 48] : [17, 40];
-    var popupAnchor = big ? [0, -50] : [0, -42];
+    var steps = ICON_SIZE_STEPS[tag] || 0;
+    var w = ICON_BASE_W + steps * ICON_STEP_W;
+    var h = ICON_BASE_H + steps * ICON_STEP_H;
+    // アンカーは元の[17,40]（34×42）・[20,48]（40×50）と同じ規則
+    // ＝x=幅の半分／y=高さ-2 で機械的に算出する
+    var anchor = [Math.round(w / 2), h - 2];
+    var popupAnchor = [0, -h];
     var c = TAG_CONFIG[tag];
     var ch = c.char[currentLang];
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 34 42">' +
@@ -1124,13 +1135,27 @@
       setChipLayerStyle(file, l.key, isPinned);
     });
   }
+  // 微修正（2026-09-23・本人指摘）：「Tokyo Lv2にカーソルを合わせた時の
+  // ズームをもう少し近づけてほしい。Lv3と差がない」。Lv2の社の分布がLv3と
+  // さほど変わらない広さのため、flyToBoundsが自然に選ぶズーム値だと両者の
+  // 見た目がほぼ同じになっていた。Lv2だけ、fitBoundsが本来選ぶズームより
+  // 1段階余分に寄せる（自然なズーム値をmap.getBoundsZoom()で求めてから
+  // +1して明示的にflyToする）
+  var LEVEL_ZOOM_BOOST = { L2: 1 };
   function flyToAreaLayer(file, level){
     var entry = areaLayerByLevel[file] && areaLayerByLevel[file][level];
     if (!entry || !map) return;
+    var boost = LEVEL_ZOOM_BOOST[level] || 0;
     if (entry.shape.type === 'rect') {
-      map.flyToBounds(entry.shape.bounds, { padding:[40,40], duration:0.6 });
+      if (boost) {
+        var bounds = L.latLngBounds(entry.shape.bounds);
+        var z = map.getBoundsZoom(bounds, false, L.point(40, 40)) + boost;
+        map.flyTo(bounds.getCenter(), z, { duration:0.6 });
+      } else {
+        map.flyToBounds(entry.shape.bounds, { padding:[40,40], duration:0.6 });
+      }
     } else {
-      map.flyTo(entry.shape.center, Math.max(map.getZoom(), 9), { duration:0.6 });
+      map.flyTo(entry.shape.center, Math.max(map.getZoom(), 9) + boost, { duration:0.6 });
     }
   }
   function wireAreaChips(){
