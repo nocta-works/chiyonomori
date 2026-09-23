@@ -185,11 +185,24 @@
      .caption-badgeのbox-decoration-break:cloneが機能しなくなる（inline-block
      化した1つの句が内部で複数行に折り返すと、その句を包む外側のinline要素
      からは「1行の子」にしか見えず、背景が最後の行にしか付かなかった）。
-     英語はもともと単語の間でしか改行されないため、句をただのinline（spanの
-     既定値）のままにしても「句の途中で崩れる」という元の不具合は起きない */
+     英語はもともと単語の間でしか改行されない……はずだったが、これは誤りだった
+     （2026-09-23・本人再指摘で発覚）。.charが1文字ずつdisplay:inline-blockに
+     なっていると、ブラウザは単語の"内部"（文字と文字の間）にも改行可能点を
+     作ってしまう。隣接するinline-block要素はHTML上に空白が無くても、行分割の
+     対象になる。実際に"the"がt/heで割れて再現した。この問題は下の.wordで
+     別途対処している（句のnowrapだけでは単語内部の割れは防げない） */
   html:lang(ja) .intro-tagline .phrase, html:lang(ja) .intro-video-caption .phrase,
   html:lang(ja) .fixed-caption .phrase, html:lang(ja) .triptych-caption .phrase,
   html:lang(ja) .declaration-text .phrase {
+    display: inline-block; white-space: nowrap;
+  }
+  /* 微修正（2026-09-23）：単語の内部で改行させない。.charの1文字ずつの
+     inline-block化が、単語の途中にも改行可能点を作ってしまうため、
+     単語（空白で区切った単位）をこの.wordで包み、nowrapで内部の改行を
+     禁止する。言語を問わず適用してよい（日本語の句は空白を持たないため、
+     句1つがそのまま1つの.wordになるだけで、既存の.phraseのnowrapと
+     二重になるが害はない） */
+  .intro-tagline .word, .intro-video-caption .word {
     display: inline-block; white-space: nowrap;
   }
 
@@ -847,26 +860,34 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
       // 単位へ分けておく。.char分割を先にやってしまうと句の外側で行われる
       // ことになり、.phraseのinline-blockが効かなくなるため順序が重要
       return splitPhrases(line).map(function(phrase){
-        var charsHtml = Array.from(phrase).map(function(ch){
-          // 本人指摘（2026-09-20・EN版で発覚）：半角スペースをそのまま
-          // <span class="char">の中身にすると、display:inline-blockの
-          // 単独スペースはブラウザに幅0へ折りたたまれ、英単語同士が
-          // 隙間なくくっついて見える不具合があった。→ &nbsp;に置き換えて
-          // 一度解消したが、依頼AM（2026-09-23）で英語の.phraseをnowrap扱いから
-          // 外した後は逆効果になった：&nbsp;は「改行してはいけない空白」なので、
-          // 英文中の単語間の折り返し可能点を全滅させてしまい、結果としてどこにも
-          // 空白由来の改行点が無い状態になり、ブラウザが已むを得ず文字と文字の
-          // 間で改行する（＝「変なところで改行」）原因になっていた。
-          // 空白は<span>で包まず生の文字のまま出す——inline-blockの箱の中身が
-          // 空白1文字だけの時にだけ幅0へ潰れるのが元の不具合であり、隣接する
-          // .char同士の"間"に浮かぶ生の空白は普通に幅を持ち、かつ改行可能点にも
-          // なる（.charのtransition-delayは空白には不要なのでこれで問題ない）
-          if (ch === ' ') { i++; return ' '; }
-          var span = '<span class="char" style="transition-delay:' + (i * stepMs) + 'ms">' + ch + '</span>';
-          i++;
-          return span;
+        // 微修正（2026-09-23・本人指摘「英語版の字幕がまだ変なところで改行される」）：
+        // 前回の対処（空白を生の文字のまま出す）だけでは直っていなかった。
+        // 実機検証用に切り出した最小再現で判明した真因＝「.charが1文字ずつ
+        // display:inline-blockになっていると、単語の"内部"（文字と文字の間、
+        // 空白を挟まない箇所）にもブラウザが改行を入れてしまう」——
+        // 隣接するinline-block要素はHTML上に空白が無くても、ブラウザの行分割
+        // アルゴリズムはその間を改行可能点として扱う（"the"がt/heで割れて
+        // 再現した）。空白の有無を直しただけでは、単語の途中で割れる方の
+        // 問題には触れていなかった。
+        // 対処＝句のさらに内側に「単語」の層を追加する。空白で区切った
+        // 各単語を<span class="word">（display:inline-block; white-space:nowrap）
+        // で包み、その内側で.charへ分割する。white-space:nowrapは
+        // inline-blockが作る内部の整形コンテキストに効くため、単語の中の
+        // 文字同士は改行できなくなる。単語と単語の間は生の空白のままなので、
+        // 折り返してよいのは単語の境目だけになる（日本語の句は元々空白を
+        // 持たないため、句1つがそのまま1つの"単語"としてnowrap化されるだけで、
+        // 従来の挙動と変わらない）
+        var wordsHtml = phrase.split(/( )/).map(function(token){
+          if (token === '') return '';
+          if (token === ' ') { i++; return ' '; }
+          var charsHtml = Array.from(token).map(function(ch){
+            var span = '<span class="char" style="transition-delay:' + (i * stepMs) + 'ms">' + ch + '</span>';
+            i++;
+            return span;
+          }).join('');
+          return '<span class="word">' + charsHtml + '</span>';
         }).join('');
-        return '<span class="phrase">' + charsHtml + '</span>';
+        return '<span class="phrase">' + wordsHtml + '</span>';
       }).join('');
     }).join('<br>');
     return i;

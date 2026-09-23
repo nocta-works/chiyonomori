@@ -1138,24 +1138,23 @@
   // 微修正（2026-09-23・本人指摘）：「Tokyo Lv2にカーソルを合わせた時の
   // ズームをもう少し近づけてほしい。Lv3と差がない」。Lv2の社の分布がLv3と
   // さほど変わらない広さのため、flyToBoundsが自然に選ぶズーム値だと両者の
-  // 見た目がほぼ同じになっていた。Lv2だけ、fitBoundsが本来選ぶズームより
-  // 1段階余分に寄せる（自然なズーム値をmap.getBoundsZoom()で求めてから
-  // +1して明示的にflyToする）
-  var LEVEL_ZOOM_BOOST = { L2: 1 };
+  // 見た目がほぼ同じになっていた。
+  // ⚠️最初は「自然なズーム値をmap.getBoundsZoom()で求めてから+1して明示的に
+  // flyTo」で対処したが、+1（整数1段階）は寄せすぎで、Lv2の構成社である
+  // 武蔵一宮氷川神社がビューポートの外に切れて見えなくなる本人指摘（致命的）を
+  // 受けて撤回。**ズーム値を直接動かすのではなく、flyToBoundsのpaddingを
+  // 小さくする方式に変更**——paddingは「boundsの外側にどれだけ余白を残すか」
+  // なので、bounds自体（＝Lv2の全構成社を含む範囲）は変えずに余白だけ削れる。
+  // これなら理屈上、構成社が枠の外に切れることが起こり得ない
+  var LEVEL_PADDING = { L2: [10, 10] };
   function flyToAreaLayer(file, level){
     var entry = areaLayerByLevel[file] && areaLayerByLevel[file][level];
     if (!entry || !map) return;
-    var boost = LEVEL_ZOOM_BOOST[level] || 0;
     if (entry.shape.type === 'rect') {
-      if (boost) {
-        var bounds = L.latLngBounds(entry.shape.bounds);
-        var z = map.getBoundsZoom(bounds, false, L.point(40, 40)) + boost;
-        map.flyTo(bounds.getCenter(), z, { duration:0.6 });
-      } else {
-        map.flyToBounds(entry.shape.bounds, { padding:[40,40], duration:0.6 });
-      }
+      var padding = LEVEL_PADDING[level] || [40, 40];
+      map.flyToBounds(entry.shape.bounds, { padding: padding, duration:0.6 });
     } else {
-      map.flyTo(entry.shape.center, Math.max(map.getZoom(), 9) + boost, { duration:0.6 });
+      map.flyTo(entry.shape.center, Math.max(map.getZoom(), 9), { duration:0.6 });
     }
   }
   function wireAreaChips(){
