@@ -175,6 +175,23 @@
   .intro-video-caption.intro-video-caption-show .char {
     opacity: 1; transform: translateY(0);
   }
+  /* 依頼AM-1（2026-09-23）：句の途中で改行させない（折り返してよいのは句の
+     境目だけ）。オープニングの全字幕（タグライン・動画キャプション・
+     固定キャプション・トリプティック・④宣言）に共通で適用する。
+     🔴display:inline-block + white-space:nowrapは日本語だけに限定する。
+     英語は1文＝1句になることが多く（例＝"One step off the street, and
+     the sound changes."）、句をinline-block化すると（a）nowrapで画面外へ
+     はみ出す（375pxで実機確認）（b）nowrapを外しても、inline-blockな時点で
+     .caption-badgeのbox-decoration-break:cloneが機能しなくなる（inline-block
+     化した1つの句が内部で複数行に折り返すと、その句を包む外側のinline要素
+     からは「1行の子」にしか見えず、背景が最後の行にしか付かなかった）。
+     英語はもともと単語の間でしか改行されないため、句をただのinline（spanの
+     既定値）のままにしても「句の途中で崩れる」という元の不具合は起きない */
+  html:lang(ja) .intro-tagline .phrase, html:lang(ja) .intro-video-caption .phrase,
+  html:lang(ja) .fixed-caption .phrase, html:lang(ja) .triptych-caption .phrase,
+  html:lang(ja) .declaration-text .phrase {
+    display: inline-block; white-space: nowrap;
+  }
 
   .intro-gate {
     position: absolute; top: 0; bottom: 0; width: 50%; z-index: 2;
@@ -223,6 +240,18 @@
     opacity: 0; transition: opacity 1s ease;
   }
   .fixed-caption.fixed-caption-show { opacity: 1; }
+  /* 依頼AM-2（2026-09-23）：.photo-shrine-name-badgeと同じ手法（文字の幅だけに
+     背景を敷く。全幅の黒帯にはしない）。.intro-video-captionは.ivc-line自体が
+     行ごとの独立したinline要素なので、追加のspanを挟まずここへ直接適用する。
+     🔴AM-1で句ごとの改行になった結果、幅の狭い画面では1つのバッジが2行に
+     折り返すことがある。box-decoration-break:cloneが無いと、その2行目が
+     「1行目の左端と2行目の右端だけ角丸の崩れた箱」になるため必ず付ける */
+  .fixed-caption .caption-badge, .triptych-caption .caption-badge,
+  .intro-video-caption .ivc-line {
+    background: rgba(10,6,2,0.6); padding: 9px 22px; border-radius: 6px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  }
 
   /* 依頼AE-2④（2026-09-19確定）：写真区画を抜けた直後に置く「一過性の宣言」。
      他のscroll-slideと同じreveal-slide機構でフェードインする。
@@ -773,6 +802,39 @@
     el.textContent = el.getAttribute('data-en');
   });
 })();
+// 依頼AM-1（2026-09-23）：字幕が句の途中で改行されて崩れる不具合の対処。
+// 句読点（、。／）や英文のピリオドの直後だけを区切り位置とし、その区切りごとに
+// <span class="phrase">（display:inline-block; white-space:nowrap、CSSは
+// .intro-tagline .phrase 等で定義）へ包む。句の内部では改行できなくなるため、
+// 折り返してよいのは句と句の間だけになる。オープニングの全字幕（タグライン・
+// 動画キャプション・固定キャプション・トリプティック・④宣言）に共通で使う関数
+// なので、どのIIFEからも呼べるようグローバル関数として定義する
+function splitPhrases(text) {
+  // 日本語＝「、」「。」「／」の直後（ゼロ幅）。英語＝ピリオド＋空白の直後
+  // （空白を区切り側に含めて消費するので、句の末尾に半角スペースが残る＝
+  // phrase同士がくっつかず、なおかつ句の内部に空白由来の改行点が増えない）
+  return text.split(/(?<=[、。／])|(?<=\.\s)/).filter(function(p){ return p.length > 0; });
+}
+function wrapPhrasesOnly(el) {
+  if (!el) return;
+  el.innerHTML = splitPhrases(el.innerHTML).map(function(p){
+    return '<span class="phrase">' + p + '</span>';
+  }).join('');
+}
+// 依頼AM-2（2026-09-23）：本人「動画・静止画・トリプティックの文字が背景で
+// 分かりにくい」。.photo-shrine-name-badgeと同じ手法（文字の幅だけに背景を
+// 敷く）を.caption-badgeとして適用する。対象は.intro-video-caption（CSS側で
+// .ivc-lineへ直接適用）／.fixed-caption／.triptych-caption の3つのみ
+// （.declaration-textは対象外＝AM-2の指定どおり）
+function wrapPhrasesWithBadge(el) {
+  if (!el) return;
+  var phrasesHtml = splitPhrases(el.innerHTML).map(function(p){
+    return '<span class="phrase">' + p + '</span>';
+  }).join('');
+  el.innerHTML = '<span class="caption-badge">' + phrasesHtml + '</span>';
+}
+wrapPhrasesWithBadge(document.getElementById('fixed-caption'));
+wrapPhrasesOnly(document.querySelector('.declaration-text'));
 (function(){
   // ②③のキャッチコピー・神社名を1文字ずつ<span>に分割し、transition-delayを
   // ずらして「順番にゆっくり表示される」演出にする（本人指定・2026-09-08）。
@@ -781,15 +843,21 @@
   function wrapCharsReveal(el, stepMs, startIndex) {
     var i = startIndex || 0;
     el.innerHTML = el.innerHTML.split('<br>').map(function(line){
-      return Array.from(line).map(function(ch){
-        // 本人指摘（2026-09-20・EN版で発覚）：半角スペースをそのまま
-        // <span class="char">の中身にすると、display:inline-blockの
-        // 単独スペースはブラウザに幅0へ折りたたまれ、英単語同士が
-        // 隙間なくくっついて見える不具合があった。&nbsp;に置き換えて解消
-        var display = ch === ' ' ? '&nbsp;' : ch;
-        var span = '<span class="char" style="transition-delay:' + (i * stepMs) + 'ms">' + display + '</span>';
-        i++;
-        return span;
+      // 依頼AM-1（2026-09-23）：.charへ分割する前に句（、。／・英文のピリオド）
+      // 単位へ分けておく。.char分割を先にやってしまうと句の外側で行われる
+      // ことになり、.phraseのinline-blockが効かなくなるため順序が重要
+      return splitPhrases(line).map(function(phrase){
+        var charsHtml = Array.from(phrase).map(function(ch){
+          // 本人指摘（2026-09-20・EN版で発覚）：半角スペースをそのまま
+          // <span class="char">の中身にすると、display:inline-blockの
+          // 単独スペースはブラウザに幅0へ折りたたまれ、英単語同士が
+          // 隙間なくくっついて見える不具合があった。&nbsp;に置き換えて解消
+          var display = ch === ' ' ? '&nbsp;' : ch;
+          var span = '<span class="char" style="transition-delay:' + (i * stepMs) + 'ms">' + display + '</span>';
+          i++;
+          return span;
+        }).join('');
+        return '<span class="phrase">' + charsHtml + '</span>';
       }).join('');
     }).join('<br>');
     return i;
@@ -817,7 +885,9 @@
   // 本人指定（2026-09-19）：一番始めのローディング（①ロード画面）だけを2倍長く。
   // ②動画キャプションの文字送り速度（CHAR_STEP）は共有定数なので触らない
   // （触ると③以降の速度も一緒に変わってしまう）——①専用のステップ・バッファを別に持つ
-  var INTRO_SPEED = 2;
+  // 依頼AM-1（2026-09-23）：本人「文字が順番に現れるがちょっと早い。1.5倍延ばして」
+  // ＝2 → 3（INTRO_CHAR_STEPが240ms→360ms）
+  var INTRO_SPEED = 3;
   var INTRO_CHAR_STEP = CHAR_STEP * INTRO_SPEED;
   // 本人指摘（2026-09-20・EN版で確認）：英語訳は文字数が日本語よりずっと多く
   // （例＝JA15文字に対しEN64文字）、固定の文字間隔（INTRO_CHAR_STEP）のままだと
@@ -825,7 +895,8 @@
   // いた（64文字×240ms＝15秒超）。文字数に関わらず「全文字が出そろうまで」の
   // 目標時間をほぼ一定にし、文字数が多いほど1文字あたりの間隔を自動的に詰める
   // （短い文言ではINTRO_CHAR_STEPが上限になるので、従来どおりの間隔を保つ）
-  var TAGLINE_SPREAD_MS = 2500;
+  // 依頼AM-1（2026-09-23）：INTRO_SPEEDと同じ1.5倍＝2500 → 3750
+  var TAGLINE_SPREAD_MS = 3750;
   var taglineLen = Array.from(tagline.textContent).length;
   var taglineStep = taglineLen > 1 ? Math.min(INTRO_CHAR_STEP, TAGLINE_SPREAD_MS / (taglineLen - 1)) : INTRO_CHAR_STEP;
   var taglineCharCount = wrapCharsReveal(tagline, taglineStep);
@@ -1091,6 +1162,7 @@ function initScrollSlideReveal() {
     var section = container.querySelector('.triptych-section');
     var cols = container.querySelectorAll('.triptych-col');
     var caption = container.querySelector('.triptych-caption');
+    wrapPhrasesWithBadge(caption); // 依頼AM-1/AM-2：言語確定後に句分割＋バッジ適用
     // 本人指定（2026-09-20）：トリプティック（3列同時表示）には社名ラベルを
     // 載せない。フォールバック（1枚ずつのスクロール）側だけに残す——依頼AH-2
     // 当初はここにも列ごとの社名ラベルを付けていたが、3枚のうち一部しか

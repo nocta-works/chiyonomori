@@ -406,6 +406,45 @@
   }
   .shrine-dropdown-name { font-size: 13px; color: var(--tan-text); white-space: nowrap; }
 
+  /* 依頼AM-4（2026-09-23）：「エリアが行、レベルがチップ」の表。エリアの数だけ
+     .area-rowが増える設計にしておく（今は東京の1行だけ）。パネル自体の
+     min-widthは230pxだと3チップが窮屈なので、この行だけ少し広く取る */
+  #area-dropdown-panel { min-width: 300px; }
+  .area-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; padding: 8px 6px; }
+  .area-row-name { font-size: 13px; color: var(--tan-text); font-weight: 600; flex-shrink: 0; }
+  .area-row-chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto; }
+  .area-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 10px; border-radius: 14px; border: 1px solid var(--border-4);
+    background: rgba(0,0,0,0.22); color: var(--tan-text); font-family: inherit;
+    font-size: 11px; letter-spacing: 0.02em; cursor: pointer; white-space: nowrap;
+    transition: border-color var(--dur-slow), color var(--dur-slow), background var(--dur-slow);
+  }
+  /* カーソルを合わせる／キーボードでフォーカス／クリックで固定、いずれも
+     同じ強調に見せる（本人指定＝チップと枠の対応が説明なしで分かること） */
+  .area-chip:hover, .area-chip:focus-visible, .area-chip.active {
+    border-color: var(--gold); color: var(--gold); background: rgba(var(--gold-glow-rgb),0.14);
+    outline: none;
+  }
+  .area-chip-line { width: 18px; height: 0; border-top: var(--gold) solid; flex-shrink: 0; }
+  /* Lv1＝実線・太め／Lv2＝破線／Lv3＝点線。色は3つとも--gold（濃さで内→外を
+     表す既存の考え方＝layerStylesの色分けはそのまま）。地図の囲いと同じ線種を
+     チップ側にも小さく見せることで、説明なしで対応が分かるようにする */
+  .area-chip-line-L1 { border-top-width: 3px; border-top-style: solid; }
+  .area-chip-line-L2 { border-top-width: 2px; border-top-style: dashed; }
+  .area-chip-line-L3 { border-top-width: 2px; border-top-style: dotted; }
+  .area-row-link {
+    flex: 1 1 100%; text-align: right; margin-top: 4px; padding-top: 8px;
+    border-top: 1px solid var(--border-4);
+    font-size: 11.5px; color: var(--gold-2); text-decoration: none;
+  }
+  .area-row-link:hover { color: var(--gold); }
+  @media (max-width: 480px) {
+    /* モバイル＝チップが横に入りきらないので、エリア名の下に折り返す */
+    .area-row { flex-direction: column; align-items: flex-start; }
+    .area-row-chips { width: 100%; }
+  }
+
   /* タグフィルター（本人指定・2026-09-10：海外版は神宮・大社・一宮・二宮の4タグに厳選。
      見た目・構成は本番index.htmlの.controls-tagsに合わせるが、参拝記録・令制国絞り込み・
      達成状況モーダルはこの地図には持ち込まない） */
@@ -873,19 +912,37 @@
     return currentLang === 'en' ? shrine.nameEn : shrine.name;
   }
   var iconCache = {};
+  // 依頼AM-3（2026-09-23）：本人「東京エリアにズームアップしたとき、明治神宮が
+  // 名社アイコンで被ってる。神宮、一宮、大社だけ少しだけ大きいアイコンで
+  // 目立たせれないか」。この3タグだけiconSizeを約1.18倍（34×42→40×50）にする。
+  // 🔴transform:scale()は使わない（09-11の幹バグ＝LeafletのtransformとCSSの
+  // transformが衝突してマーカー位置がズレる件が依頼X-1で解消済み。再発させない）
+  // ので、SVGのviewBoxはそのままでwidth/height属性だけ変えて大きさを出す。
+  // サイズはタグで一意に決まるため、既存のキー（currentLang+'_'+tag）で
+  // サイズも自動的に区別される（tagが同じなら常に同じサイズになる）
+  var BIG_ICON_TAGS = { jingu: true, taisha: true, ichi: true };
   function getIcon(tag) {
     var key = currentLang + '_' + tag;
     if (iconCache[key]) return iconCache[key];
+    var big = !!BIG_ICON_TAGS[tag];
+    var w = big ? 40 : 34, h = big ? 50 : 42;
+    var anchor = big ? [20, 48] : [17, 40];
+    var popupAnchor = big ? [0, -50] : [0, -42];
     var c = TAG_CONFIG[tag];
     var ch = c.char[currentLang];
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="34" height="42" viewBox="0 0 34 42">' +
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 34 42">' +
       '<path d="M17 2C9 2 2 9 2 17c0 10 15 23 15 23S32 27 32 17C32 9 25 2 17 2z" fill="' + c.color + '" fill-opacity="0.9" stroke="' + c.border + '" stroke-width="1.5"/>' +
       '<circle cx="17" cy="17" r="9" fill="rgba(255,255,255,0.13)"/>' +
       '<text x="17" y="22" text-anchor="middle" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',serif" font-size="' + (ch.length > 1 ? 10 : 12) + '" font-weight="bold" fill="white">' + ch + '</text>' +
       '</svg>';
-    iconCache[key] = L.divIcon({ html: svg, className: '', iconSize: [34,42], iconAnchor: [17,40], popupAnchor: [0,-42] });
+    iconCache[key] = L.divIcon({ html: svg, className: '', iconSize: [w, h], iconAnchor: anchor, popupAnchor: popupAnchor });
     return iconCache[key];
   }
+  // 依頼AM-3：重なり順。大きくするだけでは、後から描かれた名社が上に乗って
+  // しまい被りが解消しないため、PRIORITY（jingu>taisha>ichi>ni>meisha>…）から
+  // zIndexOffsetを与える。段階表示（神宮→大社→一宮→二宮→名社の順で出現）とも
+  // 整合する＝後から出る名社がzIndexOffsetの低さで神宮の下に来る
+  function markerZIndex(tag) { return (PRIORITY[tag] || 0) * 100; }
   function buildPopupContent(s) {
     var t = CHROME_TEXT[currentLang];
     var badges = s.tags.slice().sort(function(a,b){ return PRIORITY[b]-PRIORITY[a]; })
@@ -1007,35 +1064,107 @@
         '</a>';
     }).join('');
   }
+  // 依頼AM-4（2026-09-23）：本人「東京エリアタグを押した時、Lv1〜Lv3が展開され、
+  // カーソルを合わせると地図の範囲とズームでイコールになるのが分かる表現に」。
+  // 「エリアが行、レベルがチップ」の表にする＝エリアを足すたびに行が1本増える
+  // だけの設計にしておく（AREA_SHRINESのlayersを読むだけなので、京都を戻す日は
+  // データを足すだけで表示が増える）
+  var LEVEL_CHIP_TEXT = {
+    L1: { ja: 'Lv1 歩いて回れる', en: 'Lv1 · Walkable' },
+    L2: { ja: 'Lv2 電車で一時間', en: 'Lv2 · One hour by train' },
+    L3: { ja: 'Lv3 半日かけて',   en: 'Lv3 · Half a day' }
+  };
   function renderAreaDropdown(){
     var visible = AREA_PAGES.filter(function(a){ return VISIBLE_AREA_FILES.indexOf(a.file) !== -1; });
     var label = document.getElementById('area-dropdown-label');
-    var toggle = document.getElementById('area-dropdown-toggle');
-    var caret = toggle ? toggle.querySelector('.shrine-dropdown-caret') : null;
     var panel = document.getElementById('area-dropdown-panel');
-    // 依頼AH-5：見えているエリアが1つだけなら、ドロップダウンではなく単独タグに
-    // する（クリックで直接そのエリアページへ）。2つ以上に戻ったら自動的に
-    // 通常のドロップダウン表示へ戻る
-    if (visible.length === 1) {
-      var only = visible[0];
-      if (label) label.textContent = '📍 ' + only.areaLabel[currentLang];
-      if (caret) caret.style.display = 'none';
-      if (toggle) toggle.setAttribute('data-single-area-file', only.file);
-      if (panel) panel.innerHTML = '';
-      return;
-    }
-    if (caret) caret.style.display = '';
-    if (toggle) toggle.removeAttribute('data-single-area-file');
-    if (label) label.textContent = '📍 ' + AREA_LABEL[currentLang];
+    // 依頼AH-5の名残＝表示中のエリアが1つだけなら見出しにそのエリア名を出す。
+    // 2つ以上になったら「エリア」に切り替える（AREA_PAGESの定義数ではなく、
+    // 実際に見えているvisibleの数で判定＝既存のAH-5判定をそのまま踏襲）
+    if (label) label.textContent = '📍 ' + (visible.length === 1 ? visible[0].areaLabel[currentLang] : AREA_LABEL[currentLang]);
     if (!panel) return;
-    panel.innerHTML = visible.map(function(s){
-      return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '" data-area-file="' + s.file + '">' +
-        '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">📍</span>' +
-        '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
-        '</a>';
+    panel.innerHTML = visible.map(function(a){
+      var def = AREA_SHRINES[a.file];
+      var layers = (def && def.layers) ? def.layers : null;
+      // ⚠️このパネルはrenderAreaDropdown()が言語切替のたびに丸ごと作り直す
+      // （applyLang()内の[data-en]一斉置換より後に呼ばれるため、data-enに
+      // 頼ると新しく作った中身には反映されない＝実機で発覚）。他の項目と同じく
+      // currentLangで直接その場の言語を選んで文字列を組み立てる
+      var chipsHtml = layers ? layers.map(function(l){
+        var text = LEVEL_CHIP_TEXT[l.key];
+        return '<button type="button" class="area-chip" data-area-file="' + a.file + '" data-level="' + l.key + '">' +
+          '<span class="area-chip-line area-chip-line-' + l.key + '"></span>' +
+          '<span>' + text[currentLang] + '</span>' +
+          '</button>';
+      }).join('') : '';
+      // 確定文言＝「東京のページへ →」/「To the Tokyo page →」。将来エリアが
+      // 増えた時も同じ形で機械的に作れるよう、エリア名を差し込んで生成する
+      var linkText = currentLang === 'en'
+        ? ('To the ' + a.name.en + ' page →')
+        : (a.name.ja + 'のページへ →');
+      return '<div class="area-row" data-area-file="' + a.file + '">' +
+        '<span class="area-row-name">' + a.name[currentLang] + '</span>' +
+        '<div class="area-row-chips">' + chipsHtml + '</div>' +
+        '<a class="area-row-link" href="' + withTagsQuery(a.file) + '">' + linkText + '</a>' +
+        '</div>';
     }).join('');
   }
-  function renderShrineDropdown(){ renderBasicsDropdown(); renderAreaDropdown(); }
+  // チップのhover-intent（約200ms）＋クリックでの固定（pin）。
+  // 🔴transformは使わない（線の強調はweight/opacity/dashArrayの変更のみ。AM-3と同じ理由）
+  function setChipLayerStyle(file, level, hovered){
+    var entry = areaLayerByLevel[file] && areaLayerByLevel[file][level];
+    if (!entry) return;
+    entry.layer.setStyle(hovered ? layerHoverStyles[level] : layerStyles[level]);
+  }
+  function restoreAreaChipStyles(file){
+    var def = AREA_SHRINES[file];
+    if (!def || !def.layers) return;
+    def.layers.forEach(function(l){
+      var isPinned = pinnedAreaChip && pinnedAreaChip.file === file && pinnedAreaChip.level === l.key;
+      setChipLayerStyle(file, l.key, isPinned);
+    });
+  }
+  function flyToAreaLayer(file, level){
+    var entry = areaLayerByLevel[file] && areaLayerByLevel[file][level];
+    if (!entry || !map) return;
+    if (entry.shape.type === 'rect') {
+      map.flyToBounds(entry.shape.bounds, { padding:[40,40], duration:0.6 });
+    } else {
+      map.flyTo(entry.shape.center, Math.max(map.getZoom(), 9), { duration:0.6 });
+    }
+  }
+  function wireAreaChips(){
+    document.querySelectorAll('.area-chip').forEach(function(chip){
+      var file = chip.getAttribute('data-area-file');
+      var level = chip.getAttribute('data-level');
+      function onEnter(){
+        if (chipHoverTimer) clearTimeout(chipHoverTimer);
+        setChipLayerStyle(file, level, true);
+        // 通過で地図が暴れないよう、合わせてから約200ms待ってから飛ぶ
+        chipHoverTimer = setTimeout(function(){ flyToAreaLayer(file, level); chipHoverTimer = null; }, 200);
+      }
+      function onLeave(){
+        if (chipHoverTimer) { clearTimeout(chipHoverTimer); chipHoverTimer = null; }
+        // pin済みの層があればその強調へ戻す。無ければ全層を既定の見た目へ
+        restoreAreaChipStyles(file);
+      }
+      chip.addEventListener('mouseenter', onEnter);
+      chip.addEventListener('mouseleave', onLeave);
+      chip.addEventListener('focus', onEnter);
+      chip.addEventListener('blur', onLeave);
+      chip.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        if (chipHoverTimer) { clearTimeout(chipHoverTimer); chipHoverTimer = null; }
+        pinnedAreaChip = { file: file, level: level };
+        document.querySelectorAll('.area-chip.active').forEach(function(c){ c.classList.remove('active'); });
+        chip.classList.add('active');
+        restoreAreaChipStyles(file);
+        flyToAreaLayer(file, level); // クリック／タップは即座に飛ぶ（hover-intentの待ちなし）
+      });
+    });
+  }
+  function renderShrineDropdown(){ renderBasicsDropdown(); renderAreaDropdown(); wireAreaChips(); }
   renderShrineDropdown();
   // 2つのドロップダウンをそれぞれ独立して開閉できるようにする（片方を開くと
   // もう片方は閉じる。外側クリックでどちらも閉じる）
@@ -1050,33 +1179,32 @@
     closeAllDropdowns();
     d.classList.toggle('open', willOpen);
   });
+  // 依頼AM-4（2026-09-23）：「タグをクリックで東京.htmlへ」（依頼AH-5）はこれで
+  // 上書き。クリックは「展開」に変わり、遷移はパネル下端の「東京のページへ→」
+  // リンクへ移る（普通の<a href>なので特別なJSは要らない）。開いた時点で
+  // 表示中のエリアの囲い（Lv1〜3の円）を描いておき、チップのhoverで
+  // その中の1層をさらに強調する。閉じた時は囲いも消す
   document.getElementById('area-dropdown-toggle').addEventListener('click', function(e){
     e.stopPropagation();
-    // 本人指摘（2026-09-20）：「東京エリア」クリックは直接ページ遷移ではなく、
-    // 従来のドロップダウン項目クリックと同じ表現（囲い線を描いてズーム→
-    // 浮かび上がるCTAピルをクリックして初めてページへ）に戻す
-    var singleFile = this.getAttribute('data-single-area-file');
-    if (singleFile) { closeAllDropdowns(); focusArea(singleFile); return; }
     var d = document.getElementById('area-dropdown');
     var willOpen = !d.classList.contains('open');
     closeAllDropdowns();
     d.classList.toggle('open', willOpen);
+    if (willOpen) {
+      // ⚠️複数エリアが同時に見える日が来たら、focusArea()内の
+      // clearAreaEnclosure()が前のエリアの囲いを消してしまうため、
+      // 同時描画できるよう分離する必要がある。今はVISIBLE_AREA_FILESが
+      // 1件だけなのでこの単純な形で足りる
+      var visible = AREA_PAGES.filter(function(a){ return VISIBLE_AREA_FILES.indexOf(a.file) !== -1; });
+      if (visible[0]) focusArea(visible[0].file);
+    } else {
+      clearAreaEnclosure();
+    }
   });
   document.addEventListener('click', function(e){
     dropdowns.forEach(function(d){
       if (d && d.classList.contains('open') && !d.contains(e.target)) d.classList.remove('open');
     });
-  });
-  // 実行順F（依頼P-2・2026-09-13・本人指摘「選んだエリアを選択した時、地図上で
-  // そのエリアが囲われる表現は可能か」）：エリア項目のクリックは即座にページ遷移
-  // させず、まず地図上に囲いを描いてズームし、上部に出てくるCTAピルから
-  // 実際のエリアページへ進めるようにする（focusAreaは下でmap/markerList定義後に宣言）
-  document.getElementById('area-dropdown-panel').addEventListener('click', function(e){
-    var item = e.target.closest('[data-area-file]');
-    if (!item) return;
-    e.preventDefault();
-    closeAllDropdowns();
-    focusArea(item.getAttribute('data-area-file'));
   });
 
   // タグフィルター（本人指定・2026-09-10：神宮・大社・一宮・二宮の4タグのみ。
@@ -1290,6 +1418,11 @@
     var cta = document.getElementById('area-enclosure-cta');
     if (cta) cta.classList.remove('visible');
     currentFocusedAreaPage = null;
+    areaLayerByLevel = {};
+    // 依頼AM-4：チップのpin状態・保留中のhover-intentタイマーも一緒にリセットする
+    pinnedAreaChip = null;
+    if (chipHoverTimer) { clearTimeout(chipHoverTimer); chipHoverTimer = null; }
+    document.querySelectorAll('.area-chip.active').forEach(function(c){ c.classList.remove('active'); });
   }
   function drawAreaShape(shape, style) {
     var layer;
@@ -1332,6 +1465,32 @@
     areaEnclosureLayers.push(label);
     areaLevelLabels.push({ marker: label, areaFile: areaFile, levelKey: levelKey });
   }
+  // 本人指摘（2026-09-13）＝「囲いの中が少し違いが分かるような表現、色が
+  // 濃くなるなど」。不透明度の差だけでは分かりにくいため、色調そのものも
+  // 内側ほど鮮やかな金・外側ほど落ち着いた金に変えた（サイトの配色トークン
+  // --gold/--gold-2/--gold-mutedをそのまま流用し、配色の統一感は保つ）。
+  // 依頼AM-4（2026-09-23）：チップのhover/pinからも同じスタイルを使うため
+  // focusArea()の外（モジュールスコープ）へ引き上げた
+  var layerStyles = {
+    L1: { color:'#f5d08a', weight:3,   opacity:1,    fillColor:'#f5d08a', fillOpacity:0.16 },
+    L2: { color:'#e0b060', weight:2,   opacity:0.75, fillColor:'#e0b060', fillOpacity:0.09 },
+    L3: { color:'#907040', weight:1.5, opacity:0.45, fillColor:'#907040', fillOpacity:0.05 }
+  };
+  // 本人指摘（2026-09-15）：ホバーで表示するカーソル追従テキストは不要、
+  // 「エリアの色が変わる」方が良いとのこと。囲いにmouseover/mouseoutで
+  // setStyle()し、塗り・線を一段濃くする（触れているLvがどれかが一目で
+  // 分かる）。内側ほど最後に描く＝ホバー判定も内側が優先されるのは
+  // クリック判定と同じ理屈。
+  var layerHoverStyles = {
+    L1: { weight:4,   opacity:1,    fillOpacity:0.30 },
+    L2: { weight:3,   opacity:1,    fillOpacity:0.20 },
+    L3: { weight:2.5, opacity:0.85, fillOpacity:0.14 }
+  };
+  // 依頼AM-4：チップからLeafletの囲いレイヤーを引けるよう、file→level→layerで
+  // 保持する。clearAreaEnclosure()でリセットする
+  var areaLayerByLevel = {};
+  var pinnedAreaChip = null; // { file, level } — クリック/タップで固定された層
+  var chipHoverTimer = null; // hover-intent（約200ms）で保留中のflyToBounds
   function focusArea(file) {
     if (!map) return;
     var def = AREA_SHRINES[file];
@@ -1347,36 +1506,19 @@
       // 描画とクリック判定は逆順（外側から）でないと、外側L3が最後に描かれて
       // 内側L1の上に乗ってしまい、L1の領域をクリックしてもL3が反応してしまう。
       // そのため描画直前にreverse()してL3→L2→L1の順にする
-      // 本人指摘（2026-09-13）＝「囲いの中が少し違いが分かるような表現、色が
-      // 濃くなるなど」。不透明度の差だけでは分かりにくいため、色調そのものも
-      // 内側ほど鮮やかな金・外側ほど落ち着いた金に変えた（サイトの配色トークン
-      // --gold/--gold-2/--gold-mutedをそのまま流用し、配色の統一感は保つ）
-      var layerStyles = {
-        L1: { color:'#f5d08a', weight:3,   opacity:1,    fillColor:'#f5d08a', fillOpacity:0.16 },
-        L2: { color:'#e0b060', weight:2,   opacity:0.75, fillColor:'#e0b060', fillOpacity:0.09 },
-        L3: { color:'#907040', weight:1.5, opacity:0.45, fillColor:'#907040', fillOpacity:0.05 }
-      };
-      // 本人指摘（2026-09-15）：ホバーで表示するカーソル追従テキストは不要、
-      // 「エリアの色が変わる」方が良いとのこと。囲いにmouseover/mouseoutで
-      // setStyle()し、塗り・線を一段濃くする（触れているLvがどれかが一目で
-      // 分かる）。内側ほど最後に描く＝ホバー判定も内側が優先されるのは
-      // クリック判定と同じ理屈。
-      var layerHoverStyles = {
-        L1: { weight:4,   opacity:1,    fillOpacity:0.30 },
-        L2: { weight:3,   opacity:1,    fillOpacity:0.20 },
-        L3: { weight:2.5, opacity:0.85, fillOpacity:0.14 }
-      };
       // 依頼Z-2①（2026-09-14）＝カーソル追従のLv表示は廃止し、枠の内側左上に
       // 常時表示の固定ラベルを置く（マーカーホバーの社名表示とカーソル上の
       // 表示先が競合するため。本人指定）。
       var levelNum = { L1:1, L2:2, L3:3 };
       var allIdents = [];
+      areaLayerByLevel[file] = {};
       var drawOrder = def.layers.slice().reverse();
       drawOrder.forEach(function(layerDef){
         var shape = computeAreaShape(layerDef.shrines);
         allIdents = allIdents.concat(layerDef.shrines);
         if (!shape) return;
         var layer = drawAreaShape(shape, layerStyles[layerDef.key]);
+        areaLayerByLevel[file][layerDef.key] = { layer: layer, shape: shape };
         addAreaLevelLabel(layer, file, layerDef.key, (levelNum[layerDef.key] - 1) * 20);
         layer.on('mouseover', function(){ layer.setStyle(layerHoverStyles[layerDef.key]); });
         layer.on('mouseout', function(){ layer.setStyle(layerStyles[layerDef.key]); });
@@ -1544,6 +1686,7 @@
         if (tag !== item._iconTag) {
           var prevName = item.marker._icon ? item.marker._icon.dataset.name : null;
           item.marker.setIcon(getIcon(tag));
+          item.marker.setZIndexOffset(markerZIndex(tag));
           item._iconTag = tag;
           if (item.marker._icon) item.marker._icon.dataset.name = prevName || shrineName(item.shrine);
         }
@@ -1597,7 +1740,9 @@
     updateStats();
     renderSidebarList();
     markerList.forEach(function(item){
-      item.marker.setIcon(getIcon(activeTopTag(item.shrine.tags)));
+      var langTag = activeTopTag(item.shrine.tags);
+      item.marker.setIcon(getIcon(langTag));
+      item.marker.setZIndexOffset(markerZIndex(langTag));
       // 依頼Z-2③：setIconはアイコンのDOM要素を作り直すため、直前に付けた
       // dataset.name（ホバー時の社名表示用）も消える。言語切替のたびに
       // 全マーカーぶん再設定する
@@ -1764,7 +1909,7 @@
       var bounds = [];
       shrines.forEach(function(s){
         var initialTag = activeTopTag(s.tags);
-        var marker = L.marker([s.lat, s.lng], { icon: getIcon(initialTag) })
+        var marker = L.marker([s.lat, s.lng], { icon: getIcon(initialTag), zIndexOffset: markerZIndex(initialTag) })
           .bindPopup(buildPopupContent(s), { className: 'shrine-popup' });
         if (passesFilter(s)) {
           marker.addTo(map);
