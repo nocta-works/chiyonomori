@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>参拝の作法と、授かりもの｜千代の杜</title>
+<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/articles/how-to-visit.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .article-hero {
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+  }
+  .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(24px, 4vw, 34px); color: var(--gold); margin: 0 0 18px; line-height: 1.5;
+  }
+  .article-lead { font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.92; margin: 0; }
+
+  .article-body { max-width: 700px; margin: 0 auto; padding: 0 24px 20px; font-size: 14px; }
+  .article-body h2 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 19px; color: var(--gold); margin: 48px 0 14px; letter-spacing: 0.02em;
+    border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); padding-left: 12px;
+  }
+  .article-body h3 { font-size: 14px; color: var(--gold); opacity: 0.9; margin: 30px 0 10px; letter-spacing: 0.05em; }
+  .article-body p { line-height: 2.05; opacity: 0.9; margin: 0 0 16px; }
+  .article-body ul, .article-body ol { margin: 0 0 16px; padding-left: 1.3em; }
+  .article-body li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
+  .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
+
+  /* 依頼AJ（2026-09-21）：AI生成イラスト（単体・背景なし・平坦な塗り）を
+     部品として組み立てる方式に変更（旧SVG手描きは不採用）。文字は引き続き
+     HTML側のdata-enで持たせ、画像そのものには焼き込まない */
+  .diagram { margin: 30px 0 38px; }
+  .diagram-title { font-size: 13.5px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-note { font-size: 13px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+  .diagram-illust-row { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 18px; }
+  .diagram-illust-wide { width: 220px; height: auto; }
+  .diagram-illust-wide.diagram-illust-hishaku { width: 168px; }
+  /* 🔴10-bow・11-clapはサイト背景（ほぼ黒）に極めて近い暗色シルエットで、
+     そのままだと沈んで見えない（実測RGB≈45,38,34／58,47,40 vs 背景#1a1209）。
+     img要素ではなく、透過PNGをmask-imageとして使い--tan-textで塗り直す。
+     2026-09-21：本人指摘「イラストと文字が小さすぎる」を受け約2割拡大 */
+  .diagram-pose { width: 96px; height: 144px; background-color: var(--tan-text); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: bottom center; mask-position: bottom center; }
+  .diagram-pose-bow { -webkit-mask-image: url('../../assets/illustrations/10-bow.png'); mask-image: url('../../assets/illustrations/10-bow.png'); }
+  .diagram-pose-clap { -webkit-mask-image: url('../../assets/illustrations/11-clap.png'); mask-image: url('../../assets/illustrations/11-clap.png'); }
+  .diagram-steps-text { display: flex; flex-direction: column; gap: 8px; max-width: 460px; margin: 0 auto 4px; padding: 0; list-style: none; }
+  .diagram-steps-text li { font-size: 14px; line-height: 1.6; color: var(--tan-text); opacity: 0.9; }
+  .diagram-compare { display: flex; align-items: center; justify-content: center; gap: 20px; }
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 205px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 185px; }
+  .diagram-illust-label { font-size: 14px; color: var(--tan-text); letter-spacing: 0.05em; }
+  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 105px; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+  .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
+  .article-table th { color: var(--gold); font-weight: 600; opacity: 0.85; white-space: nowrap; }
+  .article-table td:first-child { white-space: nowrap; color: var(--gold); opacity: 0.9; }
+
+  .article-nav {
+    max-width: 700px; margin: 40px auto 0; padding: 0 24px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .article-nav a {
+    flex: 1; min-width: 220px; text-decoration: none; font-size: 12px; line-height: 1.8;
+    border: 1px solid var(--border-4); border-radius: 3px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); color: var(--tan-text); opacity: 0.85;
+    transition: background var(--dur-base) ease;
+  }
+  .article-nav a:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .article-nav-next { text-align: right; }
+  .article-nav-label { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; margin-bottom: 6px; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 20px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  .footer-support a:hover { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .article-hero { padding: 90px 6vw 36px; }
+  }
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/ja/articles/how-to-visit.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/how-to-visit.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html" hreflang="x-default" rel="alternate"/></head>
+<body>
+<a class="back-link" href="../map.html#mock-app" id="back-link">← 地図に戻る</a>
+<div class="lang-toggle"><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html">EN</a><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/ja/articles/how-to-visit.html">日本語</a></div>
+<div class="article-hero">
+<span class="article-eyebrow">初心者向け・記事2／全4本</span>
+<h1 class="article-title">参拝の作法と、授かりもの</h1>
+<p class="article-lead">手順はある。だが<strong>神社に「破門」は無い。</strong>作法を外したことで怒られることもない。<strong>完璧にやることより、静かにしていることの方がずっと重要。</strong>参拝そのものと、その証や持ち帰るもの——2つの節で見る。</p>
+</div>
+<div class="article-body">
+<h2>参拝の作法——間違えても、誰も咎めない</h2>
+<ol>
+<li><strong>鳥居で一礼してからくぐる。</strong> 帰りは振り返ってもう一度</li>
+<li><strong>参道の真ん中を歩かない。</strong> 中央は神の通り道とされる。端を歩く</li>
+<li><strong>手水舎（ちょうずや）</strong>——柄杓1杯の水で全部やる。左手→右手→左手に水を受けて口をすすぐ→もう一度左手→最後に柄を立てて柄杓の柄を流す。<strong>柄杓に直接口をつけない</strong></li>
+<li><strong>拝殿で二礼二拍手一礼。</strong> 賽銭を入れ、鈴があれば鳴らし、2回お辞儀、2回拍手、願い、最後に1回お辞儀。<strong>賽銭の額に決まりはない</strong>（5円玉が好まれるのは「ご縁」との語呂合わせ）</li>
+<li><strong>⚠️例外がある。出雲大社と宇佐神宮は二礼四拍手一礼。</strong>全国共通のつもりでいると外す</li>
+</ol>
+<div class="diagram">
+<p class="diagram-title">手水の手順——柄杓1杯で全部やる</p>
+<div class="diagram-illust-row">
+<img alt="" class="diagram-illust-wide" src="../../assets/illustrations/03-temizuya.png"/>
+<img alt="" class="diagram-illust-wide diagram-illust-hishaku" src="../../assets/illustrations/07-hishaku.png"/>
+</div>
+<ol class="diagram-steps-text">
+<li>①左手を洗う</li>
+<li>②右手を洗う</li>
+<li>③左手に受けて口をすすぐ（柄杓に直接口をつけない）</li>
+<li>④もう一度左手を洗う</li>
+<li>⑤柄を立てて柄杓の柄を流す</li>
+</ol>
+</div>
+<div class="diagram">
+<p class="diagram-title">拝殿での作法——二礼二拍手一礼</p>
+<div class="diagram-illust-row">
+<div class="diagram-pose diagram-pose-bow"></div>
+<div class="diagram-pose diagram-pose-clap"></div>
+<div class="diagram-pose diagram-pose-bow"></div>
+</div>
+<ol class="diagram-steps-text">
+<li>①賽銭を入れる</li>
+<li>②二礼</li>
+<li>③二拍手</li>
+<li>④一礼（願いごとの後）</li>
+</ol>
+<p class="diagram-note">⚠️出雲大社と宇佐神宮だけ、拍手は4回。</p>
+</div>
+<p><strong>やらない方がいいこと</strong>＝神事の最中の撮影／禁止表示のある場所での撮影／社殿の中へ立ち入ること（<strong>そもそも入れない</strong>）</p>
+<p class="article-bridge">参拝を終えたあと、何を受け取り、何を持ち帰るか。</p>
+<h2>御朱印とお守り——買うものではなく、受けるもの</h2>
+<div class="diagram">
+<div class="diagram-compare">
+<div class="diagram-compare-col">
+<img alt="" class="diagram-illust" src="../../assets/illustrations/08-goshuincho.png"/>
+<span class="diagram-illust-label">御朱印</span>
+</div>
+<div class="diagram-compare-divider"></div>
+<div class="diagram-compare-col">
+<img alt="" class="diagram-illust" src="../../assets/illustrations/09-omamori.png"/>
+<span class="diagram-illust-label">お守り</span>
+</div>
+</div>
+</div>
+<p>どれも売り物として扱われていない。値段は付いているが、<strong>「買う」ではなく「受ける」、「売る」ではなく「授ける」</strong>と言う。言い換えの問題に見えて、扱い方が変わってくる。</p>
+<ul>
+<li><strong>御朱印</strong>＝参拝した証として、その場で墨と朱印で書いてもらうもの。<strong>⚠️スタンプラリーではない。必ず先に参拝してから受ける。</strong>専用の御朱印帳が要る（多くの社で買える）。300〜500円程度。<strong>混雑時や書き手がいない社は「書き置き」（あらかじめ書かれた紙）になる</strong></li>
+<li><strong>お守り</strong>＝持ち歩く。<strong>1年で返すのが基本</strong>——古いものは神社に納め、焚き上げてもらう</li>
+<li><strong>お札</strong>＝家に置く。神棚があればそこへ</li>
+<li><strong>⚠️返し方</strong>＝お守りやお札をゴミ箱に入れない。<strong>返す場所（古札納所）が境内にある。</strong>受けた社と違う社でも、たいてい受け付けてもらえる</li>
+<li><strong>海外に持ち帰る場合</strong>＝返しに来られなくても咎められない。感謝して手元に置くか、丁寧に処分すればよい、とされている</li>
+</ul>
+</div>
+<div class="article-nav">
+<a class="article-nav-prev" href="japan-and-shrines.html"><span class="article-nav-label">← 前の記事</span><span>日本と神社</span></a>
+<a class="article-nav-next" href="torii-and-grounds.html"><span class="article-nav-label">次の記事 →</span><span>鳥居と境内</span></a>
+</div>
+<div class="page-footer">
+<div>千代の杜</div>
+<div class="footer-support">
+<a href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank">コーヒーを1杯 ↗</a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">Cookieは使用していません。匿名の訪問数のみ集計します。 <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">プライバシー</a></div></div>
+<script>
+(function(){
+  var tags = new URLSearchParams(location.search).get('tags');
+  var back = document.getElementById('back-link');
+  if (back && tags) {
+    back.setAttribute('href', '../map.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+    if (localStorage.getItem('siteLang') === 'en') applyLang('en');
+  } catch(err){}
+})();
+</script>
+</body>
+</html>

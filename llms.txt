@@ -1,18 +1,24 @@
 # Chiyo no Mori
 
-> An English-language map of Japanese shrines, with the Tokyo area covered in depth (individually written pages with photos, visiting tips, and access directions) while the rest of the country is shown as map markers only. No login required, no ads. Visit records are stored only on the visitor's own device (localStorage).
+> An English-language map of Japanese shrines, with the Tokyo area covered in depth (individually written pages with photos, visiting tips, and access directions) while the rest of the country is shown as map markers only. A Japanese-language edition is available at /ja/. No login required, no ads. Visit records are stored only on the visitor's own device (localStorage).
 
-The site plots shrines on a Leaflet map using GSI (Geospatial Information Authority of Japan) tile data. For Tokyo it provides individually written guides — history, how to get there, what to notice — rather than only linking out to external sources. Four background articles cover the basics for a first-time visitor: what a shrine is and how it differs from a temple, torii gates and what to look for inside the grounds, how to worship, and the kami enshrined at different types of shrines. This is an English-scoped counterpart to the Japanese-language site "Chiyo no Mori" (chiyonomori), covering a subset of its shrine database.
+The site plots shrines on a Leaflet map using GSI (Geospatial Information Authority of Japan) tile data. For Tokyo it provides individually written guides — history, how to get there, what to notice — rather than only linking out to external sources. Four background articles cover the basics for a first-time visitor: what a shrine is and how it differs from a temple, torii gates and what to look for inside the grounds, how to worship, and the kami enshrined at different types of shrines.
+
+## Languages
+
+- English (default): https://nocta-works.github.io/chiyonomori/
+- Japanese: https://nocta-works.github.io/chiyonomori/ja/
+- Every page has an English URL and a Japanese URL under /ja/ with the same path, cross-linked via hreflang.
 
 ## Key pages
 
-- [Map](https://nocta-works.github.io/chiyonomori/map.html): the full shrine map — nationwide markers, with Tokyo shrines opening a detailed page on click
-- [Tokyo area](https://nocta-works.github.io/chiyonomori/area-pages/%E6%9D%B1%E4%BA%AC.html): the Tokyo shrines covered in depth, organized in three concentric layers by how central each is to a typical visit
-- Background articles: [Japan and its shrines](https://nocta-works.github.io/chiyonomori/articles/%E6%97%A5%E6%9C%AC%E3%81%A8%E7%A5%9E%E7%A4%BE.html), [Torii gates and shrine grounds](https://nocta-works.github.io/chiyonomori/articles/%E9%B3%A5%E5%B1%85.html), [How to visit a shrine](https://nocta-works.github.io/chiyonomori/articles/%E5%8F%82%E6%8B%9D%E3%81%AE%E4%BD%9C%E6%B3%95.html), [Kami and classification](https://nocta-works.github.io/chiyonomori/articles/%E7%A5%9E%E3%80%85.html)
-- [sitemap.xml](https://nocta-works.github.io/chiyonomori/sitemap.xml): the 30 pages currently indexed for search
+- Map: https://nocta-works.github.io/chiyonomori/map.html
+- Tokyo area: https://nocta-works.github.io/chiyonomori/areas/tokyo.html
+- Background articles: https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html, https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html, https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html, https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html
+- Sitemap: https://nocta-works.github.io/chiyonomori/sitemap.xml (all English and Japanese pages currently indexed)
 
 ## Scope
 
-- Tokyo: individually written shrine pages (history, photos, visiting tips, access) — the site's main content
+- Tokyo: individually written shrine pages (history, photos, visiting tips, access) — the site's main content. Shrines covered: 三峯神社、代々木八幡宮、伊勢山皇大神宮、伊勢神宮、千葉神社、大国魂神社、大山阿夫利神社、寒川神社、布多天神社、愛宕神社、日枝神社、明治神宮、武蔵一宮氷川神社、武蔵御嶽神社、神田神社（神田明神）、花園神社、荏柄天神社、葛飾八幡宮、虎ノ門金刀比羅宮、銭洗弁財天宇賀福神社、香取神宮、鶴岡八幡宮、鹿島神宮
 - Nationwide: shrines shown as map markers only, with basic tag/name data but no individual page
 - Other regions (Kyoto, Osaka, Nagoya, Fukuoka, Hiroshima, Ise, Izumo, the Mt. Fuji area) have area pages built but not yet linked from primary navigation or the sitemap, ahead of a wider rollout

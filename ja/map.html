@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chiyo no Mori — Shrines of Japan</title>
+<title>千代の杜——日本の神社</title>
 <meta content="A map of more than a hundred shrines, with Tokyo covered in depth." name="description"/>
 <meta content="website" property="og:type"/>
 <meta content="Chiyo no Mori" property="og:site_name"/>
-<meta content="Chiyo no Mori — Shrines of Japan" property="og:title"/>
+<meta content="千代の杜——日本の神社" property="og:title"/>
 <meta content="A map of more than a hundred shrines, with Tokyo covered in depth." property="og:description"/>
-<meta content="https://nocta-works.github.io/chiyonomori/map.html" property="og:url"/>
+<meta content="https://nocta-works.github.io/chiyonomori/ja/map.html" property="og:url"/>
 <meta content="https://nocta-works.github.io/chiyonomori/assets/og-image.jpg" property="og:image"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Chiyo no Mori — Shrines of Japan" name="twitter:title"/>
+<meta content="千代の杜——日本の神社" name="twitter:title"/>
 <meta content="A map of more than a hundred shrines, with Tokyo covered in depth." name="twitter:description"/>
 <meta content="https://nocta-works.github.io/chiyonomori/assets/og-image.jpg" name="twitter:image"/>
-<link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
 <style>
   /* ══════════════════════════════════════════════════════════════
@@ -714,7 +714,7 @@
   .popup-link.wiki:hover { background: rgba(150,150,165,0.28); color: var(--color-wiki-hover); }
   .mock-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 </style>
-<link href="https://nocta-works.github.io/chiyonomori/map.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/map.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/map.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/map.html" hreflang="x-default" rel="alternate"/></head>
+<link href="https://nocta-works.github.io/chiyonomori/ja/map.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/map.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/map.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/map.html" hreflang="x-default" rel="alternate"/></head>
 <body>
 <!-- 依頼Z-2②：本番index.htmlと同じホバーカーソル演出の受け皿（PC限定でJS側が有効化） -->
 <div id="hover-cursor-tag"></div>
@@ -724,7 +724,7 @@
 <div class="torii-icon">⛩</div>
 <h1 id="mock-title">千代の杜</h1>
 </div>
-<div class="lang-toggle"><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/map.html">EN</a><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/ja/map.html">日本語</a></div>
+<div class="lang-toggle"><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/map.html">EN</a><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/ja/map.html">日本語</a></div>
 </div>
 <div class="mock-toolbar">
 <!-- 実行順B（依頼P-1・2026-09-13）：1つに詰め込みすぎていたドロップダウンを
@@ -1804,7 +1804,7 @@
   // localStorageの保存値がenなら、静的HTMLの日本語文言（タグライン・動画キャプション等の
   // data-en属性・mock-title・lang-btnの見た目）をこの時点で英語へ揃える。マーカー等の
   // currentLang依存部分は上でcurrentLangを先に'en'にしているため、この後の非同期処理
-  // （fetch('assets/shrines-overseas.json')）で自然に英語のまま作られる
+  // （fetch('../assets/shrines-overseas.json')）で自然に英語のまま作られる
   if (currentLang === 'en') applyLang('en');
   var enclosureCtaClose = document.getElementById('area-enclosure-cta-close');
   if (enclosureCtaClose) {
@@ -1848,7 +1848,7 @@
     });
   })();
 
-  fetch('assets/shrines-overseas.json')
+  fetch('../assets/shrines-overseas.json')
     .then(function(res){ return res.json(); })
     .then(function(shrines){
       // scrollWheelZoom:false で開始し、ページスクロールで地図の上を通過した

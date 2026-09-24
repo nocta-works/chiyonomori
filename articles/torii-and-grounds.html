@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Torii gates and shrine grounds — Chiyo no Mori</title>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/articles/torii-and-grounds.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .article-hero {
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+  }
+  .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(24px, 4vw, 34px); color: var(--gold); margin: 0 0 18px; line-height: 1.5;
+  }
+  .article-lead { font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.92; margin: 0; }
+
+  .article-body { max-width: 700px; margin: 0 auto; padding: 0 24px 20px; font-size: 14px; }
+  .article-body h2 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 19px; color: var(--gold); margin: 48px 0 14px; letter-spacing: 0.02em;
+    border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); padding-left: 12px;
+  }
+  .article-body h3 { font-size: 14px; color: var(--gold); opacity: 0.9; margin: 30px 0 10px; letter-spacing: 0.05em; }
+  .article-body p { line-height: 2.05; opacity: 0.9; margin: 0 0 16px; }
+  .article-body ul, .article-body ol { margin: 0 0 16px; padding-left: 1.3em; }
+  .article-body li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
+  .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
+
+  /* 依頼W-4（2026-09-13）：比較図・配置図はSVGで描く。部位名など図中に
+     出す文字はインラインSVGの<text>に置き、data-enで言語切替に対応する
+     （外部ファイル参照のimgにすると文字にJSが届かないため不可） */
+  .diagram { margin: 30px 0 38px; }
+  .diagram-title { font-size: 13.5px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-note { font-size: 13px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+  .diagram-compare { display: flex; align-items: flex-start; justify-content: center; gap: 20px; }
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 205px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 185px; }
+  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 105px; }
+
+  .diagram-path-arrow { color: var(--gold-muted); font-size: 14px; opacity: 0.5; padding-top: 40px; }
+  /* 依頼AJ（2026-09-21）：境内の順路はAI生成イラストの部品を並べる方式に変更
+     （旧SVGアイコンは不採用）。文字は引き続きHTML側data-enで持たせる。
+     2026-09-21追記：本人指摘「イラストと文字が小さすぎる」を受け約2割拡大 */
+  .diagram-route { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; justify-content: center; }
+  .diagram-route-node { display: flex; flex-direction: column; align-items: center; width: 100px; text-align: center; }
+  .diagram-illust-route { width: 84px; height: 84px; object-fit: contain; margin-bottom: 8px; }
+  .diagram-illust-flip { transform: scaleX(-1); }
+  .diagram-route-komainu-pair { display: flex; gap: 2px; margin-bottom: 8px; }
+  .diagram-route-komainu-pair .diagram-illust-route { width: 49px; height: 84px; margin-bottom: 0; }
+  /* 拝殿→本殿の間に「参拝者が立てるのはここまで」の縦線を1本入れる
+     （本人指定・依頼AI-4／AJ-3の必須要素） */
+  .diagram-route-limitline { width: 0; align-self: stretch; border-left: 1.5px dashed var(--gold-muted); opacity: 0.7; margin: 6px 4px; min-height: 92px; }
+  .diagram-illust-label { font-size: 14px; line-height: 1.5; color: var(--tan-text); opacity: 0.85; }
+
+  /* 依頼AJ-4（2026-09-21）：神明鳥居と明神鳥居の見分け方。150px幅の画像に
+     「笠木 — 最上部の横木」のような長い英訳をそのまま引き出し線で乗せると
+     文字が収まらないため、画像上は番号マーカーのみに留め、部位名の全文
+     （日英とも）は画像の下の凡例（.torii-legend）にまとめて置く方式にした。
+     .diagram-torii-frameはwidth:100%ではなくdisplay:inline-blockにして
+     画像の実寸に自動で合わせる——width:100%のままだと列の最大幅
+     （.diagram-compare-col）と画像の実寸（max-width）がズレたとき、
+     枠と画像の間に隙間ができてSVGマーカーの座標が画像とずれてしまう */
+  .diagram-torii-frame { position: relative; display: inline-block; }
+  .torii-marker-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .torii-marker circle { fill: var(--gold); }
+  .torii-marker text { fill: var(--bg-body); font-size: 64px; font-weight: 700; text-anchor: middle; }
+  .torii-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin: 16px 0 4px; }
+  .torii-legend-row { display: flex; align-items: baseline; gap: 6px; font-size: 13px; color: var(--tan-text); opacity: 0.85; }
+  .torii-legend-num { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); color: var(--bg-body); font-size: 11px; font-weight: 700; flex-shrink: 0; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+  .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
+  .article-table th { color: var(--gold); font-weight: 600; opacity: 0.85; white-space: nowrap; }
+  .article-table td:first-child { white-space: nowrap; color: var(--gold); opacity: 0.9; }
+
+  .article-nav {
+    max-width: 700px; margin: 40px auto 0; padding: 0 24px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .article-nav a {
+    flex: 1; min-width: 220px; text-decoration: none; font-size: 12px; line-height: 1.8;
+    border: 1px solid var(--border-4); border-radius: 3px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); color: var(--tan-text); opacity: 0.85;
+    transition: background var(--dur-base) ease;
+  }
+  .article-nav a:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .article-nav-next { text-align: right; }
+  .article-nav-label { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; margin-bottom: 6px; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 20px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  .footer-support a:hover { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .article-hero { padding: 90px 6vw 36px; }
+  }
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="x-default" rel="alternate"/></head>
+<body>
+<a class="back-link" href="../map.html#mock-app" id="back-link">← Back to map</a>
+<div class="lang-toggle"><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html">EN</a><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html">日本語</a></div>
+<div class="article-hero">
+<span class="article-eyebrow">Beginner · Article 3 of 4</span>
+<h1 class="article-title">Torii and shrine grounds — what to look at</h1>
+<p class="article-lead">A torii is not a gate. It marks a boundary. Beyond it is the realm of the gods, and the torii has no further function. Two sections look at outside and inside the boundary — torii, then the shrine grounds.</p>
+</div>
+<div class="article-body">
+<h2>Torii — beyond this point, the land is no longer ordinary human space</h2>
+<ul>
+<li>Learn two forms and most torii become easy to identify. Shinmei torii: straight pillars and crossbeams, almost no decoration. The form associated with Ise Jingu. Myojin torii: the top crossbeam curves upwards, with a second beam beneath it. This is the more common form.</li>
+<li>Why vermilion? It is regarded as protective, but the pigment originally contained mercury and also preserved the wood. Practical use and belief came from the same material. Many torii are also unpainted wood or stone.</li>
+<li>The thousand torii of Fushimi Inari Taisha are not decoration. They are donations. People dedicate one after a wish is fulfilled. The back of each pillar bears the donor's name and date. New ones are still being added.</li>
+<li>Torii in the sea at Itsukushima shrine, and torii on mountain summits: when an island or mountain itself is sacred, the torii stands in front of it.</li>
+</ul>
+<div class="diagram">
+<p class="diagram-title">Shinmei and Myojin torii — how to tell them apart</p>
+<div class="diagram-compare diagram-compare-torii">
+<div class="diagram-compare-col">
+<div class="diagram-torii-frame">
+<img alt="" class="diagram-illust" src="../assets/illustrations/12-torii-shinmei.png"/>
+<svg class="torii-marker-svg" viewbox="0 0 1254 1254">
+<g class="torii-marker"><circle cx="1000" cy="170" r="56"></circle><text x="1000" y="192">1</text></g>
+<g class="torii-marker"><circle cx="700" cy="390" r="56"></circle><text x="700" y="412">3</text></g>
+<g class="torii-marker"><circle cx="959" cy="700" r="56"></circle><text x="959" y="722">4</text></g>
+</svg>
+</div>
+<span class="diagram-illust-label">Shinmei torii</span>
+</div>
+<div class="diagram-compare-divider"></div>
+<div class="diagram-compare-col">
+<div class="diagram-torii-frame">
+<img alt="" class="diagram-illust" src="../assets/illustrations/01-torii.png"/>
+<svg class="torii-marker-svg" viewbox="0 0 1254 1254">
+<g class="torii-marker"><circle cx="1000" cy="155" r="56"></circle><text x="1000" y="177">1</text></g>
+<g class="torii-marker"><circle cx="940" cy="260" r="56"></circle><text x="940" y="282">2</text></g>
+<g class="torii-marker"><circle cx="1030" cy="424" r="56"></circle><text x="1030" y="446">3</text></g>
+<g class="torii-marker"><circle cx="918" cy="700" r="56"></circle><text x="918" y="722">4</text></g>
+</svg>
+</div>
+<span class="diagram-illust-label">Myojin torii</span>
+</div>
+</div>
+<div class="torii-legend">
+<div class="torii-legend-row"><span class="torii-legend-num">1</span><span>Kasagi — top lintel</span></div>
+<div class="torii-legend-row"><span class="torii-legend-num">2</span><span>Shimagi — second beam (Myojin only)</span></div>
+<div class="torii-legend-row"><span class="torii-legend-num">3</span><span>Nuki — tie beam</span></div>
+<div class="torii-legend-row"><span class="torii-legend-num">4</span><span>Hashira — pillars</span></div>
+</div>
+<p class="diagram-note">Shinmei: straight beams, no ornament (Ise Jingu's lineage). Myojin: the top beam curves upward and a second beam (shimagi) sits below it — most torii nationwide are this type.</p>
+<p class="diagram-note">Colour is not the distinction. Shinmei gates can be vermilion, Myojin gates plain wood.</p>
+</div>
+<p class="article-bridge">After the torii, what is actually worth looking at inside the grounds?</p>
+<h2>Shrine grounds — built around what cannot be seen</h2>
+<p>The most important thing in a shrine cannot be seen. The shintai, the sacred object, is kept deep inside the main sanctuary. No one looks at it. Even the Emperor does not see the shintai of Ise Jingu. Once that is clear, the layout of the grounds makes more sense.</p>
+<ul>
+<li>Worship hall and main sanctuary: visitors go no farther than the front of the worship hall. The main sanctuary cannot be entered, and its interior cannot be seen. Look less at the size of the building and more at how many fences surround it.</li>
+<li>Komainu: one often has its mouth open, the other closed, forming the a-un pair. ⚠️They are not always komainu. Inari has foxes, Kasuga Taisha has deer, Hiyoshi Taisha has monkeys. Divine messengers differ by shrine.</li>
+<li>Shimenawa: another boundary marker. The shimenawa at Izumo Taisha weighs 5 tonnes.</li>
+<li>Bells: ringing one is said to announce arrival. There are other explanations, including that the custom is relatively late.</li>
+<li>Sacred trees can be older than the shrine buildings. Buildings can be rebuilt. Trees cannot.</li>
+<li>Ema and omikuji: ema are wooden plaques for writing wishes. An unlucky omikuji is not a problem. It can be tied up and left in the grounds.</li>
+</ul>
+<div class="diagram">
+<p class="diagram-title">A route through the grounds</p>
+<div class="diagram-route">
+<div class="diagram-route-node">
+<img alt="" class="diagram-illust-route" src="../assets/illustrations/01-torii.png"/>
+<span class="diagram-illust-label">First torii</span>
+</div>
+<span class="diagram-path-arrow">→</span>
+<div class="diagram-route-node">
+<img alt="" class="diagram-illust-route" src="../assets/illustrations/03-temizuya.png"/>
+<span class="diagram-illust-label">Temizuya (purification)</span>
+</div>
+<span class="diagram-path-arrow">→</span>
+<div class="diagram-route-node">
+<div class="diagram-route-komainu-pair">
+<img alt="" class="diagram-illust-route diagram-illust-flip" src="../assets/illustrations/04-komainu.png"/>
+<img alt="" class="diagram-illust-route" src="../assets/illustrations/04-komainu.png"/>
+</div>
+<span class="diagram-illust-label">Komainu guardians</span>
+</div>
+<span class="diagram-path-arrow">→</span>
+<div class="diagram-route-node">
+<img alt="" class="diagram-illust-route" src="../assets/illustrations/05-haiden.png"/>
+<span class="diagram-illust-label">Haiden (worship hall)</span>
+</div>
+<div class="diagram-route-limitline" title="Visitors go no further than this"></div>
+<span class="diagram-path-arrow">→</span>
+<div class="diagram-route-node">
+<img alt="" class="diagram-illust-route" src="../assets/illustrations/06-honden.png"/>
+<span class="diagram-illust-label">Honden (main hall) — off-limits</span>
+</div>
+</div>
+<p class="diagram-note">The approach is walked to one side — the centre is the kami's path.</p>
+<p class="diagram-note">Visitors can go as far as the front of the haiden (dashed line). The honden itself is not open, and often not even visible.</p>
+</div>
+</div>
+<div class="article-nav">
+<a class="article-nav-prev" href="how-to-visit.html"><span class="article-nav-label">← Previous article</span><span>How to worship, and what a shrine gives</span></a>
+<a class="article-nav-next" href="kami-and-classification.html"><span class="article-nav-label">Next article →</span><span>The gods and the map's classifications</span></a>
+</div>
+<div class="page-footer">
+<div>Chiyo no Mori — Shrines of Japan</div>
+<div class="footer-support">
+<a href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank">Buy me a coffee ↗</a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">No cookies. Anonymous visit counts only. <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">Privacy</a></div></div>
+<script>
+(function(){
+  var tags = new URLSearchParams(location.search).get('tags');
+  var back = document.getElementById('back-link');
+  if (back && tags) {
+    back.setAttribute('href', '../map.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+    if (localStorage.getItem('siteLang') === 'en') applyLang('en');
+  } catch(err){}
+})();
+</script>
+</body>
+</html>

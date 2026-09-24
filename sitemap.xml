@@ -11,142 +11,292 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/area-pages/%E6%9D%B1%E4%BA%AC.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/areas/tokyo.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/articles/%E5%8F%82%E6%8B%9D%E3%81%AE%E4%BD%9C%E6%B3%95.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/articles/%E6%97%A5%E6%9C%AC%E3%81%A8%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/articles/%E7%A5%9E%E3%80%85.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/articles/%E9%B3%A5%E5%B1%85.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E4%B8%89%E5%B3%AF%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/ise-jingu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E4%BB%A3%E3%80%85%E6%9C%A8%E5%85%AB%E5%B9%A1%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/meiji-jingu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E4%BC%8A%E5%8B%A2%E5%B1%B1%E7%9A%87%E5%A4%A7%E7%A5%9E%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/kanda-myojin.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E4%BC%8A%E5%8B%A2%E7%A5%9E%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/hie-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E5%8D%83%E8%91%89%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/toranomon-kotohira.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E5%A4%A7%E5%9B%BD%E9%AD%82%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/hanazono-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E5%A4%A7%E5%B1%B1%E9%98%BF%E5%A4%AB%E5%88%A9%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/okunitama-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E5%AF%92%E5%B7%9D%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/katsushika-hachimangu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E5%B8%83%E5%A4%9A%E5%A4%A9%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/iseyama-kotaijingu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E6%84%9B%E5%AE%95%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/musashi-hikawa-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E6%97%A5%E6%9E%9D%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/chiba-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E6%98%8E%E6%B2%BB%E7%A5%9E%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/tsurugaoka-hachimangu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E6%AD%A6%E8%94%B5%E4%B8%80%E5%AE%AE%E6%B0%B7%E5%B7%9D%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/zeniarai-benten.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E6%AD%A6%E8%94%B5%E5%BE%A1%E5%B6%BD%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/egara-tenjinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E7%A5%9E%E7%94%B0%E7%A5%9E%E7%A4%BE%EF%BC%88%E7%A5%9E%E7%94%B0%E6%98%8E%E7%A5%9E%EF%BC%89.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/mitsumine-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E8%8A%B1%E5%9C%92%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/mitake-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E8%8D%8F%E6%9F%84%E5%A4%A9%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/oyama-afuri-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E8%91%9B%E9%A3%BE%E5%85%AB%E5%B9%A1%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/kashima-jingu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E8%99%8E%E3%83%8E%E9%96%80%E9%87%91%E5%88%80%E6%AF%94%E7%BE%85%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/katori-jingu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E9%8A%AD%E6%B4%97%E5%BC%81%E8%B2%A1%E5%A4%A9%E5%AE%87%E8%B3%80%E7%A6%8F%E7%A5%9E%E7%A4%BE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E9%A6%99%E5%8F%96%E7%A5%9E%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/atago-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E9%B6%B4%E5%B2%A1%E5%85%AB%E5%B9%A1%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/yoyogi-hachimangu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nocta-works.github.io/chiyonomori/shrine-pages/%E9%B9%BF%E5%B3%B6%E7%A5%9E%E5%AE%AE.html</loc>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/fuda-tenjinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/map.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/areas/tokyo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/articles/japan-and-shrines.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/articles/how-to-visit.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/articles/kami-and-classification.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/ise-jingu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/meiji-jingu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/kanda-myojin.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/hie-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/toranomon-kotohira.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/hanazono-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/okunitama-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/katsushika-hachimangu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/iseyama-kotaijingu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/musashi-hikawa-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/chiba-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/tsurugaoka-hachimangu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/zeniarai-benten.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/egara-tenjinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/mitsumine-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/mitake-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/oyama-afuri-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/kashima-jingu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/katori-jingu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/atago-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/yoyogi-hachimangu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/fuda-tenjinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

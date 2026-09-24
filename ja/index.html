@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chiyo no Mori — Shrines of Japan</title>
+<title>千代の杜——日本の神社</title>
 <meta content="A map of more than a hundred shrines, with Tokyo covered in depth." name="description"/>
 <meta content="website" property="og:type"/>
 <meta content="Chiyo no Mori" property="og:site_name"/>
-<meta content="Chiyo no Mori — Shrines of Japan" property="og:title"/>
+<meta content="千代の杜——日本の神社" property="og:title"/>
 <meta content="A map of more than a hundred shrines, with Tokyo covered in depth." property="og:description"/>
-<meta content="https://nocta-works.github.io/chiyonomori/" property="og:url"/>
+<meta content="https://nocta-works.github.io/chiyonomori/ja/" property="og:url"/>
 <meta content="https://nocta-works.github.io/chiyonomori/assets/og-image.jpg" property="og:image"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Chiyo no Mori — Shrines of Japan" name="twitter:title"/>
+<meta content="千代の杜——日本の神社" name="twitter:title"/>
 <meta content="A map of more than a hundred shrines, with Tokyo covered in depth." name="twitter:description"/>
 <meta content="https://nocta-works.github.io/chiyonomori/assets/og-image.jpg" name="twitter:image"/>
-<link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
 <style>
   /* ══════════════════════════════════════════════════════════════
@@ -747,15 +747,15 @@
   .popup-link.wiki:hover { background: rgba(150,150,165,0.28); color: var(--color-wiki-hover); }
   .mock-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 </style>
-<link href="https://nocta-works.github.io/chiyonomori/" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/" hreflang="x-default" rel="alternate"/></head>
-<body><div class="lang-toggle"><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/">EN</a><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/ja/">日本語</a></div>
+<link href="https://nocta-works.github.io/chiyonomori/ja/" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/" hreflang="x-default" rel="alternate"/></head>
+<body><div class="lang-toggle"><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/">EN</a><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/ja/">日本語</a></div>
 <div id="intro">
 <div class="intro-overlay"></div>
 <button class="intro-skip" id="intro-skip" type="button">
-<span>Skip</span>
+<span>スキップ</span>
 <span class="intro-skip-icon">›</span>
 </button>
-<div class="intro-tagline">A country with 80,000 shrines. More than a hundred of them here.</div>
+<div class="intro-tagline">八万の社がある国から、百余社。</div>
 <div class="intro-gate intro-gate-left"></div>
 <div class="intro-gate intro-gate-right"></div>
 <div class="intro-loader">
@@ -774,24 +774,24 @@
      スクロール対象にする。#introを抜けた直後、最初にスクロールで辿り着く枠） -->
 <section class="scroll-slide reveal-slide" id="video-slide">
 <video autoplay="" class="intro-video-media" loop="" muted="" playsinline="">
-<source src="assets/samukawa-sample.mp4" type="video/mp4"/>
+<source src="../assets/samukawa-sample.mp4" type="video/mp4"/>
 </video>
 <button class="video-play-prompt" id="video-play-prompt" type="button">
 <span class="video-play-prompt-icon">▶</span>
-<span>Tap to play</span>
+<span>タップして再生</span>
 </button>
-<div class="intro-video-caption" id="intro-video-caption"><span class="ivc-line">Jingu, Taisha, Ichinomiya, Ninomiya.</span><br/><span class="ivc-line">A ranking set a thousand years ago, still visible on a map.</span></div>
+<div class="intro-video-caption" id="intro-video-caption"><span class="ivc-line">神宮、大社、一宮、二宮。</span><br/><span class="ivc-line">千年前に決められた序列が、いまも地図の上に残っている。</span></div>
 <div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>
 </section>
-<div class="fixed-caption" id="fixed-caption">One step off the street, and the sound changes.</div>
+<div class="fixed-caption" id="fixed-caption">通りから一歩で、音が変わる。</div>
 <div id="scroll-slides"></div>
 <!-- 依頼AE-2④（2026-09-19確定）：一過性の宣言。写真区画を抜けた直後、
      地図（mock-app）へ入る直前に置く。この直後にAA-1の初期ズーム
      （日本全体→関東）が起きる想定で、文言と演出を揃えてある -->
 <section class="scroll-slide reveal-slide" id="declaration-slide">
-<div class="declaration-text">From Japan, down to one city.</div>
+<div class="declaration-text">日本から、ひとつの街へ。</div>
 <button class="enter-map-prompt" id="enter-map-prompt" type="button">
-<span>Enter the map</span>
+<span>地図へ進む</span>
 <span class="enter-map-prompt-arrow">→</span>
 </button>
 </section>
@@ -1090,9 +1090,9 @@ function initScrollSlideReveal() {
 // しないと、本人がモードBを回すまでオープニングが壊れる」。
 (function(){
   var FALLBACK = [
-    { file: 'assets/katori-backlit.jpg', alt: '香取神宮' },
-    { file: 'assets/kashima-hall.jpg', alt: '鹿島神宮' },
-    { file: 'assets/samukawa-sakura.jpg', alt: '寒川神社' },
+    { file: '../assets/katori-backlit.jpg', alt: '香取神宮' },
+    { file: '../assets/kashima-hall.jpg', alt: '鹿島神宮' },
+    { file: '../assets/samukawa-sakura.jpg', alt: '寒川神社' },
   ];
   var SLIDE_COUNT = 3;
   // 依頼AH-2：フォールバック経路の写真は`alt`に社名が入っているものだけ社名を
@@ -1159,7 +1159,7 @@ function initScrollSlideReveal() {
   }
 
   // トリプティック経路（新規）：写真動画/内の元画像を直接参照する
-  // （design-lab/assets/への縮小コピーは作っていない＝ローカルのdesign-lab
+  // （design-lab/../assets/への縮小コピーは作っていない＝ローカルのdesign-lab
   // 環境専用の演出で、公開プレビューでは写真動画/自体が同期されないため
   // 自動的にフォールバック経路になる）
   function renderTriptych(photos) {
@@ -1211,7 +1211,7 @@ function initScrollSlideReveal() {
   }
 
   function startFallback() {
-    fetch('assets/zoomout-manifest.json')
+    fetch('../assets/zoomout-manifest.json')
       .then(function(res){ return res.json(); })
       .then(function(list){
         list = list || [];

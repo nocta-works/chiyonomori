@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>東京の神社｜千代の杜</title>
+<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/areas/tokyo.html — 実装キュー依頼T-1（2026-09-13）：
+     1層（この街の三社）から、L1（歩いて回れる）／L2（電車で一時間）／
+     L3（半日かけて）の3層構成に作り直した。鎌倉.html・大宮.htmlはここに
+     吸収され削除済み（依頼S-2）。全19社に詳細ページへの直接リンクを張る
+     （依頼T-1「全19社に『詳しく見る』を出す」）。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .area-hero {
+    position: relative; height: 60vh; min-height: 380px; display: flex; align-items: flex-end;
+    background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
+                repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
+  }
+  .area-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.05) 55%); }
+  .area-hero-content { position: relative; padding: 0 6vw 40px; width: 100%; }
+  .area-label { display: block; font-size: 12px; letter-spacing: 0.24em; color: var(--gold); opacity: 0.75; margin-bottom: 8px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+  .area-name {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(34px, 6.5vw, 60px); color: var(--gold); margin: 0 0 14px; letter-spacing: 0.05em;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  }
+  .area-tagline { max-width: 600px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .layer-section { margin-top: 64px; }
+  .layer-ring { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .layer-num {
+    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0; }
+  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 8px 0 26px; }
+
+  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .shrine-card {
+    display: flex; flex-direction: column; text-decoration: none;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
+    overflow: hidden; transition: background var(--dur-base) ease, border-color var(--dur-base) ease;
+  }
+  .shrine-card:hover { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); }
+  .shrine-card-icon {
+    position: relative; aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(135deg, #241a0f 0 12px, #211809 12px 24px);
+    overflow: hidden;
+  }
+  /* 本人指摘（2026-09-13）：東京エリアは全社が詳細ページ（写真つき）を
+     持つため、サムネにも実写真を使う。写真の無い3社（武蔵一宮氷川神社・
+     銭洗弁財天宇賀福神社・荏柄天神社）だけ、従来のタグ1文字バッジ表示を残す */
+  .shrine-card-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .shrine-card-icon-badge {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 22px; font-weight: bold; color: #fff;
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
+  }
+  .shrine-card-icon-badge.has-photo {
+    position: absolute; bottom: 8px; left: 8px;
+    width: 34px; height: 34px; font-size: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.6), 0 0 0 1.5px rgba(255,255,255,0.3) inset;
+  }
+  .shrine-card-body { padding: 16px 18px 20px; }
+  .shrine-card-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
+  .shrine-card-name { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 2px; }
+  .shrine-card-en { display: block; font-size: 10.5px; letter-spacing: 0.05em; color: var(--tan-text); opacity: 0.5; }
+  .shrine-card-why { font-size: 12px; line-height: 1.85; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 76px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  .footer-support a:hover { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .area-hero { height: 54vh; }
+    .layer-section { margin-top: 48px; }
+  }
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/ja/areas/tokyo.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/areas/tokyo.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/areas/tokyo.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/areas/tokyo.html" hreflang="x-default" rel="alternate"/></head>
+<body>
+<a class="back-link" href="../map.html#mock-app">← 地図に戻る</a>
+<div class="lang-toggle"><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/areas/tokyo.html">EN</a><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/ja/areas/tokyo.html">日本語</a></div>
+<div class="area-hero">
+<div class="area-hero-overlay"></div>
+<div class="area-hero-content">
+<span class="area-label">同心円で広がる街</span>
+<h1 class="area-name">東京</h1>
+<p class="area-tagline">歩いて回れる都心の社から、電車で一時間の郊外、そして半日かけて行く山や海の社まで。東京は一点ではなく、同心円で広がっている。滞在日数に合わせて、外側へ進めばいい。</p>
+</div>
+</div>
+<div class="content">
+<div class="layer-section">
+<div class="layer-ring"><span class="layer-num">1</span><h2 class="section-title">Lv1・歩いて回れる（山手線圏内）</h2></div>
+<p class="section-lead">都心の駅から徒歩圏。同じ日に2〜3社をはしごできる。</p>
+<div class="shrine-cards">
+<a class="shrine-card" href="../shrines/meiji-jingu.html">
+<div class="shrine-card-icon"><img alt="明治神宮" src="../../assets/meiji-hero.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#c47a08;">神</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">神宮</span>
+<span class="shrine-card-name">明治神宮</span>
+<span class="shrine-card-en">Meiji Jingu</span>
+<p class="shrine-card-why">70万平方メートルの森は、1920年の創建時にすべて人の手で植えられたもの。原宿から10分で、街の音が消える。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/kanda-myojin.html">
+<div class="shrine-card-icon"><img alt="神田神社（神田明神）" src="../../assets/kanda-honden.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">神田神社（神田明神）</span>
+<span class="shrine-card-en">Kanda Myojin</span>
+<p class="shrine-card-why">江戸総鎮守。朝廷に敗れた後に神として祀られた平将門命を祀る。秋葉原から数分という立地。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/hie-jinja.html">
+<div class="shrine-card-icon"><img alt="日枝神社" src="../../assets/hie-escalator.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">日枝神社</span>
+<span class="shrine-card-en">Hie Jinja</span>
+<p class="shrine-card-why">江戸城（現在の皇居）の産土神。山王祭は天下三大祭のひとつ。社殿へはエスカレーターで上がれる。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/toranomon-kotohira.html">
+<div class="shrine-card-icon"><img alt="虎ノ門金刀比羅宮" src="../../assets/toranomon-skyline.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">虎ノ門金刀比羅宮</span>
+<span class="shrine-card-en">Toranomon Kotohiragu</span>
+<p class="shrine-card-why">高層オフィスビルの足元に社殿が組み込まれている。海上守護と商売繁盛の神。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/hanazono-jinja.html">
+<div class="shrine-card-icon"><img alt="花園神社" src="../../assets/hanazono-keidai.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">花園神社</span>
+<span class="shrine-card-en">Hanazono Jinja</span>
+<p class="shrine-card-why">新宿の総鎮守。ゴールデン街と歌舞伎町に隣接し、境内では紅テント演劇も続く。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/atago-jinja.html">
+<div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">愛宕神社</span>
+<span class="shrine-card-en">Atago Jinja</span>
+<p class="shrine-card-why">23区で最も高い天然の山、愛宕山の山頂に鎮座。「出世の石段」86段は馬で駆け上がった故事で知られる。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/yoyogi-hachimangu.html">
+<div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">代々木八幡宮</span>
+<span class="shrine-card-en">Yoyogi Hachimangu</span>
+<p class="shrine-card-why">明治神宮のすぐ西。境内に縄文時代の集落跡（代々木八幡遺跡）と復元住居が残る。</p>
+</div>
+</a>
+</div>
+</div>
+<div class="layer-section">
+<div class="layer-ring"><span class="layer-num">2</span><h2 class="section-title">Lv2・電車で一時間（山手線＋α）</h2></div>
+<p class="section-lead">西は府中、東は市川、南は横浜、北は大宮。都心を四方から囲む圏。</p>
+<div class="shrine-cards">
+<a class="shrine-card" href="../shrines/okunitama-jinja.html">
+<div class="shrine-card-icon"><img alt="大国魂神社" src="../../assets/okunitama-haiden.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">大国魂神社</span>
+<span class="shrine-card-en">Okunitama Jinja（西・府中）</span>
+<p class="shrine-card-why">武蔵国の総社。馬場大門のケヤキ並木は国の天然記念物。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/katsushika-hachimangu.html">
+<div class="shrine-card-icon"><img alt="葛飾八幡宮" src="../../assets/katsushika-sandou.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">葛飾八幡宮</span>
+<span class="shrine-card-en">Katsushika Hachimangu（東・市川）</span>
+<p class="shrine-card-why">樹齢1,200年とされる千本公孫樹（国の天然記念物）が立つ。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/iseyama-kotaijingu.html">
+<div class="shrine-card-icon"><img alt="伊勢山皇大神宮" src="../../assets/iseyama-torii.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">伊勢山皇大神宮</span>
+<span class="shrine-card-en">Iseyama Kotai Jingu（南・横浜）</span>
+<p class="shrine-card-why">「関東のお伊勢さま」。横浜港を見下ろす高台に、明治政府が建てた社。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/musashi-hikawa-jinja.html">
+<div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">一</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">一宮</span>
+<span class="shrine-card-name">武蔵一宮氷川神社</span>
+<span class="shrine-card-en">Musashi Ichinomiya Hikawa Jinja（北・大宮）</span>
+<p class="shrine-card-why">関東に約280社ある氷川神社の総本社。「大宮」の地名はこの社に由来するとされる。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/chiba-jinja.html">
+<div class="shrine-card-icon"><img alt="千葉神社" src="../../assets/chiba-honden.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">千葉神社</span>
+<span class="shrine-card-en">Chiba Jinja</span>
+<p class="shrine-card-why">上下2階がそれぞれ拝殿になっている「重層社殿」。北極星を祀る妙見信仰の社。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/fuda-tenjinja.html">
+<div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">布多天神社</span>
+<span class="shrine-card-en">Fuda Tenjinja（調布）</span>
+<p class="shrine-card-why">927年の延喜式神名帳に載る古社。調布の総鎮守で、『ゲゲゲの鬼太郎』ゆかりの社としても知られる。</p>
+</div>
+</a>
+</div>
+</div>
+<div class="layer-section">
+<div class="layer-ring"><span class="layer-num">3</span><h2 class="section-title">Lv3・半日かけて（完全に郊外）</h2></div>
+<p class="section-lead">鎌倉・秩父・奥多摩・丹沢・茨城・千葉・神奈川。長く滞在する人ほど、この先まで行ける。</p>
+<div class="shrine-cards">
+<a class="shrine-card" href="../shrines/tsurugaoka-hachimangu.html">
+<div class="shrine-card-icon"><img alt="鶴岡八幡宮" src="../../assets/tsurugaoka-dankazura.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#c41810;">一</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">一宮</span>
+<span class="shrine-card-name">鶴岡八幡宮</span>
+<span class="shrine-card-en">Tsurugaoka Hachimangu（鎌倉）</span>
+<p class="shrine-card-why">鎌倉幕府の中心。段葛（海から社殿まで一直線の参道）が今も町の背骨になっている。相模国一宮を称する（伝統的な一宮は同じ層の寒川神社）。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/zeniarai-benten.html">
+<div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">銭洗弁財天宇賀福神社</span>
+<span class="shrine-card-en">Zeniarai Benzaiten（鎌倉）</span>
+<p class="shrine-card-why">岩をくり抜いた洞窟の中の湧水で金を洗うと増えるとされる。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/egara-tenjinja.html">
+<div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">荏柄天神社</span>
+<span class="shrine-card-en">Egara Tenjinsha（鎌倉）</span>
+<p class="shrine-card-why">日本三天神のひとつ。鶴岡八幡宮の人出とは別の時間が流れる。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/mitsumine-jinja.html">
+<div class="shrine-card-icon"><img alt="三峯神社" src="../../assets/mitsumine-torii.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">三峯神社</span>
+<span class="shrine-card-en">Mitsumine Jinja（秩父）</span>
+<p class="shrine-card-why">標高約1,100mの山中。狛犬ではなく狼（山犬）が控える。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/mitake-jinja.html">
+<div class="shrine-card-icon"><img alt="武蔵御嶽神社" src="../../assets/mitake-honden.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">武蔵御嶽神社</span>
+<span class="shrine-card-en">Musashi Mitake Jinja（奥多摩）</span>
+<p class="shrine-card-why">標高929mの山頂。御師の宿坊が今も山上に集落として残る。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/oyama-afuri-jinja.html">
+<div class="shrine-card-icon"><img alt="大山阿夫利神社" src="../../assets/afuri-geisha.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#047857;">名</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">名社</span>
+<span class="shrine-card-name">大山阿夫利神社</span>
+<span class="shrine-card-en">Oyama Afuri Jinja（丹沢）</span>
+<p class="shrine-card-why">「あめふり山」。江戸期には年間20万人が登ったとされる大山詣りの山。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/kashima-jingu.html">
+<div class="shrine-card-icon"><img alt="鹿島神宮" src="../../assets/kashima-otorii.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#c47a08;">神</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">神宮</span>
+<span class="shrine-card-name">鹿島神宮</span>
+<span class="shrine-card-en">Kashima Jingu（茨城）</span>
+<p class="shrine-card-why">国譲り神話の神を祀る常陸国一宮。要石は地震を起こす大鯰を押さえるとされる。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/katori-jingu.html">
+<div class="shrine-card-icon"><img alt="香取神宮" src="../../assets/katori-romon.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#c47a08;">神</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">神宮</span>
+<span class="shrine-card-name">香取神宮</span>
+<span class="shrine-card-en">Katori Jingu（千葉）</span>
+<p class="shrine-card-why">鹿島と対で国譲りに遣わされた神を祀る下総国一宮。要石は鹿島と凸凹で対になる。</p>
+</div>
+</a>
+<a class="shrine-card" href="../shrines/samukawa-jinja.html">
+<div class="shrine-card-icon"><img alt="寒川神社" src="../../assets/samukawa-haiden.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#c41810;">一</span></div>
+<div class="shrine-card-body">
+<span class="shrine-card-tag">一宮</span>
+<span class="shrine-card-name">寒川神社</span>
+<span class="shrine-card-en">Samukawa Jinja（神奈川）</span>
+<p class="shrine-card-why">全国で唯一とされる八方除の相模国一宮。</p>
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="page-footer">
+<div>千代の杜</div>
+<div class="footer-support">
+<a href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank">コーヒーを1杯 ↗</a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">Cookieは使用していません。匿名の訪問数のみ集計します。 <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">プライバシー</a></div></div>
+<script>
+(function(){
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+    if (localStorage.getItem('siteLang') === 'en') applyLang('en');
+  } catch(err){}
+})();
+</script>
+</body>
+</html>

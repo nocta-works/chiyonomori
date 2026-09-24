@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Japan and its shrines — Chiyo no Mori</title>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/articles/japan-and-shrines.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .article-hero {
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+  }
+  .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(24px, 4vw, 34px); color: var(--gold); margin: 0 0 18px; line-height: 1.5;
+  }
+  .article-lead { font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.92; margin: 0; }
+
+  .article-body { max-width: 700px; margin: 0 auto; padding: 0 24px 20px; font-size: 14px; }
+  .article-body h2 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 19px; color: var(--gold); margin: 48px 0 14px; letter-spacing: 0.02em;
+    border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); padding-left: 12px;
+  }
+  .article-body h3 { font-size: 14px; color: var(--gold); opacity: 0.9; margin: 30px 0 10px; letter-spacing: 0.05em; }
+  .article-body p { line-height: 2.05; opacity: 0.9; margin: 0 0 16px; }
+  .article-body ul, .article-body ol { margin: 0 0 16px; padding-left: 1.3em; }
+  .article-body li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
+  .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
+
+  /* 依頼AI-2（2026-09-21）：AI生成は全廃・SVG線画のみへ統一（他3記事の
+     .diagram一式と同じ規則をそのまま流用） */
+  .diagram { margin: 30px 0 38px; }
+  .diagram-title { font-size: 13.5px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-note { font-size: 13px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+  /* 依頼AJ（2026-09-21）：AI生成イラスト（単体・背景なし・平坦な塗り）を
+     部品として組み立てる方式。SVG手描きから差し替え。
+     2026-09-21追記：本人指摘「イラストと文字が小さすぎる」を受け、
+     画像・ラベルとも約2割拡大（他2記事のイラスト系サイズも同時に統一） */
+  .diagram-compare { display: flex; align-items: center; justify-content: center; gap: 20px; }
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 205px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 185px; }
+  .diagram-illust-label { font-size: 14px; color: var(--tan-text); letter-spacing: 0.05em; }
+  .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 105px; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+  .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
+  .article-table th { color: var(--gold); font-weight: 600; opacity: 0.85; white-space: nowrap; }
+  .article-table td:first-child { white-space: nowrap; color: var(--gold); opacity: 0.9; }
+
+  .article-nav {
+    max-width: 700px; margin: 40px auto 0; padding: 0 24px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .article-nav a {
+    flex: 1; min-width: 220px; text-decoration: none; font-size: 12px; line-height: 1.8;
+    border: 1px solid var(--border-4); border-radius: 3px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); color: var(--tan-text); opacity: 0.85;
+    transition: background var(--dur-base) ease;
+  }
+  .article-nav a:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .article-nav-next { text-align: right; }
+  .article-nav-label { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; margin-bottom: 6px; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 20px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  .footer-support a:hover { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .article-hero { padding: 90px 6vw 36px; }
+  }
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/japan-and-shrines.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html" hreflang="x-default" rel="alternate"/></head>
+<body>
+<a class="back-link" href="../map.html#mock-app" id="back-link">← Back to map</a>
+<div class="lang-toggle"><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html">EN</a><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/ja/articles/japan-and-shrines.html">日本語</a></div>
+<div class="article-hero">
+<span class="article-eyebrow">Beginner to intermediate · Article 1 of 4</span>
+<h1 class="article-title">Japan and shrines — a country defined by what it lacks</h1>
+<p class="article-lead">Japan has about 80,000 shrines. More than convenience stores. Yet ask most Japanese people what they believe in and there is usually no clear answer. That is not insincerity. The religion simply works that way. Two sections look at how things stand now, and how they came to be that way.</p>
+</div>
+<div class="article-body">
+<h2>Japan and shrines — in a country with 80,000 shrines</h2>
+<ul>
+<li>Shinto has no founder. No scripture. No procedure for joining. Nobody created it as a system. It was simply there — and that is how it has reached the present. This is why counting "believers" does not really work.</li>
+<li>Many Japanese people go to both shrines and temples. A wedding at a shrine, a funeral at a temple, Christmas in December. It is understood as a division of roles, not a contradiction.</li>
+<li>One simple distinction: a torii means a shrine; a Buddhist statue means a temple. Some places contain both. For more than 1,000 years, shrines and temples shared the same grounds. The next section explains why.</li>
+<li>The object of prayer is different. Shrines deal with this life — health, work, exams, safe childbirth. Temples deal with the dead and ancestors. That is why shrines have no graves.</li>
+<li>⚠️One thing that makes shrine visits easier for travellers: anyone can enter. Almost no shrines charge admission. Belief is not required. There is no dress code, and tattoos are not treated as an offence — unlike at some onsen.</li>
+</ul>
+<div class="diagram">
+<p class="diagram-title">Shrine or temple — how to tell</p>
+<div class="diagram-compare">
+<div class="diagram-compare-col">
+<img alt="" class="diagram-illust" src="../assets/illustrations/01-torii.png"/>
+<span class="diagram-illust-label">Shrine</span>
+</div>
+<div class="diagram-compare-divider"></div>
+<div class="diagram-compare-col">
+<img alt="" class="diagram-illust" src="../assets/illustrations/02-temple.png"/>
+<span class="diagram-illust-label">Temple</span>
+</div>
+</div>
+<p class="diagram-note">A torii means a shrine; a Buddhist statue means a temple.</p>
+</div>
+<p class="article-bridge">The reason becomes clearer 1,500 years back.</p>
+<h2>History — how shrines were tied to the state, then untied</h2>
+<p>Most of the shrine system seen today was put in place from the Meiji period onwards. The buildings may be old. The system is new.</p>
+<ul>
+<li>Ancient Japan — there were no shrine buildings. Mountains, rocks and forests themselves were worshipped. Some shrines still preserve that form. Omiwa Jinja in Nara has no main sanctuary and worships Mount Miwa. Yamamiya Sengen Jinja in Shizuoka has no shrine building and faces Mount Fuji from afar. The buildings came later.</li>
+<li>6th century: Buddhism arrives → Shinto-Buddhist syncretism. For more than 1,000 years after that, shrines and temples occupied the same places. One explanation held that the kami were forms taken by Buddhas.</li>
+<li>927: the Engishiki Jinmyocho. The imperial court is said to have listed 2,861 shrines in a register. It was the first state-wide list used to administer shrines. Shrines on the list are called Engishiki-listed shrines.</li>
+<li>Late Heian period — the ichinomiya system emerges. A hierarchy in each province gradually took hold. (→ "The gods and the map's classifications" for more.)</li>
+<li>Medieval period — the Minamoto clan adopted Hachiman as a god of war, and the cult spread across Japan with warrior governments. Pilgrimage to Kumano became popular.</li>
+<li>Edo period — pilgrimages to Ise. Shrines gave ordinary people a reason to travel. Some years are said to have seen mass pilgrimages involving millions.</li>
+<li>🔴Meiji — separation of Shinto and Buddhism, and State Shinto. The government forcibly separated shrines and temples. Haibutsu kishaku destroyed many Buddhist statues and scriptures. Shrines were positioned as state institutions, and official ranks such as Kanpei Taisha and Kokuhei Taisha were formalised.</li>
+<li>🔴Post-war — state control ends. Shrines became private religious corporations, and the official ranking system was abolished. That is why historical ranks now carry the prefix "former", as in "former Kanpei Taisha".</li>
+<li>Today — about 80,000 shrines. Many are maintained by donations from local parishioners. Depopulation is making some impossible to maintain. More shrines now have no resident priest.</li>
+</ul>
+</div>
+<div class="article-nav">
+<a class="article-nav-next" href="how-to-visit.html"><span class="article-nav-label">Next article →</span><span>How to worship, and what a shrine gives</span></a>
+</div>
+<div class="page-footer">
+<div>Chiyo no Mori — Shrines of Japan</div>
+<div class="footer-support">
+<a href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank">Buy me a coffee ↗</a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">No cookies. Anonymous visit counts only. <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">Privacy</a></div></div>
+<script>
+(function(){
+  var tags = new URLSearchParams(location.search).get('tags');
+  var back = document.getElementById('back-link');
+  if (back && tags) {
+    back.setAttribute('href', '../map.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+    if (localStorage.getItem('siteLang') === 'en') applyLang('en');
+  } catch(err){}
+})();
+</script>
+</body>
+</html>

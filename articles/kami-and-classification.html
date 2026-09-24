@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kami, ranks and lineages — Chiyo no Mori</title>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/articles/kami-and-classification.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .article-hero {
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+  }
+  .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(24px, 4vw, 34px); color: var(--gold); margin: 0 0 18px; line-height: 1.5;
+  }
+  .article-lead { font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.92; margin: 0; }
+
+  .article-body { max-width: 700px; margin: 0 auto; padding: 0 24px 20px; font-size: 14px; }
+  .article-body h2 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 19px; color: var(--gold); margin: 48px 0 14px; letter-spacing: 0.02em;
+    border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); padding-left: 12px;
+  }
+  .article-body h3 { font-size: 14px; color: var(--gold); opacity: 0.9; margin: 30px 0 10px; letter-spacing: 0.05em; }
+  .article-body p { line-height: 2.05; opacity: 0.9; margin: 0 0 16px; }
+  .article-body ul, .article-body ol { margin: 0 0 16px; padding-left: 1.3em; }
+  .article-body li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
+  .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
+
+  /* 依頼W-4（2026-09-13）：系図・タグ一覧もSVG／HTML＋CSSで描く。神名・社名は
+     全てインラインSVGの<text>かHTMLの通常テキストなので、data-enで
+     言語ごとに差し替えられる（ラスタ画像のように作り直す必要がない） */
+  .diagram { margin: 30px 0 38px; }
+  .diagram-title { font-size: 12px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-note { font-size: 11.5px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
+
+  .rank-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 22px 0 8px; }
+  .rank-item { display: flex; flex-direction: column; align-items: center; width: 84px; text-align: center; }
+  .rank-badge {
+    width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif; font-size: 19px; font-weight: bold;
+    color: #fff; margin-bottom: 8px; box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
+  }
+  .rank-name { font-size: 12px; color: var(--tan-text); }
+  .rank-count { font-size: 10.5px; color: var(--gold-muted); margin-top: 2px; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+  .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
+  .article-table th { color: var(--gold); font-weight: 600; opacity: 0.85; white-space: nowrap; }
+  .article-table td:first-child { white-space: nowrap; color: var(--gold); opacity: 0.9; }
+
+  .article-nav {
+    max-width: 700px; margin: 40px auto 0; padding: 0 24px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .article-nav a {
+    flex: 1; min-width: 220px; text-decoration: none; font-size: 12px; line-height: 1.8;
+    border: 1px solid var(--border-4); border-radius: 3px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); color: var(--tan-text); opacity: 0.85;
+    transition: background var(--dur-base) ease;
+  }
+  .article-nav a:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .article-nav-next { text-align: right; }
+  .article-nav-label { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; margin-bottom: 6px; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 20px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  .footer-support a:hover { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .article-hero { padding: 90px 6vw 36px; }
+  }
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/kami-and-classification.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html" hreflang="x-default" rel="alternate"/></head>
+<body>
+<a class="back-link" href="../map.html#mock-app" id="back-link">← Back to map</a>
+<div class="lang-toggle"><a class="lang-btn active" href="https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html">EN</a><a class="lang-btn" href="https://nocta-works.github.io/chiyonomori/ja/articles/kami-and-classification.html">日本語</a></div>
+<div class="article-hero">
+<span class="article-eyebrow">Intermediate · Article 4 of 4</span>
+<h1 class="article-title">The gods and the map's classifications</h1>
+<p class="article-lead">There is an expression, yaoyorozu no kami — eight million gods. It means too many to count. People become gods too. That is one of the big differences from other religions. Who is enshrined, how the state ranked shrines, and why the same god appears across Japan. Three sections cover the three.</p>
+</div>
+<div class="article-body">
+<h2>The gods — a country where people become gods</h2>
+<h3>The skeleton of the myths. This is enough to read the shrine pages.</h3>
+<ul>
+<li>Izanagi and Izanami — the married creator gods who gave birth to the land and its gods.</li>
+<li>Amaterasu — the sun goddess. Angered by her younger brother's violence, she hid in a cave and the world went dark, in the Amano-Iwato myth. She is enshrined at Ise Jingu and regarded as an ancestor of the Imperial Family.</li>
+<li>Susanoo — the violent younger brother god. After his exile, he killed the eight-headed serpent Yamata no Orochi.</li>
+<li>Okuninushi — the god who built the land, then yielded it to the heavenly gods in the transfer-of-the-land myth. Izumo Taisha.</li>
+<li>Takeminakata — the god who resisted to the end in the transfer-of-the-land myth, was defeated and fled to Shinano. Suwa Taisha.</li>
+</ul>
+<div class="diagram">
+<p class="diagram-title">The mythic family tree — who is enshrined where</p>
+<div class="diagram-svg-wrap">
+<svg style="max-width:640px;" viewbox="0 0 820 380" width="100%">
+<g fill="none" stroke="var(--gold)" stroke-width="1.4">
+<line x1="410" x2="160" y1="42" y2="84"></line>
+<line x1="410" x2="410" y1="42" y2="84"></line>
+<line x1="160" x2="160" y1="116" y2="161"></line>
+<line x1="410" x2="410" y1="116" y2="159"></line>
+<line x1="410" x2="280" y1="191" y2="236"></line>
+<line x1="410" x2="410" y1="191" y2="234"></line>
+<line x1="410" x2="410" y1="266" y2="311"></line>
+<line x1="650" x2="650" y1="266" y2="311"></line>
+</g>
+<line stroke="var(--gold-muted)" stroke-dasharray="3,3" stroke-width="1.2" x1="470" x2="590" y1="250" y2="250"></line>
+<text fill="var(--gold-muted)" font-size="10.5" text-anchor="middle" x="530" y="240">Confronted</text>
+<rect fill="none" height="34" rx="4" stroke="var(--gold)" stroke-width="1.4" width="160" x="330" y="8"></rect>
+<text fill="var(--tan-text)" font-size="13" text-anchor="middle" x="410" y="30">Izanagi &amp; Izanami</text>
+<rect fill="none" height="32" rx="4" stroke="var(--gold)" stroke-width="1.4" width="120" x="100" y="84"></rect>
+<text fill="var(--tan-text)" font-size="12.5" text-anchor="middle" x="160" y="105">Amaterasu</text>
+<rect fill="none" height="32" rx="4" stroke="var(--gold)" stroke-width="1.4" width="120" x="350" y="84"></rect>
+<text fill="var(--tan-text)" font-size="12.5" text-anchor="middle" x="410" y="105">Susanoo</text>
+<rect fill="none" height="30" rx="4" stroke="var(--gold-muted)" stroke-dasharray="3,2" stroke-width="1.2" width="110" x="105" y="161"></rect>
+<text fill="var(--gold)" font-size="12" text-anchor="middle" x="160" y="181">Ise Jingu</text>
+<rect fill="none" height="32" rx="4" stroke="var(--gold)" stroke-width="1.4" width="120" x="350" y="159"></rect>
+<text fill="var(--tan-text)" font-size="12.5" text-anchor="middle" x="410" y="180">Okuninushi</text>
+<rect fill="none" height="30" rx="4" stroke="var(--gold-muted)" stroke-dasharray="3,2" stroke-width="1.2" width="110" x="225" y="236"></rect>
+<text fill="var(--gold)" font-size="12" text-anchor="middle" x="280" y="256">Izumo Taisha</text>
+<rect fill="none" height="32" rx="4" stroke="var(--gold)" stroke-width="1.4" width="120" x="350" y="234"></rect>
+<text fill="var(--tan-text)" font-size="12.5" text-anchor="middle" x="410" y="255">Takeminakata</text>
+<rect fill="none" height="32" rx="4" stroke="var(--gold)" stroke-width="1.4" width="120" x="590" y="234"></rect>
+<text fill="var(--tan-text)" font-size="12.5" text-anchor="middle" x="650" y="255">Takemikazuchi</text>
+<rect fill="none" height="30" rx="4" stroke="var(--gold-muted)" stroke-dasharray="3,2" stroke-width="1.2" width="110" x="355" y="311"></rect>
+<text fill="var(--gold)" font-size="12" text-anchor="middle" x="410" y="331">Suwa Taisha</text>
+<rect fill="none" height="30" rx="4" stroke="var(--gold-muted)" stroke-dasharray="3,2" stroke-width="1.2" width="110" x="595" y="311"></rect>
+<text fill="var(--gold)" font-size="12" text-anchor="middle" x="650" y="331">Kashima Jingu</text>
+</svg>
+</div>
+<p class="diagram-note">Solid boxes are kami, dashed boxes are the shrines that enshrine them.</p>
+</div>
+<h3>⚡Examples of people becoming gods</h3>
+<ul>
+<li>Emperor Ojin → Hachiman, said to be worshipped at about 40,000 shrines nationwide.</li>
+<li>Sugawara no Michizane → Tenjin, said to be worshipped at about 10,000 shrines. He lost a political struggle and was exiled. After his death, disasters struck the capital. He was enshrined as a god to quiet his grudge. That god is now prayed to by students as the god of learning.</li>
+<li>Taira no Masakado — a warrior who rebelled against the imperial court and was killed. He is enshrined at Kanda Jinja in Tokyo.</li>
+</ul>
+<p><strong>→ The idea of worshipping defeated figures and vengeful spirits as gods is one key to understanding Japanese shrines.</strong></p>
+<p class="article-bridge">Once the gods are clear, the next question is the map's colours — shrine status.</p>
+<h2>Status — Jingu, Taisha, Ichinomiya, Ninomiya and Notable shrines</h2>
+<p>This map uses five colours for shrine status. Four were defined more than 1,000 years ago. One was defined by this site. Start with that difference.</p>
+<div class="diagram">
+<div class="rank-row">
+<div class="rank-item">
+<div class="rank-badge" style="background:#c47a08;">J</div>
+<span class="rank-name">Jingu</span>
+<span class="rank-count">24</span>
+</div>
+<div class="rank-item">
+<div class="rank-badge" style="background:#6d28d9;">T</div>
+<span class="rank-name">Taisha</span>
+<span class="rank-count">24</span>
+</div>
+<div class="rank-item">
+<div class="rank-badge" style="background:#c41810;">I</div>
+<span class="rank-name">Ichinomiya</span>
+<span class="rank-count">92</span>
+</div>
+<div class="rank-item">
+<div class="rank-badge" style="background:#1540c0;">N2</div>
+<span class="rank-name">Ninomiya</span>
+<span class="rank-count">35</span>
+</div>
+<div class="rank-item">
+<div class="rank-badge" style="background:#047857;">N</div>
+<span class="rank-name">Notable</span>
+<span class="rank-count">33</span>
+</div>
+</div>
+<p class="diagram-note">Same icons and colors as the map markers and the “?” comparison window.</p>
+</div>
+<h3>Jingu (24 on this map)</h3>
+<p>Jingu is not a title any shrine can adopt. It is granted by imperial approval to shrines connected to deities of the Imperial Family, or to emperors themselves.</p>
+<p>There is one marker. Only one shrine is simply called Jingu: Ise Jingu. Its formal name does not include Ise. Every other Jingu carries a place name or an emperor's name — Atsuta Jingu, Kashima Jingu, Meiji Jingu.</p>
+<p>But the title does not mean the shrines share one rank. Ise Jingu is about 2,000 years old. Meiji Jingu was founded in 1920. Jingu is defined by a shrine's relationship with the Imperial Family, not its age.</p>
+<h3>Taisha (24 on this map)</h3>
+<p>This is the easiest part to misread. Taisha has two separate meanings.</p>
+<p>One is rank — Kanpei Taisha and Kokuhei Taisha, from the system under which the state ranked shrines from the Meiji period until the war's end. The other is a title: Taisha as part of a shrine's name.</p>
+<p>Before the war, Taisha meant one shrine: Izumo Taisha. Other shrines began using Taisha in their names after state control ended in the post-war period. Rank and title are different. Taisha in a shrine's name does not mean it once held a rank called Taisha.</p>
+<h3>Ichinomiya (92 on this map) · Ninomiya (35)</h3>
+<p>Ritsuryo provinces — geographical divisions established under the ritsuryo state. Japan had about 70. Within each province, the highest-status shrine became the ichinomiya, followed by the ninomiya and sannomiya.</p>
+<p>The imperial court never drew up this hierarchy as one official list. The shrines provincial governors visited first after taking office gradually became established as ichinomiya. The system emerged on its own, so some provinces have more than one claimant. Disputes remain today.</p>
+<p>The borders of the ritsuryo provinces do not match modern prefectures. Plot ichinomiya on a map, and the distribution looks uneven by prefecture.</p>
+<p>This is where the system becomes useful to a traveller. Arrive somewhere unfamiliar and find the ichinomiya of the old province. It is likely to be among the oldest and historically weightiest shrines in the area.</p>
+<h3>Notable shrine</h3>
+<p><strong>This category is different from the four above. No historical system defined it. This site did.</strong></p>
+<p>Kanda Jinja, Hie Jinja, Dazaifu Tenmangu, Tsurugaoka Hachimangu — none fit the four status categories, but each is difficult to leave out when telling the story of its area.</p>
+<p>This is an editorial decision, not an authority. The other four colours reflect decisions made centuries ago. Only this colour can change with a judgement made now.</p>
+<h3>One last point — status is not a ranking of "good shrines"</h3>
+<p>A shrine is not inferior because it is not an ichinomiya. Status shows the strength of its historical relationship with the state. It does not measure the depth of belief, the beauty of the grounds or whether a visit was worthwhile.</p>
+<p>It is a guide when deciding where to start. Nothing more.</p>
+<p class="article-bridge">Lineage is easily confused with status. Why do shrines with the same name appear all over Japan?</p>
+<h2>Lineage — why the same shrine names appear across Japan</h2>
+<p>Japan has about 80,000 shrines, but far fewer kinds of names. Inari, Hachiman, Tenjin, Sengen — the same names repeat thousands of times. Why?</p>
+<p>The answer is kanjo, the transfer of a deity to a new shrine. The idea is that dividing a god does not diminish it. Bring a divided spirit from the head shrine, and the same god is present there too. Not a copy — the same god exists in several places at once. Without that premise, the rest makes no sense.</p>
+<div class="table-wrap"><table class="article-table">
+<thead><tr><th>Lineage</th><th>Head shrine</th><th>Approximate number</th><th>What kind of god?</th></tr></thead>
+<tbody>
+<tr><td>Inari</td><td><a href="../map.html?shrine=京都|伏見稲荷大社#mock-app">Fushimi Inari Taisha (Kyoto)</a></td><td>About 30,000</td><td>Originally a god of grain. From the medieval period, also a god of business. The thousand torii are donations made in thanks for wishes fulfilled.</td></tr>
+<tr><td>Hachiman</td><td><a href="../map.html?shrine=大分|宇佐神宮#mock-app">Usa Jingu (Oita)</a></td><td>About 40,000</td><td>Emperor Ojin. The Minamoto clan worshipped Hachiman as a god of war. The cult spread across Japan with warrior governments.</td></tr>
+<tr><td>Tenjin</td><td><a href="../map.html?shrine=福岡|太宰府天満宮#mock-app">Dazaifu Tenmangu (Fukuoka)</a></td><td>About 10,000</td><td><span>Sugawara no Michizane.</span><strong>A god first worshipped to quiet a grudge later became the god of learning.</strong><span>The other head shrine is Kitano Tenmangu in Kyoto.</span></td></tr>
+<tr><td>Asama</td><td><a href="../map.html?shrine=静岡|富士山本宮浅間大社#mock-app">Fujisan Hongu Sengen Taisha (Shizuoka)</a></td><td>About 1,300</td><td>Mount Fuji itself. Worshipped to quiet its eruptions.</td></tr>
+<tr><td>Sumiyoshi</td><td><a href="../map.html?shrine=大阪|住吉大社#mock-app">Sumiyoshi Taisha (Osaka)</a></td><td>About 2,300</td><td>Gods of seafaring</td></tr>
+<tr><td>Suwa</td><td><a href="../map.html?shrine=長野|諏訪大社本宮#mock-app">Suwa Taisha Honmiya (Nagano)</a></td><td>About 25,000</td><td>Takeminakata, the god who resisted to the end in the transfer-of-the-land myth</td></tr>
+<tr><td>Kasuga</td><td><a href="../map.html?shrine=奈良|春日大社#mock-app">Kasuga Taisha (Nara)</a></td><td>About 3,000</td><td>Tutelary gods of the Fujiwara clan</td></tr>
+<tr><td>Kumano</td><td><a href="../map.html?shrine=和歌山|熊野本宮大社#mock-app">Kumano Hongu Taisha (Wakayama)</a></td><td>About 3,000</td><td>The three Kumano shrines. Medieval pilgrimage to Kumano.</td></tr>
+<tr><td>Hikawa</td><td><a href="../map.html?shrine=埼玉|武蔵一宮氷川神社#mock-app">Musashi Ichinomiya Hikawa Jinja (Saitama)</a></td><td>About 280</td><td><strong>Found only in part of Kanto. Shrine lineages have geographical biases.</strong></td></tr>
+<tr><td>Gion</td><td><a href="../map.html?shrine=京都|八坂神社#mock-app">Yasaka Jinja (Kyoto)</a></td><td>About 2,300</td><td>Gods who ward off epidemics</td></tr>
+</tbody></table></div>
+<p class="article-note">The figures are conventional estimates and have not been checked against primary sources. The wording stays with "said to be around X shrines", rather than presenting "about X" as a fact.</p>
+<p>Lineage is not a map filter. The reason is simple — understanding lineage requires prior knowledge, so it is not a useful way for first-time visitors to Japan to choose a shrine. Instead, most head shrines also rank highly under the status categories above. Start with the head shrine in the table, then follow the map from there.</p>
+</div>
+<div class="article-nav">
+<a class="article-nav-prev" href="torii-and-grounds.html"><span class="article-nav-label">← Previous article</span><span>Torii and shrine grounds</span></a>
+</div>
+<div class="page-footer">
+<div>Chiyo no Mori — Shrines of Japan</div>
+<div class="footer-support">
+<a href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank">Buy me a coffee ↗</a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">No cookies. Anonymous visit counts only. <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">Privacy</a></div></div>
+<script>
+(function(){
+  var tags = new URLSearchParams(location.search).get('tags');
+  var back = document.getElementById('back-link');
+  if (back && tags) {
+    back.setAttribute('href', '../map.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+    if (localStorage.getItem('siteLang') === 'en') applyLang('en');
+  } catch(err){}
+})();
+</script>
+</body>
+</html>
