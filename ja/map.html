@@ -543,6 +543,18 @@
     flex: 1; overflow-y: auto;
     scrollbar-width: thin; scrollbar-color: var(--border-header) transparent;
   }
+  /* 💰収益-7（2026-09-26）：地図だけ使った人を取りこぼさないための投げ銭導線。
+     #sidebar-list（flex:1・overflow-y:auto）の下に固定表示する常設フッター
+     行にする（一覧を最後までスクロールしなくても見える。全画面の地図に
+     浮かべる／固定ボタン／ポップアップは禁止のため、既存のサイドバー内に
+     収める） */
+  .sidebar-tip {
+    flex-shrink: 0; padding: 8px 12px; font-size: 10.5px; line-height: 1.6;
+    color: var(--tan-text-2); border-top: 1px solid var(--border-header);
+  }
+  .sidebar-tip a { color: var(--tan-text-2); text-decoration: none; }
+  .sidebar-tip a:hover { color: var(--gold); }
+  .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
   .sidebar-section-title {
     position: sticky; top: 0; z-index: 10;
     padding: 6px 12px 6px 10px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
@@ -765,6 +777,10 @@
 <span class="sidebar-count" id="sidebar-count"></span>
 </div>
 <div id="sidebar-list"></div>
+<div class="sidebar-tip">
+<span>千代の杜は広告のない独立したガイドです。旅の計画に役立ったら、</span>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>チップを送る ↗</span></a>
+</div>
 </div>
 </div>
 </div>
