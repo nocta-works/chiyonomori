@@ -236,7 +236,6 @@
   // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
   // localStorageに保存した言語選択を、ページを開いた時点で復元する
   try {
-    if (localStorage.getItem('siteLang') === 'en') applyLang('en');
   } catch(err){}
 })();
 </script>

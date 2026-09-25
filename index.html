@@ -199,6 +199,24 @@
   html:lang(ja) .declaration-text .phrase {
     display: inline-block; white-space: nowrap;
   }
+  /* 微修正（2026-09-25・本人指摘「13インチで見ると改行がカンマ・ピリオドの
+     位置だと綺麗に収まる」）：splitPhrases()を英語もカンマ区切りにしたので
+     （"One step off the street, and the sound changes." → "One step off
+     the street, " と "and the sound changes." の2句）、英語にも句のnowrapを
+     適用したい。ただしカンマが1つしか無い句（例＝"A ranking set a thousand
+     years ago, still visible on a map."）は分割後も片方の句が36文字程度
+     残り、375px幅では実機確認でoverflowした（右端が430pxまではみ出た）。
+     上の(a)の問題が完全には消えていないということなので、日本語のような
+     unconditional適用ではなく、原因を報告した13インチ幅相当（640px超）だけに
+     絞って適用する。スマホ幅（既存の640pxブレークポイントに合わせた）は
+     このままword-wrapに任せる＝現状維持で退行させない */
+  @media (min-width: 641px) {
+    .intro-tagline .phrase, .intro-video-caption .phrase,
+    .fixed-caption .phrase, .triptych-caption .phrase,
+    .declaration-text .phrase {
+      display: inline-block; white-space: nowrap;
+    }
+  }
   /* 微修正（2026-09-23）：単語の内部で改行させない。.charの1文字ずつの
      inline-block化が、単語の途中にも改行可能点を作ってしまうため、
      単語（空白で区切った単位）をこの.wordで包み、nowrapで内部の改行を
@@ -806,7 +824,6 @@
 (function(){
   var lang;
   try { lang = localStorage.getItem('siteLang'); } catch(err) { lang = null; }
-  document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
   if (lang !== 'en') return;
   document.querySelectorAll('[data-en]').forEach(function(el){
     el.textContent = el.getAttribute('data-en');
@@ -820,10 +837,14 @@
 // 動画キャプション・固定キャプション・トリプティック・④宣言）に共通で使う関数
 // なので、どのIIFEからも呼べるようグローバル関数として定義する
 function splitPhrases(text) {
-  // 日本語＝「、」「。」「／」の直後（ゼロ幅）。英語＝ピリオド＋空白の直後
-  // （空白を区切り側に含めて消費するので、句の末尾に半角スペースが残る＝
-  // phrase同士がくっつかず、なおかつ句の内部に空白由来の改行点が増えない）
-  return text.split(/(?<=[、。／])|(?<=\.\s)/).filter(function(p){ return p.length > 0; });
+  // 日本語＝「、」「。」「／」の直後（ゼロ幅）。英語＝カンマ・ピリオド＋空白の
+  // 直後（空白を区切り側に含めて消費するので、句の末尾に半角スペースが残る＝
+  // phrase同士がくっつかず、なおかつ句の内部に空白由来の改行点が増えない）。
+  // 微修正（2026-09-25・本人指摘「13インチで見ると改行がカンマ・ピリオドの
+  // 位置だと綺麗に収まる」）：英語もカンマの直後で区切るよう追加（日本語は
+  // 元から「、」で区切っていたのと揃える）。「80,000」のような桁区切りの
+  // カンマはカンマの直後に空白が無いため誤って区切られない
+  return text.split(/(?<=[、。／])|(?<=[,.]\s)/).filter(function(p){ return p.length > 0; });
 }
 function wrapPhrasesOnly(el) {
   if (!el) return;

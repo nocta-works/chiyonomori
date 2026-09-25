@@ -1739,7 +1739,6 @@
   var map; // fetch内で代入。redrawMarkers/focusShrineから参照するため外側スコープで宣言
   function applyLang(lang) {
     currentLang = lang;
-    document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });

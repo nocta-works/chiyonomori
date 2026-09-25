@@ -231,7 +231,6 @@
     items.forEach(function(el){ io.observe(el); });
   }
   function applyLang(lang){
-    document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
     document.querySelectorAll('[data-en]').forEach(function(el){
       if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
       el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
@@ -257,7 +256,6 @@
   // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
   // localStorageに保存した言語選択を、ページを開いた時点で復元する
   try {
-    if (localStorage.getItem('siteLang') === 'en') applyLang('en');
   } catch(err){}
 })();
 </script>
