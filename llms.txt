@@ -19,6 +19,6 @@ The site plots shrines on a Leaflet map using GSI (Geospatial Information Author
 
 ## Scope
 
-- Tokyo: individually written shrine pages (history, photos, visiting tips, access) — the site's main content. Shrines covered: 三峯神社、代々木八幡宮、伊勢山皇大神宮、伊勢神宮、千葉神社、大国魂神社、大山阿夫利神社、寒川神社、布多天神社、愛宕神社、日枝神社、明治神宮、武蔵一宮氷川神社、武蔵御嶽神社、神田神社（神田明神）、花園神社、荏柄天神社、葛飾八幡宮、虎ノ門金刀比羅宮、銭洗弁財天宇賀福神社、香取神宮、鶴岡八幡宮、鹿島神宮
+- Tokyo: individually written shrine pages (history, photos, visiting tips, access) — the site's main content. Shrines covered: 三峯神社、代々木八幡宮、伊勢山皇大神宮、伊勢神宮、千葉神社、大国魂神社、大山阿夫利神社、寒川神社、布多天神社、愛宕神社、日枝神社、明治神宮、武蔵一宮氷川神社、武蔵御嶽神社、神田神社（神田明神）、箱根神社、花園神社、荏柄天神社、葛飾八幡宮、虎ノ門金刀比羅宮、銭洗弁財天宇賀福神社、香取神宮、鶴岡八幡宮、鹿島神宮
 - Nationwide: shrines shown as map markers only, with basic tag/name data but no individual page
 - Other regions (Kyoto, Osaka, Nagoya, Fukuoka, Hiroshima, Ise, Izumo, the Mt. Fuji area) have area pages built but not yet linked from primary navigation or the sitemap, ahead of a wider rollout

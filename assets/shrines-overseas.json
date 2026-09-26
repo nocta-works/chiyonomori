@@ -3370,5 +3370,26 @@
     "provinceEn": "Musashi Province",
     "deityEn": "Sukunahikona and Sugawara no Michizane",
     "reasonEn": "A shrine listed in the Engishiki register, and a former village shrine. Guardian of the whole of Chofu, once also known as the 'Tenjin of the Five Post Towns'. Also known for its links to the manga and anime GeGeGe no Kitaro."
+  },
+  {
+    "pref": "神奈川",
+    "name": "箱根神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "相模国",
+    "lat": 35.20389,
+    "lng": 139.02556,
+    "deity": "瓊瓊杵尊・木花咲耶姫命・彦火火出見尊",
+    "reason": "関東総鎮守。旧国幣中社。芦ノ湖に立つ水中鳥居が絶景。源頼朝・徳川家ゆかりの武家の守護神。",
+    "nameEn": "Hakone Jinja",
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Ninigi no Mikoto, Konohanasakuya-hime, and Hikohohodemi no Mikoto",
+    "reasonEn": "Guardian shrine of the Kanto region and a former state-ranked shrine (kokuhei chusha). Its torii standing in Lake Ashi is a celebrated sight. Long linked to the Minamoto and Tokugawa as protector of the warrior class.",
+    "founded": "天平宝字元年（757年）と伝わる",
+    "foundedEn": "Traditionally dated to 757",
+    "station": "元箱根（バス停・芦ノ湖遊覧船のりば）",
+    "stationEn": "Moto-Hakone (bus stop and Lake Ashi sightseeing boat pier)"
   }
 ]

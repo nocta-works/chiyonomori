@@ -151,6 +151,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/hakone-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -297,6 +302,11 @@
   </url>
   <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/fuda-tenjinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/hakone-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
