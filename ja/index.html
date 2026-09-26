@@ -317,6 +317,12 @@
   .enter-map-prompt:hover { background: rgba(var(--gold-glow-rgb),0.14); border-color: var(--gold); }
   .enter-map-prompt-arrow { font-size: 18px; transition: transform 0.2s ease; }
   .enter-map-prompt:hover .enter-map-prompt-arrow { transform: translateX(4px); }
+  /* 新規5（2026-09-26）：AN-1申し送りへの回答＝トップにもプライバシーの1行を
+     入れる（.page-footerを持たないため、既存のadd_privacy_footer_line()の
+     対象外だった）。最後の区画（#declaration-slide）に置く。演出上のfade-in
+     は付けない（法的開示の1行なので、地図へ進むボタンと同じ盛り上げは不要） */
+  .declaration-privacy { font-size: 10.5px; color: var(--tan-text-2); opacity: 0.75; }
+  .declaration-privacy a { color: var(--tan-text-2); text-decoration: underline; }
   @media (prefers-reduced-motion: reduce) {
     .declaration-text, .enter-map-prompt { transition: none; }
   }
@@ -812,6 +818,10 @@
 <span>地図へ進む</span>
 <span class="enter-map-prompt-arrow">→</span>
 </button>
+<div class="declaration-privacy">
+<span>Cookieは使用していません。匿名の訪問数のみ集計します。</span>
+<a href="privacy.html">プライバシー</a>
+</div>
 </section>
 <script>
 // 本人指摘（2026-09-20）：マップとオープニングを別ページに分離した際、静的HTML

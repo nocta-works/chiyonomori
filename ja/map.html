@@ -521,6 +521,11 @@
     border-top: 1px solid var(--border-4); font-size: 12px; color: var(--gold); text-decoration: none;
   }
   .rank-modal-more:hover { text-decoration: underline; }
+  /* 新規5（2026-09-26）：AN-1申し送りへの回答＝地図にもプライバシーの1行を
+     入れる（.page-footerを持たないため既存のadd_privacy_footer_line()の
+     対象外だった）。「?」窓（rank-help-btnが開くこの.rank-modal）の末尾に置く */
+  .rank-modal-privacy { margin-top: 10px; font-size: 10.5px; color: var(--tan-text-2); opacity: 0.75; }
+  .rank-modal-privacy a { color: var(--tan-text-2); text-decoration: underline; }
   .ctrl-divider { width: 1px; height: 22px; background: var(--border-4); margin: 0 2px; flex-shrink: 0; }
   .mock-stats { font-size: 12px; color: var(--tan-text-2); border-left: 1px solid var(--border-4); padding-left: 10px; white-space: nowrap; }
 
@@ -761,6 +766,10 @@
 <h2 class="rank-modal-title" id="rank-modal-title"></h2>
 <div id="rank-modal-rows"></div>
 <a class="rank-modal-more" href="#" id="rank-modal-more"></a>
+<div class="rank-modal-privacy">
+<span>Cookieは使用していません。匿名の訪問数のみ集計します。</span>
+<a href="privacy.html">プライバシー</a>
+</div>
 </div>
 </div>
 <div id="map-area">
