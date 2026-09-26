@@ -97,6 +97,16 @@
   }
   .section p { font-size: 14.5px; color: var(--tan-text); opacity: 0.92; margin: 0 0 12px; }
 
+  .photo-block { margin: 0 auto 64px; text-align: center; opacity: 0; transform: translateY(30px); transition: opacity 1.1s ease, transform 1.1s ease; }
+  .photo-block.revealed { opacity: 1; transform: translateY(0); }
+  .photo-block img { display: block; margin: 0 auto; width: 100%; height: auto; filter: saturate(0.92) contrast(1.05); }
+  .photo-block.landscape { position: relative; left: 50%; width: min(1100px, 92vw); margin-left: calc(min(1100px, 92vw) / -2); }
+  .photo-block.portrait { max-width: 420px; }
+  .photo-block-caption {
+    max-width: 620px; margin: 16px auto 0; padding: 0 6vw;
+    font-size: 12.5px; color: var(--gold-muted); text-align: center; line-height: 1.7; letter-spacing: 0.02em;
+  }
+
   .next-shrines { max-width: 860px; margin: 72px auto 0; padding: 0 24px; }
   .next-shrines-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.8; margin-bottom: 6px; }
   .next-shrines-lead { font-size: 13px; line-height: 1.9; color: var(--tan-text); opacity: 0.7; margin: 0 0 22px; }
@@ -127,6 +137,7 @@
 <a class="back-link" href="../map.html#mock-app">← 地図に戻る</a>
 <div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/hakone-jinja.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/hakone-jinja.html">日本語</a></div>
 <div class="shrine-hero">
+<img alt="杉並木の参道の先に見える鳥居" src="../../assets/hakone-hero.jpg"/>
 <div class="shrine-hero-overlay"></div>
 <div class="shrine-hero-content">
 <span class="shrine-badge">名社</span>
@@ -150,11 +161,27 @@
 <p><span>祭神は瓊瓊杵尊・木花咲耶姫命・彦火火出見尊の三柱で、総称して箱根大神と呼ばれる。</span><strong>奈良時代の天平宝字元年（757年）、万巻上人が芦ノ湖のほとりに社殿を開いたと伝わる。</strong></p>
 <p>それ以前から、箱根山（駒ヶ岳）そのものが山岳信仰の対象だった。中世には神仏習合の霊場「箱根権現」と呼ばれ、明治の神仏分離を経て今の箱根神社になった。</p>
 </div>
+<div class="photo-block landscape">
+<img alt="杉木立に抱かれた社殿群" src="../../assets/hakone-shrine.jpg"/>
+<p class="photo-block-caption">杉木立に抱かれた社殿群。芦ノ湖のほとりに開かれた古社の佇まい。</p>
+</div>
 <div class="section">
 <span class="section-label">Highlights</span>
 <h2 class="section-title">見どころ</h2>
 <p><strong>芦ノ湖に立つ「平和の鳥居」は、湖上に浮かぶ朱の大鳥居で、写真を撮る人の列ができる名所。</strong>杉並木の参道と石段も見どころ。</p>
 <p>境内の九頭龍神社（新宮）は芦ノ湖の龍神を祀り、万巻上人が湖の毒龍を鎮めて守り神に変えたという伝説に由来する。最寄りは元箱根（芦ノ湖遊覧船ののりばでもある）。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="参道を縁取る杉並木" src="../../assets/hakone-cedar.jpg"/>
+<p class="photo-block-caption">参道を縁取る杉並木。年月を経た太い幹が空へと伸びる。</p>
+</div>
+<div class="photo-block landscape">
+<img alt="境内の九頭龍神社（新宮）の神門" src="../../assets/hakone-kuzuryu-gate.jpg"/>
+<p class="photo-block-caption">境内の九頭龍神社（新宮）の神門。芦ノ湖の龍神を祀り、万巻上人が湖の毒龍を鎮めたという伝説に由来する。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="九頭龍神社の天井に描かれた龍" src="../../assets/hakone-kuzuryu-ceiling.jpg"/>
+<p class="photo-block-caption">九頭龍神社の社殿に描かれた龍の天井画。</p>
 </div>
 <div class="section">
 <span class="section-label">Background</span>

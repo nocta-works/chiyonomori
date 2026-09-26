@@ -97,6 +97,16 @@
   }
   .section p { font-size: 14.5px; color: var(--tan-text); opacity: 0.92; margin: 0 0 12px; }
 
+  .photo-block { margin: 0 auto 64px; text-align: center; opacity: 0; transform: translateY(30px); transition: opacity 1.1s ease, transform 1.1s ease; }
+  .photo-block.revealed { opacity: 1; transform: translateY(0); }
+  .photo-block img { display: block; margin: 0 auto; width: 100%; height: auto; filter: saturate(0.92) contrast(1.05); }
+  .photo-block.landscape { position: relative; left: 50%; width: min(1100px, 92vw); margin-left: calc(min(1100px, 92vw) / -2); }
+  .photo-block.portrait { max-width: 420px; }
+  .photo-block-caption {
+    max-width: 620px; margin: 16px auto 0; padding: 0 6vw;
+    font-size: 12.5px; color: var(--gold-muted); text-align: center; line-height: 1.7; letter-spacing: 0.02em;
+  }
+
   .next-shrines { max-width: 860px; margin: 72px auto 0; padding: 0 24px; }
   .next-shrines-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.8; margin-bottom: 6px; }
   .next-shrines-lead { font-size: 13px; line-height: 1.9; color: var(--tan-text); opacity: 0.7; margin: 0 0 22px; }
@@ -127,6 +137,7 @@
 <a class="back-link" href="../map.html#mock-app">← Back to map</a>
 <div class="lang-toggle"><a class="lang-btn active" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/hakone-jinja.html">EN</a><a class="lang-btn" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/hakone-jinja.html">日本語</a></div>
 <div class="shrine-hero">
+<img alt="A torii seen at the end of the cedar-lined approach" src="../assets/hakone-hero.jpg"/>
 <div class="shrine-hero-overlay"></div>
 <div class="shrine-hero-content">
 <span class="shrine-badge">Notable shrine</span>
@@ -150,11 +161,27 @@
 <p>The enshrined deities are Ninigi no Mikoto, Konohanasakuya-hime, and Hikohohodemi no Mikoto, together known as the Hakone Okami. Tradition holds that the priest Mangan established a shrine on the shore of Lake Ashi in 757, during the Nara period.</p>
 <p>Even before that, Mount Hakone (Komagatake) itself was already an object of mountain worship. Through the medieval period the shrine was known as Hakone Gongen, a syncretic site where Shinto and Buddhism were fused, becoming today's Hakone Jinja after the Meiji-era separation of kami and buddhas.</p>
 </div>
+<div class="photo-block landscape">
+<img alt="The shrine buildings nestled among cedar trees" src="../assets/hakone-shrine.jpg"/>
+<p class="photo-block-caption">The shrine buildings nestled among cedar trees — the setting of an ancient shrine founded on the shore of Lake Ashi.</p>
+</div>
 <div class="section">
 <span class="section-label">Highlights</span>
 <h2 class="section-title">What to see</h2>
 <p>The Heiwa no Torii ("Peace Gate"), a vermilion torii standing out in Lake Ashi, is the shrine's best-known sight — visitors regularly queue to photograph it.</p>
 <p>Within the grounds, Kuzuryu Jinja (the New Shrine) enshrines the dragon god of Lake Ashi, tracing back to a legend in which the priest Mangan subdued a venomous dragon in the lake and turned it into a guardian deity. The nearest stop is Moto-Hakone, also the pier for the Lake Ashi sightseeing boats.</p>
+</div>
+<div class="photo-block portrait">
+<img alt="The cedar-lined approach" src="../assets/hakone-cedar.jpg"/>
+<p class="photo-block-caption">The cedar-lined approach — trunks thickened by centuries, reaching toward the sky.</p>
+</div>
+<div class="photo-block landscape">
+<img alt="The gate to Kuzuryu Jinja (the New Shrine) within the grounds" src="../assets/hakone-kuzuryu-gate.jpg"/>
+<p class="photo-block-caption">The gate to Kuzuryu Jinja (the New Shrine) within the grounds, enshrining the dragon god of Lake Ashi — tracing back to the legend of the priest Mangan subduing a venomous dragon in the lake.</p>
+</div>
+<div class="photo-block portrait">
+<img alt="A dragon painted on the ceiling of Kuzuryu Jinja" src="../assets/hakone-kuzuryu-ceiling.jpg"/>
+<p class="photo-block-caption">A dragon painted on the ceiling of the Kuzuryu Jinja sanctuary.</p>
 </div>
 <div class="section">
 <span class="section-label">Background</span>
