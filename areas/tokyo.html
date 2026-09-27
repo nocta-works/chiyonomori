@@ -82,8 +82,9 @@
     overflow: hidden;
   }
   /* 本人指摘（2026-09-13）：東京エリアは全社が詳細ページ（写真つき）を
-     持つため、サムネにも実写真を使う。写真の無い3社（武蔵一宮氷川神社・
-     銭洗弁財天宇賀福神社・荏柄天神社）だけ、従来のタグ1文字バッジ表示を残す */
+     持つため、サムネにも実写真を使う。写真の無い2社（銭洗弁財天宇賀福神社・
+     荏柄天神社）だけ、従来のタグ1文字バッジ表示を残す（依頼AP-3で武蔵一宮
+     氷川神社に写真が入ったため、2026-09-27にこのリストから外した） */
   .shrine-card-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .shrine-card-icon-badge {
     width: 48px; height: 48px; border-radius: 50%;
@@ -228,7 +229,7 @@
 </div>
 </a>
 <a class="shrine-card" href="../shrines/musashi-hikawa-jinja.html">
-<div class="shrine-card-icon"><span class="shrine-card-icon-badge" style="background:#c41810;">I</span></div>
+<div class="shrine-card-icon"><img alt="Musashi Ichinomiya Hikawa Jinja" src="../assets/hikawa-hero.jpg"/><span class="shrine-card-icon-badge has-photo" style="background:#c41810;">I</span></div>
 <div class="shrine-card-body">
 <span class="shrine-card-tag">Ichinomiya</span>
 <span class="shrine-card-name">Musashi Ichinomiya Hikawa Jinja</span>
