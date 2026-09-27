@@ -162,7 +162,8 @@
     position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%);
     z-index: 1; text-align: center; max-width: 82vw;
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
-    color: var(--gold); font-size: clamp(20px, 3.2vw, 32px); letter-spacing: 0.05em;
+    /* 微修正（2026-09-27・本人指摘「あと1段階小さく」）：clamp(20px,3.2vw,32px)から1段階縮小 */
+    color: var(--gold); font-size: clamp(18px, 2.9vw, 29px); letter-spacing: 0.05em;
     line-height: 1.6;
     text-shadow: 0 2px 14px rgba(0,0,0,0.7);
   }
@@ -991,6 +992,16 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
     finished = true;
     intro.classList.add('intro-hide');
     setTimeout(function(){ intro.style.display = 'none'; }, 650);
+    // 微修正（2026-09-27・本人指摘）：③動画キャプションの文字送りが、②の画面を
+    // ちゃんと見てからクリックしても既に全部表示され終わっている不具合。
+    // 原因＝#introはposition:fixedでドキュメントの流れに幅を持たないため、
+    // 直後の#video-slideはページ読み込み直後からビューポートと幾何学的に
+    // 重なっている（#introがz-index:5000で覆って見えないだけ）。そのため
+    // 旧実装のIntersectionObserver（#video-slideのthreshold:0.4）はページ
+    // 読み込み直後にほぼ即座に発火し、②の演出を見ている間に③の文字送りが
+    // 裏側で先に終わってしまっていた。#introが実際に閉じる（＝③が見え始める）
+    // この瞬間を起点にするよう、ここで直接表示させる
+    if (videoCaption) videoCaption.classList.add('intro-video-caption-show');
   }
   function openGates() {
     loader.classList.add('intro-loader-hide');
@@ -1038,26 +1049,14 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
   setTimeout(function(){ if (video.paused) showPrompt(); }, 1200);
 })();
 
-// ③動画のキャプションは、動画のスクロール枠が画面に入ったタイミングで表示する
-// （本人指定・2026-09-11：タイマー表示をやめ、④の写真と同じスクロール駆動に統一）
-(function(){
-  var videoSlide = document.getElementById('video-slide');
-  var videoCaption = document.getElementById('intro-video-caption');
-  if (!videoSlide || !videoCaption) return;
-  if (!('IntersectionObserver' in window)) {
-    videoCaption.classList.add('intro-video-caption-show');
-    return;
-  }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if (entry.isIntersecting) {
-        videoCaption.classList.add('intro-video-caption-show');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.4 });
-  io.observe(videoSlide);
-})();
+// ③動画のキャプションの表示トリガーは、上のfinish()（#introが閉じた瞬間）に
+// 移設した（微修正・2026-09-27）。#introはposition:fixedでドキュメントの
+// 流れに幅を持たないため、直後の#video-slideはページ読み込み直後から
+// ビューポートと幾何学的に重なっており、ここにあった旧・IntersectionObserver
+// （#video-slideのthreshold:0.4）はページ読み込み直後にほぼ即発火していた
+// （#introが覆って見えないだけで、実際には②の演出中に③の文字送りが裏側で
+// 先に終わっていた）。#introの開閉に幾何学的な意味が無い以上、スクロール駆動
+// ではなく「#introが閉じた瞬間」で直接トリガーする方が実態に合っている
 
 // ④の固定キャプションは、写真スクロール領域（#scroll-slides）が画面に入っている
 // 間だけ表示する（本人指定・2026-09-11：③動画をスクロール対象化したのに伴い、
