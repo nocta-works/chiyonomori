@@ -1080,11 +1080,17 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
 // 本人指定（2026-09-20）：マップとオープニングを別ページに分離。地図へは
 // このボタンのクリックで実際のページ遷移をする（スクロール継続ではない）。
 // URLに?shrine=や?tags=が付いていた場合はそのままmap.htmlへ引き継ぐ
+// 本人指摘（2026-09-30）：地図側の起動演出（日本全体→東京へズーム）は、
+// このオープニングを通過した時だけ再生されるべきで、詳細ページ等から
+// 「地図に戻る」で来た時には再生してほしくない。オープニング経由である
+// ことをmap.html側が判定できるよう、from=introの目印を付けて遷移する
 (function(){
   var btn = document.getElementById('enter-map-prompt');
   if (!btn) return;
   btn.addEventListener('click', function(){
-    location.href = 'map.html' + location.search;
+    var params = new URLSearchParams(location.search);
+    params.set('from', 'intro');
+    location.href = 'map.html?' + params.toString();
   });
 })();
 

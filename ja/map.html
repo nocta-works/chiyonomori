@@ -894,7 +894,14 @@
     var wanted = raw.split(',').filter(function(t){ return TAG_ORDER.indexOf(t) !== -1; });
     return wanted.length ? new Set(wanted) : null;
   }
-  var activeFilters = readTagsFromUrl() || new Set(DEFAULT_TAGS);
+  var urlTags = readTagsFromUrl();
+  var activeFilters = urlTags || new Set(DEFAULT_TAGS);
+  // 🆕2026-09-30（本人指摘）：詳細ページ・エリアページから「← 地図に戻る」で
+  // 戻った時は、離れる直前の地図の状態（ズーム位置・表示タグ）にそのまま
+  // 戻ってほしい（オープニング演出の「毎回リセット」とは別物）。ページを
+  // 離れる瞬間にこのキーでsessionStorageへ保存し、次に開いた時
+  // （オープニング演出でも?shrine=/?tags=直リンクでもない場合）に復元する
+  var MAP_VIEW_STORAGE_KEY = 'shrineMapView';
   function syncTagsUrl() {
     var url = new URL(location.href);
     var isDefault = activeFilters.size === DEFAULT_TAGS.length && DEFAULT_TAGS.every(function(t){ return activeFilters.has(t); });
@@ -1767,6 +1774,17 @@
 
   var markerList = [];
   var map; // fetch内で代入。redrawMarkers/focusShrineから参照するため外側スコープで宣言
+  function saveMapViewState() {
+    if (!map) return;
+    try {
+      var c = map.getCenter();
+      sessionStorage.setItem(MAP_VIEW_STORAGE_KEY, JSON.stringify({
+        tags: Array.from(activeFilters),
+        lat: c.lat, lng: c.lng, zoom: map.getZoom()
+      }));
+    } catch (err) {}
+  }
+  window.addEventListener('pagehide', saveMapViewState);
   function applyLang(lang) {
     currentLang = lang;
     document.querySelectorAll('.lang-btn').forEach(function(b){
@@ -1937,8 +1955,38 @@
       // セッション管理がブラウザ仕様（新規タブへの引き継ぎ等）と絡んで
       // 「違うブラウザ・タブなのに演出が再生されない」という混乱を繰り返し
       // 招いたため撤廃。ページを開くたび、毎回再生する
+      // 🔴2026-09-30改訂（本人指摘）：↑の「毎回」が行き過ぎていた。詳細ページ・
+      // エリアページの「← 地図に戻る」（?shrine=も?tags=も付かない素の
+      // map.html遷移）でも毎回この演出が再生されてしまい、そのたびに日本全体
+      // →東京へのズームがやり直される不具合だった。この演出はオープニング
+      // （opening-intro.html）の「地図へ進む」ボタンを経由した時だけ再生すれば
+      // よいため、そちらが付与する?from=introの有無で判定するよう変更
       var reducedMotionForReveal = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var isFirstReveal = !wantedShrineParam;
+      var cameFromIntro = new URLSearchParams(location.search).get('from') === 'intro';
+      var isFirstReveal = cameFromIntro && !wantedShrineParam;
+      // 🆕2026-09-30（本人指摘）：オープニング経由でも?shrine=直リンクでも
+      // ?tags=直リンクでもない場合（＝詳細ページ・エリアページから「← 地図に
+      // 戻る」で来た場合）は、離れる直前にsaveMapViewState()が保存しておいた
+      // ズーム位置・表示タグへ復元する。保存が無ければ（このタブで初めて
+      // map.htmlを開いた等）何もせず、既存どおり日本全体表示にフォールバックする
+      var restoredView = null;
+      if (!isFirstReveal && !wantedShrineParam && !urlTags) {
+        try {
+          var savedRaw = sessionStorage.getItem(MAP_VIEW_STORAGE_KEY);
+          if (savedRaw) {
+            var saved = JSON.parse(savedRaw);
+            if (saved && typeof saved.lat === 'number' && typeof saved.lng === 'number' && typeof saved.zoom === 'number') {
+              restoredView = saved;
+              var restoredTags = Array.isArray(saved.tags) ? saved.tags.filter(function(t){ return TAG_ORDER.indexOf(t) !== -1; }) : [];
+              if (restoredTags.length) {
+                activeFilters = new Set(restoredTags);
+                renderFilterButtons();
+                renderShrineDropdown();
+              }
+            }
+          }
+        } catch (err) {}
+      }
       if (isFirstReveal) {
         if (reducedMotionForReveal) {
           // reduced-motion時は演出せず、最初から最終状態（全5タグ）で表示する
@@ -1973,6 +2021,8 @@
         if ((size.x > 0 && size.y > 0) || attempts >= 30) {
           if (focusedShrine) {
             focusShrine(focusedShrine);
+          } else if (restoredView) {
+            map.setView([restoredView.lat, restoredView.lng], restoredView.zoom);
           } else {
             map.fitBounds(bounds, { padding: [30,30] });
             if (isFirstReveal) {
