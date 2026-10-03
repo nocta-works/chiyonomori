@@ -74,22 +74,32 @@
   .diagram-title { font-size: 13.5px; letter-spacing: 0.1em; color: var(--gold-muted); margin: 0 0 16px; text-align: center; }
   .diagram-note { font-size: 13px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
   .diagram-illust-row { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 18px; }
-  .diagram-illust-wide { width: 220px; height: auto; }
-  .diagram-illust-wide.diagram-illust-hishaku { width: 168px; }
+  /* 依頼AU-1（2026-10-03）：本人指摘「サイズがまだ小さい」を受け約1.5倍
+     （手水舎220→340px・柄杓168→260px・姿勢96×144→128×192・比較図185→280px）。
+     スマホで横にはみ出さないよう、手水舎・柄杓はmax-width:100%で縮め、
+     3つ並べる姿勢は折り返さず画面幅に合わせて縮める（下の@media） */
+  .diagram-illust-wide { width: 340px; max-width: 100%; height: auto; }
+  .diagram-illust-wide.diagram-illust-hishaku { width: 260px; }
   /* 🔴10-bow・11-clapはサイト背景（ほぼ黒）に極めて近い暗色シルエットで、
      そのままだと沈んで見えない（実測RGB≈45,38,34／58,47,40 vs 背景#1a1209）。
      img要素ではなく、透過PNGをmask-imageとして使い--tan-textで塗り直す。
      2026-09-21：本人指摘「イラストと文字が小さすぎる」を受け約2割拡大 */
-  .diagram-pose { width: 96px; height: 144px; background-color: var(--tan-text); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: bottom center; mask-position: bottom center; }
+  .diagram-pose { width: 128px; height: 192px; background-color: var(--tan-text); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: bottom center; mask-position: bottom center; }
   .diagram-pose-bow { -webkit-mask-image: url('../assets/illustrations/10-bow.png'); mask-image: url('../assets/illustrations/10-bow.png'); }
   .diagram-pose-clap { -webkit-mask-image: url('../assets/illustrations/11-clap.png'); mask-image: url('../assets/illustrations/11-clap.png'); }
   .diagram-steps-text { display: flex; flex-direction: column; gap: 8px; max-width: 460px; margin: 0 auto 4px; padding: 0; list-style: none; }
   .diagram-steps-text li { font-size: 14px; line-height: 1.6; color: var(--tan-text); opacity: 0.9; }
   .diagram-compare { display: flex; align-items: center; justify-content: center; gap: 20px; }
-  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 205px; }
-  .diagram-illust { width: 100%; height: auto; max-width: 185px; }
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 300px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 280px; }
   .diagram-illust-label { font-size: 14px; color: var(--tan-text); letter-spacing: 0.05em; }
   .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 105px; }
+  /* 礼・拍手・礼の3つは順番が意味なので、スマホでも折り返さず1行のまま縮める
+     （128×3＋隙間が327px幅に入らないため、画面幅の26vw＝縦横比2:3を保つ） */
+  @media (max-width: 480px) {
+    .diagram-illust-row-poses { flex-wrap: nowrap; gap: 10px; }
+    .diagram-illust-row-poses .diagram-pose { width: 26vw; height: auto; aspect-ratio: 2 / 3; }
+  }
 
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -142,8 +152,8 @@
 <div class="diagram">
 <p class="diagram-title">How to use the chozuya — one ladleful does everything</p>
 <div class="diagram-illust-row">
-<img alt="" class="diagram-illust-wide" src="../assets/illustrations/03-temizuya.png"/>
-<img alt="" class="diagram-illust-wide diagram-illust-hishaku" src="../assets/illustrations/07-hishaku.png"/>
+<img alt="Purification fountain (temizuya)" class="diagram-illust-wide" src="../assets/illustrations/03-temizuya.png"/>
+<img alt="Water ladle (hishaku)" class="diagram-illust-wide diagram-illust-hishaku" src="../assets/illustrations/07-hishaku.png"/>
 </div>
 <ol class="diagram-steps-text">
 <li>① Pour over the left hand</li>
@@ -155,7 +165,7 @@
 </div>
 <div class="diagram">
 <p class="diagram-title">At the worship hall — two bows, two claps, one bow</p>
-<div class="diagram-illust-row">
+<div class="diagram-illust-row diagram-illust-row-poses">
 <div class="diagram-pose diagram-pose-bow"></div>
 <div class="diagram-pose diagram-pose-clap"></div>
 <div class="diagram-pose diagram-pose-bow"></div>
@@ -174,12 +184,12 @@
 <div class="diagram">
 <div class="diagram-compare">
 <div class="diagram-compare-col">
-<img alt="" class="diagram-illust" src="../assets/illustrations/08-goshuincho.png"/>
+<img alt="Shrine stamp book (goshuincho)" class="diagram-illust" src="../assets/illustrations/08-goshuincho.png"/>
 <span class="diagram-illust-label">Goshuin</span>
 </div>
 <div class="diagram-compare-divider"></div>
 <div class="diagram-compare-col">
-<img alt="" class="diagram-illust" src="../assets/illustrations/09-omamori.png"/>
+<img alt="Amulet (omamori)" class="diagram-illust" src="../assets/illustrations/09-omamori.png"/>
 <span class="diagram-illust-label">Omamori</span>
 </div>
 </div>

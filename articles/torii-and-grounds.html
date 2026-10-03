@@ -75,23 +75,33 @@
   .diagram-svg-wrap { display: flex; justify-content: center; }
   .diagram-note { font-size: 13px; color: var(--gold-muted); text-align: center; margin-top: 16px; line-height: 1.7; }
   .diagram-compare { display: flex; align-items: flex-start; justify-content: center; gap: 20px; }
-  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 205px; }
-  .diagram-illust { width: 100%; height: auto; max-width: 185px; }
+  /* 依頼AU-1（2026-10-03）：本人指摘「サイズがまだ小さい」を受け約1.5倍
+     （比較図185→280px・列幅205→300px・順路の部品84→120px）。スマホでは
+     列がflex:1で縮むので横にはみ出さない */
+  .diagram-compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 300px; }
+  .diagram-illust { width: 100%; height: auto; max-width: 280px; }
   .diagram-compare-divider { width: 1px; align-self: stretch; background: var(--border-4); opacity: 0.7; min-height: 105px; }
 
-  .diagram-path-arrow { color: var(--gold-muted); font-size: 14px; opacity: 0.5; padding-top: 40px; }
+  .diagram-path-arrow { color: var(--gold-muted); font-size: 14px; opacity: 0.5; padding-top: 52px; }
   /* 依頼AJ（2026-09-21）：境内の順路はAI生成イラストの部品を並べる方式に変更
      （旧SVGアイコンは不採用）。文字は引き続きHTML側data-enで持たせる。
      2026-09-21追記：本人指摘「イラストと文字が小さすぎる」を受け約2割拡大 */
   .diagram-route { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; justify-content: center; }
-  .diagram-route-node { display: flex; flex-direction: column; align-items: center; width: 100px; text-align: center; }
-  .diagram-illust-route { width: 84px; height: 84px; object-fit: contain; margin-bottom: 8px; }
+  .diagram-route-node { display: flex; flex-direction: column; align-items: center; width: 124px; text-align: center; }
+  .diagram-route-node-pair { width: 142px; }
+  .diagram-illust-route { width: 120px; height: 120px; object-fit: contain; margin-bottom: 8px; }
   .diagram-illust-flip { transform: scaleX(-1); }
   .diagram-route-komainu-pair { display: flex; gap: 2px; margin-bottom: 8px; }
-  .diagram-route-komainu-pair .diagram-illust-route { width: 49px; height: 84px; margin-bottom: 0; }
+  .diagram-route-komainu-pair .diagram-illust-route { width: 70px; height: 120px; margin-bottom: 0; }
   /* 拝殿→本殿の間に「参拝者が立てるのはここまで」の縦線を1本入れる
      （本人指定・依頼AI-4／AJ-3の必須要素） */
-  .diagram-route-limitline { width: 0; align-self: stretch; border-left: 1.5px dashed var(--gold-muted); opacity: 0.7; margin: 6px 4px; min-height: 92px; }
+  .diagram-route-limitline { width: 0; align-self: stretch; border-left: 1.5px dashed var(--gold-muted); opacity: 0.7; margin: 6px 4px; min-height: 128px; }
+  /* 部品が大きくなり5つ＋矢印が本文の幅（652px）に入らないため、広い画面では
+     順路の図だけ本文の幅から左右に広げて1行に収める。狭い画面は従来どおり
+     折り返す（スマホ375pxでは2・2・1の3行になる） */
+  @media (min-width: 880px) {
+    .diagram-route { width: 800px; position: relative; left: 50%; margin-left: -400px; }
+  }
   .diagram-illust-label { font-size: 14px; line-height: 1.5; color: var(--tan-text); opacity: 0.85; }
 
   /* 依頼AJ-4（2026-09-21）：神明鳥居と明神鳥居の見分け方。150px幅の画像に
@@ -162,7 +172,7 @@
 <div class="diagram-compare diagram-compare-torii">
 <div class="diagram-compare-col">
 <div class="diagram-torii-frame">
-<img alt="" class="diagram-illust" src="../assets/illustrations/12-torii-shinmei.png"/>
+<img alt="Shinmei-style torii" class="diagram-illust" src="../assets/illustrations/12-torii-shinmei.png"/>
 <svg class="torii-marker-svg" viewbox="0 0 1254 1254">
 <g class="torii-marker"><circle cx="1000" cy="170" r="56"></circle><text x="1000" y="192">1</text></g>
 <g class="torii-marker"><circle cx="700" cy="390" r="56"></circle><text x="700" y="412">3</text></g>
@@ -174,7 +184,7 @@
 <div class="diagram-compare-divider"></div>
 <div class="diagram-compare-col">
 <div class="diagram-torii-frame">
-<img alt="" class="diagram-illust" src="../assets/illustrations/01-torii.png"/>
+<img alt="Myojin-style torii" class="diagram-illust" src="../assets/illustrations/01-torii.png"/>
 <svg class="torii-marker-svg" viewbox="0 0 1254 1254">
 <g class="torii-marker"><circle cx="1000" cy="155" r="56"></circle><text x="1000" y="177">1</text></g>
 <g class="torii-marker"><circle cx="940" cy="260" r="56"></circle><text x="940" y="282">2</text></g>
@@ -209,31 +219,31 @@
 <p class="diagram-title">A route through the grounds</p>
 <div class="diagram-route">
 <div class="diagram-route-node">
-<img alt="" class="diagram-illust-route" src="../assets/illustrations/01-torii.png"/>
+<img alt="Torii gate" class="diagram-illust-route" src="../assets/illustrations/01-torii.png"/>
 <span class="diagram-illust-label">First torii</span>
 </div>
 <span class="diagram-path-arrow">→</span>
 <div class="diagram-route-node">
-<img alt="" class="diagram-illust-route" src="../assets/illustrations/03-temizuya.png"/>
+<img alt="Purification fountain (temizuya)" class="diagram-illust-route" src="../assets/illustrations/03-temizuya.png"/>
 <span class="diagram-illust-label">Temizuya (purification)</span>
 </div>
 <span class="diagram-path-arrow">→</span>
-<div class="diagram-route-node">
+<div class="diagram-route-node diagram-route-node-pair">
 <div class="diagram-route-komainu-pair">
-<img alt="" class="diagram-illust-route diagram-illust-flip" src="../assets/illustrations/04-komainu.png"/>
-<img alt="" class="diagram-illust-route" src="../assets/illustrations/04-komainu.png"/>
+<img alt="Guardian lion-dog (komainu)" class="diagram-illust-route diagram-illust-flip" src="../assets/illustrations/04-komainu.png"/>
+<img alt="Guardian lion-dog (komainu)" class="diagram-illust-route" src="../assets/illustrations/04-komainu.png"/>
 </div>
 <span class="diagram-illust-label">Komainu guardians</span>
 </div>
 <span class="diagram-path-arrow">→</span>
 <div class="diagram-route-node">
-<img alt="" class="diagram-illust-route" src="../assets/illustrations/05-haiden.png"/>
+<img alt="Hall of worship (haiden)" class="diagram-illust-route" src="../assets/illustrations/05-haiden.png"/>
 <span class="diagram-illust-label">Haiden (worship hall)</span>
 </div>
 <div class="diagram-route-limitline" title="Visitors go no further than this"></div>
 <span class="diagram-path-arrow">→</span>
 <div class="diagram-route-node">
-<img alt="" class="diagram-illust-route" src="../assets/illustrations/06-honden.png"/>
+<img alt="Main sanctuary (honden)" class="diagram-illust-route" src="../assets/illustrations/06-honden.png"/>
 <span class="diagram-illust-label">Honden (main hall) — off-limits</span>
 </div>
 </div>
