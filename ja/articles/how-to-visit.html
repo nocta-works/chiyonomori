@@ -43,32 +43,45 @@
   .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
 
   .article-hero {
-    padding: 36px 6vw 48px; max-width: 760px; margin: 0 auto;
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
   }
 
   /* 本人指示（2026-10-04）：基礎知識の記事に入ると、前後の記事へは最下部まで
-     スクロールしないと行けなかった。4記事の上部に全記事の一覧を置き、現在の記事を
-     強調する（地図ヘッダーの「基礎知識」ドロップダウンと同じ順序・ラベル）。
-     番号はCSSカウンターで出す＝<a data-en>の中に子要素を入れると、ビルドの
-     焼き込み（data-en要素の中身をテキストで置換）で消えてしまうため */
-  .article-index { max-width: 760px; margin: 0 auto; padding: 62px 6vw 0; }
-  .article-index-label { display: block; font-size: 11px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
-  .article-index-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; counter-reset: article-index; }
-  .article-index-list li { display: flex; }
+     スクロールしないと行けなかった。4記事の一覧を画面の上端に固定し、どこまで
+     読み進めても1タップで他の記事へ移れるようにする（現在の記事は強調）。
+     地図ヘッダーの「基礎知識」ドロップダウンと同じ順序・ラベル。
+     固定の「地図に戻る」・言語ボタンと重ならないよう、広い画面（1000px以上）は
+     その2つの間（同じ高さ）に、狭い画面はその下に置く。スマホは番号を外して
+     文字だけにする。番号はCSSカウンター（<a data-en>の中に子要素を置くと、
+     ビルドの焼き込みで消えるため）。固定にした分、記事内リンク（#history等）の
+     飛び先の見出しが一覧の下に隠れないよう、html側にscroll-padding-topを足す */
+  html { scroll-padding-top: 100px; }
+  .article-index { position: fixed; top: 52px; left: 0; right: 0; z-index: 9; display: flex; justify-content: center; padding: 0 12px; pointer-events: none; }
+  .article-index-list {
+    pointer-events: auto; list-style: none; margin: 0; padding: 3px; display: flex; gap: 2px;
+    width: 100%; max-width: 600px; counter-reset: article-index;
+    background: rgba(26,18,9,0.92); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 1px solid var(--border-4); border-radius: 12px;
+  }
+  .article-index-list li { display: flex; flex: 1 1 0; min-width: 0; }
   .article-index-item {
-    flex: 1; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 10px;
-    border: 1px solid var(--border-4); border-radius: 6px; background: rgba(255,255,255,0.02);
-    font-size: 12.5px; line-height: 1.4; color: var(--tan-text); text-decoration: none;
-    transition: background var(--dur-base, .3s) ease, border-color var(--dur-base, .3s) ease;
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; padding: 6px 8px;
+    border-radius: 9px; font-size: 12px; line-height: 1.3; text-align: center; color: var(--tan-text); text-decoration: none;
+    transition: background var(--dur-base, .3s) ease;
   }
   .article-index-item::before {
     counter-increment: article-index; content: counter(article-index);
-    flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-    font-size: 10.5px; font-weight: 700; color: var(--gold);
+    flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: var(--gold);
     background: rgba(var(--gold-glow-rgb),0.3); border: 1.5px solid var(--gold);
   }
-  a.article-index-item:hover { background: rgba(var(--gold-glow-rgb),0.08); border-color: rgba(var(--gold-glow-rgb),0.45); }
-  .article-index-item.is-current { background: rgba(var(--gold-glow-rgb),0.14); border-color: var(--gold); color: var(--gold); }
+  a.article-index-item:hover { background: rgba(var(--gold-glow-rgb),0.1); }
+  .article-index-item.is-current { background: rgba(var(--gold-glow-rgb),0.2); color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+  @media (min-width: 1000px) { .article-index { top: 10px; } }
+  @media (max-width: 640px) {
+    .article-index-item { font-size: 11.5px; padding: 6px 4px; }
+    .article-index-item::before { display: none; }
+  }
   .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
   .article-title {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
@@ -152,7 +165,8 @@
   .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
 
   @media (max-width: 600px) {
-    .article-hero { padding: 90px 6vw 36px; }
+    /* 固定の一覧（上端52px＋高さ約50px）の下から始める */
+    .article-hero { padding: 120px 6vw 36px; }
   }
 </style>
 <link href="https://nocta-works.github.io/chiyonomori/ja/articles/how-to-visit.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/how-to-visit.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html" hreflang="x-default" rel="alternate"/></head>
@@ -160,7 +174,6 @@
 <a class="back-link" href="../map.html#mock-app" id="back-link">← 地図に戻る</a>
 <div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/articles/how-to-visit.html">日本語</a></div>
 <nav aria-label="神社の基礎知識 / Basics" class="article-index">
-<span class="article-index-label">⛩ 神社の基礎知識</span>
 <ol class="article-index-list" role="list">
 <li><a class="article-index-item" href="japan-and-shrines.html">日本と神社</a></li>
 <li><span aria-current="page" class="article-index-item is-current">参拝の作法</span></li>
