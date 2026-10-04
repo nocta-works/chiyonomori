@@ -85,6 +85,28 @@
   .rank-name { font-size: 12px; color: var(--tan-text); }
   .rank-count { font-size: 10.5px; color: var(--gold-muted); margin-top: 2px; }
 
+  /* 依頼AU-3（2026-10-04）：神使（神の使いの動物）と御神体の鏡を、AI生成イラスト
+     （背景なしPNG）で入れる。神そのものは描かず「しるし」だけを描く（記事
+     「鳥居と境内」の「神は見えない」と矛盾させないため）。文字は画像に焼かず、
+     ラベル・社名はHTML側のdata-enで持つ。均等な列のグリッドに置き、画像は
+     object-fit:containで基線（下端）に揃える（牛のような横長も歪まない）。
+     本文の幅（652px）に4列は窮屈なので、880px以上では図だけ本文から広げて
+     4列1行、それ未満は2×2に折り返す（鳥居の記事の順路と同じ考え方） */
+  .emblem-row { --emblem-h: 160px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; justify-items: center; margin: 22px 0 8px; }
+  .emblem { margin: 0; width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .emblem-art { width: 100%; max-width: 200px; height: var(--emblem-h); margin-bottom: 10px; }
+  .emblem-art img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+  .emblem figcaption { display: flex; flex-direction: column; align-items: center; }
+  .emblem-lineage { font-size: 14px; color: var(--gold); letter-spacing: 0.05em; }
+  .emblem-animal { font-size: 12px; color: var(--gold-muted); margin-top: 1px; }
+  .emblem-shrines { margin-top: 6px; font-size: 12px; line-height: 1.7; }
+  .emblem-shrines a { display: block; }
+  .emblem-single { grid-template-columns: minmax(0, 240px); justify-content: center; --emblem-h: 200px; }
+  @media (min-width: 880px) {
+    .emblem-row:not(.emblem-single) { grid-template-columns: repeat(4, minmax(0, 1fr)); width: 800px; position: relative; left: 50%; margin-left: -400px; }
+  }
+  @media (max-width: 480px) { .emblem-row { --emblem-h: 120px; gap: 24px 14px; } .emblem-single { --emblem-h: 170px; } }
+
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
@@ -174,6 +196,19 @@
 </div>
 <p class="diagram-note">実線＝神。破線＝その神を祀る社。</p>
 </div>
+<div class="diagram">
+<p class="diagram-title">御神体——神が宿るとされる「しるし」</p>
+<div class="emblem-row emblem-single">
+<figure class="emblem">
+<div class="emblem-art"><img alt="御神体としての銅鏡" src="../../assets/illustrations/17-mirror.png"/></div>
+<figcaption>
+<span class="emblem-lineage">鏡</span>
+<span class="emblem-shrines"><a href="../shrines/ise-jingu.html">伊勢神宮</a></span>
+</figcaption>
+</figure>
+</div>
+<p class="diagram-note">神そのものは姿を見せない。本殿の奥にあるのは、鏡・山・岩などの「御神体」。三種の神器の八咫鏡は、伊勢神宮の御神体とされる。</p>
+</div>
 <h3>⚡人が神になる例</h3>
 <ul>
 <li><strong>応神天皇 → 八幡神</strong>（全国約4万社とされる）</li>
@@ -253,6 +288,44 @@
 <tr><td>祇園</td><td><a href="../map.html?shrine=京都|八坂神社#mock-app">八坂神社（京都）</a></td><td>2,300社程度とされる</td><td>疫病を鎮める神</td></tr>
 </tbody></table></div>
 <p class="article-note"><strong>数の目安は通説による概数で、一次資料には未照合。</strong>「約」ではなく「〜社程度とされる」という言い方に留めている。</p>
+<div class="diagram">
+<p class="diagram-title">神使——系統のしるし</p>
+<div class="emblem-row">
+<figure class="emblem">
+<div class="emblem-art"><img alt="稲荷神社の狐の像" src="../../assets/illustrations/13-fox.png"/></div>
+<figcaption>
+<span class="emblem-lineage">稲荷</span>
+<span class="emblem-animal">狐</span>
+<span class="emblem-shrines"><a href="../shrines/hanazono-jinja.html">花園神社</a></span>
+</figcaption>
+</figure>
+<figure class="emblem">
+<div class="emblem-art"><img alt="天満宮の臥牛（伏せた牛）の像" src="../../assets/illustrations/14-ox.png"/></div>
+<figcaption>
+<span class="emblem-lineage">天神</span>
+<span class="emblem-animal">牛</span>
+<span class="emblem-shrines"><a href="../shrines/egara-tenjinja.html">荏柄天神社</a><a href="../shrines/fuda-tenjinja.html">布多天神社</a></span>
+</figcaption>
+</figure>
+<figure class="emblem">
+<div class="emblem-art"><img alt="狼の像（お犬様）" src="../../assets/illustrations/15-wolf.png"/></div>
+<figcaption>
+<span class="emblem-lineage">三峯・御嶽</span>
+<span class="emblem-animal">狼（お犬様）</span>
+<span class="emblem-shrines"><a href="../shrines/mitsumine-jinja.html">三峯神社</a><a href="../shrines/mitake-jinja.html">武蔵御嶽神社</a></span>
+</figcaption>
+</figure>
+<figure class="emblem">
+<div class="emblem-art"><img alt="日枝神社の神猿の像" src="../../assets/illustrations/16-monkey.png"/></div>
+<figcaption>
+<span class="emblem-lineage">日吉・山王</span>
+<span class="emblem-animal">猿</span>
+<span class="emblem-shrines"><a href="../shrines/hie-jinja.html">日枝神社</a></span>
+</figcaption>
+</figure>
+</div>
+<p class="diagram-note">神そのものではなく、神に仕える動物。同じ系統の社には、同じ動物が置かれていることが多い。社名は、この地図に詳細ページのある社。</p>
+</div>
 <p><strong>系統は地図のフィルターにしていない。</strong>理由を正直に書く——系統が分かるには前に予備知識が要り、初めて日本を訪れる人の選択基準にならないから。<strong>代わりに、各系統の総本社はほとんどが格式でも高いので、上の表から総本社へ飛べば、そこから先は地図で辿れる。</strong></p>
 </div>
 <div class="article-nav">

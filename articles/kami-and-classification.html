@@ -85,6 +85,28 @@
   .rank-name { font-size: 12px; color: var(--tan-text); }
   .rank-count { font-size: 10.5px; color: var(--gold-muted); margin-top: 2px; }
 
+  /* 依頼AU-3（2026-10-04）：神使（神の使いの動物）と御神体の鏡を、AI生成イラスト
+     （背景なしPNG）で入れる。神そのものは描かず「しるし」だけを描く（記事
+     「鳥居と境内」の「神は見えない」と矛盾させないため）。文字は画像に焼かず、
+     ラベル・社名はHTML側のdata-enで持つ。均等な列のグリッドに置き、画像は
+     object-fit:containで基線（下端）に揃える（牛のような横長も歪まない）。
+     本文の幅（652px）に4列は窮屈なので、880px以上では図だけ本文から広げて
+     4列1行、それ未満は2×2に折り返す（鳥居の記事の順路と同じ考え方） */
+  .emblem-row { --emblem-h: 160px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; justify-items: center; margin: 22px 0 8px; }
+  .emblem { margin: 0; width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .emblem-art { width: 100%; max-width: 200px; height: var(--emblem-h); margin-bottom: 10px; }
+  .emblem-art img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+  .emblem figcaption { display: flex; flex-direction: column; align-items: center; }
+  .emblem-lineage { font-size: 14px; color: var(--gold); letter-spacing: 0.05em; }
+  .emblem-animal { font-size: 12px; color: var(--gold-muted); margin-top: 1px; }
+  .emblem-shrines { margin-top: 6px; font-size: 12px; line-height: 1.7; }
+  .emblem-shrines a { display: block; }
+  .emblem-single { grid-template-columns: minmax(0, 240px); justify-content: center; --emblem-h: 200px; }
+  @media (min-width: 880px) {
+    .emblem-row:not(.emblem-single) { grid-template-columns: repeat(4, minmax(0, 1fr)); width: 800px; position: relative; left: 50%; margin-left: -400px; }
+  }
+  @media (max-width: 480px) { .emblem-row { --emblem-h: 120px; gap: 24px 14px; } .emblem-single { --emblem-h: 170px; } }
+
   .table-wrap { overflow-x: auto; margin: 0 0 8px; }
   .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
@@ -174,6 +196,19 @@
 </div>
 <p class="diagram-note">Solid boxes are kami, dashed boxes are the shrines that enshrine them.</p>
 </div>
+<div class="diagram">
+<p class="diagram-title">Shintai — the sign where a kami is said to dwell</p>
+<div class="emblem-row emblem-single">
+<figure class="emblem">
+<div class="emblem-art"><img alt="A bronze mirror as a shintai" src="../assets/illustrations/17-mirror.png"/></div>
+<figcaption>
+<span class="emblem-lineage">Mirror</span>
+<span class="emblem-shrines"><a href="../shrines/ise-jingu.html">Ise Jingu</a></span>
+</figcaption>
+</figure>
+</div>
+<p class="diagram-note">The kami itself is not shown. Deep inside the main sanctuary is a shintai — a mirror, a mountain, a rock. The Yata no Kagami, one of the Three Sacred Treasures, is regarded as the shintai of Ise Jingu.</p>
+</div>
 <h3>⚡Examples of people becoming gods</h3>
 <ul>
 <li>Emperor Ojin → Hachiman, said to be worshipped at about 40,000 shrines nationwide.</li>
@@ -253,6 +288,44 @@
 <tr><td>Gion</td><td><a href="../map.html?shrine=京都|八坂神社#mock-app">Yasaka Jinja (Kyoto)</a></td><td>About 2,300</td><td>Gods who ward off epidemics</td></tr>
 </tbody></table></div>
 <p class="article-note">The figures are conventional estimates and have not been checked against primary sources. The wording stays with "said to be around X shrines", rather than presenting "about X" as a fact.</p>
+<div class="diagram">
+<p class="diagram-title">Divine messengers — the emblem of a lineage</p>
+<div class="emblem-row">
+<figure class="emblem">
+<div class="emblem-art"><img alt="Fox statue of an Inari shrine" src="../assets/illustrations/13-fox.png"/></div>
+<figcaption>
+<span class="emblem-lineage">Inari</span>
+<span class="emblem-animal">Fox</span>
+<span class="emblem-shrines"><a href="../shrines/hanazono-jinja.html">Hanazono Jinja</a></span>
+</figcaption>
+</figure>
+<figure class="emblem">
+<div class="emblem-art"><img alt="Reclining ox statue of a Tenmangu shrine" src="../assets/illustrations/14-ox.png"/></div>
+<figcaption>
+<span class="emblem-lineage">Tenjin</span>
+<span class="emblem-animal">Ox</span>
+<span class="emblem-shrines"><a href="../shrines/egara-tenjinja.html">Egara Tenjinsha</a><a href="../shrines/fuda-tenjinja.html">Fuda Tenjinja</a></span>
+</figcaption>
+</figure>
+<figure class="emblem">
+<div class="emblem-art"><img alt="Wolf statue (Oinu-sama)" src="../assets/illustrations/15-wolf.png"/></div>
+<figcaption>
+<span class="emblem-lineage">Mitsumine and Mitake</span>
+<span class="emblem-animal">Wolf (Oinu-sama)</span>
+<span class="emblem-shrines"><a href="../shrines/mitsumine-jinja.html">Mitsumine Jinja</a><a href="../shrines/mitake-jinja.html">Musashi Mitake Jinja</a></span>
+</figcaption>
+</figure>
+<figure class="emblem">
+<div class="emblem-art"><img alt="Sacred monkey statue of Hie Jinja" src="../assets/illustrations/16-monkey.png"/></div>
+<figcaption>
+<span class="emblem-lineage">Hiyoshi and Sanno</span>
+<span class="emblem-animal">Monkey</span>
+<span class="emblem-shrines"><a href="../shrines/hie-jinja.html">Hie Jinja</a></span>
+</figcaption>
+</figure>
+</div>
+<p class="diagram-note">Not the god itself, but an animal that serves it. Shrines of the same lineage often share the same animal. The shrines named here have a page on this map.</p>
+</div>
 <p>Lineage is not a map filter. The reason is simple — understanding lineage requires prior knowledge, so it is not a useful way for first-time visitors to Japan to choose a shrine. Instead, most head shrines also rank highly under the status categories above. Start with the head shrine in the table, then follow the map from there.</p>
 </div>
 <div class="article-nav">
