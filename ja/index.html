@@ -1246,11 +1246,23 @@ function initScrollSlideReveal() {
     io.observe(section);
   }
 
+  // 🔴2026-10-04（本人指摘「日本語ページのオープニングで静止画が写ってない」）：
+  // マニフェスト内のfileは「../assets/…」というページ基準の書き方。EN版（/）では
+  // そのまま通るが、JA版（/ja/）はビルドが書き換えるのがHTML内の文字列だけで
+  // JSONの中身には届かず、/ja/../assets/…（存在しない）に解決されて静止画3枚とも
+  // 404になっていた（AN-1で/ja/を作った時から）。マニフェスト自身の場所
+  // （ビルド後はENが「../assets/」、JAが「../../assets/」）から、assetsの手前までの
+  // 相対パス（ENは空、JAは「../」）を割り出し、各fileの前に付ける
+  var ZOOMOUT_MANIFEST = '../assets/zoomout-manifest.json';
+  var ASSET_ROOT = ZOOMOUT_MANIFEST.split('zoomout-manifest.json')[0].replace(/assets\/$/, '');
+
   function startFallback() {
-    fetch('../assets/zoomout-manifest.json')
+    fetch(ZOOMOUT_MANIFEST)
       .then(function(res){ return res.json(); })
       .then(function(list){
-        list = list || [];
+        list = (list || []).map(function(item){
+          return Object.assign({}, item, { file: ASSET_ROOT + item.file });
+        });
         // 本人指定（2026-09-20）：静止画3枚目には必ずトリプティック（複数写真を
         // 1枚に合成した横長画像。ファイル名がtriptych-で始まる3件）を出す。
         // 単体版と混ざるとランダム抽選で出たり出なかったりしていたため固定する
