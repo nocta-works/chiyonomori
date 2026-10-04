@@ -43,8 +43,32 @@
   .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
 
   .article-hero {
-    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+    padding: 36px 6vw 48px; max-width: 760px; margin: 0 auto;
   }
+
+  /* 本人指示（2026-10-04）：基礎知識の記事に入ると、前後の記事へは最下部まで
+     スクロールしないと行けなかった。4記事の上部に全記事の一覧を置き、現在の記事を
+     強調する（地図ヘッダーの「基礎知識」ドロップダウンと同じ順序・ラベル）。
+     番号はCSSカウンターで出す＝<a data-en>の中に子要素を入れると、ビルドの
+     焼き込み（data-en要素の中身をテキストで置換）で消えてしまうため */
+  .article-index { max-width: 760px; margin: 0 auto; padding: 62px 6vw 0; }
+  .article-index-label { display: block; font-size: 11px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-index-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; counter-reset: article-index; }
+  .article-index-list li { display: flex; }
+  .article-index-item {
+    flex: 1; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 10px;
+    border: 1px solid var(--border-4); border-radius: 6px; background: rgba(255,255,255,0.02);
+    font-size: 12.5px; line-height: 1.4; color: var(--tan-text); text-decoration: none;
+    transition: background var(--dur-base, .3s) ease, border-color var(--dur-base, .3s) ease;
+  }
+  .article-index-item::before {
+    counter-increment: article-index; content: counter(article-index);
+    flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10.5px; font-weight: 700; color: var(--gold);
+    background: rgba(var(--gold-glow-rgb),0.3); border: 1.5px solid var(--gold);
+  }
+  a.article-index-item:hover { background: rgba(var(--gold-glow-rgb),0.08); border-color: rgba(var(--gold-glow-rgb),0.45); }
+  .article-index-item.is-current { background: rgba(var(--gold-glow-rgb),0.14); border-color: var(--gold); color: var(--gold); }
   .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
   .article-title {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
@@ -140,6 +164,15 @@
 <body>
 <a class="back-link" href="../map.html#mock-app" id="back-link">← Back to map</a>
 <div class="lang-toggle"><a class="lang-btn active" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html">EN</a><a class="lang-btn" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/articles/kami-and-classification.html">日本語</a></div>
+<nav aria-label="神社の基礎知識 / Basics" class="article-index">
+<span class="article-index-label">⛩ Basics</span>
+<ol class="article-index-list" role="list">
+<li><a class="article-index-item" href="japan-and-shrines.html">Japan &amp; Shrines</a></li>
+<li><a class="article-index-item" href="how-to-visit.html">How to Visit</a></li>
+<li><a class="article-index-item" href="torii-and-grounds.html">Torii &amp; Grounds</a></li>
+<li><span aria-current="page" class="article-index-item is-current">Kami &amp; Ranks</span></li>
+</ol>
+</nav>
 <div class="article-hero">
 <span class="article-eyebrow">Intermediate · Article 4 of 4</span>
 <h1 class="article-title">The gods and the map's classifications</h1>
