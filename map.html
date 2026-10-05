@@ -20,7 +20,8 @@
 <meta content="A map of more than a hundred shrines, with Tokyo covered in depth." name="twitter:description"/>
 <meta content="https://nocta-works.github.io/chiyonomori/assets/og-image.jpg" name="twitter:image"/>
 <link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+<!-- 依頼AV（2026-10-06）：Leaflet 1.9.4を外部（unpkg）から読まず自前で配る。unpkg・jsDelivr・cdnjsで同一内容を確認済み（js sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo= ／css sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=）。更新する時は同じ照合をする -->
+<link href="assets/leaflet/leaflet.css" rel="stylesheet"/>
 <style>
   /* ══════════════════════════════════════════════════════════════
      design-lab/opening-intro.html
@@ -793,7 +794,7 @@
 </div>
 </div>
 </div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/leaflet/leaflet.js"></script>
 <script>
 // ⑤本体：神宮・大社タグの神社のみ（48社）を表示する簡易地図
 // マーカー・アイコン・ポップアップは本番index.htmlの実装をそのまま移植（フィルタ・サイドバー・参拝記録は含まない）
