@@ -476,6 +476,7 @@
   .filter-btn.meisha { border-color: var(--tag-meisha); color: var(--tag-meisha-light); background: rgba(var(--tag-meisha-rgb),0.12); }
   .filter-btn.meisha.active { background: rgba(var(--tag-meisha-rgb),0.32); box-shadow: 0 0 9px rgba(var(--tag-meisha-rgb),0.4); }
   .filter-btn .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .filter-btn .lbl-short { display: none; } /* 依頼BD-4：スマホ（640px以下）だけ短い表記を出す。後ろのメディアクエリで上書き */
   /* 格式の?ボタン（実装キュー依頼N-1・2026-09-13）：タグ列全体に1つだけ。
      押すと個別記事へは飛ばず、5タグを比較できる窓（モーダル）を開く
      （本人指定：格式は「比べないと意味が分からない」もの） */
@@ -690,6 +691,26 @@
        375px幅でも画面の端に触れないようにする */
     .area-enclosure-cta-wrap { right: 0; }
     .area-enclosure-cta { padding: 11px 18px; font-size: 15px; gap: 8px; }
+    /* 依頼BD-4（2026-10-11）：スマホで格式のタグ（神宮・一宮など）が縦に1つずつ積み上がり、
+       画面の上側を圧迫していた。真因＝タグ列（.mock-controls）が「基礎知識」「エリア」の
+       右の狭い幅に押し込まれ、flex-wrap:wrapで1ボタンずつ折り返していた。
+       直し＝タグ列を2つのボタンの下の1行（幅いっぱい）に出し、1行に固定して横にスワイプ。
+       右端は薄く消して「続きがある」と分かるようにする。ボタンは一回り小さく、英語の
+       `Ichinomiya (1st)`は`1st`だけにする（色と記号で格式は分かる）。
+       ツールバー全体の高さは2行（基礎知識・エリアの行＋タグの行）まで */
+    .mock-toolbar { flex-wrap: wrap; gap: 8px 10px; padding: 8px 12px; }
+    .mock-controls {
+      order: 3; flex: 1 1 100%; margin-left: 0; flex-wrap: nowrap; gap: 6px;
+      overflow-x: auto; overflow-y: hidden; padding-right: 30px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+      -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 30px), transparent);
+      mask-image: linear-gradient(to right, #000 calc(100% - 30px), transparent);
+    }
+    .mock-controls::-webkit-scrollbar { display: none; }
+    .mock-controls > * { flex-shrink: 0; }
+    .filter-btn { font-size: 12px; padding: 4px 9px; gap: 4px; white-space: nowrap; }
+    .filter-btn .lbl-full { display: none; }
+    .filter-btn .lbl-short { display: inline; }
+    .mock-stats { font-size: 11.5px; }
   }
   /* タイルのみ暗色反転（マーカー・ポップアップには影響しない。本番index.htmlと同一処理） */
   .leaflet-tile-pane {
@@ -1299,6 +1320,13 @@
     if (!tags.length) return null;
     return tags.reduce(function(b,t){ return PRIORITY[t] > PRIORITY[b] ? t : b; }, tags[0]);
   }
+  // 依頼BD-4：ラベルに括弧がある時（英語の`Ichinomiya (1st)`・`Ninomiya (2nd)`）は、
+  // 括弧の中だけの短い表記を.lbl-shortに持つ。CSS（640px以下）が短い方だけを出す
+  function filterLabelHtml(label) {
+    var m = /\(([^)]+)\)/.exec(label);
+    if (!m) return label;
+    return '<span class="lbl-full">' + label + '</span><span class="lbl-short">' + m[1] + '</span>';
+  }
   function renderFilterButtons() {
     var container = document.getElementById('mock-controls');
     if (!container) return;
@@ -1307,7 +1335,7 @@
       var active = activeFilters.has(tag) ? ' active' : '';
       return '<button type="button" class="filter-btn ' + tag + active + '" data-tag="' + tag + '">' +
         '<span class="dot" style="background:' + c.border + ';box-shadow:0 0 5px ' + c.border + '"></span>' +
-        c.label[currentLang] + '</button>';
+        filterLabelHtml(c.label[currentLang]) + '</button>';
     }).join('');
     // 格式の?リンク（実装キュー依頼N-1・2026-09-13修正）：タグ1つにつき1つずつ
     // 出していたのを撤回し、タグ列全体に1つだけにした。格式は5つを比べて

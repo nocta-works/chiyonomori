@@ -118,42 +118,47 @@
   /* 依頼BB（2026-10-10）：Lvごとに横へ流れる3段のカード。参考＝Anime Spot 88（カードの形が
      揃っているので、流れていても読める）。段の見出しは地図のチップと同じ言葉・同じ線の種類
      （Lv1実線／Lv2破線／Lv3点線）。今は自動で流さず、手で横にスクロール（スナップ＋PCは矢印）。
-     自動にする日のために、1段ずつ独立した.lv-scrollerにしてある（data-autoscroll／data-speed／data-dir） */
-  .lv-rows { --lv-pad: max(24px, calc((100vw - 900px) / 2 + 24px)); --lv-gap: 14px; margin-top: 56px; }
-  .lv-row { margin-bottom: 44px; position: relative; }
-  .lv-row-head { display: flex; align-items: center; gap: 16px; padding: 0 var(--lv-pad) 14px; }
+     自動にする日のために、1段ずつ独立した.lv-scrollerにしてある（data-autoscroll／data-speed／data-dir）。
+     依頼BD-1（2026-10-11）：列が本文の左端から画面の右端まではみ出して左右非対称（右に寄って見えた）
+     のを直した。列は「画面の中央に置いた枠（最大1200px）」の中で左右対称にし、両端を同じ幅で消す。
+     矢印は列の左右（写真の高さの中央）に1つずつ。スマホはカードが画面の中央で止まる。
+     並びは「Lv1の列→Lv1の説明→Lv2の列→…」 */
+  .lv-rows { --lv-gap: 14px; --lv-card-w: 208px; --lv-edge: 60px; margin-top: 56px; }
+  .lv-row { margin-bottom: 64px; }
+  .lv-frame { position: relative; max-width: 1200px; margin: 0 auto; --lv-arrow-top: 172px; }
+  #lv3 .lv-frame { --lv-arrow-top: 200px; }
+  .lv-row-head { display: flex; align-items: baseline; gap: 16px; padding: 0 var(--lv-edge) 14px; }
   .lv-row-title {
     margin: 0; display: flex; align-items: center; gap: 12px;
     font-size: 15px; font-weight: 600; letter-spacing: 0.1em; color: var(--gold);
   }
-  .lv-line { display: inline-block; width: 38px; height: 0; border-top: var(--gold) solid; flex-shrink: 0; }
+  .lv-line { display: inline-block; width: 38px; height: 0; border-top: var(--gold) solid; flex-shrink: 0; align-self: center; }
   .lv-line-1 { border-top-width: 3px; border-top-style: solid; }
   .lv-line-2 { border-top-width: 2px; border-top-style: dashed; }
   .lv-line-3 { border-top-width: 2px; border-top-style: dotted; }
   .lv-row-count { font-size: 12px; letter-spacing: 0.06em; color: var(--tan-text); opacity: 0.7; }
-  .lv-row-nav { margin-left: auto; display: flex; gap: 8px; }
   .lv-nav-btn {
-    width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border-4);
-    background: rgba(0,0,0,0.4); color: var(--gold); font-size: 20px; line-height: 1; cursor: pointer;
+    position: absolute; top: var(--lv-arrow-top); transform: translateY(-50%); z-index: 2;
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-4);
+    background: rgba(26,18,9,0.82); color: var(--gold); font-size: 22px; line-height: 1; cursor: pointer;
     font-family: inherit; padding: 0 0 3px;
     transition: border-color var(--dur-base) ease, background var(--dur-base) ease, opacity var(--dur-base) ease;
   }
-  .lv-nav-btn:hover:not(:disabled) { border-color: var(--gold); background: rgba(var(--gold-glow-rgb),0.16); }
-  .lv-nav-btn:disabled { opacity: 0.28; cursor: default; }
+  .lv-prev { left: 12px; }
+  .lv-next { right: 12px; }
+  .lv-nav-btn:hover:not(:disabled) { border-color: var(--gold); background: rgba(var(--gold-glow-rgb),0.2); }
+  .lv-nav-btn:disabled { opacity: 0.25; cursor: default; }
   .lv-nav-btn:focus-visible, .lv-scroller:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
   .lv-scroller {
-    overflow-x: auto; overflow-y: hidden; padding: 4px var(--lv-pad) 14px;
-    scroll-snap-type: x mandatory; scroll-padding-inline: var(--lv-pad);
-    scrollbar-width: thin; scrollbar-color: var(--border-4) transparent; -webkit-overflow-scrolling: touch;
+    overflow-x: auto; overflow-y: hidden; padding: 4px var(--lv-edge) 14px;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--lv-edge);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    /* 左右の端を同じ幅でふわっと消す＝「続きがある」ことが両側で分かる（左右対称） */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--lv-edge), #000 calc(100% - var(--lv-edge)), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 var(--lv-edge), #000 calc(100% - var(--lv-edge)), transparent 100%);
   }
-  /* 段の右端（左端）を少し見切らせて「続きがある」と分からせる＝端のフェード */
-  .lv-row.can-right .lv-scroller { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent); }
-  .lv-row.can-left .lv-scroller { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 64px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 64px), transparent); }
-  .lv-row.can-left.can-right .lv-scroller {
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 64px), transparent);
-    mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 64px), transparent);
-  }
+  .lv-scroller::-webkit-scrollbar { display: none; }
   /* 自動で流す日の設定（後日）：data-autoscroll="on"の段だけ流れる。スナップは自動と喧嘩するので外す */
   .lv-scroller[data-autoscroll="on"] { scroll-snap-type: none; }
   .lv-track, .lv-group-cards { display: flex; gap: var(--lv-gap); list-style: none; margin: 0; padding: 0; width: max-content; }
@@ -164,7 +169,7 @@
   .lv-card-item { display: flex; scroll-snap-align: start; }
 
   .lv-card {
-    display: flex; flex-direction: column; width: 208px; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; width: var(--lv-card-w); text-decoration: none; color: inherit;
     background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px; overflow: hidden;
     transition: background var(--dur-base) ease, border-color var(--dur-base) ease;
   }
@@ -188,23 +193,35 @@
   .lv-card-place { font-size: 11px; color: var(--gold-muted); margin-top: 8px; }
   .lv-card-axis { font-size: 12px; line-height: 1.6; color: var(--tan-text); opacity: 0.8; margin-top: 4px; min-height: 3.2em; }
 
-  /* 既存の各Lvの説明文（検索に効く本文）はカードの下へ移した */
+  /* 各Lvの説明文（検索に効く本文）は、そのLvの列のすぐ下。見出しは列の見出しと重複するので小さく */
+  .lv-desc .layer-section { margin-top: 22px; }
+  .lv-desc .section-title { font-size: 11px; letter-spacing: 0.14em; font-weight: normal; opacity: 0.6; margin: 0 0 8px; }
+  .lv-desc .section-lead { margin: 0 0 14px; }
   .shrine-notes { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
   .shrine-notes li { font-size: 12.5px; line-height: 1.85; color: var(--tan-text); opacity: 0.8; }
   .shrine-notes a { color: var(--gold); text-decoration: none; white-space: nowrap; }
   .shrine-notes a:hover { text-decoration: underline; }
   .shrine-notes .note::before { content: "—"; margin: 0 0.6em; opacity: 0.5; }
-  .map-cta { margin: 56px 0 0; text-align: center; font-size: 14px; }
+  .map-cta { margin: 8px 0 0; text-align: center; font-size: 14px; }
   .map-cta a { text-decoration: none; padding: 12px 24px; border: 1px solid var(--gold); border-radius: 28px; display: inline-block; }
   .map-cta a:hover { background: rgba(var(--gold-glow-rgb),0.16); }
 
   @media (max-width: 600px) {
-    .lv-rows { --lv-pad: 16px; margin-top: 40px; }
-    .lv-card { width: min(70vw, 280px); }
-    .lv-row-nav { display: none; }
+    /* スマホ＝カードは画面の約75%で、画面の中央で止まる（左右に隣のカードが少しずつ見える） */
+    .lv-rows { --lv-card-w: min(75vw, 300px); --lv-edge: 16px; margin-top: 40px; }
+    .lv-row { margin-bottom: 48px; }
     .lv-row-head { flex-wrap: wrap; gap: 6px 14px; }
+    .lv-scroller {
+      padding-inline: calc((100% - var(--lv-card-w)) / 2);
+      scroll-padding-inline: 0;
+      -webkit-mask-image: none; mask-image: none;
+    }
+    .lv-card-item { scroll-snap-align: center; }
+    .lv-nav-btn { display: none; }
+    .lv-group { padding-left: 14px; }
+    .lv-track-groups { gap: 14px; }
   }
-  @media (hover: none) { .lv-row-nav { display: none; } }
+  @media (hover: none) { .lv-nav-btn { display: none; } }
   @media (prefers-reduced-motion: reduce) { .lv-scroller { scroll-behavior: auto; } }
 </style>
 <link href="https://nocta-works.github.io/chiyonomori/areas/tokyo.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/areas/tokyo.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/areas/tokyo.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/areas/tokyo.html" hreflang="x-default" rel="alternate"/></head>
@@ -221,48 +238,20 @@
 </div>
 <div class="lv-rows">
 <section class="lv-row" data-level="1" id="lv1">
+<div class="lv-frame">
 <header class="lv-row-head">
 <h2 class="lv-row-title"><span aria-hidden="true" class="lv-line lv-line-1"></span><span>Lv1 · Walkable</span></h2>
 <span class="lv-row-count">7 shrines</span>
-<div class="lv-row-nav">
-<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
-<button aria-label="Scroll right / 右へ" class="lv-nav-btn lv-next" type="button">›</button>
-</div>
 </header>
+<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
 <div aria-label="Lv1 · Walkable" class="lv-scroller" data-autoscroll="off" data-dir="1" data-speed="20" role="region" tabindex="0">
 <ul class="lv-track"><li class="lv-card-item"><a class="lv-card" href="../shrines/meiji-jingu.html"><span class="lv-card-photo"><img alt="Meiji Jingu" height="400" loading="lazy" src="../assets/card-meiji-jingu.jpg" width="320"/><span class="lv-rank" style="background:#c47a08;">J</span></span><span class="lv-card-body"><span class="lv-card-name">Meiji Jingu</span><span class="lv-card-sub">明治神宮</span><span class="lv-card-place">Shibuya, Tokyo</span><span class="lv-card-axis">Jingu · Emperor Meiji</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/kanda-myojin.html"><span class="lv-card-photo"><img alt="Kanda Myojin" height="400" loading="lazy" src="../assets/card-kanda-myojin.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Kanda Myojin</span><span class="lv-card-sub">神田神社（神田明神）</span><span class="lv-card-place">Chiyoda, Tokyo</span><span class="lv-card-axis">Guardian shrine of Edo</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/hie-jinja.html"><span class="lv-card-photo"><img alt="Hie Jinja" height="400" loading="lazy" src="../assets/card-hie-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Hie Jinja</span><span class="lv-card-sub">日枝神社</span><span class="lv-card-place">Chiyoda, Tokyo</span><span class="lv-card-axis">Tutelary shrine of Edo Castle</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/toranomon-kotohira.html"><span class="lv-card-photo"><img alt="Toranomon Kotohira-gu" height="400" loading="lazy" src="../assets/card-toranomon-kotohira.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Toranomon Kotohira-gu</span><span class="lv-card-sub">虎ノ門金刀比羅宮</span><span class="lv-card-place">Minato, Tokyo</span><span class="lv-card-axis">A Kotohira shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/hanazono-jinja.html"><span class="lv-card-photo"><img alt="Hanazono Jinja" height="400" loading="lazy" src="../assets/card-hanazono-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Hanazono Jinja</span><span class="lv-card-sub">花園神社</span><span class="lv-card-place">Shinjuku, Tokyo</span><span class="lv-card-axis">Guardian shrine of Shinjuku</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/atago-jinja.html"><span class="lv-card-photo"><img alt="Atago Jinja" height="400" loading="lazy" src="../assets/card-atago-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Atago Jinja</span><span class="lv-card-sub">愛宕神社</span><span class="lv-card-place">Minato, Tokyo</span><span class="lv-card-axis">Summit of Mt. Atago</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/yoyogi-hachimangu.html"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Yoyogi Hachimangu</span><span class="lv-card-sub">代々木八幡宮</span><span class="lv-card-place">Shibuya, Tokyo</span><span class="lv-card-axis">A Hachiman shrine</span></span></a></li></ul>
 </div>
-</section>
-<section class="lv-row" data-level="2" id="lv2">
-<header class="lv-row-head">
-<h2 class="lv-row-title"><span aria-hidden="true" class="lv-line lv-line-2"></span><span>Lv2 · One hour by train</span></h2>
-<span class="lv-row-count">6 shrines</span>
-<div class="lv-row-nav">
-<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
 <button aria-label="Scroll right / 右へ" class="lv-nav-btn lv-next" type="button">›</button>
 </div>
-</header>
-<div aria-label="Lv2 · One hour by train" class="lv-scroller" data-autoscroll="off" data-dir="-1" data-speed="20" role="region" tabindex="0">
-<ul class="lv-track"><li class="lv-card-item"><a class="lv-card" href="../shrines/okunitama-jinja.html"><span class="lv-card-photo"><img alt="Okunitama Jinja" height="400" loading="lazy" src="../assets/card-okunitama-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Okunitama Jinja</span><span class="lv-card-sub">大国魂神社</span><span class="lv-card-place">Fuchu, Tokyo</span><span class="lv-card-axis">Soja of Musashi Province</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/katsushika-hachimangu.html"><span class="lv-card-photo"><img alt="Katsushika Hachimangu" height="400" loading="lazy" src="../assets/card-katsushika-hachimangu.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Katsushika Hachimangu</span><span class="lv-card-sub">葛飾八幡宮</span><span class="lv-card-place">Ichikawa, Chiba</span><span class="lv-card-axis">A Hachiman shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/iseyama-kotaijingu.html"><span class="lv-card-photo"><img alt="Iseyama Kotai Jingu" height="400" loading="lazy" src="../assets/card-iseyama-kotaijingu.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Iseyama Kotai Jingu</span><span class="lv-card-sub">伊勢山皇大神宮</span><span class="lv-card-place">Yokohama, Kanagawa</span><span class="lv-card-axis">The “Ise” of the Kanto</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/musashi-hikawa-jinja.html"><span class="lv-card-photo"><img alt="Musashi Ichinomiya Hikawa Jinja" height="400" loading="lazy" src="../assets/card-musashi-hikawa-jinja.jpg" width="320"/><span class="lv-rank" style="background:#c41810;">1</span></span><span class="lv-card-body"><span class="lv-card-name">Musashi Ichinomiya Hikawa Jinja</span><span class="lv-card-sub">武蔵一宮氷川神社</span><span class="lv-card-place">Omiya, Saitama</span><span class="lv-card-axis">Ichinomiya of Musashi</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/chiba-jinja.html"><span class="lv-card-photo"><img alt="Chiba Jinja" height="400" loading="lazy" src="../assets/card-chiba-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Chiba Jinja</span><span class="lv-card-sub">千葉神社</span><span class="lv-card-place">Chiba City, Chiba</span><span class="lv-card-axis">A Myoken shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/fuda-tenjinja.html"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Fuda Tenjinja</span><span class="lv-card-sub">布多天神社</span><span class="lv-card-place">Chofu, Tokyo</span><span class="lv-card-axis">A Tenjin shrine</span></span></a></li></ul>
-</div>
-</section>
-<section class="lv-row" data-level="3" id="lv3">
-<header class="lv-row-head">
-<h2 class="lv-row-title"><span aria-hidden="true" class="lv-line lv-line-3"></span><span>Lv3 · Half a day</span></h2>
-<span class="lv-row-count">16 shrines</span>
-<div class="lv-row-nav">
-<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
-<button aria-label="Scroll right / 右へ" class="lv-nav-btn lv-next" type="button">›</button>
-</div>
-</header>
-<div aria-label="Lv3 · Half a day" class="lv-scroller" data-autoscroll="off" data-dir="1" data-speed="20" role="region" tabindex="0">
-<ul class="lv-track lv-track-groups"><li class="lv-group"><span class="lv-group-name">Kamakura</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/tsurugaoka-hachimangu.html"><span class="lv-card-photo"><img alt="Tsurugaoka Hachimangu" height="400" loading="lazy" src="../assets/card-tsurugaoka-hachimangu.jpg" width="320"/><span class="lv-rank" style="background:#c41810;">1</span></span><span class="lv-card-body"><span class="lv-card-name">Tsurugaoka Hachimangu</span><span class="lv-card-sub">鶴岡八幡宮</span><span class="lv-card-place">Kamakura, Kanagawa</span><span class="lv-card-axis">Hachiman · heart of Kamakura</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/zeniarai-benten.html"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Zeniarai Benzaiten</span><span class="lv-card-sub">銭洗弁財天宇賀福神社</span><span class="lv-card-place">Kamakura, Kanagawa</span><span class="lv-card-axis">A Benzaiten shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/egara-tenjinja.html"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Egara Tenjinsha</span><span class="lv-card-sub">荏柄天神社</span><span class="lv-card-place">Kamakura, Kanagawa</span><span class="lv-card-axis">One of Japan’s three great Tenjin</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Sagami’s ranked shrines</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/samukawa-jinja.html"><span class="lv-card-photo"><img alt="Samukawa Jinja" height="400" loading="lazy" src="../assets/card-samukawa-jinja.jpg" width="320"/><span class="lv-rank" style="background:#c41810;">1</span></span><span class="lv-card-body"><span class="lv-card-name">Samukawa Jinja</span><span class="lv-card-sub">寒川神社</span><span class="lv-card-place">Samukawa, Kanagawa</span><span class="lv-card-axis">Ichinomiya of Sagami</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/kawawa-jinja.html"><span class="lv-card-photo"><img alt="Kawawa Jinja" height="400" loading="lazy" src="../assets/card-kawawa-jinja.jpg" width="320"/><span class="lv-rank" style="background:#1540c0;">2</span></span><span class="lv-card-body"><span class="lv-card-name">Kawawa Jinja</span><span class="lv-card-sub">川勾神社</span><span class="lv-card-place">Ninomiya, Kanagawa</span><span class="lv-card-axis">Ninomiya of Sagami</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/hibita-jinja.html"><span class="lv-card-photo"><img alt="Hibita Jinja" height="400" loading="lazy" src="../assets/card-hibita-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Hibita Jinja</span><span class="lv-card-sub">比々多神社</span><span class="lv-card-place">Isehara, Kanagawa</span><span class="lv-card-axis">Sannomiya of Sagami</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/sakitori-jinja.html"><span class="lv-card-photo"><img alt="Sakitori Jinja" height="400" loading="lazy" src="../assets/card-sakitori-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Sakitori Jinja</span><span class="lv-card-sub">前鳥神社</span><span class="lv-card-place">Hiratsuka, Kanagawa</span><span class="lv-card-axis">Shinomiya of Sagami</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Tanzawa</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/oyama-afuri-jinja.html"><span class="lv-card-photo"><img alt="Oyama Afuri Jinja" height="400" loading="lazy" src="../assets/card-oyama-afuri-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Oyama Afuri Jinja</span><span class="lv-card-sub">大山阿夫利神社</span><span class="lv-card-place">Isehara, Kanagawa</span><span class="lv-card-axis">Head shrine of Oyama worship</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/shirasasa-inari.html"><span class="lv-card-photo"><img alt="Shirasasa Inari Jinja" height="400" loading="lazy" src="../assets/card-shirasasa-inari.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Shirasasa Inari Jinja</span><span class="lv-card-sub">白笹稲荷神社</span><span class="lv-card-place">Hadano, Kanagawa</span><span class="lv-card-axis">An Inari shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/izumo-sagami.html"><span class="lv-card-photo"><img alt="Izumo Taisha Sagami Bunshi" height="400" loading="lazy" src="../assets/card-izumo-sagami.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Izumo Taisha Sagami Bunshi</span><span class="lv-card-sub">出雲大社相模分祠</span><span class="lv-card-place">Hadano, Kanagawa</span><span class="lv-card-axis">A branch of Izumo Taisha</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Chichibu</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/mitsumine-jinja.html"><span class="lv-card-photo"><img alt="Mitsumine Jinja" height="400" loading="lazy" src="../assets/card-mitsumine-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Mitsumine Jinja</span><span class="lv-card-sub">三峯神社</span><span class="lv-card-place">Chichibu, Saitama</span><span class="lv-card-axis">Mountain shrine · about 1,100 m</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Okutama</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/mitake-jinja.html"><span class="lv-card-photo"><img alt="Musashi Mitake Jinja" height="400" loading="lazy" src="../assets/card-mitake-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Musashi Mitake Jinja</span><span class="lv-card-sub">武蔵御嶽神社</span><span class="lv-card-place">Ome, Tokyo</span><span class="lv-card-axis">Mountain shrine · 929 m</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Kashima &amp; Katori</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/kashima-jingu.html"><span class="lv-card-photo"><img alt="Kashima Jingu" height="400" loading="lazy" src="../assets/card-kashima-jingu.jpg" width="320"/><span class="lv-rank" style="background:#c47a08;">J</span></span><span class="lv-card-body"><span class="lv-card-name">Kashima Jingu</span><span class="lv-card-sub">鹿島神宮</span><span class="lv-card-place">Kashima, Ibaraki</span><span class="lv-card-axis">Ichinomiya of Hitachi</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/katori-jingu.html"><span class="lv-card-photo"><img alt="Katori Jingu" height="400" loading="lazy" src="../assets/card-katori-jingu.jpg" width="320"/><span class="lv-rank" style="background:#c47a08;">J</span></span><span class="lv-card-body"><span class="lv-card-name">Katori Jingu</span><span class="lv-card-sub">香取神宮</span><span class="lv-card-place">Katori, Chiba</span><span class="lv-card-axis">Ichinomiya of Shimosa</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Hakone &amp; Mishima</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/hakone-jinja.html"><span class="lv-card-photo"><img alt="Hakone Jinja" height="400" loading="lazy" src="../assets/card-hakone-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Hakone Jinja</span><span class="lv-card-sub">箱根神社</span><span class="lv-card-place">Hakone, Kanagawa</span><span class="lv-card-axis">Guardian shrine of the Kanto</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../map.html?shrine=静岡|三嶋大社#mock-app"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#6d28d9;">T</span></span><span class="lv-card-body"><span class="lv-card-name">Mishima Taisha</span><span class="lv-card-sub">三嶋大社</span><span class="lv-card-place">Mishima, Shizuoka</span><span class="lv-card-axis">Ichinomiya of Izu</span></span></a></li></ul></li></ul>
-</div>
-</section>
-</div>
-<div class="content">
+<div class="content lv-desc">
 <div class="layer-section">
-<div class="layer-ring"><span class="layer-num">1</span><h2 class="section-title">Lv1 · Walkable (inside the Yamanote loop)</h2></div>
+<h3 class="section-title">Lv1 · Walkable (inside the Yamanote loop)</h3>
 <p class="section-lead">Within walking distance of central stations. Two or three shrines can fit into one day.</p>
 <ul class="shrine-notes">
 <li><a href="../shrines/meiji-jingu.html">Meiji Jingu</a><span class="note">The forest covers 700,000 square metres. Every tree was planted by hand when the shrine was founded in 1920. Ten minutes from Harajuku, and the city goes quiet.</span></li>
@@ -274,20 +263,50 @@
 <li><a href="../shrines/yoyogi-hachimangu.html">Yoyogi Hachimangu</a><span class="note">Just west of Meiji Jingu. The grounds preserve a Jomon settlement site and a reconstructed dwelling.</span></li>
 </ul>
 </div>
+</div>
+</section>
+<section class="lv-row" data-level="2" id="lv2">
+<div class="lv-frame">
+<header class="lv-row-head">
+<h2 class="lv-row-title"><span aria-hidden="true" class="lv-line lv-line-2"></span><span>Lv2 · One hour by train</span></h2>
+<span class="lv-row-count">6 shrines</span>
+</header>
+<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
+<div aria-label="Lv2 · One hour by train" class="lv-scroller" data-autoscroll="off" data-dir="-1" data-speed="20" role="region" tabindex="0">
+<ul class="lv-track"><li class="lv-card-item"><a class="lv-card" href="../shrines/okunitama-jinja.html"><span class="lv-card-photo"><img alt="Okunitama Jinja" height="400" loading="lazy" src="../assets/card-okunitama-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Okunitama Jinja</span><span class="lv-card-sub">大国魂神社</span><span class="lv-card-place">Fuchu, Tokyo</span><span class="lv-card-axis">Soja of Musashi Province</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/katsushika-hachimangu.html"><span class="lv-card-photo"><img alt="Katsushika Hachimangu" height="400" loading="lazy" src="../assets/card-katsushika-hachimangu.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Katsushika Hachimangu</span><span class="lv-card-sub">葛飾八幡宮</span><span class="lv-card-place">Ichikawa, Chiba</span><span class="lv-card-axis">A Hachiman shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/iseyama-kotaijingu.html"><span class="lv-card-photo"><img alt="Iseyama Kotai Jingu" height="400" loading="lazy" src="../assets/card-iseyama-kotaijingu.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Iseyama Kotai Jingu</span><span class="lv-card-sub">伊勢山皇大神宮</span><span class="lv-card-place">Yokohama, Kanagawa</span><span class="lv-card-axis">The “Ise” of the Kanto</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/musashi-hikawa-jinja.html"><span class="lv-card-photo"><img alt="Musashi Ichinomiya Hikawa Jinja" height="400" loading="lazy" src="../assets/card-musashi-hikawa-jinja.jpg" width="320"/><span class="lv-rank" style="background:#c41810;">1</span></span><span class="lv-card-body"><span class="lv-card-name">Musashi Ichinomiya Hikawa Jinja</span><span class="lv-card-sub">武蔵一宮氷川神社</span><span class="lv-card-place">Omiya, Saitama</span><span class="lv-card-axis">Ichinomiya of Musashi</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/chiba-jinja.html"><span class="lv-card-photo"><img alt="Chiba Jinja" height="400" loading="lazy" src="../assets/card-chiba-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Chiba Jinja</span><span class="lv-card-sub">千葉神社</span><span class="lv-card-place">Chiba City, Chiba</span><span class="lv-card-axis">A Myoken shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/fuda-tenjinja.html"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Fuda Tenjinja</span><span class="lv-card-sub">布多天神社</span><span class="lv-card-place">Chofu, Tokyo</span><span class="lv-card-axis">A Tenjin shrine</span></span></a></li></ul>
+</div>
+<button aria-label="Scroll right / 右へ" class="lv-nav-btn lv-next" type="button">›</button>
+</div>
+<div class="content lv-desc">
 <div class="layer-section">
-<div class="layer-ring"><span class="layer-num">2</span><h2 class="section-title">Lv2 · One hour by train (Yamanote loop + beyond)</h2></div>
+<h3 class="section-title">Lv2 · One hour by train (Yamanote loop + beyond)</h3>
 <p class="section-lead">Fuchu to the west. Ichikawa to the east. Yokohama to the south. Omiya to the north. A ring around central Tokyo.</p>
 <ul class="shrine-notes">
 <li><a href="../shrines/okunitama-jinja.html">Okunitama Jinja</a><span class="note">The soja of Musashi Province. The Baba Daimon zelkova avenue is a National Natural Monument.</span></li>
 <li><a href="../shrines/katsushika-hachimangu.html">Katsushika Hachimangu</a><span class="note">The Sembon Ginkgo stands here. It is said to be 1,200 years old and is a National Natural Monument.</span></li>
-<li><a href="../shrines/iseyama-kotaijingu.html">Iseyama Kotai Jingu</a><span class="note">&amp;quot;The Ise of Kanto&amp;quot;. The Meiji government built the shrine on a hill overlooking Yokohama harbour.</span></li>
+<li><a href="../shrines/iseyama-kotaijingu.html">Iseyama Kotai Jingu</a><span class="note">"The Ise of Kanto". The Meiji government built the shrine on a hill overlooking Yokohama harbour.</span></li>
 <li><a href="../shrines/musashi-hikawa-jinja.html">Musashi Ichinomiya Hikawa Jinja</a><span class="note">The head shrine of about 280 Hikawa shrines in Kanto. The place name Omiya is said to come from this shrine.</span></li>
-<li><a href="../shrines/chiba-jinja.html">Chiba Jinja</a><span class="note">Its &amp;quot;two-storey shrine&amp;quot; has a separate worship hall on each floor. The shrine follows Myoken worship of the North Star.</span></li>
+<li><a href="../shrines/chiba-jinja.html">Chiba Jinja</a><span class="note">Its "two-storey shrine" has a separate worship hall on each floor. The shrine follows Myoken worship of the North Star.</span></li>
 <li><a href="../shrines/fuda-tenjinja.html">Fuda Tenjinja</a><span class="note">An old shrine listed in the 927 Engishiki Jinmyocho. It is the guardian shrine of Chofu and is also associated with GeGeGe no Kitaro.</span></li>
 </ul>
 </div>
+</div>
+</section>
+<section class="lv-row" data-level="3" id="lv3">
+<div class="lv-frame">
+<header class="lv-row-head">
+<h2 class="lv-row-title"><span aria-hidden="true" class="lv-line lv-line-3"></span><span>Lv3 · Half a day</span></h2>
+<span class="lv-row-count">16 shrines</span>
+</header>
+<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
+<div aria-label="Lv3 · Half a day" class="lv-scroller" data-autoscroll="off" data-dir="1" data-speed="20" role="region" tabindex="0">
+<ul class="lv-track lv-track-groups"><li class="lv-group"><span class="lv-group-name">Kamakura</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/tsurugaoka-hachimangu.html"><span class="lv-card-photo"><img alt="Tsurugaoka Hachimangu" height="400" loading="lazy" src="../assets/card-tsurugaoka-hachimangu.jpg" width="320"/><span class="lv-rank" style="background:#c41810;">1</span></span><span class="lv-card-body"><span class="lv-card-name">Tsurugaoka Hachimangu</span><span class="lv-card-sub">鶴岡八幡宮</span><span class="lv-card-place">Kamakura, Kanagawa</span><span class="lv-card-axis">Hachiman · heart of Kamakura</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/zeniarai-benten.html"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Zeniarai Benzaiten</span><span class="lv-card-sub">銭洗弁財天宇賀福神社</span><span class="lv-card-place">Kamakura, Kanagawa</span><span class="lv-card-axis">A Benzaiten shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/egara-tenjinja.html"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Egara Tenjinsha</span><span class="lv-card-sub">荏柄天神社</span><span class="lv-card-place">Kamakura, Kanagawa</span><span class="lv-card-axis">One of Japan’s three great Tenjin</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Sagami’s ranked shrines</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/samukawa-jinja.html"><span class="lv-card-photo"><img alt="Samukawa Jinja" height="400" loading="lazy" src="../assets/card-samukawa-jinja.jpg" width="320"/><span class="lv-rank" style="background:#c41810;">1</span></span><span class="lv-card-body"><span class="lv-card-name">Samukawa Jinja</span><span class="lv-card-sub">寒川神社</span><span class="lv-card-place">Samukawa, Kanagawa</span><span class="lv-card-axis">Ichinomiya of Sagami</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/kawawa-jinja.html"><span class="lv-card-photo"><img alt="Kawawa Jinja" height="400" loading="lazy" src="../assets/card-kawawa-jinja.jpg" width="320"/><span class="lv-rank" style="background:#1540c0;">2</span></span><span class="lv-card-body"><span class="lv-card-name">Kawawa Jinja</span><span class="lv-card-sub">川勾神社</span><span class="lv-card-place">Ninomiya, Kanagawa</span><span class="lv-card-axis">Ninomiya of Sagami</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/hibita-jinja.html"><span class="lv-card-photo"><img alt="Hibita Jinja" height="400" loading="lazy" src="../assets/card-hibita-jinja.jpg" width="320"/><span class="lv-rank" style="background:#1540c0;">3</span></span><span class="lv-card-body"><span class="lv-card-name">Hibita Jinja</span><span class="lv-card-sub">比々多神社</span><span class="lv-card-place">Isehara, Kanagawa</span><span class="lv-card-axis">Sannomiya of Sagami</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/sakitori-jinja.html"><span class="lv-card-photo"><img alt="Sakitori Jinja" height="400" loading="lazy" src="../assets/card-sakitori-jinja.jpg" width="320"/><span class="lv-rank" style="background:#1540c0;">4</span></span><span class="lv-card-body"><span class="lv-card-name">Sakitori Jinja</span><span class="lv-card-sub">前鳥神社</span><span class="lv-card-place">Hiratsuka, Kanagawa</span><span class="lv-card-axis">Shinomiya of Sagami</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Tanzawa</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/oyama-afuri-jinja.html"><span class="lv-card-photo"><img alt="Oyama Afuri Jinja" height="400" loading="lazy" src="../assets/card-oyama-afuri-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Oyama Afuri Jinja</span><span class="lv-card-sub">大山阿夫利神社</span><span class="lv-card-place">Isehara, Kanagawa</span><span class="lv-card-axis">Head shrine of Oyama worship</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/shirasasa-inari.html"><span class="lv-card-photo"><img alt="Shirasasa Inari Jinja" height="400" loading="lazy" src="../assets/card-shirasasa-inari.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Shirasasa Inari Jinja</span><span class="lv-card-sub">白笹稲荷神社</span><span class="lv-card-place">Hadano, Kanagawa</span><span class="lv-card-axis">An Inari shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/izumo-sagami.html"><span class="lv-card-photo"><img alt="Izumo Taisha Sagami Bunshi" height="400" loading="lazy" src="../assets/card-izumo-sagami.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Izumo Taisha Sagami Bunshi</span><span class="lv-card-sub">出雲大社相模分祠</span><span class="lv-card-place">Hadano, Kanagawa</span><span class="lv-card-axis">A branch of Izumo Taisha</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Chichibu</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/mitsumine-jinja.html"><span class="lv-card-photo"><img alt="Mitsumine Jinja" height="400" loading="lazy" src="../assets/card-mitsumine-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Mitsumine Jinja</span><span class="lv-card-sub">三峯神社</span><span class="lv-card-place">Chichibu, Saitama</span><span class="lv-card-axis">Mountain shrine · about 1,100 m</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Okutama</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/mitake-jinja.html"><span class="lv-card-photo"><img alt="Musashi Mitake Jinja" height="400" loading="lazy" src="../assets/card-mitake-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Musashi Mitake Jinja</span><span class="lv-card-sub">武蔵御嶽神社</span><span class="lv-card-place">Ome, Tokyo</span><span class="lv-card-axis">Mountain shrine · 929 m</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Kashima &amp; Katori</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/kashima-jingu.html"><span class="lv-card-photo"><img alt="Kashima Jingu" height="400" loading="lazy" src="../assets/card-kashima-jingu.jpg" width="320"/><span class="lv-rank" style="background:#c47a08;">J</span></span><span class="lv-card-body"><span class="lv-card-name">Kashima Jingu</span><span class="lv-card-sub">鹿島神宮</span><span class="lv-card-place">Kashima, Ibaraki</span><span class="lv-card-axis">Ichinomiya of Hitachi</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/katori-jingu.html"><span class="lv-card-photo"><img alt="Katori Jingu" height="400" loading="lazy" src="../assets/card-katori-jingu.jpg" width="320"/><span class="lv-rank" style="background:#c47a08;">J</span></span><span class="lv-card-body"><span class="lv-card-name">Katori Jingu</span><span class="lv-card-sub">香取神宮</span><span class="lv-card-place">Katori, Chiba</span><span class="lv-card-axis">Ichinomiya of Shimosa</span></span></a></li></ul></li><li class="lv-group"><span class="lv-group-name">Hakone &amp; Mishima</span><ul class="lv-group-cards"><li class="lv-card-item"><a class="lv-card" href="../shrines/hakone-jinja.html"><span class="lv-card-photo"><img alt="Hakone Jinja" height="400" loading="lazy" src="../assets/card-hakone-jinja.jpg" width="320"/><span class="lv-rank" style="background:#047857;">N</span></span><span class="lv-card-body"><span class="lv-card-name">Hakone Jinja</span><span class="lv-card-sub">箱根神社</span><span class="lv-card-place">Hakone, Kanagawa</span><span class="lv-card-axis">Guardian shrine of the Kanto</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../map.html?shrine=静岡|三嶋大社#mock-app"><span class="lv-card-photo is-ill"><img alt="" class="lv-ill" height="200" loading="lazy" src="../assets/illustrations/01-torii.png" width="200"/><span class="lv-rank" style="background:#6d28d9;">T</span></span><span class="lv-card-body"><span class="lv-card-name">Mishima Taisha</span><span class="lv-card-sub">三嶋大社</span><span class="lv-card-place">Mishima, Shizuoka</span><span class="lv-card-axis">Ichinomiya of Izu</span></span></a></li></ul></li></ul>
+</div>
+<button aria-label="Scroll right / 右へ" class="lv-nav-btn lv-next" type="button">›</button>
+</div>
+<div class="content lv-desc">
 <div class="layer-section">
-<div class="layer-ring"><span class="layer-num">3</span><h2 class="section-title">Lv3 · Half a day (fully suburban)</h2></div>
+<h3 class="section-title">Lv3 · Half a day (fully suburban)</h3>
 <p class="section-lead">Kamakura, Sagami’s ranked shrines, Chichibu, Okutama, Tanzawa, Hakone, Ibaraki, Chiba and Mishima in Shizuoka. A longer stay opens this outer ring.</p>
 <ul class="shrine-notes">
 <li><a href="../shrines/tsurugaoka-hachimangu.html">Tsurugaoka Hachimangu</a><span class="note">Centre of the Kamakura shogunate. Dankazura, the straight approach from the sea to the shrine, still forms the spine of the town. It calls itself the ichinomiya of Sagami Province. The traditional ichinomiya is Samukawa Jinja, also in this ring.</span></li>
@@ -295,7 +314,7 @@
 <li><a href="../shrines/egara-tenjinja.html">Egara Tenjinsha</a><span class="note">Counted among Japan's three great Tenjin shrines. A different pace from the crowds at Tsurugaoka Hachimangu.</span></li>
 <li><a href="../shrines/mitsumine-jinja.html">Mitsumine Jinja</a><span class="note">About 1,100 metres up in the mountains. Wolves, or mountain dogs, stand where komainu usually would.</span></li>
 <li><a href="../shrines/mitake-jinja.html">Musashi Mitake Jinja</a><span class="note">On a 929-metre summit. The old oshi pilgrim lodgings still form a living settlement on the mountain.</span></li>
-<li><a href="../shrines/oyama-afuri-jinja.html">Oyama Afuri Jinja</a><span class="note">The &amp;quot;rain mountain&amp;quot;. About 200,000 people a year are said to have climbed Oyama on pilgrimage in the Edo period.</span></li>
+<li><a href="../shrines/oyama-afuri-jinja.html">Oyama Afuri Jinja</a><span class="note">The "rain mountain". About 200,000 people a year are said to have climbed Oyama on pilgrimage in the Edo period.</span></li>
 <li><a href="../shrines/shirasasa-inari.html">Shirasasa Inari Jinja</a><span class="note">Counted as one of the three great Inari shrines of the Kanto. A tunnel of vermilion torii, and countless small white foxes.</span></li>
 <li><a href="../shrines/izumo-sagami.html">Izumo Taisha Sagami Bunshi</a><span class="note">A branch of Izumo Taisha in Shimane, known as “the Izumo-san of the Kanto”. A shrine to the dragon-snake deity stands deep in its bamboo grove.</span></li>
 <li><a href="../shrines/kashima-jingu.html">Kashima Jingu</a><span class="note">Ichinomiya of Hitachi Province, enshrining a god from the transfer-of-the-land myth. Its Kaname-ishi is said to pin down the giant catfish that causes earthquakes.</span></li>
@@ -308,6 +327,10 @@
 <li><a href="../map.html?shrine=静岡|三嶋大社#mock-app">Mishima Taisha</a><span class="note">The ichinomiya of Izu Province and a former imperial shrine. Minamoto no Yoritomo prayed here for the revival of his clan while exiled in Izu, and continued to revere it deeply after raising his army.</span></li>
 </ul>
 </div>
+</div>
+</section>
+</div>
+<div class="content">
 <p class="map-cta"><a href="../map.html#mock-app">See all of these on the map →</a></p>
 </div>
 <div class="page-footer">
