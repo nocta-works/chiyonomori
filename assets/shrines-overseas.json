@@ -3402,13 +3402,13 @@
     "province": "相模国",
     "lat": 35.40131,
     "lng": 139.28394,
-    "deity": "天利剣神・大日孁貴神・素戔嗚尊・天忍穗耳尊",
-    "reason": "相模国三宮。伊勢原市三ノ宮に鎮座。延喜式名神大社。縄文時代から続く相模の古社で関東最古の式内大社のひとつ。",
+    "deity": "豊斟渟尊・天明玉命・稚日女尊・日本武尊（相殿：大酒解神・小酒解神）",
+    "reason": "相模国三宮。伊勢原市三ノ宮に鎮座。『延喜式』神名帳に載る式内社（小社）。国府祭の座問答で、一宮と二宮の争いを「いずれ明年まで」と取りなす役を担う。",
     "nameEn": "Hibita Jinja",
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
-    "deityEn": "Amaterasu (Ohirume no Muchi), Susanoo, Ame no Oshihomimi and others",
-    "reasonEn": "The sannomiya, or third-ranked shrine, of Sagami Province, in Sannomiya, Isehara. A myojin taisha listed in the Engishiki, and an ancient shrine of Sagami in a place settled since the Jomon period."
+    "deityEn": "Toyokumunu, Ame no Akarutama, Wakahirume and Yamato Takeru (also enshrined: Osakatoke and Kosakatoke)",
+    "reasonEn": "The sannomiya, or third-ranked shrine, of Sagami Province, in Sannomiya, Isehara. A shikinai-sha, listed as a minor shrine in the register of the Engishiki. At the Kokufu Matsuri it is the shrine that calms the quarrel between the first and second shrines with the words “let us leave it until next year”."
   },
   {
     "pref": "神奈川",
@@ -3419,12 +3419,12 @@
     "province": "相模国",
     "lat": 35.35713,
     "lng": 139.36466,
-    "deity": "菟道稚郎子命・仁徳天皇・応神天皇",
+    "deity": "菟道稚郎子命・大山咋命・日本武尊",
     "reason": "相模国四宮。平塚市四之宮に鎮座。学問の神・菟道稚郎子命を祀り受験合格の神として知られる。延喜式内社。",
     "nameEn": "Sakitori Jinja",
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
-    "deityEn": "Uji no Wakiiratsuko, Emperor Nintoku and Emperor Ojin",
+    "deityEn": "Uji no Wakiiratsuko, Oyamakui and Yamato Takeru",
     "reasonEn": "The shinomiya, or fourth-ranked shrine, of Sagami Province, in Shinomiya, Hiratsuka. It enshrines Uji no Wakiiratsuko, a god of learning, and is known for prayers for exam success. A shikinai-sha listed in the Engishiki.",
     "blessing": "学業・受験合格",
     "blessingEn": "Study and entrance exams"
