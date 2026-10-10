@@ -156,6 +156,31 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/kawawa-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/hibita-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/sakitori-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/shirasasa-inari.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/izumo-sagami.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -307,6 +332,31 @@
   </url>
   <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/hakone-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/kawawa-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/hibita-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/sakitori-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/shirasasa-inari.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/izumo-sagami.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

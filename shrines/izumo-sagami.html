@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>寒川神社（寒川）｜千代の杜</title>
-<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>Izumo Taisha Sagami Bunshi, Hadano — Chiyo no Mori</title>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <style>
-  /* design-lab/shrines/samukawa-jinja.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
-     実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/寒川神社/の採用済み分から
-     代表的な数枚を選び design-lab/../assets/ へ縮小コピーして使用（sips -Z 1600）。 */
+  /* design-lab/shrines/izumo-sagami.html — 依頼AY（2026-10-10）：相模の宮＋2社を東京エリアLv3に追加。
+     写真は依頼BCの自動判定（実装セッションが目で見て選んだもの）。構造は箱根神社.htmlと同じ。 */
   :root {
     --bg-body: #1a1209;
     --bg-header-1: #2c1810;
@@ -18,6 +17,7 @@
     --gold-muted: #907040;
     --border-4: #6a5030;
     --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;
   }
   * { box-sizing: border-box; }
   body {
@@ -44,6 +44,8 @@
   .shrine-hero {
     position: relative; height: 78vh; min-height: 460px;
     display: flex; align-items: flex-end;
+    background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
+                repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
   }
   .shrine-hero img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
@@ -68,8 +70,8 @@
   .shrine-meta { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; font-size: 12px; color: var(--tan-text); opacity: 0.85; }
   .shrine-meta span b { color: var(--gold); font-weight: normal; display: block; font-size: 10px; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 2px; }
 
-  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。
-     読まずに分かる層を足す（ベンチマーク調査の共通点＝概要を先に、本文はその後） */
+
+  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。 */
   .quick-facts {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 24px;
     max-width: 760px; margin: 0 auto 56px; padding: 20px 24px;
@@ -139,112 +141,103 @@
     .section, .photo-block { opacity: 1 !important; transform: none !important; transition: none !important; }
   }
 </style>
-<link href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html" hreflang="x-default" rel="alternate"/></head>
+<link href="https://nocta-works.github.io/chiyonomori/shrines/izumo-sagami.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/shrines/izumo-sagami.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/shrines/izumo-sagami.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/shrines/izumo-sagami.html" hreflang="x-default" rel="alternate"/></head>
 <body>
-<a class="back-link" href="../map.html#mock-app">← 地図に戻る</a>
-<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html">日本語</a></div>
+<a class="back-link" href="../map.html#mock-app">← Back to map</a>
+<div class="lang-toggle"><a class="lang-btn active" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/izumo-sagami.html">EN</a><a class="lang-btn" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/izumo-sagami.html">日本語</a></div>
 <div class="shrine-hero">
-<img alt="拝殿" src="../../assets/samukawa-haiden.jpg"/>
+<img alt="The great torii in the grounds" src="../assets/izumo-hero.jpg"/>
 <div class="shrine-hero-overlay"></div>
 <div class="shrine-hero-content">
-<span class="shrine-badge">一宮</span>
-<span class="shrine-name-en">Samukawa Jinja</span>
-<h1 class="shrine-name-ja">寒川神社</h1>
+<span class="shrine-badge">Notable shrine</span>
+<span class="shrine-name-en">Izumo Taisha Sagami Bunshi</span>
+<h1 class="shrine-name-ja">Izumo Taisha Sagami Bunshi</h1>
 <div class="shrine-meta">
-<span><b>御祭神</b><span>寒川比古命・寒川比女命</span></span>
-<span><b>所在地</b><span>神奈川県寒川町</span></span>
+<span><b>Enshrined deity</b><span>Okuninushi</span></span>
+<span><b>Location</b><span>Hadano, Kanagawa</span></span>
 </div>
 <div class="shrine-links">
-<a class="shrine-link gmaps" href="https://www.google.com/maps/search/寒川神社" rel="noopener" target="_blank">📍 地図</a>
-<a class="shrine-link official" href="https://www.google.com/search?q=寒川神社+公式" rel="noopener" target="_blank">🌐 公式</a>
-<a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/寒川神社" rel="noopener" target="_blank">📖 Wiki</a>
+<a class="shrine-link gmaps" href="https://www.google.com/maps/search/出雲大社相模分祠" rel="noopener" target="_blank">📍 Map</a>
+<a class="shrine-link official" href="https://www.google.com/search?q=出雲大社相模分祠+公式" rel="noopener" target="_blank">🌐 Official site</a>
+<a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/出雲大社相模分祠" rel="noopener" target="_blank">📖 Wiki</a>
 </div>
 </div>
 </div>
 <div class="content">
 <div class="quick-facts">
-<div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">寒川比古命・寒川比女命</span></div>
-<div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">八方除（全国唯一）</span></div>
-<div><span class="quick-fact-label">創建</span><span class="quick-fact-value">1600年以上前とされる</span></div>
-<div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR宮山</span></div>
-</div><p class="shrine-provenance" style="max-width:760px;margin:-40px auto 44px;font-size:11.5px;letter-spacing:0.06em;color:var(--gold-muted);text-align:center;">実際に参拝・写真はすべて自前</p>
+<div><span class="quick-fact-label">Deity</span><span class="quick-fact-value">Okuninushi</span></div>
+<div><span class="quick-fact-label">Founded</span><span class="quick-fact-value">1888, as a branch of Izumo Taisha</span></div>
+<div><span class="quick-fact-label">Nearest station</span><span class="quick-fact-value">Odakyu Hadano Station, then bus</span></div>
+</div><p class="shrine-provenance" style="max-width:760px;margin:-40px auto 44px;font-size:11.5px;letter-spacing:0.06em;color:var(--gold-muted);text-align:center;">Visited in person · Original photography</p>
 <div class="section">
 <span class="section-label">History</span>
-<h2 class="section-title">由緒・創建</h2>
-<p>相模国一宮。全国で唯一、八方除の守護神とされる。</p>
-</div>
-<div class="photo-block landscape">
-<img alt="神門" src="../../assets/samukawa-shinmon.jpg"/>
-<p class="photo-block-caption">神門。皇室の菊花紋の提灯が下がる。</p>
+<h2 class="section-title">Origins and founding</h2>
+<p>A branch shrine of Izumo Taisha in Shimane, enshrining Okuninushi. It received a divided spirit of the deity from Izumo Taisha in 1888, and is known as “the Izumo-san of the Kanto”.</p>
 </div>
 <div class="photo-block portrait">
-<img alt="神門を近くから見上げた様子" src="../../assets/samukawa-shinmon-crowd.jpg"/>
-</div>
-<div class="photo-block portrait">
-<img alt="神橋の先にそびえる鳥居" src="../../assets/samukawa-shinbashi-torii.jpg"/>
+<img alt="A large torii with a green top beam" src="../assets/izumo-torii.jpg"/>
+<p class="photo-block-caption">A large torii with a green top beam.</p>
 </div>
 <div class="section">
 <span class="section-label">Highlights</span>
-<h2 class="section-title">見どころ</h2>
-<p>神門（正月の迎春ねぶた）／方位盤／神嶽山神苑（参拝した人だけが入れる庭園とされる）。</p>
+<h2 class="section-title">What to see</h2>
+<p>The approach begins as a tunnel of bamboo, and the grounds open out beyond a large torii. A great shimenawa hangs on the main hall. Deeper in the bamboo grove stands the Ryujashin no Yashiro, which enshrines the dragon-snake deity long venerated in the Izumo region, with a spring in front of it.</p>
 </div>
 <div class="photo-block landscape">
-<img alt="拝殿" src="../../assets/samukawa-haiden.jpg"/>
-</div>
-<div class="photo-block landscape">
-<img alt="拝殿を正面から見た様子" src="../../assets/samukawa-haiden-front.jpg"/>
+<img alt="The approach through the bamboo grove" src="../assets/izumo-bamboo.jpg"/>
+<p class="photo-block-caption">The approach through the bamboo grove.</p>
 </div>
 <div class="photo-block portrait">
-<img alt="神嶽山神苑の入口" src="../../assets/samukawa-shinen.jpg"/>
-<p class="photo-block-caption">神嶽山神苑の入口。参拝者だけが入れる庭園。</p>
-</div>
-<div class="photo-block portrait">
-<img alt="神苑の中を抜ける小径" src="../../assets/samukawa-shinen-path.jpg"/>
-</div>
-<div class="photo-block portrait">
-<img alt="神苑の奥にある苔葺き屋根の小さな門" src="../../assets/samukawa-shinen-gate.jpg"/>
+<img alt="The main hall, hung with a large shimenawa" src="../assets/izumo-haiden.jpg"/>
+<p class="photo-block-caption">The main hall, hung with a large shimenawa.</p>
 </div>
 <div class="photo-block landscape">
-<img alt="神苑の池に流れ込む小さな滝" src="../../assets/samukawa-shinen-waterfall.jpg"/>
+<img alt="The purification pavilion, with autumn decorations spread under its roof" src="../assets/izumo-chozuya.jpg"/>
+<p class="photo-block-caption">The purification pavilion, its ceiling covered with orange autumn decorations.</p>
 </div>
 <div class="photo-block landscape">
-<img alt="神苑の池に浮かぶ井桁の意匠" src="../../assets/samukawa-shinen-well.jpg"/>
+<img alt="The Ryujashin no Yashiro in the bamboo grove" src="../assets/izumo-ryuja-shrine.jpg"/>
+<p class="photo-block-caption">The Ryujashin no Yashiro in the bamboo grove.</p>
 </div>
 <div class="photo-block landscape">
-<img alt="神苑の池の噴水" src="../../assets/samukawa-shinen-fountain.jpg"/>
+<img alt="Spring water among stones, with small shrines beyond" src="../assets/izumo-spring.jpg"/>
+<p class="photo-block-caption">Spring water among stones, with small shrines beyond.</p>
 </div>
 <div class="section">
 <span class="section-label">Background</span>
-<h2 class="section-title">文化的背景</h2>
-<p>八方除——方位・地相・家相・日柄など、あらゆる方角から来る災いを祓うとされる。建築・引越し・旅行の前に参る社。春分と秋分の日の出が富士山を通る線上にあるという伝承がある。</p>
+<h2 class="section-title">Cultural context</h2>
+<p><strong>The same god appears at several shrines of the Tokyo area. </strong><span>Okuninushi is regarded as the same deity as Onamuchi at </span><a href="kanda-myojin.html">Kanda Jinja</a><span>, Okunitama at </span><a href="okunitama-jinja.html">Okunitama Jinja</a><span> and Onamuchi at </span><a href="kawawa-jinja.html">Kawawa Jinja</a><span> (→ </span><a href="../articles/kami-and-classification.html#myths">Kami, ranks and lineages: Myths</a><span>, on the transfer of the land).</span></p>
+<p>Stone rabbits stand among the trees of the grove. Okuninushi is the god known from the myth of the white hare of Inaba.</p>
+</div>
+<div class="photo-block portrait">
+<img alt="A stone rabbit" src="../assets/izumo-rabbit1.jpg"/>
+<p class="photo-block-caption">A stone rabbit.</p>
+</div>
+<div class="photo-block portrait">
+<img alt="A stone statue of a standing rabbit" src="../assets/izumo-rabbit2.jpg"/>
+<p class="photo-block-caption">A stone statue of a standing rabbit.</p>
 </div>
 </div>
 <div class="next-shrines">
-<div class="next-shrines-title">次の一社</div>
-<p class="next-shrines-lead">東京郊外の南端。大山阿夫利神社とも遠く繋がり、相模の二宮へ続く。</p>
+<div class="next-shrines-title">Next shrine</div>
+<p class="next-shrines-lead">Another shrine in Hadano.</p>
 <div class="next-shrine-grid">
-<a class="next-shrine-card" href="oyama-afuri-jinja.html">
-<span class="next-shrine-set">名社</span>
-<span class="next-shrine-name">大山阿夫利神社</span>
-<span class="next-shrine-en">Oyama Afuri Jinja</span>
-<p class="next-shrine-why">雨乞いの山岳霊場。同じ神奈川。</p>
-</a>
-<a class="next-shrine-card" href="kawawa-jinja.html">
-<span class="next-shrine-set">二宮</span>
-<span class="next-shrine-name">川勾神社</span>
-<span class="next-shrine-en">Kawawa Jinja</span>
-<p class="next-shrine-why">相模国の一宮から、二宮へ。</p>
+<a class="next-shrine-card" href="shirasasa-inari.html">
+<span class="next-shrine-set">Notable shrine</span>
+<span class="next-shrine-name">Shirasasa Inari Jinja</span>
+<span class="next-shrine-en">Shirasasa Inari Jinja</span>
+<p class="next-shrine-why">Also in Hadano — an Inari shrine counted among the three great Inari shrines of the Kanto.</p>
 </a>
 </div>
-<a class="next-shrine-card" href="../areas/tokyo.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
+<a class="next-shrine-card" href="../areas/tokyo.html" style="margin-top:14px"><span class="next-shrine-set">This area</span><span class="next-shrine-name">Shrines around Tokyo</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">From central shrines within walking distance to suburban shrines that take half a day.</p></a>
 </div>
 <div class="page-footer">
-<div>千代の杜</div>
+<div>Chiyo no Mori — Shrines of Japan</div>
 <div class="footer-support">
-<span>千代の杜は広告のない独立したガイドです。旅の計画に役立ったら、</span>
-<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>チップを送る ↗</span></a>
+<span>Chiyo no Mori is independent and ad-free. If this guide helped you plan your visit,</span>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>leave a small tip ↗</span></a>
 </div>
-<div class="footer-privacy" style="margin-top:8px;">Cookieは使用していません。匿名の訪問数のみ集計します。 <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">プライバシー</a></div></div>
+<div class="footer-privacy" style="margin-top:8px;">No cookies. Anonymous visit counts only. <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">Privacy</a></div></div>
 <script>
 (function(){
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -282,8 +275,6 @@
       }
     });
   }
-  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
-  // localStorageに保存した言語選択を、ページを開いた時点で復元する
   try {
   } catch(err){}
 })();

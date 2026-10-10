@@ -4,12 +4,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>寒川神社（寒川）｜千代の杜</title>
+<title>前鳥神社（平塚）｜千代の杜</title>
 <link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <style>
-  /* design-lab/shrines/samukawa-jinja.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
-     実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/寒川神社/の採用済み分から
-     代表的な数枚を選び design-lab/../assets/ へ縮小コピーして使用（sips -Z 1600）。 */
+  /* design-lab/shrines/sakitori-jinja.html — 依頼AY（2026-10-10）：相模の宮＋2社を東京エリアLv3に追加。
+     写真は依頼BCの自動判定（実装セッションが目で見て選んだもの）。構造は箱根神社.htmlと同じ。 */
   :root {
     --bg-body: #1a1209;
     --bg-header-1: #2c1810;
@@ -18,6 +17,7 @@
     --gold-muted: #907040;
     --border-4: #6a5030;
     --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;
   }
   * { box-sizing: border-box; }
   body {
@@ -44,6 +44,8 @@
   .shrine-hero {
     position: relative; height: 78vh; min-height: 460px;
     display: flex; align-items: flex-end;
+    background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
+                repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
   }
   .shrine-hero img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
@@ -68,8 +70,8 @@
   .shrine-meta { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; font-size: 12px; color: var(--tan-text); opacity: 0.85; }
   .shrine-meta span b { color: var(--gold); font-weight: normal; display: block; font-size: 10px; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 2px; }
 
-  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。
-     読まずに分かる層を足す（ベンチマーク調査の共通点＝概要を先に、本文はその後） */
+
+  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。 */
   .quick-facts {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 24px;
     max-width: 760px; margin: 0 auto 56px; padding: 20px 24px;
@@ -139,101 +141,86 @@
     .section, .photo-block { opacity: 1 !important; transform: none !important; transition: none !important; }
   }
 </style>
-<link href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html" hreflang="x-default" rel="alternate"/></head>
+<link href="https://nocta-works.github.io/chiyonomori/ja/shrines/sakitori-jinja.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/shrines/sakitori-jinja.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/shrines/sakitori-jinja.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/shrines/sakitori-jinja.html" hreflang="x-default" rel="alternate"/></head>
 <body>
 <a class="back-link" href="../map.html#mock-app">← 地図に戻る</a>
-<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html">日本語</a></div>
+<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/sakitori-jinja.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/sakitori-jinja.html">日本語</a></div>
 <div class="shrine-hero">
-<img alt="拝殿" src="../../assets/samukawa-haiden.jpg"/>
+<img alt="松の大木の下に立つ前鳥神社の拝殿" src="../../assets/sakitori-hero.jpg"/>
 <div class="shrine-hero-overlay"></div>
 <div class="shrine-hero-content">
-<span class="shrine-badge">一宮</span>
-<span class="shrine-name-en">Samukawa Jinja</span>
-<h1 class="shrine-name-ja">寒川神社</h1>
+<span class="shrine-badge">名社</span>
+<span class="shrine-name-en">Sakitori Jinja</span>
+<h1 class="shrine-name-ja">前鳥神社</h1>
 <div class="shrine-meta">
-<span><b>御祭神</b><span>寒川比古命・寒川比女命</span></span>
-<span><b>所在地</b><span>神奈川県寒川町</span></span>
+<span><b>御祭神</b><span>菟道稚郎子命・仁徳天皇・応神天皇</span></span>
+<span><b>所在地</b><span>神奈川県平塚市</span></span>
 </div>
 <div class="shrine-links">
-<a class="shrine-link gmaps" href="https://www.google.com/maps/search/寒川神社" rel="noopener" target="_blank">📍 地図</a>
-<a class="shrine-link official" href="https://www.google.com/search?q=寒川神社+公式" rel="noopener" target="_blank">🌐 公式</a>
-<a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/寒川神社" rel="noopener" target="_blank">📖 Wiki</a>
+<a class="shrine-link gmaps" href="https://www.google.com/maps/search/前鳥神社" rel="noopener" target="_blank">📍 地図</a>
+<a class="shrine-link official" href="https://www.google.com/search?q=前鳥神社+公式" rel="noopener" target="_blank">🌐 公式</a>
+<a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/前鳥神社" rel="noopener" target="_blank">📖 Wiki</a>
 </div>
 </div>
 </div>
 <div class="content">
 <div class="quick-facts">
-<div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">寒川比古命・寒川比女命</span></div>
-<div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">八方除（全国唯一）</span></div>
-<div><span class="quick-fact-label">創建</span><span class="quick-fact-value">1600年以上前とされる</span></div>
-<div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR宮山</span></div>
+<div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">菟道稚郎子命・仁徳天皇・応神天皇</span></div>
+<div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">学業・受験合格</span></div>
 </div><p class="shrine-provenance" style="max-width:760px;margin:-40px auto 44px;font-size:11.5px;letter-spacing:0.06em;color:var(--gold-muted);text-align:center;">実際に参拝・写真はすべて自前</p>
 <div class="section">
 <span class="section-label">History</span>
 <h2 class="section-title">由緒・創建</h2>
-<p>相模国一宮。全国で唯一、八方除の守護神とされる。</p>
-</div>
-<div class="photo-block landscape">
-<img alt="神門" src="../../assets/samukawa-shinmon.jpg"/>
-<p class="photo-block-caption">神門。皇室の菊花紋の提灯が下がる。</p>
+<p>相模国の<strong>四宮</strong>。『延喜式』の式内社。鎮座地は平塚市<strong>四之宮</strong>。</p>
 </div>
 <div class="photo-block portrait">
-<img alt="神門を近くから見上げた様子" src="../../assets/samukawa-shinmon-crowd.jpg"/>
-</div>
-<div class="photo-block portrait">
-<img alt="神橋の先にそびえる鳥居" src="../../assets/samukawa-shinbashi-torii.jpg"/>
+<img alt="参道の入口に立つ鳥居" src="../../assets/sakitori-torii.jpg"/>
+<p class="photo-block-caption">参道の入口に立つ鳥居。額には「前鳥神社」とある。</p>
 </div>
 <div class="section">
 <span class="section-label">Highlights</span>
 <h2 class="section-title">見どころ</h2>
-<p>神門（正月の迎春ねぶた）／方位盤／神嶽山神苑（参拝した人だけが入れる庭園とされる）。</p>
-</div>
-<div class="photo-block landscape">
-<img alt="拝殿" src="../../assets/samukawa-haiden.jpg"/>
-</div>
-<div class="photo-block landscape">
-<img alt="拝殿を正面から見た様子" src="../../assets/samukawa-haiden-front.jpg"/>
+<p>祭神の菟道稚郎子命は学問の神とされ、受験の合格を願う人が参る。参道の入口の鳥居の脇には狛犬が控え、境内には松の大木が立つ。</p>
 </div>
 <div class="photo-block portrait">
-<img alt="神嶽山神苑の入口" src="../../assets/samukawa-shinen.jpg"/>
-<p class="photo-block-caption">神嶽山神苑の入口。参拝者だけが入れる庭園。</p>
+<img alt="鳥居の脇に控える狛犬" src="../../assets/sakitori-komainu.jpg"/>
+<p class="photo-block-caption">鳥居の脇に控える狛犬。参道は奥の社殿へ続く。</p>
 </div>
 <div class="photo-block portrait">
-<img alt="神苑の中を抜ける小径" src="../../assets/samukawa-shinen-path.jpg"/>
-</div>
-<div class="photo-block portrait">
-<img alt="神苑の奥にある苔葺き屋根の小さな門" src="../../assets/samukawa-shinen-gate.jpg"/>
+<img alt="松の大木の下の社殿" src="../../assets/sakitori-haiden.jpg"/>
+<p class="photo-block-caption">松の大木の下の社殿。</p>
 </div>
 <div class="photo-block landscape">
-<img alt="神苑の池に流れ込む小さな滝" src="../../assets/samukawa-shinen-waterfall.jpg"/>
+<img alt="手水舎の水盤と柄杓" src="../../assets/sakitori-chozuya.jpg"/>
+<p class="photo-block-caption">手水舎の水盤と柄杓。</p>
 </div>
 <div class="photo-block landscape">
-<img alt="神苑の池に浮かぶ井桁の意匠" src="../../assets/samukawa-shinen-well.jpg"/>
-</div>
-<div class="photo-block landscape">
-<img alt="神苑の池の噴水" src="../../assets/samukawa-shinen-fountain.jpg"/>
+<img alt="砂利の広い境内と、奥の社殿" src="../../assets/sakitori-grounds.jpg"/>
+<p class="photo-block-caption">砂利の広い境内。奥に社殿が見える。</p>
 </div>
 <div class="section">
 <span class="section-label">Background</span>
 <h2 class="section-title">文化的背景</h2>
-<p>八方除——方位・地相・家相・日柄など、あらゆる方角から来る災いを祓うとされる。建築・引越し・旅行の前に参る社。春分と秋分の日の出が富士山を通る線上にあるという伝承がある。</p>
+<p><strong>宮の序列が、そのまま地名に残っている。</strong>二宮の川勾神社は二宮町、三宮の比々多神社は伊勢原市三ノ宮、四宮の前鳥神社は平塚市四之宮。千年以上前の神社の順位が、今の住所に書かれている。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="並木の下の参道" src="../../assets/sakitori-avenue.jpg"/>
+<p class="photo-block-caption">並木の下の参道。</p>
+</div>
+<div class="photo-block landscape">
+<img alt="並木の下の参道" src="../../assets/sakitori-avenue2.jpg"/>
+<p class="photo-block-caption">並木の下の参道。奥に鳥居が見える。</p>
 </div>
 </div>
 <div class="next-shrines">
 <div class="next-shrines-title">次の一社</div>
-<p class="next-shrines-lead">東京郊外の南端。大山阿夫利神社とも遠く繋がり、相模の二宮へ続く。</p>
+<p class="next-shrines-lead">相模国の宮の鎖は、ここで四つ目。はじまりは寒川神社。</p>
 <div class="next-shrine-grid">
-<a class="next-shrine-card" href="oyama-afuri-jinja.html">
-<span class="next-shrine-set">名社</span>
-<span class="next-shrine-name">大山阿夫利神社</span>
-<span class="next-shrine-en">Oyama Afuri Jinja</span>
-<p class="next-shrine-why">雨乞いの山岳霊場。同じ神奈川。</p>
-</a>
-<a class="next-shrine-card" href="kawawa-jinja.html">
-<span class="next-shrine-set">二宮</span>
-<span class="next-shrine-name">川勾神社</span>
-<span class="next-shrine-en">Kawawa Jinja</span>
-<p class="next-shrine-why">相模国の一宮から、二宮へ。</p>
+<a class="next-shrine-card" href="samukawa-jinja.html">
+<span class="next-shrine-set">一宮</span>
+<span class="next-shrine-name">寒川神社</span>
+<span class="next-shrine-en">Samukawa Jinja</span>
+<p class="next-shrine-why">四宮から、一宮へ。もとに戻る。</p>
 </a>
 </div>
 <a class="next-shrine-card" href="../areas/tokyo.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
@@ -282,8 +269,6 @@
       }
     });
   }
-  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
-  // localStorageに保存した言語選択を、ページを開いた時点で復元する
   try {
   } catch(err){}
 })();

@@ -4,12 +4,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>寒川神社（寒川）｜千代の杜</title>
+<title>出雲大社相模分祠（秦野）｜千代の杜</title>
 <link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <style>
-  /* design-lab/shrines/samukawa-jinja.html — 明治神宮.html/伊勢神宮.html と同一テンプレート。
-     実装キュー依頼T（東京エリアを仕上げる）。写真は写真動画/寒川神社/の採用済み分から
-     代表的な数枚を選び design-lab/../assets/ へ縮小コピーして使用（sips -Z 1600）。 */
+  /* design-lab/shrines/izumo-sagami.html — 依頼AY（2026-10-10）：相模の宮＋2社を東京エリアLv3に追加。
+     写真は依頼BCの自動判定（実装セッションが目で見て選んだもの）。構造は箱根神社.htmlと同じ。 */
   :root {
     --bg-body: #1a1209;
     --bg-header-1: #2c1810;
@@ -18,6 +17,7 @@
     --gold-muted: #907040;
     --border-4: #6a5030;
     --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;
   }
   * { box-sizing: border-box; }
   body {
@@ -44,6 +44,8 @@
   .shrine-hero {
     position: relative; height: 78vh; min-height: 460px;
     display: flex; align-items: flex-end;
+    background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
+                repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
   }
   .shrine-hero img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
@@ -68,8 +70,8 @@
   .shrine-meta { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; font-size: 12px; color: var(--tan-text); opacity: 0.85; }
   .shrine-meta span b { color: var(--gold); font-weight: normal; display: block; font-size: 10px; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 2px; }
 
-  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。
-     読まずに分かる層を足す（ベンチマーク調査の共通点＝概要を先に、本文はその後） */
+
+  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。 */
   .quick-facts {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 24px;
     max-width: 760px; margin: 0 auto 56px; padding: 20px 24px;
@@ -139,101 +141,92 @@
     .section, .photo-block { opacity: 1 !important; transform: none !important; transition: none !important; }
   }
 </style>
-<link href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html" hreflang="x-default" rel="alternate"/></head>
+<link href="https://nocta-works.github.io/chiyonomori/ja/shrines/izumo-sagami.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/shrines/izumo-sagami.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/shrines/izumo-sagami.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/shrines/izumo-sagami.html" hreflang="x-default" rel="alternate"/></head>
 <body>
 <a class="back-link" href="../map.html#mock-app">← 地図に戻る</a>
-<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/samukawa-jinja.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/samukawa-jinja.html">日本語</a></div>
+<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/izumo-sagami.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/izumo-sagami.html">日本語</a></div>
 <div class="shrine-hero">
-<img alt="拝殿" src="../../assets/samukawa-haiden.jpg"/>
+<img alt="境内の大鳥居" src="../../assets/izumo-hero.jpg"/>
 <div class="shrine-hero-overlay"></div>
 <div class="shrine-hero-content">
-<span class="shrine-badge">一宮</span>
-<span class="shrine-name-en">Samukawa Jinja</span>
-<h1 class="shrine-name-ja">寒川神社</h1>
+<span class="shrine-badge">名社</span>
+<span class="shrine-name-en">Izumo Taisha Sagami Bunshi</span>
+<h1 class="shrine-name-ja">出雲大社相模分祠</h1>
 <div class="shrine-meta">
-<span><b>御祭神</b><span>寒川比古命・寒川比女命</span></span>
-<span><b>所在地</b><span>神奈川県寒川町</span></span>
+<span><b>御祭神</b><span>大国主大神</span></span>
+<span><b>所在地</b><span>神奈川県秦野市</span></span>
 </div>
 <div class="shrine-links">
-<a class="shrine-link gmaps" href="https://www.google.com/maps/search/寒川神社" rel="noopener" target="_blank">📍 地図</a>
-<a class="shrine-link official" href="https://www.google.com/search?q=寒川神社+公式" rel="noopener" target="_blank">🌐 公式</a>
-<a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/寒川神社" rel="noopener" target="_blank">📖 Wiki</a>
+<a class="shrine-link gmaps" href="https://www.google.com/maps/search/出雲大社相模分祠" rel="noopener" target="_blank">📍 地図</a>
+<a class="shrine-link official" href="https://www.google.com/search?q=出雲大社相模分祠+公式" rel="noopener" target="_blank">🌐 公式</a>
+<a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/出雲大社相模分祠" rel="noopener" target="_blank">📖 Wiki</a>
 </div>
 </div>
 </div>
 <div class="content">
 <div class="quick-facts">
-<div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">寒川比古命・寒川比女命</span></div>
-<div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">八方除（全国唯一）</span></div>
-<div><span class="quick-fact-label">創建</span><span class="quick-fact-value">1600年以上前とされる</span></div>
-<div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">JR宮山</span></div>
+<div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">大国主大神</span></div>
+<div><span class="quick-fact-label">創建</span><span class="quick-fact-value">1888年（出雲大社から分霊）</span></div>
+<div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">小田急 秦野駅（バス）</span></div>
 </div><p class="shrine-provenance" style="max-width:760px;margin:-40px auto 44px;font-size:11.5px;letter-spacing:0.06em;color:var(--gold-muted);text-align:center;">実際に参拝・写真はすべて自前</p>
 <div class="section">
 <span class="section-label">History</span>
 <h2 class="section-title">由緒・創建</h2>
-<p>相模国一宮。全国で唯一、八方除の守護神とされる。</p>
-</div>
-<div class="photo-block landscape">
-<img alt="神門" src="../../assets/samukawa-shinmon.jpg"/>
-<p class="photo-block-caption">神門。皇室の菊花紋の提灯が下がる。</p>
+<p>島根の<strong>出雲大社の分祠</strong>。祭神は大国主大神。1888年（明治21年）に出雲大社から御分霊を受けた。「関東のいずもさん」と呼ばれる。</p>
 </div>
 <div class="photo-block portrait">
-<img alt="神門を近くから見上げた様子" src="../../assets/samukawa-shinmon-crowd.jpg"/>
-</div>
-<div class="photo-block portrait">
-<img alt="神橋の先にそびえる鳥居" src="../../assets/samukawa-shinbashi-torii.jpg"/>
+<img alt="緑色の笠木をのせた大鳥居" src="../../assets/izumo-torii.jpg"/>
+<p class="photo-block-caption">緑色の笠木をのせた大鳥居。</p>
 </div>
 <div class="section">
 <span class="section-label">Highlights</span>
 <h2 class="section-title">見どころ</h2>
-<p>神門（正月の迎春ねぶた）／方位盤／神嶽山神苑（参拝した人だけが入れる庭園とされる）。</p>
+<p>参道は竹林のトンネルから始まり、大きな鳥居の先に境内が開ける。拝殿には大きな注連縄が掛かる。竹林の奥には、出雲地方に古くから伝わる龍蛇神を祀る「龍蛇神の社」があり、その前に湧水がある。</p>
 </div>
 <div class="photo-block landscape">
-<img alt="拝殿" src="../../assets/samukawa-haiden.jpg"/>
-</div>
-<div class="photo-block landscape">
-<img alt="拝殿を正面から見た様子" src="../../assets/samukawa-haiden-front.jpg"/>
+<img alt="竹林の参道" src="../../assets/izumo-bamboo.jpg"/>
+<p class="photo-block-caption">竹林の参道。</p>
 </div>
 <div class="photo-block portrait">
-<img alt="神嶽山神苑の入口" src="../../assets/samukawa-shinen.jpg"/>
-<p class="photo-block-caption">神嶽山神苑の入口。参拝者だけが入れる庭園。</p>
-</div>
-<div class="photo-block portrait">
-<img alt="神苑の中を抜ける小径" src="../../assets/samukawa-shinen-path.jpg"/>
-</div>
-<div class="photo-block portrait">
-<img alt="神苑の奥にある苔葺き屋根の小さな門" src="../../assets/samukawa-shinen-gate.jpg"/>
+<img alt="大きな注連縄が掛かる拝殿" src="../../assets/izumo-haiden.jpg"/>
+<p class="photo-block-caption">拝殿。大きな注連縄が掛かる。</p>
 </div>
 <div class="photo-block landscape">
-<img alt="神苑の池に流れ込む小さな滝" src="../../assets/samukawa-shinen-waterfall.jpg"/>
+<img alt="天井に秋の飾りが広がる手水舎" src="../../assets/izumo-chozuya.jpg"/>
+<p class="photo-block-caption">手水舎。天井にオレンジ色の秋の飾りが広がる。</p>
 </div>
 <div class="photo-block landscape">
-<img alt="神苑の池に浮かぶ井桁の意匠" src="../../assets/samukawa-shinen-well.jpg"/>
+<img alt="竹林の中の龍蛇神の社" src="../../assets/izumo-ryuja-shrine.jpg"/>
+<p class="photo-block-caption">竹林の中の「龍蛇神の社」。</p>
 </div>
 <div class="photo-block landscape">
-<img alt="神苑の池の噴水" src="../../assets/samukawa-shinen-fountain.jpg"/>
+<img alt="石の間を流れる湧水と、奥の小さな社" src="../../assets/izumo-spring.jpg"/>
+<p class="photo-block-caption">石の間を流れる湧水。奥に小さな社が見える。</p>
 </div>
 <div class="section">
 <span class="section-label">Background</span>
 <h2 class="section-title">文化的背景</h2>
-<p>八方除——方位・地相・家相・日柄など、あらゆる方角から来る災いを祓うとされる。建築・引越し・旅行の前に参る社。春分と秋分の日の出が富士山を通る線上にあるという伝承がある。</p>
+<p><strong>同じ神が、東京エリアの何社にもいる。</strong><span>大国主大神は、</span><a href="kanda-myojin.html">神田神社</a><span>の大己貴命、</span><a href="okunitama-jinja.html">大国魂神社</a><span>の大國魂大神、</span><a href="kawawa-jinja.html">川勾神社</a><span>の大名牟遅命と同じ神とされる（→</span><a href="../articles/kami-and-classification.html#myths">神々と、この地図の分類：神話</a><span>の国譲り）。</span></p>
+<p>境内の竹林には、石の兎の像が立つ。大国主大神は、因幡の白兎の神話に登場する神として知られる。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="石の兎の像" src="../../assets/izumo-rabbit1.jpg"/>
+<p class="photo-block-caption">石の兎の像。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="立つ兎の石像" src="../../assets/izumo-rabbit2.jpg"/>
+<p class="photo-block-caption">立つ兎の石像。</p>
 </div>
 </div>
 <div class="next-shrines">
 <div class="next-shrines-title">次の一社</div>
-<p class="next-shrines-lead">東京郊外の南端。大山阿夫利神社とも遠く繋がり、相模の二宮へ続く。</p>
+<p class="next-shrines-lead">同じ秦野の社。</p>
 <div class="next-shrine-grid">
-<a class="next-shrine-card" href="oyama-afuri-jinja.html">
+<a class="next-shrine-card" href="shirasasa-inari.html">
 <span class="next-shrine-set">名社</span>
-<span class="next-shrine-name">大山阿夫利神社</span>
-<span class="next-shrine-en">Oyama Afuri Jinja</span>
-<p class="next-shrine-why">雨乞いの山岳霊場。同じ神奈川。</p>
-</a>
-<a class="next-shrine-card" href="kawawa-jinja.html">
-<span class="next-shrine-set">二宮</span>
-<span class="next-shrine-name">川勾神社</span>
-<span class="next-shrine-en">Kawawa Jinja</span>
-<p class="next-shrine-why">相模国の一宮から、二宮へ。</p>
+<span class="next-shrine-name">白笹稲荷神社</span>
+<span class="next-shrine-en">Shirasasa Inari Jinja</span>
+<p class="next-shrine-why">同じ秦野の社。関東三大稲荷のひとつとされる稲荷へ。</p>
 </a>
 </div>
 <a class="next-shrine-card" href="../areas/tokyo.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の神社</span><span class="next-shrine-en">Tokyo</span><p class="next-shrine-why">歩いて回れる都心の社から、半日かけて行く郊外の社まで。</p></a>
@@ -282,8 +275,6 @@
       }
     });
   }
-  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
-  // localStorageに保存した言語選択を、ページを開いた時点で復元する
   try {
   } catch(err){}
 })();

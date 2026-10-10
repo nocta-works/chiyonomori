@@ -3391,5 +3391,82 @@
     "foundedEn": "Traditionally dated to 757",
     "station": "元箱根（バス停・芦ノ湖遊覧船のりば）",
     "stationEn": "Moto-Hakone (bus stop and Lake Ashi sightseeing boat pier)"
+  },
+  {
+    "pref": "神奈川",
+    "name": "比々多神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "相模国",
+    "lat": 35.40131,
+    "lng": 139.28394,
+    "deity": "天利剣神・大日孁貴神・素戔嗚尊・天忍穗耳尊",
+    "reason": "相模国三宮。伊勢原市三ノ宮に鎮座。延喜式名神大社。縄文時代から続く相模の古社で関東最古の式内大社のひとつ。",
+    "nameEn": "Hibita Jinja",
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Amaterasu (Ohirume no Muchi), Susanoo, Ame no Oshihomimi and others",
+    "reasonEn": "The sannomiya, or third-ranked shrine, of Sagami Province, in Sannomiya, Isehara. A myojin taisha listed in the Engishiki, and an ancient shrine of Sagami in a place settled since the Jomon period."
+  },
+  {
+    "pref": "神奈川",
+    "name": "前鳥神社",
+    "tags": [
+      "meisha"
+    ],
+    "province": "相模国",
+    "lat": 35.35713,
+    "lng": 139.36466,
+    "deity": "菟道稚郎子命・仁徳天皇・応神天皇",
+    "reason": "相模国四宮。平塚市四之宮に鎮座。学問の神・菟道稚郎子命を祀り受験合格の神として知られる。延喜式内社。",
+    "nameEn": "Sakitori Jinja",
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Uji no Wakiiratsuko, Emperor Nintoku and Emperor Ojin",
+    "reasonEn": "The shinomiya, or fourth-ranked shrine, of Sagami Province, in Shinomiya, Hiratsuka. It enshrines Uji no Wakiiratsuko, a god of learning, and is known for prayers for exam success. A shikinai-sha listed in the Engishiki.",
+    "blessing": "学業・受験合格",
+    "blessingEn": "Study and entrance exams"
+  },
+  {
+    "pref": "神奈川",
+    "name": "白笹稲荷神社",
+    "tags": [
+      "meisha",
+      "inari"
+    ],
+    "province": "相模国",
+    "lat": 35.36508,
+    "lng": 139.21639,
+    "deity": "宇迦之御魂大神・佐田彦大神・大宮能売大神",
+    "reason": "関東三大稲荷のひとつ。秦野市に鎮座。毎年2月の初午大祭には多くの参拝者が訪れる。旧郷社。商売繁盛・五穀豊穣の神。",
+    "nameEn": "Shirasasa Inari Jinja",
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Ukanomitama, Sadahiko and Omiyanome",
+    "reasonEn": "Counted as one of the three great Inari shrines of the Kanto, though which shrines make up the three is disputed. It stands in Hadano, and the Hatsuuma Taisai festival every February draws many worshippers. A former district shrine (gosha), worshipped for business prosperity and abundant harvests.",
+    "blessing": "商売繁盛・五穀豊穣",
+    "blessingEn": "Business prosperity and abundant harvests"
+  },
+  {
+    "pref": "神奈川",
+    "name": "出雲大社相模分祠",
+    "tags": [
+      "meisha"
+    ],
+    "province": "相模国",
+    "lat": 35.37094,
+    "lng": 139.20944,
+    "deity": "大国主大神",
+    "reason": "島根の出雲大社の分祠。秦野市平沢に鎮座し、大国主大神を祀る。「関東のいずもさん」と呼ばれる。",
+    "nameEn": "Izumo Taisha Sagami Bunshi",
+    "prefEn": "Kanagawa",
+    "provinceEn": "Sagami Province",
+    "deityEn": "Okuninushi",
+    "reasonEn": "A branch of Izumo Taisha in Shimane, enshrining Okuninushi, in the Hirasawa district of Hadano. Known as “the Izumo-san of the Kanto”.",
+    "founded": "1888年（出雲大社から分霊）",
+    "foundedEn": "1888, as a branch of Izumo Taisha",
+    "station": "小田急 秦野駅（バス）",
+    "stationEn": "Odakyu Hadano Station, then bus"
   }
 ]
