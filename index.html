@@ -216,6 +216,16 @@
     .declaration-text .phrase {
       display: inline-block; white-space: nowrap;
     }
+    /* 2026-10-11（横画面のOP確認で発見・前からあった不具合）：英語の句は末尾に半角スペースを
+       持つが、inline-blockの句の行末では畳まれて消え、句と句の間の空白が無くなっていた
+       （"Jingu,Taisha,Ichinomiya,Ninomiya."・"From Japan,down to one city."）。
+       スマホ（480px以下）は句をinlineに戻すので起きない。句の間に余白を足して直す。
+       日本語の句は末尾に空白を持たない（日本語は空白を入れない）ので対象外 */
+    html[lang="en"] .intro-tagline .phrase:not(:last-child), html[lang="en"] .intro-video-caption .phrase:not(:last-child),
+    html[lang="en"] .fixed-caption .phrase:not(:last-child), html[lang="en"] .triptych-caption .phrase:not(:last-child),
+    html[lang="en"] .declaration-text .phrase:not(:last-child) {
+      margin-right: 0.28em;
+    }
   }
   /* 微修正（2026-09-23）：単語の内部で改行させない。.charの1文字ずつの
      inline-block化が、単語の途中にも改行可能点を作ってしまうため、
@@ -502,6 +512,29 @@
     }
     .scroll-slide.revealed .intro-video-media,
     .scroll-slide.revealed > img.is-landscape { transform: translateY(-50%) scale(1); }
+  }
+  /* 2026-10-11（本人「スマホ横画面のOPを確認」→確認の結果、字幕が高さに対して大きい）：
+     字幕の文字サイズが画面の幅（vw）基準のため、横画面（844x390）では幅が大きく高さが
+     小さく、動画の字幕が高さの30%・固定の字幕が26%を占め、下の「SCROLL」の矢印とも重なった。
+     横向き＆高さ500px以下だけ、①文字サイズを高さ（vh）でも頭打ちにする（今の幅基準の値と
+     高さ基準の値の小さい方。PC・縦画面は変わらない）②SCROLLの矢印を横1行の小さな形にして
+     下端へ寄せる（矢印の弾みも小さく）。縦画面・PCには影響しない */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .intro-tagline { font-size: min(clamp(18px, 3vw, 28px), 5vh); }
+    .intro-video-caption { font-size: min(clamp(18px, 2.9vw, 29px), 4.6vh); }
+    .fixed-caption { font-size: min(clamp(24px, 4vw, 38px), 6vh); }
+    .triptych-caption { font-size: min(clamp(20px, 3.6vw, 34px), 6vh); }
+    .declaration-text { font-size: min(clamp(24px, 4.4vw, 44px), 7.5vh); }
+    .photo-shrine-name-badge { font-size: min(clamp(18px, 2.8vw, 26px), 5vh); padding: 6px 16px; }
+    .scroll-slide-hint {
+      bottom: 8px; flex-direction: row; gap: 8px; padding: 4px 16px;
+      font-size: 11px; letter-spacing: 0.3em;
+    }
+    .scroll-slide-hint-arrow { font-size: 18px; animation-name: scrollHintBounceSm; }
+    @keyframes scrollHintBounceSm {
+      0%, 100% { transform: translateY(-2px); opacity: 0.65; }
+      50% { transform: translateY(3px); opacity: 1; }
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .triptych-col img { transition: none; transition-delay: 0ms; }
