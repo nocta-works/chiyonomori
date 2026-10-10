@@ -797,8 +797,12 @@
 <!-- ③動画（本人指定・2026-09-11：タイマーで自動送りせず、④の写真3枚と同じ
      スクロール対象にする。#introを抜けた直後、最初にスクロールで辿り着く枠） -->
 <section class="scroll-slide reveal-slide" id="video-slide">
-<video autoplay="" class="intro-video-media" loop="" muted="" playsinline="">
-<source src="../assets/samukawa-sample.mp4" type="video/mp4"/>
+<!-- 依頼BA（2026-10-10）：寒川1か所の8秒から、6場面（白笹稲荷の鳥居トンネル→寒川の滝→
+       川勾の石段→白笹稲荷の竹の水→香取の拝殿→川勾の鳥居）のつなぎ合わせ16秒へ。
+       最後が鳥居・最初が鳥居トンネルなので、ループの継ぎ目も鳥居どうしで繋がる。
+       posterは動画の1コマ目＝reduced-motionで止まって見える絵・読み込み前の絵 -->
+<video autoplay="" class="intro-video-media" loop="" muted="" playsinline="" poster="../assets/op-loop-poster.jpg" preload="auto">
+<source src="../assets/op-loop.mp4" type="video/mp4"/>
 </video>
 <button class="video-play-prompt" id="video-play-prompt" type="button">
 <span class="video-play-prompt-icon">▶</span>
