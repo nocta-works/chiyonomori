@@ -438,6 +438,52 @@
   @media (max-width: 480px) {
     .triptych-caption { font-size: clamp(15px, 4.4vw, 22px); bottom: 12%; }
   }
+  /* 依頼BM-2（2026-10-11・本人「PCでは文字がいい感じだが、スマホでは大きすぎるのと、
+     改行の場所が不自然」）：スマホ（480px以下）だけ、文字を小さくし、改行の位置を
+     文ごとに決め打ちする。PCの見た目・改行は変えない（この@mediaの中だけ）。
+     真因＝①最小サイズが大きい（タグライン18px・②の字幕18px・③24px・④24pxは
+     どれもclamp()の下限で、スマホでは常に下限）②句の途中で折り返さない処理は、
+     375pxで英語の長い句がはみ出したため、PC（641px以上）だけに限定されていた
+     ＝スマホでは文字の途中のどこででも折り返していた。
+     直し＝改行の位置は「句の境目」と一致する（日本語は「、」の後・英語は「,」「.」の後）
+     ので、スマホでは句と句の間に強制の改行を入れ、句の中では折り返さない。
+     JSが作る<span class="phrase">の末尾に、::afterで改行（\A）を足す形＝1文字ずつ現れる
+     演出（.char/.word）の中でもそのまま保たれ、バッジ（.caption-badge・.ivc-line）の
+     背景も行ごとに付く。②の1行目「神宮、大社、一宮、二宮。」は列挙なので改行しない。
+     320pxで1行が収まらない時は、単語の切れ目（英語）でだけ折り返す（.wordのnowrapはそのまま） */
+  @media (max-width: 480px) {
+    html[lang] .intro-tagline .phrase, html[lang] .intro-video-caption .phrase,
+    html[lang] .fixed-caption .phrase, html[lang] .triptych-caption .phrase,
+    html[lang] .declaration-text .phrase {
+      display: inline; white-space: normal;
+    }
+    .intro-tagline .phrase:not(:last-child)::after, .intro-video-caption .phrase:not(:last-child)::after,
+    .fixed-caption .phrase:not(:last-child)::after, .triptych-caption .phrase:not(:last-child)::after,
+    .declaration-text .phrase:not(:last-child)::after {
+      content: "\A"; white-space: pre;
+    }
+    .intro-video-caption .ivc-line:first-child .phrase::after { content: none; }
+    /* 🔴left:50%＋translateX(-50%)の中央寄せは、幅autoの絶対配置だと「幅＝画面の半分−α」に
+       縮んでしまう（shrink-to-fit。依頼AHの注記と同じ罠）。スマホでは左右16pxずつの
+       枠（left/right指定）に広げ、中の文字をtext-alignで中央に寄せる */
+    .intro-tagline, .intro-video-caption, .fixed-caption, .triptych-caption {
+      left: 16px; right: 16px; transform: none; max-width: none;
+    }
+    .intro-tagline { font-size: 16px; }
+    .intro-video-caption { font-size: 16px; }
+    .intro-video-caption .ivc-line { padding: 8px 12px; }
+    .fixed-caption, .triptych-caption { font-size: 20px; }
+    .fixed-caption .caption-badge, .triptych-caption .caption-badge { padding: 8px 14px; }
+    .declaration-text { font-size: 22px; padding: 0 16px; }
+  }
+  /* 320px前後の英語だけ、指定位置以外で折り返さないよう少し詰める（16pxだと
+     "Jingu, Taisha, Ichinomiya, Ninomiya." が288pxに入らず "Ninomiya." が1語だけ落ちる）。
+     日本語は16pxのまま320pxに収まるので触らない。 */
+  @media (max-width: 340px) {
+    html[lang="en"] .intro-tagline { font-size: 15px; }
+    html[lang="en"] .intro-video-caption { font-size: 13.5px; }
+    html[lang="en"] .intro-video-caption .ivc-line { padding: 8px 6px; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .triptych-col img { transition: none; transition-delay: 0ms; }
     .triptych-caption { transition: none; }
