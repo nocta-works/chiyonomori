@@ -1363,14 +1363,14 @@
   });
 
   // 格式の窓（モーダル）（実装キュー依頼N-1・2026-09-13）：5タグを縦に並べて
-  // 比較できる形。件数は現行データ（神宮24・大社24・一宮91・二宮35）と一致
+  // 比較できる形。件数は現行データ（神宮24・大社24・一宮91・二宮30）と一致（2026-10-11 依頼BKで35→30）
   // 確認済み。名社の14件は依頼D（164社への絞り込み）実施後の数で、まだ
   // 現行データには反映されていない（本キュー依頼Dの節を参照）
   var RANK_INFO = [
     { tag: 'jingu', label: { ja: '神宮', en: 'Jingu' }, count: 24, desc: { ja: '皇室にゆかりのある神、または天皇を祀る社。勅許で与えられる社号。ただ「神宮」とだけ呼ぶのは伊勢神宮ひとつ。古さではなく皇室との関係で決まる。', en: 'Shrines enshrining kami connected to the imperial line, or an emperor. Granted by imperial sanction — only Ise Jingu is called simply "Jingu."' } },
     { tag: 'taisha', label: { ja: '大社', en: 'Taisha' }, count: 24, desc: { ja: '2つの意味がある。戦前の社格（官幣大社・国幣大社）と、名前としての「〇〇大社」。戦前は出雲大社ただ一社を指した。', en: 'Two meanings: a pre-war state rank, and the name "Taisha" itself. Before the war, "Taisha" meant only Izumo Taisha.' } },
     { tag: 'ichi', label: { ja: '一宮', en: 'Ichinomiya' }, count: 92, desc: { ja: '律令時代の国（全国約70国）ごとの筆頭社。朝廷が決めた一覧ではなく、国司が最初に参る社が定着したもの。だから国によって異説がある。', en: 'The top-ranked shrine of each historical province (~70 nationwide). Not an official decree — the shrine a new governor visited first, settled by custom.' } },
-    { tag: 'ni', label: { ja: '二宮', en: 'Ninomiya' }, count: 35, desc: { ja: '同じ序列の2番目。一宮に次ぐ社。', en: 'Second in the same provincial ranking, after the ichinomiya.' } },
+    { tag: 'ni', label: { ja: '二宮', en: 'Ninomiya' }, count: 30, desc: { ja: '同じ序列の2番目。一宮に次ぐ社。', en: 'Second in the same provincial ranking, after the ichinomiya.' } },
     // 【2026-10-11】川勾神社（二宮）に名社タグを足し、初期表示（神宮・一宮・名社）の地図にも出るようにした＝33→34社
     // 名社33社（実行順A・依頼R-1+S-1で26社確定→実行順I・依頼S-2で5社追加→
     // 依頼Y-1で鶴岡八幡宮が一宮へ移り-1→依頼Y-2で愛宕神社・代々木八幡宮・
