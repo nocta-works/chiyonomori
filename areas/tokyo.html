@@ -202,6 +202,15 @@
   .shrine-notes a { color: var(--gold); text-decoration: none; white-space: nowrap; }
   .shrine-notes a:hover { text-decoration: underline; }
   .shrine-notes .note::before { content: "—"; margin: 0 0.6em; opacity: 0.5; }
+  /* 依頼BD後の本人指摘（2026-10-11）：社名の長さがバラバラで、その後の説明文の始まる位置が揃わず読みにくい。
+     → 「社名の列」と「説明の列」の表（シート）にする。枠線は付けない。社名の列の幅は、そのLvの
+     いちばん長い社名に合う（subgrid）。説明は必ず同じ位置から始まる。subgridが使えない古いブラウザは、
+     上の「社名 — 説明」の流れる文のまま（読めなくはならない） */
+  @supports (grid-template-columns: subgrid) {
+    .shrine-notes { grid-template-columns: max-content 1fr; column-gap: 24px; row-gap: 10px; }
+    .shrine-notes li { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: baseline; }
+    .shrine-notes .note::before { content: none; }
+  }
   .map-cta { margin: 8px 0 0; text-align: center; font-size: 14px; }
   .map-cta a { text-decoration: none; padding: 12px 24px; border: 1px solid var(--gold); border-radius: 28px; display: inline-block; }
   .map-cta a:hover { background: rgba(var(--gold-glow-rgb),0.16); }
@@ -220,6 +229,12 @@
     .lv-nav-btn { display: none; }
     .lv-group { padding-left: 14px; }
     .lv-track-groups { gap: 14px; }
+    /* 説明の表は、幅が足りないので1列（社名の下に説明） */
+    @supports (grid-template-columns: subgrid) {
+      .shrine-notes { grid-template-columns: 1fr; row-gap: 12px; }
+      .shrine-notes li { grid-template-columns: 1fr; row-gap: 1px; }
+    }
+    .shrine-notes a { white-space: normal; }
   }
   @media (hover: none) { .lv-nav-btn { display: none; } }
   @media (prefers-reduced-motion: reduce) { .lv-scroller { scroll-behavior: auto; } }
