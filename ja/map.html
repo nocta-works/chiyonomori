@@ -616,13 +616,20 @@
   .leaflet-marker-icon { transition: opacity var(--dur-slowest) ease; }
   .marker-dimmed { opacity: 0.22 !important; }
   .area-enclosure-cta-wrap {
-    /* 本人指摘（2026-09-20）：中央だとサイドバーも含めた全幅の真ん中になり
-       ゴチャつくため、左寄せにする。
-       🔴2026-09-21追記：左寄せの結果、Leafletのズームコントロール
-       （左上・幅34px＋left:10px）とCTAピルが重なる不具合が発覚。
-       ズームコントロールの右端（約44px）をよけるpadding-leftに変更 */
-    position: absolute; top: 14px; left: 0; right: 0; z-index: 900;
-    display: flex; justify-content: flex-start; padding-left: 60px; pointer-events: none;
+    /* 依頼AZ（2026-10-10）：地図の左上から「地図の下中央」へ移した。
+       真因＝エリアのパネル（#area-dropdown-panel・z-index:2000）がヘッダーから
+       地図の左上へ垂れ下がり、同じ左上にあるピルを覆っていた（同じ行き先への
+       リンクが2つ同じ場所に出ていた）。置き場の条件：
+       ・左上（ズーム・ドロップダウンの真下）から離す
+       ・右下のLeaflet出典表示（高さ約20px）と縦に重ならないよう、bottom:40pxで
+         その上に浮かせる（スマホの幅375pxでも出典表示の長い文字列と干渉しない）
+       ・サイドバー（右220px・狭幅では非表示）を含めた全幅の真ん中ではなく、
+         地図そのものの真ん中に置く（2026-09-20のゴチャつき指摘と同じ理由）
+       ・スマホで親指が届く下側
+       🔴ピルは「エリアのパネルが開いている間は隠す」（syncAreaCta()）。
+       開いている間はパネル下端のリンクが同じ役をするので、同時に2つ出さない */
+    position: absolute; bottom: 40px; left: 0; right: 220px; z-index: 900;
+    display: flex; justify-content: center; padding: 0 12px; pointer-events: none;
   }
   .area-enclosure-cta {
     /* 本人指摘（2026-09-20）：浮かび上がる東京ページアイコンを前より大きく */
@@ -679,6 +686,10 @@
      （本番のボトムシート化まではこの試作の現段階ではスコープ外） */
   @media (max-width: 640px) {
     #sidebar { display: none; }
+    /* 依頼AZ：サイドバーが無いので地図の全幅の中央へ。ピルも一回り小さくして
+       375px幅でも画面の端に触れないようにする */
+    .area-enclosure-cta-wrap { right: 0; }
+    .area-enclosure-cta { padding: 11px 18px; font-size: 15px; gap: 8px; }
   }
   /* タイルのみ暗色反転（マーカー・ポップアップには影響しない。本番index.htmlと同一処理） */
   .leaflet-tile-pane {
@@ -1139,11 +1150,9 @@
           '<span>' + text[currentLang] + '</span>' +
           '</button>';
       }).join('') : '';
-      // 確定文言＝「東京のページへ →」/「To the Tokyo page →」。将来エリアが
-      // 増えた時も同じ形で機械的に作れるよう、エリア名を差し込んで生成する
-      var linkText = currentLang === 'en'
-        ? ('To the ' + a.name.en + ' page →')
-        : (a.name.ja + 'のページへ →');
+      // 依頼AZ（2026-10-10）：文言は地図下中央のピルと同じ（ctaPhrase）に揃える
+      // ＝同じ行き先は同じ言葉。エリアが増えても機械的に作れる
+      var linkText = a.ctaPhrase[currentLang] + ' →';
       return '<div class="area-row" data-area-file="' + a.file + '">' +
         '<span class="area-row-name">' + a.name[currentLang] + '</span>' +
         '<div class="area-row-chips">' + chipsHtml + '</div>' +
@@ -1226,6 +1235,7 @@
   var dropdowns = [document.getElementById('basics-dropdown'), document.getElementById('area-dropdown')];
   function closeAllDropdowns(except){
     dropdowns.forEach(function(d){ if (d && d !== except) d.classList.remove('open'); });
+    syncAreaCta(); // 依頼AZ：エリアのパネルが閉じたら、選択中のエリアのピルを出す
   }
   document.getElementById('basics-dropdown-toggle').addEventListener('click', function(e){
     e.stopPropagation();
@@ -1252,14 +1262,20 @@
       // 1件だけなのでこの単純な形で足りる
       var visible = AREA_PAGES.filter(function(a){ return VISIBLE_AREA_FILES.indexOf(a.file) !== -1; });
       if (visible[0]) focusArea(visible[0].file);
-    } else {
+    } else if (!pinnedAreaChip) {
+      // チップで層を固定していない時だけ囲いも消す。固定している時は、
+      // 閉じたあとも囲いを残して地図を見られるようにする（依頼AZ・2026-10-10。
+      // その状態で東京ページへ行く手段が地図下中央のピルになる）
       clearAreaEnclosure();
     }
+    // 依頼AZ：パネルが開いている間はピルを隠し、閉じたら（エリアが選ばれたままなら）出す
+    syncAreaCta();
   });
   document.addEventListener('click', function(e){
     dropdowns.forEach(function(d){
       if (d && d.classList.contains('open') && !d.contains(e.target)) d.classList.remove('open');
     });
+    syncAreaCta();
   });
 
   // タグフィルター（本人指定・2026-09-10：神宮・大社・一宮・二宮の4タグのみ。
@@ -1463,6 +1479,19 @@
   var areaDimmedIcons = [];
   var areaLevelLabels = []; // { marker, areaFile, levelKey } — 言語切替時にテキストを再計算するため保持
   var currentFocusedAreaPage = null; // focusArea()中のCTAピル言語切替時にテキストを再計算するため保持
+  // 依頼AZ（2026-10-10）：ピルの出し入れはここ1か所に集める。
+  // 出す条件＝「エリアが選ばれている（currentFocusedAreaPageがある）」かつ
+  // 「エリアのパネルが閉じている」。パネルが開いている間は、パネル下端の
+  // リンクが同じ行き先へ導くので隠す（同時に2つ出さない）。パネルは複数の
+  // 経路（トグル・外側クリック・基礎知識側の開閉）で閉じるため、開閉の
+  // 各所からこの関数を呼んで状態を合わせる
+  function syncAreaCta() {
+    var cta = document.getElementById('area-enclosure-cta');
+    if (!cta) return;
+    var panel = document.getElementById('area-dropdown');
+    var panelOpen = !!(panel && panel.classList.contains('open'));
+    cta.classList.toggle('visible', !!currentFocusedAreaPage && !panelOpen);
+  }
   function clearAreaEnclosure() {
     if (!map) return;
     areaEnclosureLayers.forEach(function(l){ map.removeLayer(l); });
@@ -1622,10 +1651,12 @@
     if (cta && ctaText && areaPage) {
       // 本人指摘（2026-09-20）：ピルの中身が「Tokyo」だけだと何が起きるのか
       // 分からないので、一言添えた確定フレーズ（ctaPhrase）を使う
-      ctaText.textContent = '⛩ ' + areaPage.ctaPhrase[currentLang];
+      // 依頼AZ：絵文字の⛩は外し、矢印で行き先があることを示す
+      // （パネル下端のリンクと同じ文言）。表示の可否はsyncAreaCta()が決める
+      ctaText.textContent = areaPage.ctaPhrase[currentLang] + ' →';
       cta.href = goUrl;
-      cta.classList.add('visible');
       currentFocusedAreaPage = areaPage;
+      syncAreaCta();
     }
   }
   // 依頼AA-1（2026-09-19）：起動時、日本全体表示（上のfitBounds）から数秒後に
@@ -1827,7 +1858,7 @@
     // だったバグの修正。フォーカス中のエリアを覚えておき、その場でテキストだけ差し替える
     if (currentFocusedAreaPage) {
       var ctaTextEl = document.getElementById('area-enclosure-cta-text');
-      if (ctaTextEl) ctaTextEl.textContent = '⛩ ' + currentFocusedAreaPage.ctaPhrase[currentLang];
+      if (ctaTextEl) ctaTextEl.textContent = currentFocusedAreaPage.ctaPhrase[currentLang] + ' →';
     }
   }
   // 本人指定（2026-09-20）：マップとオープニングを別ページに分離したため、
