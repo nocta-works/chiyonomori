@@ -345,6 +345,12 @@
      がそのまま縦に伸び、地図・サイドバー全体が4700px超まで引き伸ばされてしまう。
      heightを確定値にして初めてflex:1とoverflow-y:autoが機能する */
   .mock-app { height: 100vh; display: flex; flex-direction: column; scroll-snap-align: start; }
+  /* 依頼BL：地図の下の、主なページへの普通のリンクの行（地図は100vhなので、その下にある） */
+  .site-links { padding: 26px 20px 32px; border-top: 1px solid var(--border-4); text-align: center; scroll-snap-align: end; }
+  .site-links-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; max-width: 760px; margin: 0 auto; font-size: 12.5px; letter-spacing: 0.04em; }
+  .site-links-nav a { color: var(--tan-text-2); text-decoration: none; }
+  .site-links-nav a:hover, .site-links-nav a:focus-visible { color: var(--gold); text-decoration: underline; }
+  .site-links-nav a[aria-current="page"] { color: var(--gold-muted); }
   .mock-header {
     padding: 16px 20px; border-bottom: 1px solid var(--border-4);
     display: flex; align-items: center; gap: 10px;
@@ -826,6 +832,12 @@
 </div>
 </div>
 </div>
+<!-- 依頼BL（2026-10-11）：地図の記事・エリア・詳細ページへのリンクはJSで組み立てるため、
+     Googleの描画待ちになりやすい。主なページへの普通のリンク（<a href>）を、地図の下の
+     フッターにHTMLで置く（JSで作らない・隠さない）。地図の下に少しスクロールすると見える -->
+<footer class="site-links">
+<nav class="site-links-nav"><a aria-current="page" href="map.html">Shrine map</a><a href="areas/tokyo.html">Shrines in Tokyo</a><a href="articles/japan-and-shrines.html">Japan and its shrines</a><a href="articles/how-to-visit.html">How to visit a shrine</a><a href="articles/torii-and-grounds.html">Torii gates and shrine grounds</a><a href="articles/kami-and-classification.html">Kami, ranks and lineages</a></nav>
+</footer>
 <script src="assets/leaflet/leaflet.js"></script>
 <script>
 // ⑤本体：神宮・大社タグの神社のみ（48社）を表示する簡易地図
