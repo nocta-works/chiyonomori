@@ -61,11 +61,13 @@
     --dur-slower: 0.25s;
     --dur-slowest: 0.28s;
     --dur-bar: 0.4s;
-    --tag-jingu: #d4860a;    --tag-jingu-rgb: 212,134,10;   --tag-jingu-light: #f5c842;
-    --tag-taisha: #7c3aed;   --tag-taisha-rgb: 124,58,237;  --tag-taisha-light: #c4a8ff;
-    --tag-ichi: #e83020;     --tag-ichi-rgb: 232,48,32;     --tag-ichi-light: #ff9a8a;
-    --tag-ni: #1a50d8;       --tag-ni-rgb: 26,80,216;       --tag-ni-light: #88b4ff;
-    --tag-meisha: #059669;   --tag-meisha-rgb: 5,150,105;   --tag-meisha-light: #6ee7b7;
+    /* 依頼BN-3（2026-10-11）：格式5つの色を伝統色に。神宮＝金茶・大社＝古代紫・一宮＝朱・二宮＝藍・名社＝常磐。
+       地の色（--tag-X）は暗い地図の上でも沈まない明るさ、薄い色（-light）は非表示時の線・文字に使う */
+    --tag-jingu: #a8791f;    --tag-jingu-rgb: 168,121,31;   --tag-jingu-light: #e6c886;
+    --tag-taisha: #6a4580;   --tag-taisha-rgb: 106,69,128;  --tag-taisha-light: #c4a6d4;
+    --tag-ichi: #b23a24;     --tag-ichi-rgb: 178,58,36;     --tag-ichi-light: #e8a090;
+    --tag-ni: #2c5585;       --tag-ni-rgb: 44,85,133;       --tag-ni-light: #9db6d6;
+    --tag-meisha: #2c6249;   --tag-meisha-rgb: 44,98,73;    --tag-meisha-light: #9cc4ae;
     --tag-meisha2: #0284c7;  --tag-meisha2-rgb: 2,132,199;  --tag-meisha2-light: #7dd3fc;
     --tag-meisha3: #b45309;  --tag-meisha3-rgb: 180,83,9;   --tag-meisha3-light: #fcd34d;
     --tag-hachiman: #be185d; --tag-hachiman-rgb: 190,24,93; --tag-hachiman-light: #f9a8d4;
@@ -468,20 +470,25 @@
     display: flex; align-items: center; gap: 5px;
     padding: 5px 11px; border-radius: 20px; border: 1.5px solid;
     cursor: pointer; font-family: inherit; font-size: 13px; letter-spacing: 0.05em;
-    transition: all var(--dur-slower); opacity: 0.42; background: transparent;
+    transition: all var(--dur-slower); opacity: 0.7; background: transparent;
   }
   .filter-btn.active { opacity: 1; }
-  .filter-btn.jingu  { border-color: var(--tag-jingu);  color: var(--tag-jingu-light);  background: rgba(var(--tag-jingu-rgb),0.12); }
-  .filter-btn.jingu.active  { background: rgba(var(--tag-jingu-rgb),0.38);  box-shadow: 0 0 9px rgba(var(--tag-jingu-rgb),0.4); }
-  .filter-btn.taisha { border-color: var(--tag-taisha); color: var(--tag-taisha-light); background: rgba(var(--tag-taisha-rgb),0.12); }
-  .filter-btn.taisha.active { background: rgba(var(--tag-taisha-rgb),0.32); box-shadow: 0 0 9px rgba(var(--tag-taisha-rgb),0.4); }
-  .filter-btn.ichi   { border-color: var(--tag-ichi);   color: var(--tag-ichi-light);   background: rgba(var(--tag-ichi-rgb),0.12); }
-  .filter-btn.ichi.active   { background: rgba(var(--tag-ichi-rgb),0.36);   box-shadow: 0 0 9px rgba(var(--tag-ichi-rgb),0.4); }
-  .filter-btn.ni     { border-color: var(--tag-ni);     color: var(--tag-ni-light);     background: rgba(var(--tag-ni-rgb),0.12); }
-  .filter-btn.ni.active     { background: rgba(var(--tag-ni-rgb),0.32);     box-shadow: 0 0 9px rgba(var(--tag-ni-rgb),0.4); }
-  .filter-btn.meisha { border-color: var(--tag-meisha); color: var(--tag-meisha-light); background: rgba(var(--tag-meisha-rgb),0.12); }
-  .filter-btn.meisha.active { background: rgba(var(--tag-meisha-rgb),0.32); box-shadow: 0 0 9px rgba(var(--tag-meisha-rgb),0.4); }
-  .filter-btn .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  /* 依頼BN-4：丸いボタンの左に格式の印（18px）。表示中＝地の色で塗り＋金の細線＋文字#fbf3e0／
+     非表示＝塗りなし＋地の色の線＋文字は薄い色。meishaの葉脈は、表示中は地の色・非表示は背景色で抜く */
+  .filter-btn.jingu { border-color: var(--tag-jingu); color: var(--tag-jingu-light); background: transparent; }
+  .filter-btn.jingu.active { background: var(--tag-jingu); border-color: #ecd08c; color: #fbf3e0; }
+  .filter-btn.taisha { border-color: var(--tag-taisha); color: var(--tag-taisha-light); background: transparent; }
+  .filter-btn.taisha.active { background: var(--tag-taisha); border-color: #ecd08c; color: #fbf3e0; }
+  .filter-btn.ichi { border-color: var(--tag-ichi); color: var(--tag-ichi-light); background: transparent; }
+  .filter-btn.ichi.active { background: var(--tag-ichi); border-color: #ecd08c; color: #fbf3e0; }
+  .filter-btn.ni { border-color: var(--tag-ni); color: var(--tag-ni-light); background: transparent; }
+  .filter-btn.ni.active { background: var(--tag-ni); border-color: #ecd08c; color: #fbf3e0; }
+  .filter-btn.meisha { border-color: var(--tag-meisha); color: var(--tag-meisha-light); background: transparent; }
+  .filter-btn.meisha.active { background: var(--tag-meisha); border-color: #ecd08c; color: #fbf3e0; }
+  .filter-btn.meisha .vein { stroke: var(--bg-body); }
+  .filter-btn.meisha.active .vein { stroke: var(--tag-meisha); }
+  .filter-btn .tag-mark { display: block; width: 18px; height: 18px; flex-shrink: 0; }
+  .filter-btn .tag-mark svg { display: block; width: 100%; height: 100%; }
   .filter-btn .lbl-short { display: none; } /* 依頼BD-4：スマホ（640px以下）だけ短い表記を出す。後ろのメディアクエリで上書き */
   /* 格式の?ボタン（実装キュー依頼N-1・2026-09-13）：タグ列全体に1つだけ。
      押すと個別記事へは飛ばず、5タグを比較できる窓（モーダル）を開く
@@ -516,10 +523,10 @@
   .rank-modal-row { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.07); }
   .rank-modal-row:first-child { border-top: none; }
   .rank-modal-badge {
-    flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-size: 15px; font-weight: bold; color: #fff;
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid #ecd08c;
+    display: flex; align-items: center; justify-content: center; color: #f6ecd6;
   }
+  .rank-modal-badge svg { display: block; width: 22px; height: 22px; }
   .rank-modal-text { flex: 1; min-width: 0; }
   .rank-modal-row-title { font-size: 13px; color: var(--tan-text); display: flex; align-items: baseline; gap: 8px; }
   .rank-modal-count { font-size: 11px; color: var(--gold-muted); }
@@ -957,11 +964,13 @@
   // 3タグだけを初期表示にし、大社・二宮はタグフィルターボタンで足す形にする
   var DEFAULT_TAGS = ['jingu', 'ichi', 'meisha'];
   var TAG_CONFIG = {
-    jingu:   { label:{ja:'神宮',en:'Jingu'},        char:{ja:'神',en:'J'},  color:'#c47a08', border:'#f5c842', bg:'rgba(212,134,10,0.18)' },
-    taisha:  { label:{ja:'大社',en:'Taisha'},       char:{ja:'大',en:'T'},  color:'#6d28d9', border:'#c4a8ff', bg:'rgba(124,58,237,0.18)' },
-    ichi:    { label:{ja:'一宮',en:'Ichinomiya (1st)'}, char:{ja:'一',en:'1'}, color:'#c41810', border:'#ff9a8a', bg:'rgba(232,48,32,0.18)' },
-    ni:      { label:{ja:'二宮',en:'Ninomiya (2nd)'},   char:{ja:'二',en:'2'}, color:'#1540c0', border:'#88b4ff', bg:'rgba(26,80,216,0.18)' },
-    meisha:  { label:{ja:'名社',en:'Notable'}, char:{ja:'名',en:'N'}, color:'#047857', border:'#6ee7b7', bg:'rgba(4,120,87,0.18)' },
+    // 依頼BN（2026-10-11）：color＝地の色（マーカーの塗り・「?」窓のバッジ）／border＝薄い色（一覧の見出しの線・文字）。
+    // 神宮・大社・一宮・二宮・名社の5つは、文字（char）の代わりに下のRANK_SYMBOLSの印を使う
+    jingu:   { label:{ja:'神宮',en:'Jingu'},        char:{ja:'神',en:'J'},  color:'#a8791f', border:'#e6c886', bg:'rgba(168,121,31,0.18)' },
+    taisha:  { label:{ja:'大社',en:'Taisha'},       char:{ja:'大',en:'T'},  color:'#6a4580', border:'#c4a6d4', bg:'rgba(106,69,128,0.18)' },
+    ichi:    { label:{ja:'一宮',en:'Ichinomiya (1st)'}, char:{ja:'一',en:'1'}, color:'#b23a24', border:'#e8a090', bg:'rgba(178,58,36,0.18)' },
+    ni:      { label:{ja:'二宮',en:'Ninomiya (2nd)'},   char:{ja:'二',en:'2'}, color:'#2c5585', border:'#9db6d6', bg:'rgba(44,85,133,0.18)' },
+    meisha:  { label:{ja:'名社',en:'Notable'}, char:{ja:'名',en:'N'}, color:'#2c6249', border:'#9cc4ae', bg:'rgba(44,98,73,0.18)' },
     meisha2: { label:{ja:'名社２',en:'Notable β'}, char:{ja:'社',en:'β'}, color:'#0369a1', border:'#7dd3fc' },
     meisha3: { label:{ja:'名社３',en:'Notable γ'}, char:{ja:'奉',en:'γ'}, color:'#92400e', border:'#fcd34d' },
     hachiman:{ label:{ja:'八幡',en:'Hachiman'},     char:{ja:'八',en:'H'},  color:'#be185d', border:'#f9a8d4' },
@@ -1041,8 +1050,45 @@
   // 34×42基準からの累計段階数。jingu＝3段階（最初の1段階＋今回の2段階）、
   // taisha/ichi＝2段階（最初の1段階＋今回の1段階）
   var ICON_SIZE_STEPS = { jingu: 3, taisha: 2, ichi: 2 };
+  // 依頼BN-2（2026-10-11）：格式の印＝文字を使わないSVG（viewBox 0 0 34 42の座標）。言語で変わらない。
+  // fgは線・面の色、veinは名社の葉脈の色（地の色で抜く）。kは線の太さの倍率（マーカー1／ボタン等は少し太く）。
+  // 神宮＝千木＋屋根・大社＝注連縄＋紙垂3本・一宮＝一本線・二宮＝二本線（上を短く）・名社＝榊の葉
+  // （三宮・四宮の三本線・四本線は、東京エリアページの印だけ＝地図では使わない）
+  var RANK_SYMBOLS = {
+    jingu: function(fg, vein, k) {
+      return '<path d="M9.5 23.5L17 16L24.5 23.5" fill="none" stroke="' + fg + '" stroke-width="' + (2.2 * k) + '" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<path d="M14.5 15.5L19.5 10.5M19.5 15.5L14.5 10.5" fill="none" stroke="' + fg + '" stroke-width="' + (1.6 * k) + '" stroke-linecap="round"/>' +
+        '<path d="M10.5 26H23.5" fill="none" stroke="' + fg + '" stroke-width="' + (1.6 * k) + '" stroke-linecap="round"/>';
+    },
+    taisha: function(fg, vein, k) {
+      return '<rect x="7.5" y="13" width="19" height="4.2" rx="2.1" fill="' + fg + '"/>' +
+        '<path d="M11 17.5L12.6 20L11 22.5L12.6 25M17 17.5L18.6 20L17 22.5L18.6 25M23 17.5L24.6 20L23 22.5L24.6 25" fill="none" stroke="' + fg + '" stroke-width="' + (1.3 * k) + '" stroke-linejoin="round"/>';
+    },
+    ichi: function(fg) {
+      return '<rect x="8.5" y="17.6" width="17" height="3.2" rx="1.6" fill="' + fg + '"/>';
+    },
+    ni: function(fg) {
+      return '<rect x="10" y="14.2" width="14" height="3" rx="1.5" fill="' + fg + '"/>' +
+        '<rect x="8.5" y="21" width="17" height="3" rx="1.5" fill="' + fg + '"/>';
+    },
+    meisha: function(fg, vein, k) {
+      return '<path d="M11 25C11 17.5 16 12.5 23.5 12C23.5 19.5 18.5 24.5 11 25Z" fill="' + fg + '"/>' +
+        '<path class="vein" d="M12.5 23.5L21 14.5" fill="none"' + (vein ? ' stroke="' + vein + '"' : '') + ' stroke-width="' + (1 * k) + '"/>';
+    }
+  };
+  var RANK_FG = '#f6ecd6';    // 印の色（生成り）
+  var RANK_EDGE = '#ecd08c';  // マーカーの縁・バッジの縁（金の細線。5つ共通）
+  // ボタン・「?」窓用の印だけのSVG（マーカーの印の座標をそのまま、周りを切り詰めたviewBoxで拡大）。
+  // fg='currentColor'にすると、ボタンの文字色（表示中＝#fbf3e0／非表示＝薄い色）に従う
+  function rankMarkSvg(tag, fg, vein, k) {
+    var sym = RANK_SYMBOLS[tag];
+    if (!sym) return '';
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="5.5 6.5 23 23" aria-hidden="true" focusable="false">' + sym(fg, vein, k) + '</svg>';
+  }
   function getIcon(tag) {
-    var key = currentLang + '_' + tag;
+    var isRank = !!RANK_SYMBOLS[tag];
+    // 5つの格式は印が言語で変わらない＝キャッシュのキーに言語を含めない。それ以外のタグ（名社2・3・八幡・稲荷）は従来の文字入りのピン
+    var key = isRank ? tag : currentLang + '_' + tag;
     if (iconCache[key]) return iconCache[key];
     var steps = ICON_SIZE_STEPS[tag] || 0;
     var w = ICON_BASE_W + steps * ICON_STEP_W;
@@ -1052,12 +1098,21 @@
     var anchor = [Math.round(w / 2), h - 2];
     var popupAnchor = [0, -h];
     var c = TAG_CONFIG[tag];
-    var ch = c.char[currentLang];
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 34 42">' +
-      '<path d="M17 2C9 2 2 9 2 17c0 10 15 23 15 23S32 27 32 17C32 9 25 2 17 2z" fill="' + c.color + '" fill-opacity="0.9" stroke="' + c.border + '" stroke-width="1.5"/>' +
-      '<circle cx="17" cy="17" r="9" fill="rgba(255,255,255,0.13)"/>' +
-      '<text x="17" y="22" text-anchor="middle" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',serif" font-size="' + (ch.length > 1 ? 10 : 12) + '" font-weight="bold" fill="white">' + ch + '</text>' +
-      '</svg>';
+    var svg;
+    if (isRank) {
+      // 依頼BN-1：形＝絵馬（尖りの先（17, 39.5）が地点）。塗り＝地の色／縁＝金の細線／中の印＝生成り
+      svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 34 42">' +
+        '<path d="M17 2L31 10V30H20.5L17 39.5L13.5 30H3V10Z" fill="' + c.color + '" stroke="' + RANK_EDGE + '" stroke-width="1" stroke-linejoin="round"/>' +
+        RANK_SYMBOLS[tag](RANK_FG, c.color, 1) +
+        '</svg>';
+    } else {
+      var ch = c.char[currentLang];
+      svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 34 42">' +
+        '<path d="M17 2C9 2 2 9 2 17c0 10 15 23 15 23S32 27 32 17C32 9 25 2 17 2z" fill="' + c.color + '" fill-opacity="0.9" stroke="' + c.border + '" stroke-width="1.5"/>' +
+        '<circle cx="17" cy="17" r="9" fill="rgba(255,255,255,0.13)"/>' +
+        '<text x="17" y="22" text-anchor="middle" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',serif" font-size="' + (ch.length > 1 ? 10 : 12) + '" font-weight="bold" fill="white">' + ch + '</text>' +
+        '</svg>';
+    }
     iconCache[key] = L.divIcon({ html: svg, className: '', iconSize: [w, h], iconAnchor: anchor, popupAnchor: popupAnchor });
     return iconCache[key];
   }
@@ -1380,7 +1435,7 @@
       var c = TAG_CONFIG[tag];
       var active = activeFilters.has(tag) ? ' active' : '';
       return '<button type="button" class="filter-btn ' + tag + active + '" data-tag="' + tag + '">' +
-        '<span class="dot" style="background:' + c.border + ';box-shadow:0 0 5px ' + c.border + '"></span>' +
+        '<span class="tag-mark">' + rankMarkSvg(tag, 'currentColor', null, 1.35) + '</span>' +
         filterLabelHtml(c.label[currentLang]) + '</button>';
     }).join('');
     // 格式の?リンク（実装キュー依頼N-1・2026-09-13修正）：タグ1つにつき1つずつ
@@ -1436,7 +1491,7 @@
     document.getElementById('rank-modal-rows').innerHTML = RANK_INFO.map(function(r){
       var c = TAG_CONFIG[r.tag];
       return '<div class="rank-modal-row">' +
-        '<span class="rank-modal-badge" style="background:' + c.color + ';border-color:' + c.border + ';">' + c.char[currentLang] + '</span>' +
+        '<span class="rank-modal-badge" style="background:' + c.color + ';">' + rankMarkSvg(r.tag, RANK_FG, c.color, 1.2) + '</span>' +
         '<div class="rank-modal-text"><div class="rank-modal-row-title">' + r.label[currentLang] + '<span class="rank-modal-count">' + r.count + '</span></div>' +
         '<p>' + r.desc[currentLang] + '</p></div></div>';
     }).join('');

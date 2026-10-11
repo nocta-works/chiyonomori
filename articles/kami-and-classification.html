@@ -114,11 +114,12 @@
 
   .rank-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 22px 0 8px; }
   .rank-item { display: flex; flex-direction: column; align-items: center; width: 84px; text-align: center; }
+  /* 依頼BN（2026-10-11）：地図のマーカー・「?」の比較窓と同じ印（文字の無い絵）と伝統色。縁は金の細線 */
   .rank-badge {
     width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif; font-size: 19px; font-weight: bold;
-    color: #fff; margin-bottom: 8px; box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
+    color: #f6ecd6; margin-bottom: 8px; box-shadow: 0 0 0 1.5px rgba(236,208,140,0.9) inset;
   }
+  .rank-badge svg { display: block; width: 30px; height: 30px; }
   .rank-name { font-size: 12px; color: var(--tan-text); }
   .rank-count { font-size: 10.5px; color: var(--gold-muted); margin-top: 2px; }
 
@@ -267,29 +268,29 @@
 <div class="diagram">
 <div class="rank-row">
 <div class="rank-item">
-<div class="rank-badge" style="background:#c47a08;">J</div>
+<div class="rank-badge" style="background:#a8791f;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 23.5L17 16L24.5 23.5" fill="none" stroke="#f6ecd6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.64"></path><path d="M14.5 15.5L19.5 10.5M19.5 15.5L14.5 10.5" fill="none" stroke="#f6ecd6" stroke-linecap="round" stroke-width="1.92"></path><path d="M10.5 26H23.5" fill="none" stroke="#f6ecd6" stroke-linecap="round" stroke-width="1.92"></path></svg></div>
 <span class="rank-name">Jingu</span>
 <span class="rank-count">24</span>
 </div>
 <div class="rank-item">
-<div class="rank-badge" style="background:#6d28d9;">T</div>
+<div class="rank-badge" style="background:#6a4580;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><rect fill="#f6ecd6" height="4.2" rx="2.1" width="19" x="7.5" y="13"></rect><path d="M11 17.5L12.6 20L11 22.5L12.6 25M17 17.5L18.6 20L17 22.5L18.6 25M23 17.5L24.6 20L23 22.5L24.6 25" fill="none" stroke="#f6ecd6" stroke-linejoin="round" stroke-width="1.56"></path></svg></div>
 <span class="rank-name">Taisha</span>
 <span class="rank-count">24</span>
 </div>
 <div class="rank-item">
-<div class="rank-badge" style="background:#c41810;">I</div>
+<div class="rank-badge" style="background:#b23a24;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><rect fill="#f6ecd6" height="3.2" rx="1.6" width="17" x="8.5" y="17.6"></rect></svg></div>
 <span class="rank-name">Ichinomiya</span>
 <span class="rank-count">92</span>
 </div>
 <div class="rank-item">
-<div class="rank-badge" style="background:#1540c0;">N2</div>
+<div class="rank-badge" style="background:#2c5585;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><rect fill="#f6ecd6" height="3" rx="1.5" width="14" x="10" y="14.2"></rect><rect fill="#f6ecd6" height="3" rx="1.5" width="17" x="8.5" y="21"></rect></svg></div>
 <span class="rank-name">Ninomiya</span>
-<span class="rank-count">35</span>
+<span class="rank-count">30</span>
 </div>
 <div class="rank-item">
-<div class="rank-badge" style="background:#047857;">N</div>
+<div class="rank-badge" style="background:#2c6249;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><path d="M11 25C11 17.5 16 12.5 23.5 12C23.5 19.5 18.5 24.5 11 25Z" fill="#f6ecd6"></path><path d="M12.5 23.5L21 14.5" fill="none" stroke="#2c6249" stroke-width="1.2"></path></svg></div>
 <span class="rank-name">Notable</span>
-<span class="rank-count">33</span>
+<span class="rank-count">34</span>
 </div>
 </div>
 <p class="diagram-note">Same icons and colors as the map markers and the “?” comparison window.</p>
