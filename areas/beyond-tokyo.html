@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shrines beyond Tokyo — Chiyo no Mori</title>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/areas/tokyo.html — 実装キュー依頼T-1（2026-09-13）：
+     1層（この街の三社）から、L1（歩いて回れる）／L2（電車で一時間）／
+     L3（半日かけて）の3層構成に作り直した。鎌倉.html・大宮.htmlはここに
+     吸収され削除済み（依頼S-2）。全19社に詳細ページへの直接リンクを張る
+     （依頼T-1「全19社に『詳しく見る』を出す」）。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .area-hero {
+    position: relative; height: 60vh; min-height: 380px; display: flex; align-items: flex-end;
+    background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
+                repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
+  }
+  .area-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.05) 55%); }
+  .area-hero-content { position: relative; padding: 0 6vw 40px; width: 100%; }
+  .area-label { display: block; font-size: 12px; letter-spacing: 0.24em; color: var(--gold); opacity: 0.75; margin-bottom: 8px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+  .area-name {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(34px, 6.5vw, 60px); color: var(--gold); margin: 0 0 14px; letter-spacing: 0.05em;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  }
+  .area-tagline { max-width: 600px; font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.95; margin: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.85); }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .layer-section { margin-top: 64px; }
+  .layer-ring { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .layer-num {
+    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.85; margin: 0; }
+  .section-lead { font-size: 13px; line-height: 2; color: var(--tan-text); opacity: 0.72; margin: 8px 0 26px; }
+
+  .shrine-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .shrine-card {
+    display: flex; flex-direction: column; text-decoration: none;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
+    overflow: hidden; transition: background var(--dur-base) ease, border-color var(--dur-base) ease;
+  }
+  .shrine-card:hover { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); }
+  .shrine-card-icon {
+    position: relative; aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(135deg, #241a0f 0 12px, #211809 12px 24px);
+    overflow: hidden;
+  }
+  /* 本人指摘（2026-09-13）：東京エリアは全社が詳細ページ（写真つき）を
+     持つため、サムネにも実写真を使う。写真の無い2社（銭洗弁財天宇賀福神社・
+     荏柄天神社）だけ、従来のタグ1文字バッジ表示を残す（依頼AP-3で武蔵一宮
+     氷川神社に写真が入ったため、2026-09-27にこのリストから外した） */
+  .shrine-card-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .shrine-card-icon-badge {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 22px; font-weight: bold; color: #fff;
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.15) inset;
+  }
+  .shrine-card-icon-badge.has-photo {
+    position: absolute; bottom: 8px; left: 8px;
+    width: 34px; height: 34px; font-size: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.6), 0 0 0 1.5px rgba(255,255,255,0.3) inset;
+  }
+  .shrine-card-body { padding: 16px 18px 20px; }
+  .shrine-card-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
+  .shrine-card-name { display: block; font-size: 16px; color: var(--tan-text); margin: 8px 0 2px; }
+  .shrine-card-en { display: block; font-size: 10.5px; letter-spacing: 0.05em; color: var(--tan-text); opacity: 0.5; }
+  .shrine-card-why { font-size: 12px; line-height: 1.85; color: var(--tan-text); opacity: 0.72; margin: 10px 0 0; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 76px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  .footer-support a:hover { color: var(--gold); }
+  .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
+
+  @media (max-width: 600px) {
+    .area-hero { height: 54vh; }
+    .layer-section { margin-top: 48px; }
+  }
+
+  /* 依頼BB（2026-10-10）：Lvごとに横へ流れる3段のカード。参考＝Anime Spot 88（カードの形が
+     揃っているので、流れていても読める）。段の見出しは地図のチップと同じ言葉・同じ線の種類
+     （Lv1実線／Lv2破線／Lv3点線）。今は自動で流さず、手で横にスクロール（スナップ＋PCは矢印）。
+     自動にする日のために、1段ずつ独立した.lv-scrollerにしてある（data-autoscroll／data-speed／data-dir）。
+     依頼BD-1（2026-10-11）：列が本文の左端から画面の右端まではみ出して左右非対称（右に寄って見えた）
+     のを直した。列は「画面の中央に置いた枠（最大1200px）」の中で左右対称にし、両端を同じ幅で消す。
+     矢印は列の左右（写真の高さの中央）に1つずつ。スマホはカードが画面の中央で止まる。
+     並びは「Lv1の列→Lv1の説明→Lv2の列→…」 */
+  .lv-rows { --lv-gap: 14px; --lv-card-w: 208px; --lv-edge: 60px; margin-top: 56px; }
+  .lv-row { margin-bottom: 64px; }
+  .lv-frame { position: relative; max-width: 1200px; margin: 0 auto; --lv-arrow-top: 172px; }
+  #lv3 .lv-frame { --lv-arrow-top: 200px; }
+  .lv-row-head { display: flex; align-items: baseline; gap: 16px; padding: 0 var(--lv-edge) 14px; }
+  .lv-row-title {
+    margin: 0; display: flex; align-items: center; gap: 12px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.1em; color: var(--gold);
+  }
+  .lv-line { display: inline-block; width: 38px; height: 0; border-top: var(--gold) solid; flex-shrink: 0; align-self: center; }
+  .lv-line-1 { border-top-width: 3px; border-top-style: solid; }
+  .lv-line-2 { border-top-width: 2px; border-top-style: dashed; }
+  .lv-line-3 { border-top-width: 2px; border-top-style: dotted; }
+  .lv-row-count { font-size: 12px; letter-spacing: 0.06em; color: var(--tan-text); opacity: 0.7; }
+  .lv-nav-btn {
+    position: absolute; top: var(--lv-arrow-top); transform: translateY(-50%); z-index: 2;
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-4);
+    background: rgba(26,18,9,0.82); color: var(--gold); font-size: 22px; line-height: 1; cursor: pointer;
+    font-family: inherit; padding: 0 0 3px;
+    transition: border-color var(--dur-base) ease, background var(--dur-base) ease, opacity var(--dur-base) ease;
+  }
+  .lv-prev { left: 12px; }
+  .lv-next { right: 12px; }
+  .lv-nav-btn:hover:not(:disabled) { border-color: var(--gold); background: rgba(var(--gold-glow-rgb),0.2); }
+  .lv-nav-btn:disabled { opacity: 0.25; cursor: default; }
+  .lv-nav-btn:focus-visible, .lv-scroller:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  .lv-scroller {
+    overflow-x: auto; overflow-y: hidden; padding: 4px var(--lv-edge) 14px;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--lv-edge);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    /* 左右の端を同じ幅でふわっと消す＝「続きがある」ことが両側で分かる（左右対称） */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--lv-edge), #000 calc(100% - var(--lv-edge)), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 var(--lv-edge), #000 calc(100% - var(--lv-edge)), transparent 100%);
+  }
+  .lv-scroller::-webkit-scrollbar { display: none; }
+  /* 自動で流す日の設定（後日）：data-autoscroll="on"の段だけ流れる。スナップは自動と喧嘩するので外す */
+  .lv-scroller[data-autoscroll="on"] { scroll-snap-type: none; }
+  .lv-track, .lv-group-cards { display: flex; gap: var(--lv-gap); list-style: none; margin: 0; padding: 0; width: max-content; }
+  .lv-track-groups { gap: 22px; }
+  .lv-group { display: flex; flex-direction: column; gap: 10px; padding-left: 22px; border-left: 1px solid var(--border-4); }
+  .lv-group:first-child { padding-left: 0; border-left: none; }
+  .lv-group-name { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-muted); }
+  .lv-card-item { display: flex; scroll-snap-align: start; }
+
+  .lv-card {
+    display: flex; flex-direction: column; width: var(--lv-card-w); text-decoration: none; color: inherit;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px; overflow: hidden;
+    transition: background var(--dur-base) ease, border-color var(--dur-base) ease;
+  }
+  .lv-card:hover, .lv-card:focus-visible { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); outline: none; }
+  .lv-card-photo { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; background: #241a0f; }
+  .lv-card-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .lv-card-photo.is-ill {
+    background: repeating-linear-gradient(135deg, #241a0f 0 12px, #211809 12px 24px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lv-card-photo .lv-ill { position: static; width: 46%; height: auto; opacity: 0.26; object-fit: contain; }
+  /* 依頼BN（2026-10-11）：カードの格式の印。文字（神・名…）をやめ、地図のマーカーと同じ印（文字の無い絵）に。
+     色は伝統色（地の色）、縁は金の細線。言語で変わらない。文字は見えない形で残す（スクリーンリーダー用） */
+  .lv-rank {
+    position: absolute; top: 8px; left: 8px; width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; color: #f6ecd6;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.6), 0 0 0 1px rgba(236,208,140,0.9) inset;
+  }
+  .lv-rank svg { display: block; width: 18px; height: 18px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .lv-card-body { display: flex; flex-direction: column; flex: 1; padding: 12px 14px 15px; }
+  .lv-card-name { font-size: 15px; line-height: 1.4; color: var(--tan-text); min-height: 2.8em; }
+  .lv-card-sub { font-size: 10.5px; letter-spacing: 0.05em; color: var(--tan-text); opacity: 0.5; margin-top: 2px; }
+  .lv-card-place { font-size: 11px; color: var(--gold-muted); margin-top: 8px; }
+  .lv-card-axis { font-size: 12px; line-height: 1.6; color: var(--tan-text); opacity: 0.8; margin-top: 4px; min-height: 3.2em; }
+
+  /* 各Lvの説明文（検索に効く本文）は、そのLvの列のすぐ下。見出しは列の見出しと重複するので小さく */
+  .lv-desc .layer-section { margin-top: 22px; }
+  .lv-desc .section-title { font-size: 11px; letter-spacing: 0.14em; font-weight: normal; opacity: 0.6; margin: 0 0 8px; }
+  .lv-desc .section-lead { margin: 0 0 14px; }
+  .shrine-notes { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .shrine-notes li { font-size: 12.5px; line-height: 1.85; color: var(--tan-text); opacity: 0.8; }
+  .shrine-notes a { color: var(--gold); text-decoration: none; white-space: nowrap; }
+  .shrine-notes a:hover { text-decoration: underline; }
+  .shrine-notes .note::before { content: "—"; margin: 0 0.6em; opacity: 0.5; }
+  /* 依頼BD後の本人指摘（2026-10-11）：社名の長さがバラバラで、その後の説明文の始まる位置が揃わず読みにくい。
+     → 「社名の列」と「説明の列」の表（シート）にする。枠線は付けない。社名の列の幅は、そのLvの
+     いちばん長い社名に合う（subgrid）。説明は必ず同じ位置から始まる。subgridが使えない古いブラウザは、
+     上の「社名 — 説明」の流れる文のまま（読めなくはならない） */
+  @supports (grid-template-columns: subgrid) {
+    .shrine-notes { grid-template-columns: max-content 1fr; column-gap: 24px; row-gap: 10px; }
+    .shrine-notes li { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: baseline; }
+    .shrine-notes .note::before { content: none; }
+  }
+  .map-cta { margin: 8px 0 0; text-align: center; font-size: 14px; }
+  .map-cta a { text-decoration: none; padding: 12px 24px; border: 1px solid var(--gold); border-radius: 28px; display: inline-block; }
+  .map-cta a:hover { background: rgba(var(--gold-glow-rgb),0.16); }
+
+  @media (max-width: 600px) {
+    /* スマホ＝カードは画面の約75%で、画面の中央で止まる（左右に隣のカードが少しずつ見える） */
+    .lv-rows { --lv-card-w: min(75vw, 300px); --lv-edge: 16px; margin-top: 40px; }
+    .lv-row { margin-bottom: 48px; }
+    .lv-row-head { flex-wrap: wrap; gap: 6px 14px; }
+    .lv-scroller {
+      padding-inline: calc((100% - var(--lv-card-w)) / 2);
+      scroll-padding-inline: 0;
+      -webkit-mask-image: none; mask-image: none;
+    }
+    .lv-card-item { scroll-snap-align: center; }
+    .lv-nav-btn { display: none; }
+    .lv-group { padding-left: 14px; }
+    .lv-track-groups { gap: 14px; }
+    /* 説明の表は、幅が足りないので1列（社名の下に説明） */
+    @supports (grid-template-columns: subgrid) {
+      .shrine-notes { grid-template-columns: 1fr; row-gap: 12px; }
+      .shrine-notes li { grid-template-columns: 1fr; row-gap: 1px; }
+    }
+    .shrine-notes a { white-space: normal; }
+  }
+  @media (hover: none) { .lv-nav-btn { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .lv-scroller { scroll-behavior: auto; } }
+  /* 依頼BQ：横に動かせない段（カードが少ない段）は、矢印を隠してカードを中央に寄せる */
+  .lv-frame.no-scroll .lv-nav-btn { display: none; }
+  .lv-frame.no-scroll .lv-track { margin-left: auto; margin-right: auto; }
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/areas/beyond-tokyo.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/areas/beyond-tokyo.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/areas/beyond-tokyo.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/areas/beyond-tokyo.html" hreflang="x-default" rel="alternate"/><meta content="Shrines visited beyond Tokyo. They will move to their own regional pages in time." name="description"/><meta content="website" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="Shrines beyond Tokyo — Chiyo no Mori" property="og:title"/><meta content="Shrines visited beyond Tokyo. They will move to their own regional pages in time." property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/areas/beyond-tokyo.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/beyond-tokyo.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="Shrines beyond Tokyo — Chiyo no Mori" property="og:image:alt"/><meta content="en_US" property="og:locale"/><meta content="ja_JP" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Shrines beyond Tokyo — Chiyo no Mori" name="twitter:title"/><meta content="Shrines visited beyond Tokyo. They will move to their own regional pages in time." name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/beyond-tokyo.jpg" name="twitter:image"/><style>
+  /* 依頼BP-2：共有のボタン（外部の部品は使わない） */
+  .share-row { max-width: 860px; margin: 56px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .share-label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; margin-right: 6px; }
+  .share-btn { font: inherit; font-size: 12px; letter-spacing: 0.04em; padding: 8px 16px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: transparent; color: var(--tan-text); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+  .share-btn:hover, .share-btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .share-btn[hidden] { display: none; }
+</style></head>
+<body>
+<a class="back-link" href="../map.html#mock-app">← Back to map</a>
+<div class="lang-toggle"><a class="lang-btn active" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/areas/beyond-tokyo.html">EN</a><a class="lang-btn" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/areas/beyond-tokyo.html">日本語</a></div>
+<div class="area-hero">
+<div class="area-hero-overlay"></div>
+<div class="area-hero-content">
+<span class="area-label">Beyond the capital</span>
+<h1 class="area-name">Beyond Tokyo</h1>
+<p class="area-tagline">Shrines visited beyond Tokyo. They will move to their own regional pages in time.</p>
+</div>
+</div>
+<div class="lv-rows">
+<section class="lv-row" id="ise">
+<div class="lv-frame">
+<header class="lv-row-head">
+<h2 class="lv-row-title"><span>Ise</span></h2>
+<span class="lv-row-count">2 shrines</span>
+</header>
+<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
+<div aria-label="Ise" class="lv-scroller" data-autoscroll="off" data-dir="1" data-speed="20" role="region" tabindex="0">
+<ul class="lv-track"><li class="lv-card-item"><a class="lv-card" href="../shrines/ise-jingu.html"><span class="lv-card-photo"><img alt="Ise Jingu" height="400" loading="lazy" src="../assets/card-ise-jingu.jpg" width="320"/><span class="lv-rank" style="background:#a8791f;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 23.5L17 16L24.5 23.5" fill="none" stroke="#f6ecd6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.64"></path><path d="M14.5 15.5L19.5 10.5M19.5 15.5L14.5 10.5" fill="none" stroke="#f6ecd6" stroke-linecap="round" stroke-width="1.92"></path><path d="M10.5 26H23.5" fill="none" stroke="#f6ecd6" stroke-linecap="round" stroke-width="1.92"></path></svg><span class="sr-only">Jingu</span></span></span><span class="lv-card-body"><span class="lv-card-name">Ise Jingu</span><span class="lv-card-sub">伊勢神宮</span><span class="lv-card-place">Ise, Mie</span><span class="lv-card-axis">Jingu · the Inner and Outer Shrines</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/sarutahiko-jinja.html"><span class="lv-card-photo"><img alt="Sarutahiko Jinja" height="400" loading="lazy" src="../assets/card-sarutahiko-jinja.jpg" width="320"/><span class="lv-rank" style="background:#2c6249;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><path d="M11 25C11 17.5 16 12.5 23.5 12C23.5 19.5 18.5 24.5 11 25Z" fill="#f6ecd6"></path><path d="M12.5 23.5L21 14.5" fill="none" stroke="#2c6249" stroke-width="1.2"></path></svg><span class="sr-only">Notable</span></span></span><span class="lv-card-body"><span class="lv-card-name">Sarutahiko Jinja</span><span class="lv-card-sub">猿田彦神社</span><span class="lv-card-place">Ise, Mie</span><span class="lv-card-axis">Notable · the god who opens the way</span></span></a></li></ul>
+</div>
+<button aria-label="Scroll right / 右へ" class="lv-nav-btn lv-next" type="button">›</button>
+</div>
+<div class="content lv-desc">
+<div class="layer-section">
+<p class="section-lead">Ise Jingu, which rebuilds its sanctuary every twenty years, and Sarutahiko Jinja, which enshrines the god who opens the way.</p>
+<ul class="shrine-notes">
+<li><a href="../shrines/ise-jingu.html">Ise Jingu</a><span class="note">The Inner and Outer Shrines. Shikinen Sengu, the rebuilding of the sanctuary every twenty years, has continued since the Asuka period.</span></li>
+<li><a href="../shrines/sarutahiko-jinja.html">Sarutahiko Jinja</a><span class="note">The god who opens the way. The Uji-Doko family, said to be his descendants, have been chief priests for generations. Some visit before starting a business, changing jobs or moving house.</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section class="lv-row" id="hida">
+<div class="lv-frame">
+<header class="lv-row-head">
+<h2 class="lv-row-title"><span>Hida · Takayama</span></h2>
+<span class="lv-row-count">2 shrines</span>
+</header>
+<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
+<div aria-label="Hida · Takayama" class="lv-scroller" data-autoscroll="off" data-dir="-1" data-speed="20" role="region" tabindex="0">
+<ul class="lv-track"><li class="lv-card-item"><a class="lv-card" href="../shrines/minashi-jinja.html"><span class="lv-card-photo"><img alt="Minashi Jinja" height="400" loading="lazy" src="../assets/card-minashi-jinja.jpg" width="320"/><span class="lv-rank" style="background:#b23a24;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><rect fill="#f6ecd6" height="3.2" rx="1.6" width="17" x="8.5" y="17.6"></rect></svg><span class="sr-only">Ichinomiya (1st)</span></span></span><span class="lv-card-body"><span class="lv-card-name">Minashi Jinja</span><span class="lv-card-sub">水無神社</span><span class="lv-card-place">Takayama, Gifu</span><span class="lv-card-axis">Ichinomiya · Hida Province</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/sakurayama-hachimangu.html"><span class="lv-card-photo"><img alt="Sakurayama Hachimangu" height="400" loading="lazy" src="../assets/card-sakurayama-hachimangu.jpg" width="320"/><span class="lv-rank" style="background:#2c6249;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><path d="M11 25C11 17.5 16 12.5 23.5 12C23.5 19.5 18.5 24.5 11 25Z" fill="#f6ecd6"></path><path d="M12.5 23.5L21 14.5" fill="none" stroke="#2c6249" stroke-width="1.2"></path></svg><span class="sr-only">Notable</span></span></span><span class="lv-card-body"><span class="lv-card-name">Sakurayama Hachimangu</span><span class="lv-card-sub">桜山八幡宮</span><span class="lv-card-place">Takayama, Gifu</span><span class="lv-card-axis">Notable · the autumn Takayama Festival</span></span></a></li></ul>
+</div>
+<button aria-label="Scroll right / 右へ" class="lv-nav-btn lv-next" type="button">›</button>
+</div>
+<div class="content lv-desc">
+<div class="layer-section">
+<p class="section-lead">The ichinomiya of Hida Province and the shrine of the autumn Takayama Festival, which divide the town of Takayama between them.</p>
+<ul class="shrine-notes">
+<li><a href="../shrines/minashi-jinja.html">Minashi Jinja</a><span class="note">The ichinomiya of Hida Province. The principal deity is Mitoshi no Okami. The mountain behind, Kuraiyama, is its sacred object.</span></li>
+<li><a href="../shrines/sakurayama-hachimangu.html">Sakurayama Hachimangu</a><span class="note">The guardian shrine of the northern half of Takayama. At the autumn Takayama Festival (the Hachiman Festival), eleven floats are paraded together.</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section class="lv-row" id="fuji">
+<div class="lv-frame">
+<header class="lv-row-head">
+<h2 class="lv-row-title"><span>Mount Fuji</span></h2>
+<span class="lv-row-count">3 shrines</span>
+</header>
+<button aria-label="Scroll left / 左へ" class="lv-nav-btn lv-prev" type="button">‹</button>
+<div aria-label="Mount Fuji" class="lv-scroller" data-autoscroll="off" data-dir="1" data-speed="20" role="region" tabindex="0">
+<ul class="lv-track"><li class="lv-card-item"><a class="lv-card" href="../shrines/fujisan-hongu-sengen-taisha.html"><span class="lv-card-photo"><img alt="Fujisan Hongu Sengen Taisha" height="400" loading="lazy" src="../assets/card-fujisan-hongu-sengen-taisha.jpg" width="320"/><span class="lv-rank" style="background:#6a4580;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><rect fill="#f6ecd6" height="4.2" rx="2.1" width="19" x="7.5" y="13"></rect><path d="M11 17.5L12.6 20L11 22.5L12.6 25M17 17.5L18.6 20L17 22.5L18.6 25M23 17.5L24.6 20L23 22.5L24.6 25" fill="none" stroke="#f6ecd6" stroke-linejoin="round" stroke-width="1.56"></path></svg><span class="sr-only">Taisha</span></span></span><span class="lv-card-body"><span class="lv-card-name">Fujisan Hongu Sengen Taisha</span><span class="lv-card-sub">富士山本宮浅間大社</span><span class="lv-card-place">Fujinomiya, Shizuoka</span><span class="lv-card-axis">Taisha · head of the Sengen shrines</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/yamamiya-sengen-jinja.html"><span class="lv-card-photo"><img alt="Yamamiya Sengen Jinja" height="400" loading="lazy" src="../assets/card-yamamiya-sengen-jinja.jpg" width="320"/><span class="lv-rank" style="background:#2c6249;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><path d="M11 25C11 17.5 16 12.5 23.5 12C23.5 19.5 18.5 24.5 11 25Z" fill="#f6ecd6"></path><path d="M12.5 23.5L21 14.5" fill="none" stroke="#2c6249" stroke-width="1.2"></path></svg><span class="sr-only">Notable</span></span></span><span class="lv-card-body"><span class="lv-card-name">Yamamiya Sengen Jinja</span><span class="lv-card-sub">山宮浅間神社</span><span class="lv-card-place">Fujinomiya, Shizuoka</span><span class="lv-card-axis">Notable · the original shrine</span></span></a></li><li class="lv-card-item"><a class="lv-card" href="../shrines/kitaguchi-hongu-fuji-sengen-jinja.html"><span class="lv-card-photo"><img alt="Kitaguchi Hongu Fuji Sengen Jinja" height="400" loading="lazy" src="../assets/card-kitaguchi-hongu-fuji-sengen-jinja.jpg" width="320"/><span class="lv-rank" style="background:#2c6249;"><svg aria-hidden="true" focusable="false" viewbox="5.5 6.5 23 23" xmlns="http://www.w3.org/2000/svg"><path d="M11 25C11 17.5 16 12.5 23.5 12C23.5 19.5 18.5 24.5 11 25Z" fill="#f6ecd6"></path><path d="M12.5 23.5L21 14.5" fill="none" stroke="#2c6249" stroke-width="1.2"></path></svg><span class="sr-only">Notable</span></span></span><span class="lv-card-body"><span class="lv-card-name">Kitaguchi Hongu Fuji Sengen Jinja</span><span class="lv-card-sub">北口本宮冨士浅間神社</span><span class="lv-card-place">Fujiyoshida, Yamanashi</span><span class="lv-card-axis">Notable · the northern climbing route</span></span></a></li></ul>
+</div>
+<button aria-label="Scroll right / 右へ" class="lv-nav-btn lv-next" type="button">›</button>
+</div>
+<div class="content lv-desc">
+<div class="layer-section">
+<p class="section-lead">A shrine that calms the mountain, a shrine that worships it from afar, and a shrine for climbing it: three shrines around Mount Fuji.</p>
+<ul class="shrine-notes">
+<li><a href="../shrines/fujisan-hongu-sengen-taisha.html">Fujisan Hongu Sengen Taisha</a><span class="note">The head shrine of the Sengen shrines, of which more than 1,300 are said to exist across Japan. The main sanctuary, in the two-storey Sengen-zukuri style, was built under Tokugawa Ieyasu.</span></li>
+<li><a href="../shrines/yamamiya-sengen-jinja.html">Yamamiya Sengen Jinja</a><span class="note">Regarded as the original shrine of Fujisan Hongu Sengen Taisha. It has no main hall; Mount Fuji itself is worshipped from the worship site.</span></li>
+<li><a href="../shrines/kitaguchi-hongu-fuji-sengen-jinja.html">Kitaguchi Hongu Fuji Sengen Jinja</a><span class="note">On the northern side of Mount Fuji, at the start of the Yoshida climbing route. It grew up as a shrine for climbing the mountain.</span></li>
+</ul>
+</div>
+</div>
+</section>
+</div>
+<div class="share-row" data-share=""><span class="share-label">Share this page</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">Share</button><button class="share-btn" data-done="Copied" data-goatcounter-click="share" data-share-copy="" type="button">Copy link</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fareas%2Fbeyond-tokyo.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Fbeyond-tokyo.jpg&amp;description=Shrines%20beyond%20Tokyo%20%E2%80%94%20Chiyo%20no%20Mori" rel="noopener noreferrer" target="_blank">Save to Pinterest</a></div><div class="content">
+<p class="map-cta"><a href="../map.html#mock-app">See all of these on the map →</a></p>
+</div>
+<div class="page-footer">
+<div>Chiyo no Mori — Shrines of Japan</div>
+<div class="footer-support">
+<span>Chiyo no Mori is independent and ad-free. If this guide helped you plan your visit,</span>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>leave a small tip ↗</span></a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">No cookies. Anonymous visit counts only. <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">Privacy</a></div></div>
+<script>
+(function(){
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+  } catch(err){}
+})();
+
+// 依頼BB（2026-10-10）：3段の横スクロール。手で動かす（スナップ／PCは矢印／キーボードの左右）。
+// 自動で流す日のための作り＝段ごとに独立。data-autoscroll="on"にした段だけ流れる
+// （data-speed＝px/秒、data-dir＝1で右へ・-1で左へ。3段を同じ速さ・向きにすると目が疲れるので、
+// 自動にする時は段ごとに変える）。prefers-reduced-motionでは何があっても自動にしない
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.lv-row').forEach(function(row){
+    var sc = row.querySelector('.lv-scroller');
+    var prev = row.querySelector('.lv-prev'), next = row.querySelector('.lv-next');
+    if (!sc) return;
+    function step(){
+      var c = sc.querySelector('.lv-card');
+      return c ? c.getBoundingClientRect().width + 14 : 220;
+    }
+    function update(){
+      var max = sc.scrollWidth - sc.clientWidth, x = sc.scrollLeft;
+      row.classList.toggle('can-left', x > 2);
+      row.classList.toggle('can-right', x < max - 2);
+      if (prev) prev.disabled = x <= 2;
+      if (next) next.disabled = x >= max - 2;
+    }
+    function go(dir, page){
+      var d = page ? Math.max(step(), sc.clientWidth - step()) : step();
+      sc.scrollBy({ left: dir * d, behavior: reduced ? 'auto' : 'smooth' });
+    }
+    if (prev) prev.addEventListener('click', function(){ go(-1, true); });
+    if (next) next.addEventListener('click', function(){ go(1, true); });
+    sc.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(1, false); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1, false); }
+    });
+    sc.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+
+    // 自動で流す（既定はoff）
+    var running = false, paused = false, last = null;
+    function tick(t){
+      if (sc.dataset.autoscroll !== 'on' || reduced) { running = false; last = null; return; }
+      if (last !== null && !paused) {
+        var dir = Number(sc.dataset.dir) || 1, speed = Number(sc.dataset.speed) || 20;
+        var max = sc.scrollWidth - sc.clientWidth;
+        var x = sc.scrollLeft + dir * speed * (t - last) / 1000;
+        if (x >= max) { x = max; sc.dataset.dir = '-1'; } else if (x <= 0) { x = 0; sc.dataset.dir = '1'; }
+        sc.scrollLeft = x;
+      }
+      last = t;
+      requestAnimationFrame(tick);
+    }
+    function maybeStart(){ if (!running && !reduced && sc.dataset.autoscroll === 'on') { running = true; last = null; requestAnimationFrame(tick); } }
+    ['mouseenter', 'focusin', 'touchstart'].forEach(function(ev){ sc.addEventListener(ev, function(){ paused = true; }, { passive: true }); });
+    ['mouseleave', 'focusout', 'touchend'].forEach(function(ev){ sc.addEventListener(ev, function(){ paused = false; }, { passive: true }); });
+    new MutationObserver(maybeStart).observe(sc, { attributes: true, attributeFilter: ['data-autoscroll'] });
+    maybeStart();
+  });
+})();
+</script>
+<script>
+(function(){
+  function mark(){
+    document.querySelectorAll('.lv-frame').forEach(function(f){
+      var sc = f.querySelector('.lv-scroller'); if (!sc) return;
+      f.classList.toggle('no-scroll', sc.scrollWidth <= sc.clientWidth + 2);
+    });
+  }
+  mark(); window.addEventListener('resize', mark); window.addEventListener('load', mark);
+})();
+</script>
+<script async="" data-goatcounter="https://chiyonomori.goatcounter.com/count" src="//gc.zgo.at/count.js"></script><script>
+(function(){
+  var root = document.querySelector('[data-share]'); if (!root) return;
+  var canon = document.querySelector('link[rel="canonical"]');
+  var url = canon ? canon.href : location.href, title = document.title;
+  var nat = root.querySelector('[data-share-native]');
+  if (nat && navigator.share) {
+    nat.hidden = false;
+    nat.addEventListener('click', function(){ navigator.share({ title: title, url: url }).catch(function(){}); });
+  }
+  var cp = root.querySelector('[data-share-copy]');
+  if (cp) cp.addEventListener('click', function(){
+    var label = cp.textContent, done = cp.getAttribute('data-done');
+    function ok(){ cp.textContent = done; setTimeout(function(){ cp.textContent = label; }, 1500); }
+    function fallback(){
+      var t = document.createElement('textarea'); t.value = url; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t); ok();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
+  });
+})();
+</script>
+</body>
+</html>

@@ -5,19 +5,19 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>神社の地図｜千代の杜</title>
-<meta content="A map of more than a hundred shrines, with Tokyo covered in depth." name="description"/>
+<meta content="100社を超える神社の地図。東京は特に詳しく。" name="description"/>
 <meta content="website" property="og:type"/>
 <meta content="Chiyo no Mori" property="og:site_name"/>
 <meta content="神社の地図｜千代の杜" property="og:title"/>
-<meta content="A map of more than a hundred shrines, with Tokyo covered in depth." property="og:description"/>
+<meta content="100社を超える神社の地図。東京は特に詳しく。" property="og:description"/>
 <meta content="https://nocta-works.github.io/chiyonomori/ja/map.html" property="og:url"/>
 <meta content="https://nocta-works.github.io/chiyonomori/assets/og-image.jpg" property="og:image"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
-<meta content="en_US" property="og:locale"/>
+<meta content="ja_JP" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="神社の地図｜千代の杜" name="twitter:title"/>
-<meta content="A map of more than a hundred shrines, with Tokyo covered in depth." name="twitter:description"/>
+<meta content="100社を超える神社の地図。東京は特に詳しく。" name="twitter:description"/>
 <meta content="https://nocta-works.github.io/chiyonomori/assets/og-image.jpg" name="twitter:image"/>
 <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <!-- 依頼AV（2026-10-06）：Leaflet 1.9.4を外部（unpkg）から読まず自前で配る。unpkg・jsDelivr・cdnjsで同一内容を確認済み（js sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo= ／css sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=）。更新する時は同じ照合をする -->
@@ -811,7 +811,7 @@
   .popup-link.wiki:hover { background: rgba(150,150,165,0.28); color: var(--color-wiki-hover); }
   .mock-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 </style>
-<link href="https://nocta-works.github.io/chiyonomori/ja/map.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/map.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/map.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/map.html" hreflang="x-default" rel="alternate"/></head>
+<link href="https://nocta-works.github.io/chiyonomori/ja/map.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/map.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/map.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/map.html" hreflang="x-default" rel="alternate"/><meta content="en_US" property="og:locale:alternate"/></head>
 <body>
 <!-- 依頼Z-2②：本番index.htmlと同じホバーカーソル演出の受け皿（PC限定でJS側が有効化） -->
 <div id="hover-cursor-tag"></div>
@@ -918,12 +918,12 @@
     '伊勢神宮（内宮）': 'shrines/ise-jingu.html',
     '伊勢神宮（外宮）': 'shrines/ise-jingu.html',
     '明治神宮': 'shrines/meiji-jingu.html',
-    '富士山本宮浅間大社': 'shrine-pages/富士山本宮浅間大社.html',
-    '山宮浅間神社': 'shrine-pages/山宮浅間神社.html',
-    '北口本宮冨士浅間神社': 'shrine-pages/北口本宮冨士浅間神社.html',
-    '水無神社': 'shrine-pages/水無神社.html',
-    '桜山八幡宮': 'shrine-pages/桜山八幡宮.html',
-    '猿田彦神社': 'shrine-pages/猿田彦神社.html',
+    '富士山本宮浅間大社': 'shrines/fujisan-hongu-sengen-taisha.html',
+    '山宮浅間神社': 'shrines/yamamiya-sengen-jinja.html',
+    '北口本宮冨士浅間神社': 'shrines/kitaguchi-hongu-fuji-sengen-jinja.html',
+    '水無神社': 'shrines/minashi-jinja.html',
+    '桜山八幡宮': 'shrines/sakurayama-hachimangu.html',
+    '猿田彦神社': 'shrines/sarutahiko-jinja.html',
     // 実行順D（依頼T・2026-09-13）：東京エリア18社を追加
     '神田神社（神田明神）': 'shrines/kanda-myojin.html',
     '日枝神社': 'shrines/hie-jinja.html',
@@ -1192,11 +1192,14 @@
     { name:{ja:'東京',en:'Tokyo'}, areaLabel:{ja:'東京エリア',en:'Tokyo Area'}, ctaPhrase:{ja:'東京の神社　厳選紹介',en:'Tokyo — Curated Shrines'}, file:'areas/tokyo.html' },
     { name:{ja:'大阪',en:'Osaka'}, areaLabel:{ja:'大阪エリア',en:'Osaka Area'}, ctaPhrase:{ja:'大阪の神社　厳選紹介',en:'Osaka — Curated Shrines'}, file:'area-pages/大阪.html' },
     { name:{ja:'京都',en:'Kyoto'}, areaLabel:{ja:'京都エリア',en:'Kyoto Area'}, ctaPhrase:{ja:'京都の神社　厳選紹介',en:'Kyoto — Curated Shrines'}, file:'area-pages/京都.html' },
+    // 依頼BQ（2026-10-13）：「東京の外」の枠。京都・大阪などのエリアを作るまでの繋ぎ。Lvのチップも地図上の囲いも無い
+    // （AREA_SHRINESにも入れない＝行と、ページへのリンクだけが出る）
+    { name:{ja:'東京の外',en:'Beyond Tokyo'}, areaLabel:{ja:'東京の外',en:'Beyond Tokyo'}, ctaPhrase:{ja:'東京の外の神社　紹介',en:'Beyond Tokyo — Shrines'}, file:'areas/beyond-tokyo.html' },
   ];
   // 依頼AH-5（2026-09-20）：今はエリアが東京しかないので、ドロップダウンではなく
   // 単独タグとして出す。AREA_PAGES自体は消さない（他エリアが戻った時にそのまま
   // 使うため）——ここに増やすだけで自動的にドロップダウン表示へ戻る作りにする
-  var VISIBLE_AREA_FILES = ['areas/tokyo.html'];
+  var VISIBLE_AREA_FILES = ['areas/tokyo.html', 'areas/beyond-tokyo.html'];
   // 実行順F（依頼P-2＋R-4・2026-09-13）：エリアを地図上で囲うための、エリア→
   // 所属社リスト。⚠️依頼R-5の教訓＝名前だけでは同名他県の社と衝突する
   // （日枝神社が富山を返した実例）ため、必ず「県|名前」で持ち、marker側の

@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://nocta-works.github.io/chiyonomori/areas/beyond-tokyo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -181,6 +186,36 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/sarutahiko-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/minashi-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/sakurayama-hachimangu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/fujisan-hongu-sengen-taisha.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/yamamiya-sengen-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/kitaguchi-hongu-fuji-sengen-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -192,6 +227,11 @@
   </url>
   <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/areas/tokyo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/areas/beyond-tokyo.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -357,6 +397,36 @@
   </url>
   <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/izumo-sagami.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/sarutahiko-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/minashi-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/sakurayama-hachimangu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/fujisan-hongu-sengen-taisha.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/yamamiya-sengen-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/kitaguchi-hongu-fuji-sengen-jinja.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
