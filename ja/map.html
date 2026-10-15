@@ -781,9 +781,10 @@
   .bm-pref { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(221,208,160,0.62); }
   .bm-zoom-hi .bm-pref { font-size: 12.5px; color: rgba(221,208,160,0.5); }
   .bm-town { font-size: 11px; letter-spacing: 0.04em; color: rgba(236,224,186,0.82); }
-  .bm-air { font-size: 10.5px; letter-spacing: 0.04em; color: rgba(160,196,226,0.92); }
+  .bm-air { font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; color: rgba(243,234,210,0.97); }   /* 依頼BS2：青系は使わない・大きく */
   .bm-sta { font-size: 9.5px; letter-spacing: 0.02em; color: rgba(236,224,186,0.8); }
-  .bm-air-mark { position: absolute; left: 0; top: 0; width: 15px; height: 15px; transform: translate(-50%, -50%); pointer-events: none; filter: drop-shadow(0 0 2px #0d0a07); }
+  .bm-air-mark { position: absolute; left: 0; top: 0; width: 28px; height: 28px; transform: translate(-50%, -50%); pointer-events: none; border-radius: 50%; background: #efe4c8; border: 1.5px solid #2a2012; box-shadow: 0 1px 5px rgba(0,0,0,0.65); display: flex; align-items: center; justify-content: center; }
+  .bm-air-mark svg { width: 17px; height: 17px; display: block; }
   .bm-switch { position: relative; font-family: 'Helvetica Neue', Arial, sans-serif; }
   .leaflet-control.bm-switch { margin: 10px 10px 0 0; }
   .bm-switch-btn {
@@ -1388,7 +1389,7 @@
     if (!entry || !map) return;
     if (entry.shape.type === 'rect') {
       var padding = LEVEL_PADDING[level] || [40, 40];
-      map.flyToBounds(entry.shape.bounds, { padding: padding, duration:0.6 });
+      map.flyToBounds(entry.shape.bounds, flyCap({ padding: padding, duration:0.6 }));
     } else {
       map.flyTo(entry.shape.center, Math.max(map.getZoom(), 9), { duration:0.6 });
     }
@@ -1813,7 +1814,7 @@
         layer.on('click', function(e){
           L.DomEvent.stopPropagation(e);
           if (shape.type === 'rect') {
-            map.flyToBounds(shape.bounds, { padding:[40,40], duration:0.6 });
+            map.flyToBounds(shape.bounds, flyCap({ padding:[40,40], duration:0.6 }));
           } else {
             map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration:0.6 });
           }
@@ -1828,7 +1829,7 @@
       var overallShape = computeAreaShape(allIdents);
       if (overallShape) {
         if (overallShape.type === 'rect') {
-          map.flyToBounds(overallShape.bounds, { padding:[40,40], duration:0.8 });
+          map.flyToBounds(overallShape.bounds, flyCap({ padding:[40,40], duration:0.8 }));
         } else {
           map.flyTo(overallShape.center, Math.max(map.getZoom(), 9), { duration:0.8 });
         }
@@ -1845,7 +1846,7 @@
       layer.on('click', function(e){ L.DomEvent.stopPropagation(e); location.href = goUrl; });
       dimOutOfArea(def.shrines);
       if (shape.type === 'rect') {
-        map.flyToBounds(shape.bounds, { padding:[40,40], duration:0.8 });
+        map.flyToBounds(shape.bounds, flyCap({ padding:[40,40], duration:0.8 }));
       } else {
         map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration:0.8 });
       }
@@ -1884,7 +1885,7 @@
     var shape = computeAreaShape(idents);
     if (!shape) return;
     if (shape.type === 'rect') {
-      map.flyToBounds(shape.bounds, { padding:[40,40], duration: duration });
+      map.flyToBounds(shape.bounds, flyCap({ padding:[40,40], duration: duration }));
     } else {
       map.flyTo(shape.center, Math.max(map.getZoom(), 9), { duration: duration });
     }
@@ -2136,8 +2137,11 @@
   // Detailed＝従来の地理院タイル。最初はSimple（選んだ地図は覚えない）。
   // ⚠️地図の上の文字とボタンの名前は、どの言語のページでも英語のまま（本人の方針）。
   // 出典＝国土交通省 国土数値情報（行政区域・鉄道・高速道路）を加工。行政区域はSmartNews公開の簡素化版（N03-2021）。
+  // 依頼BS2（2026-10-16）：エリア（東京のLv1など）へ飛ぶ時、SimpleとAccessの寄れる上限を超えないようにする
+  // （超えるとDetailedへ自動で切り替わってしまう。Lv1もSimpleのまま見せたい＝本人）。initBasemaps()の後に差し替わる
+  var flyCap = function(o){ return o; };
   function initBasemaps(map, detailedTiles) {
-    var BASE_MAX_ZOOM = 11; // Simple／Accessで寄れる上限。簡素化した海岸線は、これより寄ると神社が海に落ちて見える→超えたらDetailedへ自動で切り替える
+    var BASE_MAX_ZOOM = 14; // Simple／Accessで寄れる上限（BS2でBSの11から14へ。東京のLv1＝ズーム13もSimpleで見せるため）。これを超えて寄ると、Detailedへ自動で切り替える
     var TOWN_MIN_ZOOM = 8;  // 町名を出し始める寄り具合
     var container = map.getContainer();
     var mode = null, token = 0;
@@ -2175,24 +2179,36 @@
         var land = L.geoJSON({ type: 'Feature', geometry: d.land }, { renderer: rFill, interactive: false,
           style: { fillColor: '#241b11', fillOpacity: 1, color: '#8a7048', weight: 0.9, opacity: 0.8 } });
         var borders = L.polyline(d.borders.map(function(l){ return l.map(ll); }), { renderer: rLine, interactive: false,
-          color: '#d3a955', weight: 0.9, opacity: 0.62, smoothFactor: 1 });
+          color: '#cdb27a', weight: 1, opacity: 0.55, dashArray: '2 5', lineCap: 'round', smoothFactor: 1 });   // 依頼BS2：路線と区別がつくよう、細い点線に
         simpleGroup.addLayer(land); simpleGroup.addLayer(borders);
         d.prefs.forEach(function(p){ addLabel('pref', p.n, p.p, 0, 3, prefGroup); });
         d.towns.forEach(function(t){ addLabel('town', t.n, t.p, TOWN_MIN_ZOOM, 1, townGroup); });
       });
       return simpleLoading;
     }
-    function lineStyle(kind, z) {
-      if (kind === 'shin') return { color: '#ecdcae', weight: 1.5 + Math.max(0, z - 5) * 0.25, opacity: 0.95 };
-      if (kind === 'jr') return { color: '#b9a57c', weight: 0.7 + Math.max(0, z - 6) * 0.14, opacity: 0.85 };
-      if (kind === 'priv') return { color: '#85775a', weight: 0.6 + Math.max(0, z - 9) * 0.12, opacity: 0.8 };
-      return { color: '#62aaa4', weight: 0.9 + Math.max(0, z - 6) * 0.14, opacity: 0.9 };   // 高速道路
+    // 依頼BS2：Googleマップを手本にした線。高速道路＝橙（縁取りつき）／鉄道＝灰色の線に暗い点線（線路の枕木）。
+    // 新幹線＝太く白に近い灰色／JR＝中くらいの灰色／民鉄・地下鉄＝細い濃い灰色。青系の色は川と見分けがつかないので使わない
+    function lineSpecs(kind, z) {
+      var up = Math.max(0, z - 5);
+      if (kind === 'hw') { var w = 1.7 + up * 0.42;
+        return [{ color: '#4a2a05', weight: w + 2.4, opacity: 0.95 }, { color: '#f5a623', weight: w, opacity: 1 }]; }
+      if (kind === 'shin') { var w2 = 2.6 + up * 0.38;
+        return [{ color: '#f1f1ec', weight: w2, opacity: 1 }, { color: '#1b140b', weight: w2 * 0.5, opacity: 0.95, dashArray: (w2 * 2.2).toFixed(1) + ' ' + (w2 * 2.2).toFixed(1) }]; }
+      if (kind === 'jr') { var w3 = 1.9 + up * 0.3;
+        return [{ color: '#b4b4ae', weight: w3, opacity: 1 }, { color: '#1b140b', weight: w3 * 0.5, opacity: 0.9, dashArray: (w3 * 2.2).toFixed(1) + ' ' + (w3 * 2.2).toFixed(1) }]; }
+      var w4 = 1.4 + Math.max(0, z - 8) * 0.28;   // 民鉄・地下鉄など
+      return [{ color: '#8f8f89', weight: w4, opacity: 1 }, { color: '#1b140b', weight: w4 * 0.5, opacity: 0.85, dashArray: (w4 * 2.2).toFixed(1) + ' ' + (w4 * 2.2).toFixed(1) }];
     }
     function mkLines(kind, arr, group) {
-      var pl = L.polyline(arr.map(function(l){ return l.map(ll); }), Object.assign({ renderer: rLine, interactive: false, smoothFactor: 1 }, lineStyle(kind, map.getZoom())));
-      group.addLayer(pl); accessKinds[kind] = pl; return pl;
+      var latlngs = arr.map(function(l){ return l.map(ll); });
+      var specs = lineSpecs(kind, map.getZoom());
+      var layers = specs.map(function(sp){ return L.polyline(latlngs, Object.assign({ renderer: rLine, interactive: false, smoothFactor: 1, lineCap: 'butt', lineJoin: 'round' }, sp)); });
+      layers.forEach(function(pl){ group.addLayer(pl); });
+      accessKinds[kind] = { layers: layers, group: group }; return accessKinds[kind];
     }
-    var PLANE = '<svg class="bm-air-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L14 9L22 13V15L14 13L13 19L16 21V22L12 21L8 22V21L11 19L10 13L2 15V13L10 9Z" fill="#a0c4e2"/></svg>';
+    function restyle(kind, z) { var k = accessKinds[kind]; if (!k) return; lineSpecs(kind, z).forEach(function(sp, i){ k.layers[i].setStyle(sp); }); }
+    var PLANE_PATH = 'M12 2L14 9L22 13V15L14 13L13 19L16 21V22L12 21L8 22V21L11 19L10 13L2 15V13L10 9Z';
+    var PLANE = '<span class="bm-air-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="' + PLANE_PATH + '" fill="#2a2012"/></svg></span>';
     function loadAccess() {
       if (accessLoading) return accessLoading;
       accessLoading = fetchJson('../assets/basemap-access.json').then(function(d){
@@ -2241,7 +2257,8 @@
         var w = el.offsetWidth + 6, h = el.offsetHeight + 4;
         var offs = L_.type === 'pref' ? [[0, 0]]
           : (L_.type === 'town' ? [[0, 0], [0, 17], [0, -22], [w / 2 + 14, 0], [-(w / 2 + 14), 0]]
-          : [[w / 2 + 9, 0], [-(w / 2 + 9), 0], [0, 16], [0, -16]]);   // 空港・駅＝印の右→左→下→上に文字
+          : (L_.type === 'air' ? [[w / 2 + 20, 0], [-(w / 2 + 20), 0], [0, 25], [0, -25]]
+          : [[w / 2 + 9, 0], [-(w / 2 + 9), 0], [0, 16], [0, -16]]));   // 空港・駅＝印の右→左→下→上に文字
         for (var i = 0; i < offs.length; i++) {
           var cx = p.x + offs[i][0], cy = p.y + offs[i][1];
           var box = [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
@@ -2263,13 +2280,13 @@
       var z = map.getZoom();
       if (mode !== 'detailed' && z > BASE_MAX_ZOOM + 0.001) { setMode('detailed', { auto: true }); return; }
       if (mode === 'access') {
-        Object.keys(accessKinds).forEach(function(k){ accessKinds[k].setStyle(lineStyle(k, z)); });
-        toggle(accessKinds.hw, z >= 6); toggle(accessKinds.jr, z >= 6);
+        Object.keys(accessKinds).forEach(function(k){ restyle(k, z); });
+        toggleKind('hw', z >= 6); toggleKind('jr', z >= 6);
         if (z >= 8 && !privLoading) loadPriv().then(function(){ if (mode === 'access') onZoom(); });
         if (privLoading && privData) { toggle2(privGroup, z >= 9); }
       }
     }
-    function toggle(layer, on) { if (!layer) return; var has = accessGroup.hasLayer(layer); if (on && !has) accessGroup.addLayer(layer); else if (!on && has) accessGroup.removeLayer(layer); }
+    function toggleKind(kind, on) { var k = accessKinds[kind]; if (!k) return; k.layers.forEach(function(pl){ var has = k.group.hasLayer(pl); if (on && !has) k.group.addLayer(pl); else if (!on && has) k.group.removeLayer(pl); }); }
     function toggle2(group, on) { var has = map.hasLayer(group); if (on && !has) map.addLayer(group); else if (!on && has) map.removeLayer(group); }
 
     // ---- 切り替えの部品（地図の右上。Googleマップの「レイヤ」と同じ小さな四角）
@@ -2286,12 +2303,14 @@
       { id: 'detailed', name: 'Detailed', desc: 'Detailed map (Japanese labels)' }
     ];
     var ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 3L21 8L12 13L3 8Z"/><path d="M3 12.2L12 17.2L21 12.2" stroke-linecap="round"/><path d="M3 16.4L12 21.4L21 16.4" stroke-linecap="round" opacity="0.55"/></svg>';
+    function railSw(base, w, dash) { return '<svg viewBox="0 0 26 12" aria-hidden="true"><line x1="0" y1="6" x2="26" y2="6" stroke="' + base + '" stroke-width="' + w + '"/><line x1="0" y1="6" x2="26" y2="6" stroke="#1b140b" stroke-width="' + (w * 0.5) + '" stroke-dasharray="' + dash + '"/></svg>'; }
     var LEGEND = [
-      ['<span class="bm-legend-sw" style="color:#ecdcae;border-top-width:3px"></span>', 'Shinkansen'],
-      ['<span class="bm-legend-sw" style="color:#b9a57c"></span>', 'JR lines'],
-      ['<span class="bm-legend-sw" style="color:#85775a;border-top-width:1px"></span>', 'Private &amp; subway lines (zoom in)'],
-      ['<span class="bm-legend-sw" style="color:#62aaa4"></span>', 'Expressways'],
-      ['<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L14 9L22 13V15L14 13L13 19L16 21V22L12 21L8 22V21L11 19L10 13L2 15V13L10 9Z" fill="#a0c4e2" transform="translate(0 0)"/></svg>', 'Airports'],
+      [railSw('#f1f1ec', 4, '8 8'), 'Shinkansen'],
+      [railSw('#b4b4ae', 3, '6 6'), 'JR lines'],
+      [railSw('#8f8f89', 2, '4 4'), 'Private &amp; subway lines (zoom in)'],
+      ['<svg viewBox="0 0 26 12" aria-hidden="true"><line x1="0" y1="6" x2="26" y2="6" stroke="#4a2a05" stroke-width="6.4"/><line x1="0" y1="6" x2="26" y2="6" stroke="#f5a623" stroke-width="4"/></svg>', 'Expressways'],
+      ['<svg viewBox="0 0 26 12" aria-hidden="true"><line x1="0" y1="6" x2="26" y2="6" stroke="#cdb27a" stroke-width="1.2" stroke-dasharray="2 4" stroke-linecap="round" opacity="0.8"/></svg>', 'Prefecture borders'],
+      ['<span style="display:inline-block;width:26px;text-align:center"><span class="bm-air-mark" style="position:static;display:inline-flex;width:16px;height:16px;transform:none;vertical-align:middle"><svg viewBox="0 0 24 24" style="width:10px;height:10px"><path d="M12 2L14 9L22 13V15L14 13L13 19L16 21V22L12 21L8 22V21L11 19L10 13L2 15V13L10 9Z" fill="#2a2012"/></svg></span></span>', 'Airports'],
       ['<span style="display:inline-block;width:26px;text-align:center"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:#ecdcae"></span></span>', 'Stations named on shrine pages (zoom in)']
     ];
     var panel, btn, curLabel;
@@ -2347,7 +2366,7 @@
         map.addLayer(simpleGroup); map.addLayer(prefGroup); map.addLayer(townGroup);
         if (next === 'access') {
           map.addLayer(accessGroup); map.addLayer(airGroup); map.addLayer(staGroup);
-          Object.keys(accessKinds).forEach(function(k){ accessKinds[k].setStyle(lineStyle(k, map.getZoom())); });
+          Object.keys(accessKinds).forEach(function(k){ restyle(k, map.getZoom()); });
           onZoom();
         }
         if (map.getZoom() > BASE_MAX_ZOOM + 0.001) { setMode('detailed', { auto: true }); return; }
@@ -2356,7 +2375,8 @@
     }
     map.on('zoom', onZoom);
     map.on('moveend zoomend layeradd layerremove', scheduleLayout);
-    return { setMode: setMode, getMode: function(){ return mode; }, maxZoom: BASE_MAX_ZOOM, relayout: scheduleLayout };
+    return { setMode: setMode, getMode: function(){ return mode; }, maxZoom: BASE_MAX_ZOOM, relayout: scheduleLayout,
+             capFly: function(o){ if (mode !== 'detailed' && (o.maxZoom === undefined || o.maxZoom > BASE_MAX_ZOOM)) o.maxZoom = BASE_MAX_ZOOM; return o; } };
   }
 
   fetch('../assets/shrines-overseas.json')
@@ -2387,6 +2407,7 @@
         maxZoom: 18
       });
       var basemap = initBasemaps(map, detailedTiles);
+      flyCap = basemap.capFly;
       // 実行順F（依頼P-2・2026-09-13）：地図の何もない場所をクリックしたら
       // エリアの囲いを解除する（囲い自体のクリックはstopPropagationしてあるので
       // ここには来ない）
