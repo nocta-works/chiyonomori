@@ -2483,17 +2483,35 @@
       });
       updateStats();
       renderSidebarList();
+      // 依頼BS（2026-10-16）：地図の入れ物の大きさが0のまま30回待ち切った時（ページが隠れた状態で読み込まれた等）は、
+      // 大きさ0のままfitBoundsすると最大ズーム（18）の見当違いの場所に飛ぶ→従来の地図でも壊れた表示になり、
+      // Simple／Accessでは上限超えでDetailedに切り替わってしまう。大きさが0の時は日本全体の初期位置のままにして、
+      // 大きさが決まった最初の時に1度だけ全体表示に合わせ直す
       function fitWhenReady(attempts) {
         attempts = attempts || 0;
         map.invalidateSize();
         var size = map.getSize();
+        if (size.x === 0 || size.y === 0) {
+          if (attempts >= 30 && !focusedShrine && !restoredView) {
+            map.setView([36.0, 136.5], 5, { animate: false });
+            map.once('resize', function(){ map.fitBounds(bounds, { padding: [30,30], maxZoom: 7, animate: false }); });
+            if (window.ResizeObserver) {
+              var ro = new ResizeObserver(function(){ if (map.getSize().x > 0) { ro.disconnect(); map.invalidateSize(); } });
+              ro.observe(map.getContainer());
+            }
+            return;
+          }
+        }
         if ((size.x > 0 && size.y > 0) || attempts >= 30) {
           if (focusedShrine) {
             focusShrine(focusedShrine);
           } else if (restoredView) {
             map.setView([restoredView.lat, restoredView.lng], restoredView.zoom);
           } else {
-            map.fitBounds(bounds, { padding: [30,30] });
+            // 依頼BS（2026-10-16）：maxZoom:7＝日本全体を収める表示は、画面がどれだけ広くても7を超えない。
+            // ページが隠れた状態で読み込まれた時など、入れ物の大きさが異常な値の瞬間にfitBoundsが走ると、
+            // 最大ズーム（18）の見当違いの場所に飛ぶことがあった（本番の最初の読み込みで1度起きた）→上限で防ぐ
+            map.fitBounds(bounds, { padding: [30,30], maxZoom: 7 });
             if (isFirstReveal) {
               triggerReveal(reducedMotionForReveal);
             }
