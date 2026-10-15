@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>諏訪大社（諏訪）｜千代の杜</title>
+<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* 依頼BR（2026-10-15）：「東京の外」に足した5社を、公開中のページ（川勾神社.html）と同じ型で作った。
+     日本語のソース＋全文のdata-en。写真は依頼BCの規則（顔・奉納者名は無し）で目視確認済み。 */
+  :root {
+    --bg-body: #1a1209;
+    --bg-header-1: #2c1810;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .shrine-hero {
+    position: relative; height: 78vh; min-height: 460px;
+    display: flex; align-items: flex-end;
+    background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
+                repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
+  }
+  .shrine-hero img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.92) contrast(1.05);
+  }
+  .shrine-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.1) 55%, rgba(0,0,0,0.25));
+  }
+  .shrine-hero-content { position: relative; padding: 0 var(--pad-x, 6vw) 48px; width: 100%; }
+  .shrine-badge {
+    display: inline-block; font-size: 11px; letter-spacing: 0.15em; color: var(--gold);
+    border: 1px solid rgba(var(--gold-glow-rgb),0.5); border-radius: 20px; padding: 4px 14px;
+    margin-bottom: 16px; text-transform: uppercase;
+  }
+  .shrine-name-en { display: block; font-size: 13px; letter-spacing: 0.2em; color: var(--gold-muted); margin-bottom: 6px; text-transform: uppercase; }
+  .shrine-name-ja {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(32px, 6vw, 56px); color: var(--gold); margin: 0; letter-spacing: 0.04em;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  }
+  .shrine-meta { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; font-size: 12px; color: var(--tan-text); opacity: 0.85; }
+  .shrine-meta span b { color: var(--gold); font-weight: normal; display: block; font-size: 10px; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 2px; }
+
+
+  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。 */
+  .quick-facts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 24px;
+    max-width: 760px; margin: 0 auto 56px; padding: 20px 24px;
+    border: 1px solid var(--border-4); border-radius: 4px; background: rgba(255,255,255,0.02);
+  }
+  .quick-fact-label { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; margin-bottom: 4px; }
+  .quick-fact-value { font-size: 13.5px; color: var(--tan-text); line-height: 1.6; }
+
+  .shrine-links { display: flex; gap: 8px; margin-top: 20px; max-width: 360px; }
+  .shrine-link {
+    display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1;
+    padding: 8px 10px; border-radius: 8px; font-size: 12px; text-decoration: none;
+    letter-spacing: 0.03em; white-space: nowrap; transition: background 0.15s ease, color 0.15s ease;
+  }
+  .shrine-link.gmaps { background: rgba(66,133,244,0.16); border: 1px solid rgba(66,133,244,0.4); color: #7eb8ff; }
+  .shrine-link.gmaps:hover { background: rgba(66,133,244,0.3); color: #aad4ff; }
+  .shrine-link.official { background: rgba(var(--gold-glow-rgb),0.16); border: 1px solid rgba(var(--gold-glow-rgb),0.4); color: var(--gold); }
+  .shrine-link.official:hover { background: rgba(var(--gold-glow-rgb),0.3); }
+  .shrine-link.wiki { background: rgba(150,150,165,0.16); border: 1px solid rgba(150,150,165,0.4); color: #b8b8c8; }
+  .shrine-link.wiki:hover { background: rgba(150,150,165,0.3); color: #d8d8e8; }
+
+  .content { max-width: 760px; margin: 0 auto; padding: 70px var(--pad-x, 6vw); }
+  .section { margin-bottom: 64px; opacity: 0; transform: translateY(30px); transition: opacity 1.1s ease, transform 1.1s ease; }
+  .section.revealed { opacity: 1; transform: translateY(0); }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.2em; color: var(--gold-muted);
+    text-transform: uppercase; display: block; margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 22px; color: var(--gold); margin: 0 0 18px; letter-spacing: 0.03em;
+  }
+  .section p { font-size: 14.5px; color: var(--tan-text); opacity: 0.92; margin: 0 0 12px; }
+
+  .photo-block { margin: 0 auto 64px; text-align: center; opacity: 0; transform: translateY(30px); transition: opacity 1.1s ease, transform 1.1s ease; }
+  .photo-block.revealed { opacity: 1; transform: translateY(0); }
+  .photo-block img { display: block; margin: 0 auto; width: 100%; height: auto; filter: saturate(0.92) contrast(1.05); }
+  .photo-block.landscape { position: relative; left: 50%; width: min(1100px, 92vw); margin-left: calc(min(1100px, 92vw) / -2); }
+  .photo-block.portrait { max-width: 420px; }
+  .photo-block-caption {
+    max-width: 620px; margin: 16px auto 0; padding: 0 6vw;
+    font-size: 12.5px; color: var(--gold-muted); text-align: center; line-height: 1.7; letter-spacing: 0.02em;
+  }
+
+  .next-shrines { max-width: 860px; margin: 72px auto 0; padding: 0 24px; }
+  .next-shrines-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.8; margin-bottom: 6px; }
+  .next-shrines-lead { font-size: 13px; line-height: 1.9; color: var(--tan-text); opacity: 0.7; margin: 0 0 22px; }
+  .next-shrine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .next-shrine-card {
+    display: block; padding: 20px 22px; text-decoration: none;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
+    transition: background var(--dur-base, .3s) ease, border-color var(--dur-base, .3s) ease;
+  }
+  .next-shrine-card:hover { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); }
+  .next-shrine-set { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
+  .next-shrine-name { display: block; font-size: 17px; color: var(--tan-text); margin: 8px 0 2px; }
+  .next-shrine-en { display: block; font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text); opacity: 0.5; }
+  .next-shrine-why { font-size: 12px; line-height: 1.85; color: var(--tan-text); opacity: 0.72; margin: 12px 0 0; }
+  .next-shrines .shrine-links { margin: 34px auto 0; }
+  .page-footer { text-align: center; padding: 40px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  .footer-support a:hover { color: var(--gold); }
+  .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section, .photo-block { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/ja/shrines/suwa-taisha.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/shrines/suwa-taisha.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/shrines/suwa-taisha.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/shrines/suwa-taisha.html" hreflang="x-default" rel="alternate"/><meta content="諏訪大社（長野県の諏訪湖周辺）。信濃国の一宮。全国に約一万社あるといわれる諏訪神社の総本社（公式）。創建は『古事記』の国譲りの神話までさかのぼり、最も古い神社の一つとされる（公式）。" name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="諏訪大社（諏訪）｜千代の杜" property="og:title"/><meta content="諏訪大社（長野県の諏訪湖周辺）。信濃国の一宮。全国に約一万社あるといわれる諏訪神社の総本社（公式）。創建は『古事記』の国譲りの神話までさかのぼり、最も古い神社の一つとされる（公式）。" property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/ja/shrines/suwa-taisha.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/suwa-taisha.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="諏訪大社（諏訪）｜千代の杜" property="og:image:alt"/><meta content="ja_JP" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="諏訪大社（諏訪）｜千代の杜" name="twitter:title"/><meta content="諏訪大社（長野県の諏訪湖周辺）。信濃国の一宮。全国に約一万社あるといわれる諏訪神社の総本社（公式）。創建は『古事記』の国譲りの神話までさかのぼり、最も古い神社の一つとされる（公式）。" name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/suwa-taisha.jpg" name="twitter:image"/><style>
+  /* 依頼BP-2：共有のボタン（外部の部品は使わない） */
+  .share-row { max-width: 860px; margin: 56px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .share-label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; margin-right: 6px; }
+  .share-btn { font: inherit; font-size: 12px; letter-spacing: 0.04em; padding: 8px 16px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: transparent; color: var(--tan-text); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+  .share-btn:hover, .share-btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .share-btn[hidden] { display: none; }
+</style></head>
+<body>
+<a class="back-link" href="../map.html#mock-app">← 地図に戻る</a>
+<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/suwa-taisha.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/suwa-taisha.html">日本語</a></div>
+<div class="shrine-hero">
+<img alt="本宮の社殿を、軒の下から見る" src="../../assets/suwa-hon-haiden.jpg"/>
+<div class="shrine-hero-overlay"></div>
+<div class="shrine-hero-content">
+<span class="shrine-badge">一宮</span>
+<span class="shrine-name-en">Suwa Taisha</span>
+<h1 class="shrine-name-ja">諏訪大社</h1>
+<div class="shrine-meta">
+<span><b>御祭神</b><span>建御名方神・八坂刀売神ほか（社により異なる）</span></span>
+<span><b>所在地</b><span>長野県の諏訪湖周辺</span></span>
+</div>
+<div class="shrine-links">
+<a class="shrine-link gmaps" href="https://www.google.com/maps/search/諏訪大社" rel="noopener" target="_blank">📍 地図</a>
+<a class="shrine-link official" href="https://www.google.com/search?q=諏訪大社+公式" rel="noopener" target="_blank">🌐 公式</a>
+<a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/諏訪大社" rel="noopener" target="_blank">📖 Wiki</a>
+</div>
+</div>
+</div>
+<div class="content">
+<div class="quick-facts">
+<div><span class="quick-fact-label">構成</span><span class="quick-fact-value">上社（本宮・前宮）と下社（春宮・秋宮）</span></div>
+<div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">建御名方神・八坂刀売神・八重事代主神（社により異なる）</span></div>
+<div><span class="quick-fact-label">創建</span><span class="quick-fact-value">『古事記』の国譲りの神話までさかのぼる（公式）</span></div>
+<div><span class="quick-fact-label">御柱祭</span><span class="quick-fact-value">寅と申の年、7年目ごと。次は2028年</span></div>
+</div><p class="shrine-provenance" style="max-width:760px;margin:-40px auto 44px;font-size:11.5px;letter-spacing:0.06em;color:var(--gold-muted);text-align:center;">実際に参拝・写真はすべて自前</p>
+<div class="section">
+<span class="section-label">History</span>
+<h2 class="section-title">由緒・創建</h2>
+<p><strong>信濃国の一宮。</strong>全国に約一万社あるといわれる諏訪神社の<strong>総本社</strong>（公式）。創建は『古事記』の国譲りの神話までさかのぼり、最も古い神社の一つとされる（公式）。</p>
+</div>
+<div class="section">
+<span class="section-label">Four shrines</span>
+<h2 class="section-title">4社の構成</h2>
+<p>諏訪湖の南に<strong>上社</strong>の本宮と前宮、北に<strong>下社</strong>の春宮と秋宮が鎮座する。この4つを合わせて、諏訪大社という。祭神は社ごとに異なる——本宮は建御名方神、前宮は八坂刀売神、春宮と秋宮は建御名方神・八坂刀売神・八重事代主神（公式）。</p>
+</div>
+<div class="section">
+<span class="section-label">Honmiya</span>
+<h2 class="section-title">上社 本宮</h2>
+<p>祭神は建御名方神。<strong>本殿を持たず、山を御神体とする</strong>（公式）。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="反りのある屋根の建物の正面" src="../../assets/suwa-hon-haiden-front.jpg"/>
+<p class="photo-block-caption">反りのある屋根の建物。正面に石段が見える。</p>
+</div>
+<div class="photo-block landscape">
+<img alt="屋根のある通路" src="../../assets/suwa-hon-passage.jpg"/>
+<p class="photo-block-caption">屋根のある通路。灯籠が両脇に立つ。</p>
+</div>
+<div class="section">
+<span class="section-label">Maemiya</span>
+<h2 class="section-title">上社 前宮</h2>
+<p>祭神は八坂刀売神。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="前宮の大きな白い鳥居" src="../../assets/suwa-mae-torii.jpg"/>
+<p class="photo-block-caption">前宮の大きな白い鳥居。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="前宮の社殿" src="../../assets/suwa-mae-shaden.jpg"/>
+<p class="photo-block-caption">前宮の社殿。軒下に注連縄と賽銭箱が見える。</p>
+</div>
+<div class="section">
+<span class="section-label">Harumiya</span>
+<h2 class="section-title">下社 春宮</h2>
+<p>祭神は建御名方神・八坂刀売神・八重事代主神。<strong>本殿を持たず、杉の御神木を御神体とする</strong>（公式）。</p>
+</div>
+<div class="section">
+<span class="section-label">Akimiya</span>
+<h2 class="section-title">下社 秋宮</h2>
+<p>祭神は春宮と同じ。<strong>本殿を持たず、イチイの御神木を御神体とする</strong>（公式）。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="秋宮の鳥居と参道" src="../../assets/suwa-aki-torii.jpg"/>
+<p class="photo-block-caption">秋宮の鳥居と、奥へ続く石畳の参道。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="柵に囲まれた大木" src="../../assets/suwa-aki-tree.jpg"/>
+<p class="photo-block-caption">柵に囲まれた大木。幹に注連縄が巻かれている。</p>
+</div>
+<div class="photo-block landscape">
+<img alt="大きな注連縄が下がる建物と狛犬" src="../../assets/suwa-aki-kagura.jpg"/>
+<p class="photo-block-caption">大きな注連縄が軒に下がる建物。手前に狛犬が見える。</p>
+</div>
+<div class="section">
+<span class="section-label">Background</span>
+<h2 class="section-title">文化的背景</h2>
+<p><span><strong>本殿の無い神社。</strong>本宮・春宮・秋宮は本殿を持たず、上社は山を、下社は御神木（春宮は杉、秋宮はイチイ）を御神体とする。自然そのものを祀る、古い信仰の姿（公式）。（→</span><a href="../articles/torii-and-grounds.html#grounds">鳥居と境内</a><span>）</span></p>
+<p><strong>御柱祭。</strong>寅と申の年、7年目ごとに行う式年造営御柱大祭（公式）。次は2028年（令和10年・申年）。</p>
+<p><span>祭神の建御名方神は、国譲りの神話で最後まで抗った神。敗れて信濃へ逃れたと語られる（→</span><a href="../articles/kami-and-classification.html#myths">神々と、この地図の分類：神話の骨格</a><span>）。</span></p>
+</div>
+</div>
+<div class="share-row" data-share=""><span class="share-label">このページを共有</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">共有</button><button class="share-btn" data-done="コピーしました" data-goatcounter-click="share" data-share-copy="" type="button">リンクをコピー</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fja%2Fshrines%2Fsuwa-taisha.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Fsuwa-taisha.jpg&amp;description=%E8%AB%8F%E8%A8%AA%E5%A4%A7%E7%A4%BE%EF%BC%88%E8%AB%8F%E8%A8%AA%EF%BC%89%EF%BD%9C%E5%8D%83%E4%BB%A3%E3%81%AE%E6%9D%9C" rel="noopener noreferrer" target="_blank">Pinterestに保存</a></div><div class="next-shrines">
+<div class="next-shrines-title">次の一社</div>
+<p class="next-shrines-lead">同じ一宮で、総本社の社へ。</p>
+<div class="next-shrine-grid">
+<a class="next-shrine-card" href="fujisan-hongu-sengen-taisha.html">
+<span class="next-shrine-set">大社</span>
+<span class="next-shrine-name">富士山本宮浅間大社</span>
+<span class="next-shrine-en">Fujisan Hongu Sengen Taisha</span>
+<p class="next-shrine-why">どちらも一宮で、総本社。約一万の諏訪社と、1,300社余の浅間社。</p>
+</a>
+</div>
+<a class="next-shrine-card" href="../areas/beyond-tokyo.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の外の神社</span><span class="next-shrine-en">Beyond Tokyo</span><p class="next-shrine-why">東京から足をのばして、参拝した社。いずれ地域ごとのページに移る。</p></a>
+</div>
+<div class="page-footer">
+<div>千代の杜</div>
+<div class="footer-support">
+<span>千代の杜は広告のない独立したガイドです。旅の計画に役立ったら、</span>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>チップを送る ↗</span></a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">Cookieは使用していません。匿名の訪問数のみ集計します。 <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">プライバシー</a></div></div>
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.section, .photo-block');
+  if (reduced || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('revealed'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) { entry.target.classList.add('revealed'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    items.forEach(function(el){ io.observe(el); });
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  try {
+  } catch(err){}
+})();
+</script>
+<script async="" data-goatcounter="https://chiyonomori.goatcounter.com/count" src="//gc.zgo.at/count.js"></script><script>
+(function(){
+  var root = document.querySelector('[data-share]'); if (!root) return;
+  var canon = document.querySelector('link[rel="canonical"]');
+  var url = canon ? canon.href : location.href, title = document.title;
+  var nat = root.querySelector('[data-share-native]');
+  if (nat && navigator.share) {
+    nat.hidden = false;
+    nat.addEventListener('click', function(){ navigator.share({ title: title, url: url }).catch(function(){}); });
+  }
+  var cp = root.querySelector('[data-share-copy]');
+  if (cp) cp.addEventListener('click', function(){
+    var label = cp.textContent, done = cp.getAttribute('data-done');
+    function ok(){ cp.textContent = done; setTimeout(function(){ cp.textContent = label; }, 1500); }
+    function fallback(){
+      var t = document.createElement('textarea'); t.value = url; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t); ok();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
+  });
+})();
+</script>
+</body>
+</html>

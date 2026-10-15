@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>伊奈波神社（岐阜）｜千代の杜</title>
+<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* 依頼BR（2026-10-15）：「東京の外」に足した5社を、公開中のページ（川勾神社.html）と同じ型で作った。
+     日本語のソース＋全文のdata-en。写真は依頼BCの規則（顔・奉納者名は無し）で目視確認済み。 */
+  :root {
+    --bg-body: #1a1209;
+    --bg-header-1: #2c1810;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .shrine-hero {
+    position: relative; height: 78vh; min-height: 460px;
+    display: flex; align-items: flex-end;
+    background: radial-gradient(ellipse at 30% 15%, rgba(var(--gold-glow-rgb),0.10), transparent 55%),
+                repeating-linear-gradient(135deg, #241a0f 0 18px, #1c1309 18px 36px);
+  }
+  .shrine-hero img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.92) contrast(1.05);
+  }
+  .shrine-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.1) 55%, rgba(0,0,0,0.25));
+  }
+  .shrine-hero-content { position: relative; padding: 0 var(--pad-x, 6vw) 48px; width: 100%; }
+  .shrine-badge {
+    display: inline-block; font-size: 11px; letter-spacing: 0.15em; color: var(--gold);
+    border: 1px solid rgba(var(--gold-glow-rgb),0.5); border-radius: 20px; padding: 4px 14px;
+    margin-bottom: 16px; text-transform: uppercase;
+  }
+  .shrine-name-en { display: block; font-size: 13px; letter-spacing: 0.2em; color: var(--gold-muted); margin-bottom: 6px; text-transform: uppercase; }
+  .shrine-name-ja {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(32px, 6vw, 56px); color: var(--gold); margin: 0; letter-spacing: 0.04em;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  }
+  .shrine-meta { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; font-size: 12px; color: var(--tan-text); opacity: 0.85; }
+  .shrine-meta span b { color: var(--gold); font-weight: normal; display: block; font-size: 10px; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 2px; }
+
+
+  /* 依頼W-5①（2026-09-13）：詳細ページ冒頭のQuick Facts（祭神／ご利益／創建／最寄駅）。 */
+  .quick-facts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 24px;
+    max-width: 760px; margin: 0 auto 56px; padding: 20px 24px;
+    border: 1px solid var(--border-4); border-radius: 4px; background: rgba(255,255,255,0.02);
+  }
+  .quick-fact-label { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; margin-bottom: 4px; }
+  .quick-fact-value { font-size: 13.5px; color: var(--tan-text); line-height: 1.6; }
+
+  .shrine-links { display: flex; gap: 8px; margin-top: 20px; max-width: 360px; }
+  .shrine-link {
+    display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1;
+    padding: 8px 10px; border-radius: 8px; font-size: 12px; text-decoration: none;
+    letter-spacing: 0.03em; white-space: nowrap; transition: background 0.15s ease, color 0.15s ease;
+  }
+  .shrine-link.gmaps { background: rgba(66,133,244,0.16); border: 1px solid rgba(66,133,244,0.4); color: #7eb8ff; }
+  .shrine-link.gmaps:hover { background: rgba(66,133,244,0.3); color: #aad4ff; }
+  .shrine-link.official { background: rgba(var(--gold-glow-rgb),0.16); border: 1px solid rgba(var(--gold-glow-rgb),0.4); color: var(--gold); }
+  .shrine-link.official:hover { background: rgba(var(--gold-glow-rgb),0.3); }
+  .shrine-link.wiki { background: rgba(150,150,165,0.16); border: 1px solid rgba(150,150,165,0.4); color: #b8b8c8; }
+  .shrine-link.wiki:hover { background: rgba(150,150,165,0.3); color: #d8d8e8; }
+
+  .content { max-width: 760px; margin: 0 auto; padding: 70px var(--pad-x, 6vw); }
+  .section { margin-bottom: 64px; opacity: 0; transform: translateY(30px); transition: opacity 1.1s ease, transform 1.1s ease; }
+  .section.revealed { opacity: 1; transform: translateY(0); }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.2em; color: var(--gold-muted);
+    text-transform: uppercase; display: block; margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 22px; color: var(--gold); margin: 0 0 18px; letter-spacing: 0.03em;
+  }
+  .section p { font-size: 14.5px; color: var(--tan-text); opacity: 0.92; margin: 0 0 12px; }
+
+  .photo-block { margin: 0 auto 64px; text-align: center; opacity: 0; transform: translateY(30px); transition: opacity 1.1s ease, transform 1.1s ease; }
+  .photo-block.revealed { opacity: 1; transform: translateY(0); }
+  .photo-block img { display: block; margin: 0 auto; width: 100%; height: auto; filter: saturate(0.92) contrast(1.05); }
+  .photo-block.landscape { position: relative; left: 50%; width: min(1100px, 92vw); margin-left: calc(min(1100px, 92vw) / -2); }
+  .photo-block.portrait { max-width: 420px; }
+  .photo-block-caption {
+    max-width: 620px; margin: 16px auto 0; padding: 0 6vw;
+    font-size: 12.5px; color: var(--gold-muted); text-align: center; line-height: 1.7; letter-spacing: 0.02em;
+  }
+
+  .next-shrines { max-width: 860px; margin: 72px auto 0; padding: 0 24px; }
+  .next-shrines-title { font-size: 13px; letter-spacing: 0.18em; color: var(--gold); opacity: 0.8; margin-bottom: 6px; }
+  .next-shrines-lead { font-size: 13px; line-height: 1.9; color: var(--tan-text); opacity: 0.7; margin: 0 0 22px; }
+  .next-shrine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .next-shrine-card {
+    display: block; padding: 20px 22px; text-decoration: none;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border-4); border-radius: 3px;
+    transition: background var(--dur-base, .3s) ease, border-color var(--dur-base, .3s) ease;
+  }
+  .next-shrine-card:hover { background: rgba(var(--gold-glow-rgb),0.07); border-color: rgba(var(--gold-glow-rgb),0.45); }
+  .next-shrine-set { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; }
+  .next-shrine-name { display: block; font-size: 17px; color: var(--tan-text); margin: 8px 0 2px; }
+  .next-shrine-en { display: block; font-size: 11px; letter-spacing: 0.08em; color: var(--tan-text); opacity: 0.5; }
+  .next-shrine-why { font-size: 12px; line-height: 1.85; color: var(--tan-text); opacity: 0.72; margin: 12px 0 0; }
+  .next-shrines .shrine-links { margin: 34px auto 0; }
+  .page-footer { text-align: center; padding: 40px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  .footer-support a:hover { color: var(--gold); }
+  .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section, .photo-block { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/ja/shrines/inaba-jinja.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/shrines/inaba-jinja.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/shrines/inaba-jinja.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/shrines/inaba-jinja.html" hreflang="x-default" rel="alternate"/><meta content="伊奈波神社（岐阜県岐阜市）。名社。祭神の五十瓊敷入彦命は垂仁天皇の長男。『古事記』『日本書紀』に、諸国に八百の池溝をひらいたと記される（公式）。" name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="伊奈波神社（岐阜）｜千代の杜" property="og:title"/><meta content="伊奈波神社（岐阜県岐阜市）。名社。祭神の五十瓊敷入彦命は垂仁天皇の長男。『古事記』『日本書紀』に、諸国に八百の池溝をひらいたと記される（公式）。" property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/ja/shrines/inaba-jinja.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/inaba-jinja.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="伊奈波神社（岐阜）｜千代の杜" property="og:image:alt"/><meta content="ja_JP" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="伊奈波神社（岐阜）｜千代の杜" name="twitter:title"/><meta content="伊奈波神社（岐阜県岐阜市）。名社。祭神の五十瓊敷入彦命は垂仁天皇の長男。『古事記』『日本書紀』に、諸国に八百の池溝をひらいたと記される（公式）。" name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/inaba-jinja.jpg" name="twitter:image"/><style>
+  /* 依頼BP-2：共有のボタン（外部の部品は使わない） */
+  .share-row { max-width: 860px; margin: 56px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .share-label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; margin-right: 6px; }
+  .share-btn { font: inherit; font-size: 12px; letter-spacing: 0.04em; padding: 8px 16px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: transparent; color: var(--tan-text); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+  .share-btn:hover, .share-btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .share-btn[hidden] { display: none; }
+</style></head>
+<body>
+<a class="back-link" href="../map.html#mock-app">← 地図に戻る</a>
+<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/shrines/inaba-jinja.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/shrines/inaba-jinja.html">日本語</a></div>
+<div class="shrine-hero">
+<img alt="木々の枝越しに見る楼門" src="../../assets/inaba-romon.jpg"/>
+<div class="shrine-hero-overlay"></div>
+<div class="shrine-hero-content">
+<span class="shrine-badge">名社</span>
+<span class="shrine-name-en">Inaba Jinja</span>
+<h1 class="shrine-name-ja">伊奈波神社</h1>
+<div class="shrine-meta">
+<span><b>御祭神</b><span>五十瓊敷入彦命</span></span>
+<span><b>所在地</b><span>岐阜県岐阜市</span></span>
+</div>
+<div class="shrine-links">
+<a class="shrine-link gmaps" href="https://www.google.com/maps/search/伊奈波神社" rel="noopener" target="_blank">📍 地図</a>
+<a class="shrine-link official" href="https://www.google.com/search?q=伊奈波神社+公式" rel="noopener" target="_blank">🌐 公式</a>
+<a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/伊奈波神社" rel="noopener" target="_blank">📖 Wiki</a>
+</div>
+</div>
+</div>
+<div class="content">
+<div class="quick-facts">
+<div><span class="quick-fact-label">祭神</span><span class="quick-fact-value">五十瓊敷入彦命</span></div>
+<div><span class="quick-fact-label">創建</span><span class="quick-fact-value">社伝では景行天皇14年、竹内宿禰が丸山に祀ったのが始まり</span></div>
+<div><span class="quick-fact-label">格式</span><span class="quick-fact-value">昭和14年に国幣小社</span></div>
+</div><p class="shrine-provenance" style="max-width:760px;margin:-40px auto 44px;font-size:11.5px;letter-spacing:0.06em;color:var(--gold-muted);text-align:center;">実際に参拝・写真はすべて自前</p>
+<div class="section">
+<span class="section-label">History</span>
+<h2 class="section-title">由緒・創建</h2>
+<p>祭神の五十瓊敷入彦命は垂仁天皇の長男。『古事記』『日本書紀』に、諸国に<strong>八百の池溝</strong>をひらいたと記される（公式）。薨去の翌年（景行14年）、竹内宿禰が稲葉山近くの丸山に祀ったのが始まり（社伝）。<strong>天文8年（1539）、斎藤道三が稲葉山を居城とするにあたり、今の麓に遷した。</strong>昭和14年に国幣小社となった。</p>
+<p>配祀は、渟熨斗媛命・日葉酢媛命・彦多都彦命・物部十千根命。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="石の鳥居と、奥へ続く参道" src="../../assets/inaba-torii.jpg"/>
+<p class="photo-block-caption">石の鳥居と、奥へ続く参道。</p>
+</div>
+<div class="section">
+<span class="section-label">Highlights</span>
+<h2 class="section-title">見どころ</h2>
+<p>石の鳥居をくぐると、石畳の参道が続く。奥にもう一つの鳥居と社殿が見える。長い石段の上に、門が建つ。境内には、石組みと流れのある庭がある。石段の脇には、小さな社（秋葉社）がある。</p>
+</div>
+<div class="photo-block portrait">
+<img alt="石畳の参道と、奥の鳥居・社殿" src="../../assets/inaba-sando.jpg"/>
+<p class="photo-block-caption">石畳の参道の先に、もう一つの石の鳥居と社殿が見える。</p>
+</div>
+<div class="photo-block landscape">
+<img alt="社殿へ続く石段" src="../../assets/inaba-kaidan.jpg"/>
+<p class="photo-block-caption">上へ続く石段。上に門が見える。</p>
+</div>
+<div class="photo-block landscape">
+<img alt="石組みと流れのある庭" src="../../assets/inaba-niwa.jpg"/>
+<p class="photo-block-caption">石組みと流れのある庭。石灯籠が立つ。</p>
+</div>
+<div class="photo-block landscape">
+<img alt="境内の小社" src="../../assets/inaba-massha.jpg"/>
+<p class="photo-block-caption">境内の小社。石柱に「秋葉社」とある。</p>
+</div>
+<div class="section">
+<span class="section-label">Background</span>
+<h2 class="section-title">文化的背景</h2>
+<p><strong>水を防ぐ神。</strong>揖斐・長良・木曽の三つの川に囲まれ、洪水に悩まされてきた土地。陰陽五行の「水を制するには金」から、周りには金と水の地名が多い（公式）。</p>
+</div>
+</div>
+<div class="share-row" data-share=""><span class="share-label">このページを共有</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">共有</button><button class="share-btn" data-done="コピーしました" data-goatcounter-click="share" data-share-copy="" type="button">リンクをコピー</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fja%2Fshrines%2Finaba-jinja.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Finaba-jinja.jpg&amp;description=%E4%BC%8A%E5%A5%88%E6%B3%A2%E7%A5%9E%E7%A4%BE%EF%BC%88%E5%B2%90%E9%98%9C%EF%BC%89%EF%BD%9C%E5%8D%83%E4%BB%A3%E3%81%AE%E6%9D%9C" rel="noopener noreferrer" target="_blank">Pinterestに保存</a></div><div class="next-shrines">
+<div class="next-shrines-title">次の一社</div>
+<p class="next-shrines-lead">美濃の宮を、もう一社。</p>
+<div class="next-shrine-grid">
+<a class="next-shrine-card" href="nangu-taisha.html">
+<span class="next-shrine-set">大社</span>
+<span class="next-shrine-name">南宮大社</span>
+<span class="next-shrine-en">Nangu Taisha</span>
+<p class="next-shrine-why">同じ美濃。美濃の一宮へ。</p>
+</a>
+</div>
+<a class="next-shrine-card" href="../areas/beyond-tokyo.html" style="margin-top:14px"><span class="next-shrine-set">この地域</span><span class="next-shrine-name">東京の外の神社</span><span class="next-shrine-en">Beyond Tokyo</span><p class="next-shrine-why">東京から足をのばして、参拝した社。いずれ地域ごとのページに移る。</p></a>
+</div>
+<div class="page-footer">
+<div>千代の杜</div>
+<div class="footer-support">
+<span>千代の杜は広告のない独立したガイドです。旅の計画に役立ったら、</span>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>チップを送る ↗</span></a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">Cookieは使用していません。匿名の訪問数のみ集計します。 <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">プライバシー</a></div></div>
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.section, .photo-block');
+  if (reduced || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('revealed'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) { entry.target.classList.add('revealed'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    items.forEach(function(el){ io.observe(el); });
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  try {
+  } catch(err){}
+})();
+</script>
+<script async="" data-goatcounter="https://chiyonomori.goatcounter.com/count" src="//gc.zgo.at/count.js"></script><script>
+(function(){
+  var root = document.querySelector('[data-share]'); if (!root) return;
+  var canon = document.querySelector('link[rel="canonical"]');
+  var url = canon ? canon.href : location.href, title = document.title;
+  var nat = root.querySelector('[data-share-native]');
+  if (nat && navigator.share) {
+    nat.hidden = false;
+    nat.addEventListener('click', function(){ navigator.share({ title: title, url: url }).catch(function(){}); });
+  }
+  var cp = root.querySelector('[data-share-copy]');
+  if (cp) cp.addEventListener('click', function(){
+    var label = cp.textContent, done = cp.getAttribute('data-done');
+    function ok(){ cp.textContent = done; setTimeout(function(){ cp.textContent = label; }, 1500); }
+    function fallback(){
+      var t = document.createElement('textarea'); t.value = url; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t); ok();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
+  });
+})();
+</script>
+</body>
+</html>

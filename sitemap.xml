@@ -216,6 +216,31 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/atsuta-jingu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/masumida-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/nangu-taisha.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/inaba-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/shrines/suwa-taisha.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -427,6 +452,31 @@
   </url>
   <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/kitaguchi-hongu-fuji-sengen-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/atsuta-jingu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/masumida-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/nangu-taisha.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/inaba-jinja.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/shrines/suwa-taisha.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

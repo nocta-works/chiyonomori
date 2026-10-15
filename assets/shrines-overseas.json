@@ -302,12 +302,12 @@
     "province": "尾張国",
     "lat": 35.12651,
     "lng": 136.9087,
-    "deity": "熱田大神（草薙剣）",
+    "deity": "熱田大神（草薙神剣を御霊代とする天照大神）",
     "reason": "三種の神器の一つ草薙神剣の鎮座を起源とする古社。日本武尊の没後、宮簀媛命が神剣を熱田の地に祀ったと伝わる。",
     "nameEn": "Atsuta Jingu",
     "prefEn": "Aichi",
     "provinceEn": "Owari Province",
-    "deityEn": "The Atsuta deity (the sacred sword Kusanagi)",
+    "deityEn": "The Atsuta deity — Amaterasu, embodied in the sacred sword Kusanagi",
     "reasonEn": "An ancient shrine founded to house the sword Kusanagi, one of the three imperial regalia. After Yamato Takeru's death, Miyazuhime is said to have enshrined the sword at Atsuta."
   },
   {
@@ -683,12 +683,12 @@
     "province": "美濃国",
     "lat": 35.36078,
     "lng": 136.52496,
-    "deity": "金山彦命",
+    "deity": "金山彦大神（相殿 彦火火出見尊・見野命）",
     "reason": "美濃国一宮。旧国幣大社。金山彦大神を祀る全国の鉱山・金属業の総本宮として、鍛冶や金属関係者の信仰を集める。",
     "nameEn": "Nangu Taisha",
     "prefEn": "Gifu",
     "provinceEn": "Mino Province",
-    "deityEn": "Kanayamahiko",
+    "deityEn": "Kanayamahiko Okami (with Hikohohodemi no Mikoto and Mino no Mikoto enshrined alongside)",
     "reasonEn": "The ichinomiya of Mino Province and a former national shrine. As the head shrine for mining and metalworking nationwide, enshrining Kanayamahiko Okami, it draws worship from blacksmiths and metalworkers."
   },
   {
@@ -848,12 +848,12 @@
     "lat": 35.99837,
     "lng": 138.11888,
     "deity": "建御名方神・八坂刀売神",
-    "reason": "信濃国一宮。全国の諏訪神社の総本社をなす諏訪大社四社の一つで、本宮には本殿がなく、独特の諏訪造の社殿を伝える。",
+    "reason": "信濃国一宮。全国の諏訪神社の総本社をなす諏訪大社四社の一つ。本宮・春宮・秋宮は本殿を持たず、上社は山を、下社は御神木（春宮は杉、秋宮はイチイ）を御神体とする。",
     "nameEn": "Suwa Taisha (Honmiya)",
     "prefEn": "Nagano",
     "provinceEn": "Shinano Province",
     "deityEn": "Takeminakata and Yasakatome",
-    "reasonEn": "The ichinomiya of Shinano Province, one of the four shrines making up Suwa Taisha, the head shrine of all Suwa shrines nationwide. The Honmiya has no main hall, keeping to its distinctive Suwa-zukuri style of architecture."
+    "reasonEn": "The ichinomiya of Shinano Province, one of the four shrines making up Suwa Taisha, the head shrine of all Suwa shrines nationwide. The Honmiya, Harumiya and Akimiya have no main hall: the Upper Shrine takes a mountain as its sacred object, and the Lower Shrine a sacred tree (a cedar at Harumiya, a yew at Akimiya)."
   },
   {
     "pref": "静岡",
@@ -3025,12 +3025,12 @@
     "lat": 35.42723,
     "lng": 136.77081,
     "deity": "五十瓊敷入彦命",
-    "reason": "美濃国三宮。五十瓊敷入彦命を主祭神に祀る古社。斎藤道三が稲葉山城築城に際し、現在地へ遷座したと伝わる。",
+    "reason": "五十瓊敷入彦命を主祭神に祀る古社。天文8年（1539）、斎藤道三が稲葉山を居城とするにあたり、現在の麓の地に遷した。",
     "nameEn": "Inaba Jinja",
     "prefEn": "Gifu",
     "provinceEn": "Mino Province",
     "deityEn": "Ikishiiribiko",
-    "reasonEn": "The sannomiya of Mino Province, an ancient shrine whose chief deity is Ikishiiribiko. It is said to have moved to its present site when Saito Dosan built Inabayama Castle."
+    "reasonEn": "An ancient shrine whose chief deity is Ikishiiribiko. In 1539 (Tenbun 8), when Saito Dosan made Mount Inaba his stronghold, the shrine was moved to its present site at the foot of the mountain."
   },
   {
     "pref": "石川",
