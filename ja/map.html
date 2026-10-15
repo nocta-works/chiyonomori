@@ -782,7 +782,7 @@
   .bm-zoom-hi .bm-pref { font-size: 12.5px; color: rgba(221,208,160,0.5); }
   .bm-town { font-size: 11px; letter-spacing: 0.04em; color: rgba(236,224,186,0.82); }
   .bm-air { font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; color: rgba(243,234,210,0.97); }   /* 依頼BS2：青系は使わない・大きく */
-  .bm-sta { font-size: 9.5px; letter-spacing: 0.02em; color: rgba(236,224,186,0.8); }
+  .bm-sta { font-size: 10px; letter-spacing: 0.02em; color: rgba(236,224,186,0.8); }
   .bm-air-mark { position: absolute; left: 0; top: 0; width: 28px; height: 28px; transform: translate(-50%, -50%); pointer-events: none; border-radius: 50%; background: #efe4c8; border: 1.5px solid #2a2012; box-shadow: 0 1px 5px rgba(0,0,0,0.65); display: flex; align-items: center; justify-content: center; }
   .bm-air-mark svg { width: 17px; height: 17px; display: block; }
   .bm-switch { position: relative; font-family: 'Helvetica Neue', Arial, sans-serif; }
@@ -2154,11 +2154,14 @@
       : '出典：国土交通省国土数値情報ダウンロードサイト（<a href="https://nlftp.mlit.go.jp/ksj/" target="_blank" rel="noopener" title="行政区域はSmartNews メディア研究所公開の簡素化版（N03-2021）を使用">nlftp.mlit.go.jp/ksj</a>）をもとに作成';
     var simpleGroup = L.layerGroup([], { attribution: ATTR });
     var accessGroup = L.layerGroup([]);
-    var privGroup = L.layerGroup([]);
     var labels = [];           // {type, ll, minZoom, maxZoom, prio, marker, inner, group}
-    var accessKinds = {};      // {shin, jr, hw} → L.polyline（zoomで太さを変える）
-    var simpleData = null, accessData = null, privData = null;
-    var simpleLoading = null, accessLoading = null, privLoading = null;
+    var accessKinds = {};      // 線の種類 → {layers, group}（zoomで太さを変える）
+    var simpleData = null;
+    var simpleLoading = null, accessLoading = null, trunkLoading = null, mainLoading = null, privLoading = null;
+    // 依頼BS3（2026-10-16）：Accessは「寄るほど増える」段階表示。データも段階で読む（最初は新幹線・空港・駅の名前だけ＝約12KB）
+    //   ズーム〜5＝新幹線だけ（空港も出さない）／6＝＋高速自動車国道・主な空港7／7＝＋JR・空港すべて／8＝＋その他の自動車専用道・山手線と中央線の色／9＝＋首都高などの都市高速・民鉄と地下鉄／10〜＝駅
+    var KIND_MIN_ZOOM = { shin: 0, trunk: 6, jr: 7, hw: 8, ym: 8, ch: 8, urban: 9, priv: 9 };
+    var KIND_ORDER = ['priv', 'jr', 'hw', 'trunk', 'urban', 'shin', 'ym', 'ch'];   // 下から重ねる順
 
     function ll(c) { return [c[1], c[0]]; }
     function fetchJson(url) { return fetch(url).then(function(r){ return r.json(); }); }
@@ -2190,41 +2193,61 @@
     // 新幹線＝太く白に近い灰色／JR＝中くらいの灰色／民鉄・地下鉄＝細い濃い灰色。青系の色は川と見分けがつかないので使わない
     function lineSpecs(kind, z) {
       var up = Math.max(0, z - 5);
-      if (kind === 'hw') { var w = 1.7 + up * 0.42;
+      var dash = function(w){ return (w * 2.2).toFixed(1) + ' ' + (w * 2.2).toFixed(1); };
+      var rail = function(base, w, op){ return [{ color: base, weight: w, opacity: 1 }, { color: '#1b140b', weight: w * 0.5, opacity: w < 2 ? 0 : op, dashArray: dash(w) }]; };   // 細すぎる時は点線を重ねない（線が消えて見えなくなる）
+      if (kind === 'hw' || kind === 'trunk' || kind === 'urban') { var w = (1.7 + up * 0.42) * (kind === 'urban' ? 0.85 : 1);
         return [{ color: '#4a2a05', weight: w + 2.4, opacity: 0.95 }, { color: '#f5a623', weight: w, opacity: 1 }]; }
-      if (kind === 'shin') { var w2 = 2.6 + up * 0.38;
-        return [{ color: '#f1f1ec', weight: w2, opacity: 1 }, { color: '#1b140b', weight: w2 * 0.5, opacity: 0.95, dashArray: (w2 * 2.2).toFixed(1) + ' ' + (w2 * 2.2).toFixed(1) }]; }
-      if (kind === 'jr') { var w3 = 1.9 + up * 0.3;
-        return [{ color: '#b4b4ae', weight: w3, opacity: 1 }, { color: '#1b140b', weight: w3 * 0.5, opacity: 0.9, dashArray: (w3 * 2.2).toFixed(1) + ' ' + (w3 * 2.2).toFixed(1) }]; }
-      var w4 = 1.4 + Math.max(0, z - 8) * 0.28;   // 民鉄・地下鉄など
-      return [{ color: '#8f8f89', weight: w4, opacity: 1 }, { color: '#1b140b', weight: w4 * 0.5, opacity: 0.85, dashArray: (w4 * 2.2).toFixed(1) + ' ' + (w4 * 2.2).toFixed(1) }];
+      if (kind === 'shin') return rail('#f1f1ec', z <= 5 ? 1.7 : 2.6 + up * 0.38, 0.95);   // いちばん引いた段階では細く
+      if (kind === 'ym') return rail('#6fd13f', 2.8 + up * 0.36, 0.95);    // 山手線＝緑（本人の要望：Googleマップから外れてよい・目立ってよい）
+      if (kind === 'ch') return rail('#f0463c', 2.8 + up * 0.36, 0.95);    // 中央線＝朱赤（橙の高速道路と取り違えない赤）
+      if (kind === 'jr') return rail('#b4b4ae', 1.9 + up * 0.3, 0.9);
+      return rail('#8f8f89', 1.4 + Math.max(0, z - 8) * 0.28, 0.85);       // 民鉄・地下鉄など
     }
     function mkLines(kind, arr, group) {
       var latlngs = arr.map(function(l){ return l.map(ll); });
       var specs = lineSpecs(kind, map.getZoom());
       var layers = specs.map(function(sp){ return L.polyline(latlngs, Object.assign({ renderer: rLine, interactive: false, smoothFactor: 1, lineCap: 'butt', lineJoin: 'round' }, sp)); });
       layers.forEach(function(pl){ group.addLayer(pl); });
-      accessKinds[kind] = { layers: layers, group: group }; return accessKinds[kind];
+      accessKinds[kind] = { layers: layers, group: group, on: true }; return accessKinds[kind];
     }
     function restyle(kind, z) { var k = accessKinds[kind]; if (!k) return; lineSpecs(kind, z).forEach(function(sp, i){ k.layers[i].setStyle(sp); }); }
     var PLANE_PATH = 'M12 2L14 9L22 13V15L14 13L13 19L16 21V22L12 21L8 22V21L11 19L10 13L2 15V13L10 9Z';
     var PLANE = '<span class="bm-air-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="' + PLANE_PATH + '" fill="#2a2012"/></svg></span>';
+    // 1段目（Accessを選んだ時）＝新幹線・空港・駅の名前だけ
     function loadAccess() {
       if (accessLoading) return accessLoading;
       accessLoading = fetchJson('../assets/basemap-access.json').then(function(d){
-        accessData = d;
-        mkLines('hw', d.highways, accessGroup); mkLines('jr', d.jr, accessGroup); mkLines('shin', d.shinkansen, accessGroup);
-        d.airports.forEach(function(a){ addLabel('air', a.n, a.p, 5, 2, airGroup, PLANE); });
+        mkLines('shin', d.shinkansen, accessGroup);
+        d.airports.forEach(function(a){ addLabel('air', a.n, a.p, a.h ? 6 : 7, 2, airGroup, PLANE); });
         d.stations.forEach(function(s){
-          addLabel('sta', s.n, s.p, 9, 2, staGroup, '<span class="bm-sta-dot" style="position:absolute;left:0;top:0;width:5px;height:5px;margin:-2px 0 0 -2px;border-radius:50%;background:#ecdcae;box-shadow:0 0 2px #0d0a07"></span>');
+          addLabel('sta', s.n, s.p, s.z, 2, staGroup, '<span class="bm-sta-dot" style="position:absolute;left:0;top:0;width:5px;height:5px;margin:-2px 0 0 -2px;border-radius:50%;background:#ecdcae;box-shadow:0 0 2px #0d0a07"></span>');
         });
       });
       return accessLoading;
     }
+    // 2段目（ズーム6〜）＝高速自動車国道／3段目（ズーム7〜）＝JR・その他の自動車専用道・都市高速・山手線と中央線／4段目（ズーム8〜）＝民鉄・地下鉄
+    function loadTrunk() {
+      if (trunkLoading) return trunkLoading;
+      trunkLoading = fetchJson('../assets/basemap-access-trunk.json').then(function(d){ mkLines('trunk', d.trunk, accessGroup); });
+      return trunkLoading;
+    }
+    function loadMain() {
+      if (mainLoading) return mainLoading;
+      mainLoading = fetchJson('../assets/basemap-access-main.json').then(function(d){
+        mkLines('jr', d.jr, accessGroup); mkLines('hw', d.hw, accessGroup); mkLines('urban', d.urban, accessGroup);
+        mkLines('ym', d.yamanote, accessGroup); mkLines('ch', d.chuo, accessGroup);
+      });
+      return mainLoading;
+    }
     function loadPriv() {
       if (privLoading) return privLoading;
-      privLoading = fetchJson('../assets/basemap-access-minor.json').then(function(d){ privData = d; mkLines('priv', d['private'], privGroup); });
+      privLoading = fetchJson('../assets/basemap-access-minor.json').then(function(d){ mkLines('priv', d['private'], accessGroup); });
       return privLoading;
+    }
+    // 線の種類ごとに、出す寄り具合に達していれば出す／重ね順を整える
+    function applyStages(z) {
+      KIND_ORDER.forEach(function(kind){ toggleKind(kind, z >= KIND_MIN_ZOOM[kind]); });
+      KIND_ORDER.forEach(function(kind){ var k = accessKinds[kind]; if (k && k.on) k.layers.forEach(function(pl){ if (accessGroup.hasLayer(pl) && pl._renderer && pl._map) pl.bringToFront(); }); });
     }
 
     // ---- 文字の置き場：重ならないものだけ出す（県名＞空港・駅＞町名の順）。町名・空港・駅は、神社のマーカーとも重ねない
@@ -2275,19 +2298,20 @@
     }
     function scheduleLayout() { if (!layoutTimer) layoutTimer = setTimeout(layoutLabels, 60); }
 
-    // ---- 寄るほど線を太く／民鉄は寄った時だけ
+    // ---- 寄るほど線を太く／種類ごとに、寄った時から出す（段階表示）
     function onZoom() {
       var z = map.getZoom();
       if (mode !== 'detailed' && z > BASE_MAX_ZOOM + 0.001) { setMode('detailed', { auto: true }); return; }
       if (mode === 'access') {
+        var again = function(){ if (mode === 'access') onZoom(); };
+        if (z >= 6 && !trunkLoading) loadTrunk().then(again);
+        if (z >= 7 && !mainLoading) loadMain().then(again);
+        if (z >= 8 && !privLoading) loadPriv().then(again);
         Object.keys(accessKinds).forEach(function(k){ restyle(k, z); });
-        toggleKind('hw', z >= 6); toggleKind('jr', z >= 6);
-        if (z >= 8 && !privLoading) loadPriv().then(function(){ if (mode === 'access') onZoom(); });
-        if (privLoading && privData) { toggle2(privGroup, z >= 9); }
+        applyStages(z);
       }
     }
-    function toggleKind(kind, on) { var k = accessKinds[kind]; if (!k) return; k.layers.forEach(function(pl){ var has = k.group.hasLayer(pl); if (on && !has) k.group.addLayer(pl); else if (!on && has) k.group.removeLayer(pl); }); }
-    function toggle2(group, on) { var has = map.hasLayer(group); if (on && !has) map.addLayer(group); else if (!on && has) map.removeLayer(group); }
+    function toggleKind(kind, on) { var k = accessKinds[kind]; if (!k) return; k.on = on; k.layers.forEach(function(pl){ var has = k.group.hasLayer(pl); if (on && !has) k.group.addLayer(pl); else if (!on && has) k.group.removeLayer(pl); }); }
 
     // ---- 切り替えの部品（地図の右上。Googleマップの「レイヤ」と同じ小さな四角）
     var toast = document.createElement('div'); toast.className = 'bm-toast'; toast.setAttribute('role', 'status'); toast.setAttribute('aria-live', 'polite');
@@ -2307,6 +2331,8 @@
     var LEGEND = [
       [railSw('#f1f1ec', 4, '8 8'), 'Shinkansen'],
       [railSw('#b4b4ae', 3, '6 6'), 'JR lines'],
+      [railSw('#6fd13f', 4, '8 8'), 'Yamanote Line'],
+      [railSw('#f0463c', 4, '8 8'), 'Chuo Line'],
       [railSw('#8f8f89', 2, '4 4'), 'Private &amp; subway lines (zoom in)'],
       ['<svg viewBox="0 0 26 12" aria-hidden="true"><line x1="0" y1="6" x2="26" y2="6" stroke="#4a2a05" stroke-width="6.4"/><line x1="0" y1="6" x2="26" y2="6" stroke="#f5a623" stroke-width="4"/></svg>', 'Expressways'],
       ['<svg viewBox="0 0 26 12" aria-hidden="true"><line x1="0" y1="6" x2="26" y2="6" stroke="#cdb27a" stroke-width="1.2" stroke-dasharray="2 4" stroke-linecap="round" opacity="0.8"/></svg>', 'Prefecture borders'],
@@ -2344,7 +2370,7 @@
     }
 
     function clearAll() {
-      [simpleGroup, accessGroup, privGroup, prefGroup, townGroup, airGroup, staGroup].forEach(function(g){ if (map.hasLayer(g)) map.removeLayer(g); });
+      [simpleGroup, accessGroup, prefGroup, townGroup, airGroup, staGroup].forEach(function(g){ if (map.hasLayer(g)) map.removeLayer(g); });
       if (map.hasLayer(detailedTiles)) map.removeLayer(detailedTiles);
     }
     function setMode(next, opts) {
