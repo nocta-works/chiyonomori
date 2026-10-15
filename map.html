@@ -763,6 +763,61 @@
   .leaflet-tile-pane {
     filter: invert(0.91) hue-rotate(180deg) contrast(0.80) brightness(0.88) saturate(0.60);
   }
+  /* ===== 依頼BS（2026-10-15）：地図の表示を3つから選べる＝Simple／Access／Detailed =====
+     Simple＝県境・海岸線と、英語の県名・町名だけ（自前の線のデータ。タイル画像は使わない）。最初に出す地図
+     Access＝Simple＋鉄道・高速道路・空港・（詳細ページの最寄駅）。選んだ時だけデータを読む
+     Detailed＝従来の地理院タイル（日本語の地名入り）
+     ⚠️地図の上の文字とボタンの名前は、どの言語のページでも英語のまま（今後ドイツ語・フランス語を足しても地図は変えない方針＝本人） */
+  .leaflet-container { background: #17120d; }   /* タイルの読み込み中に、明るい灰色が見えないように（Detailed） */
+  .leaflet-container.bm-vector { background: #0d0a07; }
+  .bm-label-icon.leaflet-div-icon { background: transparent; border: none; pointer-events: none; width: 0; height: 0; visibility: hidden; }   /* 文字の置き場が決まるまで見せない（layoutLabelsがvisibleにする） */
+  .bm-label {
+    position: absolute; left: 0; top: 0; white-space: nowrap; transform: translate(-50%, -50%);
+    font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1; pointer-events: none;
+    text-shadow: 0 0 3px #0d0a07, 0 0 3px #0d0a07, 0 0 6px #0d0a07;
+    transition: opacity 0.25s ease;
+  }
+  .bm-label.bm-hidden { opacity: 0; }
+  .bm-pref { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(221,208,160,0.62); }
+  .bm-zoom-hi .bm-pref { font-size: 12.5px; color: rgba(221,208,160,0.5); }
+  .bm-town { font-size: 11px; letter-spacing: 0.04em; color: rgba(236,224,186,0.82); }
+  .bm-air { font-size: 10.5px; letter-spacing: 0.04em; color: rgba(160,196,226,0.92); }
+  .bm-sta { font-size: 9.5px; letter-spacing: 0.02em; color: rgba(236,224,186,0.8); }
+  .bm-air-mark { position: absolute; left: 0; top: 0; width: 15px; height: 15px; transform: translate(-50%, -50%); pointer-events: none; filter: drop-shadow(0 0 2px #0d0a07); }
+  .bm-switch { position: relative; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .leaflet-control.bm-switch { margin: 10px 10px 0 0; }
+  .bm-switch-btn {
+    display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 10px 0 8px; cursor: pointer;
+    background: rgba(20,14,6,0.92); color: var(--gold); border: 1px solid var(--gold-muted); border-radius: 6px;
+    font: inherit; font-size: 12px; letter-spacing: 0.04em; box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  .bm-switch-btn:hover, .bm-switch-btn[aria-expanded="true"] { border-color: var(--gold); background: rgba(40,26,10,0.96); }
+  .bm-switch-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .bm-switch-panel {
+    position: absolute; right: 0; top: 42px; width: 214px; padding: 6px; z-index: 5;
+    background: rgba(20,14,6,0.97); border: 1px solid var(--gold-muted); border-radius: 8px; box-shadow: 0 8px 26px rgba(0,0,0,0.6);
+  }
+  .bm-switch-panel[hidden] { display: none; }
+  .bm-opt {
+    display: block; width: 100%; text-align: left; cursor: pointer; padding: 7px 9px; border-radius: 6px; border: 1px solid transparent;
+    background: transparent; color: var(--tan-text); font: inherit; font-size: 12.5px;
+  }
+  .bm-opt:hover { background: rgba(var(--gold-glow-rgb),0.1); }
+  .bm-opt[aria-checked="true"] { border-color: var(--gold-muted); background: rgba(var(--gold-glow-rgb),0.14); color: var(--gold); }
+  .bm-opt-desc { display: block; margin-top: 2px; font-size: 10.5px; color: var(--tan-text-2); letter-spacing: 0.02em; }
+  .bm-legend { margin: 6px 4px 2px; padding-top: 7px; border-top: 1px solid rgba(144,112,64,0.45); font-size: 10.5px; color: var(--tan-text-2); }
+  .bm-legend[hidden] { display: none; }
+  .bm-legend-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
+  .bm-legend-sw { width: 26px; height: 0; border-top: 2px solid currentColor; flex-shrink: 0; }
+  .bm-legend-row svg { width: 26px; height: 12px; flex-shrink: 0; }
+  .bm-toast {
+    position: absolute; top: 12px; left: calc((100% - 220px) / 2); transform: translateX(-50%); z-index: 950; max-width: calc(100% - 24px);
+    padding: 8px 14px; border-radius: 18px; border: 1px solid var(--gold-muted); background: rgba(20,14,6,0.94); color: var(--tan-text);
+    font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; letter-spacing: 0.02em; box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .bm-toast.visible { opacity: 1; }
+  @media (max-width: 640px) { .bm-toast { left: 50%; } .bm-switch-btn span.bm-cur { display: none; } .bm-switch-btn { padding: 0 8px; } }
   .shrine-popup .leaflet-popup-content-wrapper {
     background: linear-gradient(135deg, var(--bg-popup-1) 0%, var(--bg-popup-2) 100%);
     border: 1px solid var(--border-header); border-radius: 8px; color: var(--text-body);
@@ -2076,6 +2131,234 @@
     });
   })();
 
+  // ===== 依頼BS（2026-10-15）：地図の表示切り替え（Simple／Access／Detailed） =====
+  // Simple＝県境・海岸線＋英語の県名・町名（自前の線のデータ）。Access＝Simple＋鉄道・高速道路・空港・最寄駅。
+  // Detailed＝従来の地理院タイル。最初はSimple（選んだ地図は覚えない）。
+  // ⚠️地図の上の文字とボタンの名前は、どの言語のページでも英語のまま（本人の方針）。
+  // 出典＝国土交通省 国土数値情報（行政区域・鉄道・高速道路）を加工。行政区域はSmartNews公開の簡素化版（N03-2021）。
+  function initBasemaps(map, detailedTiles) {
+    var BASE_MAX_ZOOM = 11; // Simple／Accessで寄れる上限。簡素化した海岸線は、これより寄ると神社が海に落ちて見える→超えたらDetailedへ自動で切り替える
+    var TOWN_MIN_ZOOM = 8;  // 町名を出し始める寄り具合
+    var container = map.getContainer();
+    var mode = null, token = 0;
+    map.createPane('bmFill').style.zIndex = 210;
+    map.createPane('bmLines').style.zIndex = 215;
+    var labelPane = map.createPane('bmLabels'); labelPane.style.zIndex = 450; labelPane.style.pointerEvents = 'none';
+    var rFill = L.canvas({ pane: 'bmFill' }), rLine = L.canvas({ pane: 'bmLines' });
+    var ATTR = currentLang === 'en'
+      ? 'Source: <a href="https://nlftp.mlit.go.jp/ksj/" target="_blank" rel="noopener" title="Boundaries: simplified N03-2021 data published by SmartNews Media Research Institute">MLIT National Land Numerical Information</a> (processed)'
+      : '出典：国土交通省国土数値情報ダウンロードサイト（<a href="https://nlftp.mlit.go.jp/ksj/" target="_blank" rel="noopener" title="行政区域はSmartNews メディア研究所公開の簡素化版（N03-2021）を使用">nlftp.mlit.go.jp/ksj</a>）をもとに作成';
+    var simpleGroup = L.layerGroup([], { attribution: ATTR });
+    var accessGroup = L.layerGroup([]);
+    var privGroup = L.layerGroup([]);
+    var labels = [];           // {type, ll, minZoom, maxZoom, prio, marker, inner, group}
+    var accessKinds = {};      // {shin, jr, hw} → L.polyline（zoomで太さを変える）
+    var simpleData = null, accessData = null, privData = null;
+    var simpleLoading = null, accessLoading = null, privLoading = null;
+
+    function ll(c) { return [c[1], c[0]]; }
+    function fetchJson(url) { return fetch(url).then(function(r){ return r.json(); }); }
+    function addLabel(type, name, p, minZoom, prio, group, extraHtml) {
+      var cls = 'bm-label bm-' + type;
+      var html = (extraHtml || '') + '<span class="' + cls + '" translate="no" lang="en">' + name + '</span>';
+      var marker = L.marker([p[1], p[0]], { pane: 'bmLabels', interactive: false, keyboard: false,
+        icon: L.divIcon({ className: 'bm-label-icon', html: html, iconSize: [0, 0], iconAnchor: [0, 0] }) });
+      group.addLayer(marker);
+      labels.push({ type: type, ll: L.latLng(p[1], p[0]), minZoom: minZoom, prio: prio, marker: marker, group: group, el: null });
+    }
+    var airGroup = L.layerGroup([]), staGroup = L.layerGroup([]), prefGroup = L.layerGroup([]), townGroup = L.layerGroup([]);
+
+    function loadSimple() {
+      if (simpleLoading) return simpleLoading;
+      simpleLoading = fetchJson('assets/basemap-simple.json').then(function(d){
+        simpleData = d;
+        var land = L.geoJSON({ type: 'Feature', geometry: d.land }, { renderer: rFill, interactive: false,
+          style: { fillColor: '#241b11', fillOpacity: 1, color: '#8a7048', weight: 0.9, opacity: 0.8 } });
+        var borders = L.polyline(d.borders.map(function(l){ return l.map(ll); }), { renderer: rLine, interactive: false,
+          color: '#d3a955', weight: 0.9, opacity: 0.62, smoothFactor: 1 });
+        simpleGroup.addLayer(land); simpleGroup.addLayer(borders);
+        d.prefs.forEach(function(p){ addLabel('pref', p.n, p.p, 0, 3, prefGroup); });
+        d.towns.forEach(function(t){ addLabel('town', t.n, t.p, TOWN_MIN_ZOOM, 1, townGroup); });
+      });
+      return simpleLoading;
+    }
+    function lineStyle(kind, z) {
+      if (kind === 'shin') return { color: '#ecdcae', weight: 1.5 + Math.max(0, z - 5) * 0.25, opacity: 0.95 };
+      if (kind === 'jr') return { color: '#b9a57c', weight: 0.7 + Math.max(0, z - 6) * 0.14, opacity: 0.85 };
+      if (kind === 'priv') return { color: '#85775a', weight: 0.6 + Math.max(0, z - 9) * 0.12, opacity: 0.8 };
+      return { color: '#62aaa4', weight: 0.9 + Math.max(0, z - 6) * 0.14, opacity: 0.9 };   // 高速道路
+    }
+    function mkLines(kind, arr, group) {
+      var pl = L.polyline(arr.map(function(l){ return l.map(ll); }), Object.assign({ renderer: rLine, interactive: false, smoothFactor: 1 }, lineStyle(kind, map.getZoom())));
+      group.addLayer(pl); accessKinds[kind] = pl; return pl;
+    }
+    var PLANE = '<svg class="bm-air-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L14 9L22 13V15L14 13L13 19L16 21V22L12 21L8 22V21L11 19L10 13L2 15V13L10 9Z" fill="#a0c4e2"/></svg>';
+    function loadAccess() {
+      if (accessLoading) return accessLoading;
+      accessLoading = fetchJson('assets/basemap-access.json').then(function(d){
+        accessData = d;
+        mkLines('hw', d.highways, accessGroup); mkLines('jr', d.jr, accessGroup); mkLines('shin', d.shinkansen, accessGroup);
+        d.airports.forEach(function(a){ addLabel('air', a.n, a.p, 5, 2, airGroup, PLANE); });
+        d.stations.forEach(function(s){
+          addLabel('sta', s.n, s.p, 9, 2, staGroup, '<span class="bm-sta-dot" style="position:absolute;left:0;top:0;width:5px;height:5px;margin:-2px 0 0 -2px;border-radius:50%;background:#ecdcae;box-shadow:0 0 2px #0d0a07"></span>');
+        });
+      });
+      return accessLoading;
+    }
+    function loadPriv() {
+      if (privLoading) return privLoading;
+      privLoading = fetchJson('assets/basemap-access-minor.json').then(function(d){ privData = d; mkLines('priv', d['private'], privGroup); });
+      return privLoading;
+    }
+
+    // ---- 文字の置き場：重ならないものだけ出す（県名＞空港・駅＞町名の順）。町名・空港・駅は、神社のマーカーとも重ねない
+    var layoutTimer = null;
+    function layoutLabels() {
+      layoutTimer = null;
+      if (mode === 'detailed') return;
+      var z = map.getZoom(), size = map.getSize();
+      container.classList.toggle('bm-zoom-hi', z >= 9);
+      var mboxes = [];
+      markerList.forEach(function(m){
+        if (!map.hasLayer(m.marker)) return;
+        var p = map.latLngToContainerPoint(m.marker.getLatLng());
+        mboxes.push([p.x - 19, p.y - 48, p.x + 19, p.y + 6]);
+      });
+      function hit(a, b) { return a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1]; }
+      var placed = [];
+      var vis = labels.filter(function(L_){ return L_.group && map.hasLayer(L_.group) && z >= L_.minZoom; });
+      vis.sort(function(a, b){ return b.prio - a.prio; });
+      labels.forEach(function(L_){
+        // 切り替えでレイヤを外して付け直すと、マーカーのDOMが作り直される→毎回取り直す（古い要素を握らない）
+        L_.el = L_.marker._icon ? L_.marker._icon.querySelector('.bm-label') : null;
+      });
+      var shown = new Set();
+      labels.forEach(function(L_){ var ic = L_.marker._icon; if (ic) { ic.style.display = (L_.group && map.hasLayer(L_.group) && z >= L_.minZoom) ? '' : 'none'; ic.style.visibility = 'visible'; } });
+      vis.forEach(function(L_){
+        var el = L_.el; if (!el) return;
+        var p = map.latLngToContainerPoint(L_.ll);
+        if (p.x < -40 || p.y < -20 || p.x > size.x + 40 || p.y > size.y + 20) return;
+        var w = el.offsetWidth + 6, h = el.offsetHeight + 4;
+        var offs = L_.type === 'pref' ? [[0, 0]]
+          : (L_.type === 'town' ? [[0, 0], [0, 17], [0, -22], [w / 2 + 14, 0], [-(w / 2 + 14), 0]]
+          : [[w / 2 + 9, 0], [-(w / 2 + 9), 0], [0, 16], [0, -16]]);   // 空港・駅＝印の右→左→下→上に文字
+        for (var i = 0; i < offs.length; i++) {
+          var cx = p.x + offs[i][0], cy = p.y + offs[i][1];
+          var box = [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
+          var bad = placed.some(function(b){ return hit(box, b); });
+          if (!bad && L_.type !== 'pref') bad = mboxes.some(function(b){ return hit(box, b); });
+          if (!bad) {
+            placed.push(box); shown.add(L_);
+            el.style.transform = 'translate(calc(-50% + ' + offs[i][0] + 'px), calc(-50% + ' + offs[i][1] + 'px))';
+            break;
+          }
+        }
+      });
+      labels.forEach(function(L_){ if (L_.el) L_.el.classList.toggle('bm-hidden', !shown.has(L_)); });
+    }
+    function scheduleLayout() { if (!layoutTimer) layoutTimer = setTimeout(layoutLabels, 60); }
+
+    // ---- 寄るほど線を太く／民鉄は寄った時だけ
+    function onZoom() {
+      var z = map.getZoom();
+      if (mode !== 'detailed' && z > BASE_MAX_ZOOM + 0.001) { setMode('detailed', { auto: true }); return; }
+      if (mode === 'access') {
+        Object.keys(accessKinds).forEach(function(k){ accessKinds[k].setStyle(lineStyle(k, z)); });
+        toggle(accessKinds.hw, z >= 6); toggle(accessKinds.jr, z >= 6);
+        if (z >= 8 && !privLoading) loadPriv().then(function(){ if (mode === 'access') onZoom(); });
+        if (privLoading && privData) { toggle2(privGroup, z >= 9); }
+      }
+    }
+    function toggle(layer, on) { if (!layer) return; var has = accessGroup.hasLayer(layer); if (on && !has) accessGroup.addLayer(layer); else if (!on && has) accessGroup.removeLayer(layer); }
+    function toggle2(group, on) { var has = map.hasLayer(group); if (on && !has) map.addLayer(group); else if (!on && has) map.removeLayer(group); }
+
+    // ---- 切り替えの部品（地図の右上。Googleマップの「レイヤ」と同じ小さな四角）
+    var toast = document.createElement('div'); toast.className = 'bm-toast'; toast.setAttribute('role', 'status'); toast.setAttribute('aria-live', 'polite');
+    map.getContainer().parentNode.appendChild(toast);
+    var toastTimer = null;
+    function say(text) {
+      toast.textContent = text; toast.classList.add('visible'); clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toast.classList.remove('visible'); }, 4200);
+    }
+    var MODES = [
+      { id: 'simple', name: 'Simple', desc: 'Prefectures and towns' },
+      { id: 'access', name: 'Access', desc: 'Plus rail, expressways, airports' },
+      { id: 'detailed', name: 'Detailed', desc: 'Detailed map (Japanese labels)' }
+    ];
+    var ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 3L21 8L12 13L3 8Z"/><path d="M3 12.2L12 17.2L21 12.2" stroke-linecap="round"/><path d="M3 16.4L12 21.4L21 16.4" stroke-linecap="round" opacity="0.55"/></svg>';
+    var LEGEND = [
+      ['<span class="bm-legend-sw" style="color:#ecdcae;border-top-width:3px"></span>', 'Shinkansen'],
+      ['<span class="bm-legend-sw" style="color:#b9a57c"></span>', 'JR lines'],
+      ['<span class="bm-legend-sw" style="color:#85775a;border-top-width:1px"></span>', 'Private &amp; subway lines (zoom in)'],
+      ['<span class="bm-legend-sw" style="color:#62aaa4"></span>', 'Expressways'],
+      ['<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L14 9L22 13V15L14 13L13 19L16 21V22L12 21L8 22V21L11 19L10 13L2 15V13L10 9Z" fill="#a0c4e2" transform="translate(0 0)"/></svg>', 'Airports'],
+      ['<span style="display:inline-block;width:26px;text-align:center"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:#ecdcae"></span></span>', 'Stations named on shrine pages (zoom in)']
+    ];
+    var panel, btn, curLabel;
+    var Ctl = L.Control.extend({
+      options: { position: 'topright' },
+      onAdd: function() {
+        var wrap = L.DomUtil.create('div', 'leaflet-control bm-switch');
+        L.DomEvent.disableClickPropagation(wrap); L.DomEvent.disableScrollPropagation(wrap);
+        wrap.innerHTML =
+          '<button type="button" class="bm-switch-btn" aria-haspopup="true" aria-expanded="false" aria-label="Map type" translate="no" lang="en">' + ICON + '<span class="bm-cur"></span></button>' +
+          '<div class="bm-switch-panel" role="menu" aria-label="Map type" translate="no" lang="en" hidden>' +
+          MODES.map(function(m){ return '<button type="button" class="bm-opt" role="menuitemradio" aria-checked="false" data-mode="' + m.id + '">' + m.name + '<span class="bm-opt-desc">' + m.desc + '</span></button>'; }).join('') +
+          '<div class="bm-legend" hidden>' + LEGEND.map(function(r){ return '<div class="bm-legend-row">' + r[0] + '<span>' + r[1] + '</span></div>'; }).join('') + '</div></div>';
+        btn = wrap.querySelector('.bm-switch-btn'); panel = wrap.querySelector('.bm-switch-panel'); curLabel = wrap.querySelector('.bm-cur');
+        btn.addEventListener('click', function(){ var open = panel.hasAttribute('hidden'); if (open) panel.removeAttribute('hidden'); else panel.setAttribute('hidden', ''); btn.setAttribute('aria-expanded', String(open)); });
+        panel.addEventListener('click', function(e){
+          var b = e.target.closest('.bm-opt'); if (!b) return;
+          setMode(b.getAttribute('data-mode'), {}); panel.setAttribute('hidden', ''); btn.setAttribute('aria-expanded', 'false');
+        });
+        document.addEventListener('click', function(e){ if (!wrap.contains(e.target) && !panel.hasAttribute('hidden')) { panel.setAttribute('hidden', ''); btn.setAttribute('aria-expanded', 'false'); } });
+        document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !panel.hasAttribute('hidden')) { panel.setAttribute('hidden', ''); btn.setAttribute('aria-expanded', 'false'); btn.focus(); } });
+        return wrap;
+      }
+    });
+    new Ctl().addTo(map);
+    function syncUI() {
+      if (!panel) return;
+      curLabel.textContent = MODES.filter(function(m){ return m.id === mode; })[0].name;
+      panel.querySelectorAll('.bm-opt').forEach(function(b){ b.setAttribute('aria-checked', String(b.getAttribute('data-mode') === mode)); });
+      var lg = panel.querySelector('.bm-legend'); if (mode === 'access') lg.removeAttribute('hidden'); else lg.setAttribute('hidden', '');
+    }
+
+    function clearAll() {
+      [simpleGroup, accessGroup, privGroup, prefGroup, townGroup, airGroup, staGroup].forEach(function(g){ if (map.hasLayer(g)) map.removeLayer(g); });
+      if (map.hasLayer(detailedTiles)) map.removeLayer(detailedTiles);
+    }
+    function setMode(next, opts) {
+      opts = opts || {};
+      if (next === mode) return;
+      var my = ++token; mode = next; syncUI();
+      clearAll();
+      if (next === 'detailed') {
+        container.classList.remove('bm-vector'); map.addLayer(detailedTiles); detailedTiles.bringToBack();
+        if (opts.auto) say('Switched to the Detailed map to zoom in closer.');
+        return;
+      }
+      container.classList.add('bm-vector');
+      // Detailedで上限より寄っていた時にSimple／Accessを選んだら、上限まで引いてから切り替える（すぐDetailedへ戻されないように）
+      if (!opts.auto && map.getZoom() > BASE_MAX_ZOOM) map.setZoom(BASE_MAX_ZOOM, { animate: false });
+      var jobs = [loadSimple()]; if (next === 'access') jobs.push(loadAccess());
+      Promise.all(jobs).then(function(){
+        if (my !== token) return;
+        map.addLayer(simpleGroup); map.addLayer(prefGroup); map.addLayer(townGroup);
+        if (next === 'access') {
+          map.addLayer(accessGroup); map.addLayer(airGroup); map.addLayer(staGroup);
+          Object.keys(accessKinds).forEach(function(k){ accessKinds[k].setStyle(lineStyle(k, map.getZoom())); });
+          onZoom();
+        }
+        if (map.getZoom() > BASE_MAX_ZOOM + 0.001) { setMode('detailed', { auto: true }); return; }
+        scheduleLayout(); setTimeout(layoutLabels, 150);
+      }).catch(function(){ if (my === token) { mode = null; setMode('detailed', {}); say('The simple map could not be loaded. Showing the Detailed map.'); } });
+    }
+    map.on('zoom', onZoom);
+    map.on('moveend zoomend layeradd layerremove', scheduleLayout);
+    return { setMode: setMode, getMode: function(){ return mode; }, maxZoom: BASE_MAX_ZOOM, relayout: scheduleLayout };
+  }
+
   fetch('assets/shrines-overseas.json')
     .then(function(res){ return res.json(); })
     .then(function(shrines){
@@ -2084,7 +2367,7 @@
       // 触りたいという本人要望があるため、地図上でのスクロールがいったん
       // 止まった時点（＝勢いで通過し終えたと判断できる時点）で自動的に
       // scrollWheelZoomを有効化する（本人指摘・2026-09-08）。
-      map = L.map('shrine-map', { center: [36.0,136.5], zoom: 5, scrollWheelZoom: false });
+      map = L.map('shrine-map', { center: [36.0,136.5], zoom: 5, scrollWheelZoom: false, maxZoom: 18 });
       (function(){
         var mapEl = document.getElementById('shrine-map');
         var armTimer = null;
@@ -2098,10 +2381,12 @@
         }
         mapEl.addEventListener('wheel', onWheel, { passive: true });
       })();
-      L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+      // 依頼BS：従来の地理院タイルは「Detailed」として残す（最初はSimple。下のbasemap.setMode()で出す）
+      var detailedTiles = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
         attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">地理院タイル</a>',
         maxZoom: 18
-      }).addTo(map);
+      });
+      var basemap = initBasemaps(map, detailedTiles);
       // 実行順F（依頼P-2・2026-09-13）：地図の何もない場所をクリックしたら
       // エリアの囲いを解除する（囲い自体のクリックはstopPropagationしてあるので
       // ここには来ない）
@@ -2181,6 +2466,9 @@
         renderFilterButtons();
         renderShrineDropdown();
       }
+      // 依頼BS：最初に出す地図＝Simple（選んだ地図は覚えない）。「← 地図に戻る」で復元する表示がSimpleで寄れる上限より
+      // 寄っていた場合だけ、その表示をそのまま見せるためDetailedで始める
+      basemap.setMode(restoredView && restoredView.zoom > basemap.maxZoom ? 'detailed' : 'simple');
       var bounds = [];
       shrines.forEach(function(s){
         var initialTag = activeTopTag(s.tags);
