@@ -18,6 +18,7 @@
     --gold-muted: #907040;
     --border-4: #6a5030;
     --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;   /* 依頼BT-1（2026-10-18）：未定義のままだとKo-fiリンクとプライバシーの行が親の色（#6a5030・コントラスト約2.5:1）になり読めなかった。定義のあるページ（川勾神社など）と同じ値（約9.5:1） */
   }
   * { box-sizing: border-box; }
   body {
@@ -88,6 +89,9 @@
   .shrine-link.gmaps:hover { background: rgba(66,133,244,0.3); color: #aad4ff; }
   .shrine-link.official { background: rgba(var(--gold-glow-rgb),0.16); border: 1px solid rgba(var(--gold-glow-rgb),0.4); color: var(--gold); }
   .shrine-link.official:hover { background: rgba(var(--gold-glow-rgb),0.3); }
+  /* 依頼BT-3（2026-10-18）：公式サイトを確かめていない社は、名前を「Search official site／公式サイトを検索」に変えた（行き先は従来どおりGoogle検索）。
+     長い名前は2行に折り返してよい（3つのボタンが狭い幅に並ぶため） */
+  .shrine-link.official.search { white-space: normal; text-align: center; line-height: 1.25; }
   .shrine-link.wiki { background: rgba(150,150,165,0.16); border: 1px solid rgba(150,150,165,0.4); color: #b8b8c8; }
   .shrine-link.wiki:hover { background: rgba(150,150,165,0.3); color: #d8d8e8; }
 
@@ -164,7 +168,7 @@
 </div>
 <div class="shrine-links">
 <a class="shrine-link gmaps" href="https://www.google.com/maps/search/千葉神社" rel="noopener" target="_blank">📍 Map</a>
-<a class="shrine-link official" href="https://www.google.com/search?q=千葉神社+公式" rel="noopener" target="_blank">🌐 Official site</a>
+<a class="shrine-link official search" href="https://www.google.com/search?q=千葉神社+公式" rel="noopener" target="_blank">🌐 Search official site</a>
 <a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/千葉神社" rel="noopener" target="_blank">📖 Wiki</a>
 </div>
 </div>

@@ -856,7 +856,12 @@
     background: rgba(var(--gold-glow-rgb),0.16); border: 1px solid rgba(var(--gold-glow-rgb),0.4); color: var(--gold);
   }
   .popup-link-detail:hover { background: rgba(var(--gold-glow-rgb),0.3); }
-  .popup-links { display: flex; gap: 5px; margin-top: 6px; }
+  .popup-links { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  /* 依頼BT-3（2026-10-18）：公式サイトの名前を「Search official site／公式サイトを検索」に変えた（行き先は従来どおりGoogle検索）。
+     長いので、地図とWikiを上の段、これを下の段いっぱいに置く */
+  .popup-link.gmaps { order: 1; }
+  .popup-link.wiki { order: 2; }
+  .popup-link.official { order: 3; flex: 1 1 100%; }
   .popup-link { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1; min-width: 0; padding: 5px 6px; border-radius: 6px; font-size: 12.5px; text-decoration: none; letter-spacing: 0.03em; white-space: nowrap; }
   .popup-link-icon { font-size: 13px; }
   .popup-link.gmaps { background: rgba(66,133,244,0.14); border: 1px solid rgba(66,133,244,0.35); color: var(--color-link); }
@@ -951,14 +956,14 @@
   var HEADER_TITLE = { ja: '千代の杜', en: 'Chiyo no Mori' };
   var CHROME_TEXT = {
     ja: {
-      province: '旧国：', deity: '祭神：', map: '地図', official: '公式', wiki: 'Wiki', detail: '詳しく見る',
+      province: '旧国：', deity: '祭神：', map: '地図', official: '公式サイトを検索', wiki: 'Wiki', detail: '詳しく見る',
       blessing: 'ご利益：', founded: '創建：', station: '最寄駅：',
       listTitle: '神社リスト',
       shownFmt: function(n){ return '表示中 ' + n + ' 社'; },
       countFmt: function(n){ return n + '社'; },
     },
     en: {
-      province: 'Province: ', deity: 'Deity: ', map: 'Map', official: 'Official', wiki: 'Wiki', detail: 'Read more',
+      province: 'Province: ', deity: 'Deity: ', map: 'Map', official: 'Search official site', wiki: 'Wiki', detail: 'Read more',
       blessing: 'Blessings: ', founded: 'Founded: ', station: 'Nearest station: ',
       listTitle: 'Shrine List',
       shownFmt: function(n){ return 'Showing ' + n + ' shrine' + (n === 1 ? '' : 's'); },
