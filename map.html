@@ -539,7 +539,12 @@
   /* 新規5（2026-09-26）：AN-1申し送りへの回答＝地図にもプライバシーの1行を
      入れる（.page-footerを持たないため既存のadd_privacy_footer_line()の
      対象外だった）。「?」窓（rank-help-btnが開くこの.rank-modal）の末尾に置く */
-  .rank-modal-privacy { margin-top: 10px; font-size: 10.5px; color: var(--tan-text-2); opacity: 0.75; }
+  .rank-modal-privacy { margin-top: 10px; font-size: 10.5px; color: var(--tan-text-2); }   /* 依頼収益-8：opacity 0.75を外した（約3.8:1→約5.8:1） */
+  /* 依頼💰収益-8 A（2026-10-19）：スマホの地図にKo-fiの入口が無かった（一覧〈サイドバー〉ごと隠れるため）→格式の窓の末尾に1行（PC・スマホ共通）。
+     地図の下のフッター・ポップアップ・ドロップダウンには置かない。計測の名前は`kofi-rank`（使われたかを他と混ぜずに見る） */
+  .rank-modal-tip { margin-top: 12px; font-size: 11px; line-height: 1.7; text-align: center; color: var(--tan-text-2); }
+  .rank-modal-tip a { white-space: nowrap; color: var(--tan-text); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(221,208,160,0.5); }
+  .rank-modal-tip a:hover { color: var(--gold); }
   .rank-modal-privacy a { color: var(--tan-text-2); text-decoration: underline; }
   .ctrl-divider { width: 1px; height: 22px; background: var(--border-4); margin: 0 2px; flex-shrink: 0; }
   .mock-stats { font-size: 12px; color: var(--tan-text-2); border-left: 1px solid var(--border-4); padding-left: 10px; white-space: nowrap; }
@@ -907,6 +912,10 @@
 <h2 class="rank-modal-title" id="rank-modal-title"></h2>
 <div id="rank-modal-rows"></div>
 <a class="rank-modal-more" href="#" id="rank-modal-more"></a>
+<div class="rank-modal-tip">
+<span>Chiyo no Mori is independent and ad-free. If this guide helped you plan your visit,</span>
+<a data-goatcounter-click="kofi-rank" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>leave a small tip ↗</span></a>
+</div>
 <div class="rank-modal-privacy">
 <span>No cookies. Anonymous visit counts only.</span>
 <a href="privacy.html">Privacy</a>

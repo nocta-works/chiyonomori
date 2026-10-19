@@ -136,7 +136,10 @@
   .next-shrines .shrine-links { margin: 34px auto 0; }
   .page-footer { text-align: center; padding: 40px; font-size: 11px; color: var(--border-4); }
   .footer-support { margin-top: 8px; }
-  .footer-support a { color: var(--tan-text-2); text-decoration: none; }
+  /* 依頼💰収益-8 C（2026-10-19）：フッターの「支援する理由の1文」とプライバシーの行が`.page-footer`の色（#6a5030・約2.5:1）で読めなかった。
+     #a89c78（約6.8:1）に。リンクは明るい色（#c9b98a・約9.5:1）＋下線で、文と見分ける。サイト名の行は控えめなまま */
+  .footer-support, .footer-privacy { color: #a89c78; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(201,185,138,0.55); }
   .footer-support a:hover { color: var(--gold); }
   .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
 
