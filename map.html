@@ -473,6 +473,14 @@
     transition: all var(--dur-slower); opacity: 0.7; background: transparent;
   }
   .filter-btn.active { opacity: 1; }
+  /* 依頼BU-1（2026-10-21）：タグを「すべて外す／すべて表示」の1つのボタン。タグ（丸い・色つき・印つき）とは別物に見えるよう、
+     印なし・角の小さい枠線だけ・文字は一段小さく。タグの列の左端 */
+  .tag-all-btn {
+    padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-4); background: transparent;
+    color: var(--tan-text-2); font-family: inherit; font-size: 12px; letter-spacing: 0.03em; cursor: pointer; white-space: nowrap;
+  }
+  .tag-all-btn:hover { background: rgba(var(--gold-glow-rgb),0.1); color: var(--tan-text); }
+  .sidebar-empty { padding: 16px 12px; font-size: 12px; color: var(--tan-text-2); }
   /* 依頼BN-4：丸いボタンの左に格式の印（18px）。表示中＝地の色で塗り＋金の細線＋文字#fbf3e0／
      非表示＝塗りなし＋地の色の線＋文字は薄い色。meishaの葉脈は、表示中は地の色・非表示は背景色で抜く */
   .filter-btn.jingu { border-color: var(--tag-jingu); color: var(--tag-jingu-light); background: transparent; }
@@ -726,6 +734,7 @@
     .mock-controls::-webkit-scrollbar { display: none; }
     .mock-controls > * { flex-shrink: 0; }
     .filter-btn { font-size: 12px; padding: 4px 9px; gap: 4px; white-space: nowrap; }
+    .tag-all-btn { font-size: 11px; padding: 4px 8px; }
     .filter-btn .lbl-full { display: none; }
     .filter-btn .lbl-short { display: inline; }
     .mock-stats { font-size: 11.5px; }
@@ -757,6 +766,7 @@
     .mock-controls::-webkit-scrollbar { display: none; }
     .mock-controls > * { flex-shrink: 0; }
     .filter-btn { font-size: 12px; padding: 4px 10px; gap: 4px; white-space: nowrap; }
+    .tag-all-btn { font-size: 11px; padding: 4px 8px; }
     #map-area { min-height: 0; }
     #sidebar { display: none; }
     .area-enclosure-cta-wrap { right: 0; }
@@ -1066,6 +1076,9 @@
   }
   var urlTags = readTagsFromUrl();
   var activeFilters = urlTags || new Set(DEFAULT_TAGS);
+  // 依頼BU（2026-10-21）：最初の演出（startStagedReveal）の制御口。人がタグ・「すべて外す」を押した時に、
+  // 残りのタグが後から勝手にオンにならないよう止める。演出が無い時はnull
+  var revealControl = null;
   // 🆕2026-09-30（本人指摘）：詳細ページ・エリアページから「← 地図に戻る」で
   // 戻った時は、離れる直前の地図の状態（ズーム位置・表示タグ）にそのまま
   // 戻ってほしい（オープニング演出の「毎回リセット」とは別物）。ページを
@@ -1079,7 +1092,8 @@
       url.searchParams.delete(TAG_URL_PARAM);
     } else {
       var ordered = TAG_ORDER.filter(function(t){ return activeFilters.has(t); });
-      url.searchParams.set(TAG_URL_PARAM, ordered.join(','));
+      if (ordered.length) url.searchParams.set(TAG_URL_PARAM, ordered.join(','));
+      else url.searchParams.delete(TAG_URL_PARAM);   // 依頼BU：全部オフ
     }
     history.replaceState(null, '', url.pathname + url.search + url.hash);
   }
@@ -1523,13 +1537,30 @@
     // 5つ並べて見せる（本人指定）
     var rankHelpTitle = currentLang === 'ja' ? '格式について' : 'About shrine ranks';
     var rankHelpHtml = '<button type="button" class="rank-help-btn" id="rank-help-btn" title="' + rankHelpTitle + '">?</button>';
-    container.innerHTML = buttonsHtml + rankHelpHtml + '<div class="ctrl-divider"></div><div class="mock-stats" id="mock-stats"></div>';
+    // 依頼BU-1（2026-10-21）：タグの列の左端に「すべて外す／すべて表示」の1つのボタン。タグとは別物と分かる形（印なし・角の小さい枠線だけ）
+    var anyOn = activeFilters.size > 0;
+    var allBtnText = anyOn ? (currentLang === 'ja' ? 'すべて外す' : 'Clear all') : (currentLang === 'ja' ? 'すべて表示' : 'Show all');
+    var allBtnHtml = '<button type="button" class="tag-all-btn" id="tag-all-btn" data-mode="' + (anyOn ? 'clear' : 'show') + '">' + allBtnText + '</button>';
+    container.innerHTML = allBtnHtml + buttonsHtml + rankHelpHtml + '<div class="ctrl-divider"></div><div class="mock-stats" id="mock-stats"></div>';
   }
   renderFilterButtons();
   document.getElementById('mock-controls').addEventListener('click', function(e){
     if (e.target.closest('#rank-help-btn')) { openRankModal(); return; }
+    // 依頼BU-1：「すべて外す／すべて表示」。最初の演出の途中なら、そこで止める（残りのタグが後から勝手にオンにならないように）
+    var allBtn = e.target.closest('#tag-all-btn');
+    if (allBtn) {
+      if (revealControl) revealControl.cancel();
+      if (activeFilters.size > 0) activeFilters.clear();
+      else TAG_ORDER.forEach(function(t){ activeFilters.add(t); });   // 二宮も含めた5つ（演出の後と同じ状態）
+      syncTagsUrl();
+      renderFilterButtons();
+      renderShrineDropdown();
+      redrawMarkers();
+      return;
+    }
     var btn = e.target.closest('.filter-btn');
     if (!btn) return;
+    if (revealControl) revealControl.cancel();   // 依頼BU-1：タグを1つ押した時も演出を止める（今の状態から、押したタグだけを切り替える）
     var tag = btn.getAttribute('data-tag');
     activeFilters.has(tag) ? activeFilters.delete(tag) : activeFilters.add(tag);
     syncTagsUrl();
@@ -1633,6 +1664,7 @@
       var cfg = TAG_CONFIG[tag];
       var sec = document.createElement('div');
       sec.className = 'sidebar-section';
+      sec.setAttribute('data-tag', tag);   // 依頼BU-2：最初の演出で、増えたタグの節へスクロールするため
       var title = document.createElement('div');
       title.className = 'sidebar-section-title';
       title.style.cssText = 'background:' + cfg.bg + '; border-left:3px solid ' + cfg.border + '; color:' + cfg.border + ';';
@@ -1642,6 +1674,13 @@
       list.appendChild(sec);
       total += items.length;
     });
+    // 依頼BU-1：全部オフの時は空にせず、1行の案内（最初の演出が始まる前の空の状態では出さない）
+    if (total === 0 && !(revealControl && revealControl.active())) {
+      var empty = document.createElement('div');
+      empty.className = 'sidebar-empty';
+      empty.textContent = currentLang === 'ja' ? 'タグが選ばれていません' : 'No tags selected.';
+      list.appendChild(empty);
+    }
     var countEl = document.getElementById('sidebar-count');
     if (countEl) countEl.textContent = CHROME_TEXT[currentLang].countFmt(total);
     var titleEl = document.getElementById('sidebar-title');
@@ -1920,30 +1959,54 @@
     var stageIndex = 0;
     var interrupted = false;
     var timer = null;
-    function addStageTags(tags) {
+    // 依頼BU-2（2026-10-21）：タグが増えるたび、右のリスト（PCだけ）を、増えたタグの節の見出しまでなめらかにスクロールして追う。
+    // 人がリストをスクロールした（ホイール・タッチ・スクロールバーのドラッグ・キー）・地図をドラッグした・タグを押した時は、それ以降は追わない。
+    // 演出の後の位置は、最後に足された名社の節のまま
+    var list = document.getElementById('sidebar-list');
+    var following = true;
+    function stopFollowing() { following = false; }
+    if (list) ['wheel', 'touchstart', 'mousedown', 'keydown'].forEach(function(ev){ list.addEventListener(ev, stopFollowing, { passive: true, once: true }); });
+    function addStageTags(tags, follow) {
+      var prevTop = list ? list.scrollTop : 0;
       tags.forEach(function(t){ activeFilters.add(t); });
       renderFilterButtons();
       renderShrineDropdown();
       redrawMarkers();
+      if (follow && following && list && list.offsetParent !== null) {   // offsetParent=null＝右のリストが隠れている（スマホ）→追わない
+        list.scrollTop = prevTop;   // リストを作り直すと位置が戻るので、いったん元の位置に直してから、新しい節へ動く
+        var sec = list.querySelector('.sidebar-section[data-tag="' + tags[0] + '"]');
+        if (sec) {
+          var top = sec.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop;
+          list.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      }
     }
     function finishAll() {
       if (timer) clearTimeout(timer);
-      addStageTags(STAGES.slice(stageIndex));
+      following = false;
+      addStageTags(STAGES.slice(stageIndex), false);
       stageIndex = STAGES.length;
     }
+    // 人が「すべて外す」・タグを押した時＝そこで止める。finishAllと違い、残りのタグは足さない（押した後の状態を、人の操作で決める）
+    revealControl = {
+      cancel: function(){ interrupted = true; following = false; if (timer) clearTimeout(timer); revealControl = null; },
+      active: function(){ return !interrupted && stageIndex < STAGES.length; }
+    };
     map.once('dragstart', function(){
       if (interrupted || stageIndex >= STAGES.length) return;
       interrupted = true;
       map.stop();
       finishAll();
+      revealControl = null;
     });
     function nextStage() {
       if (interrupted || stageIndex >= STAGES.length) return;
       var tag = STAGES[stageIndex];
-      addStageTags([tag]);
+      addStageTags([tag], true);
       if (tag === 'ni') flyToKanto(2.5); // 二宮の表示と同時にズーム開始
       stageIndex++;
       if (stageIndex < STAGES.length) timer = setTimeout(nextStage, STEP_MS);
+      else revealControl = null;   // 最後のタグまで来たら、演出は終わり
     }
     timer = setTimeout(nextStage, STEP_MS);
   }
