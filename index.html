@@ -149,12 +149,21 @@
   .intro-skip {
     position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
     z-index: 4; display: flex; align-items: center; gap: 8px;
-    padding: 13px 26px; border-radius: 26px; cursor: pointer;
-    background: rgba(0,0,0,0.4); border: 1px solid rgba(var(--gold-glow-rgb),0.45);
-    color: var(--tan-text); font-size: 15px; letter-spacing: 0.1em;
-    opacity: 0.85; transition: opacity 0.2s ease, background 0.2s ease;
+    padding: 9px 20px; border-radius: 26px; cursor: pointer;
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(var(--gold-glow-rgb),0.25);
+    color: var(--tan-text); font-size: 13px; letter-spacing: 0.1em;
+    opacity: 0.8; transition: opacity 0.2s ease, background 0.2s ease;
   }
   .intro-skip:hover { opacity: 1; background: rgba(0,0,0,0.55); }
+  /* 依頼BV-1（2026-10-22）：地図へ直接行く小さなリンク（右上・文字だけ） */
+  .intro-map-link {
+    position: fixed; top: 14px; right: 20px; z-index: 5100;
+    padding: 8px 6px; font-size: 13px; letter-spacing: 0.08em; text-decoration: none;
+    color: var(--tan-text); text-shadow: 0 1px 8px rgba(0,0,0,0.9), 0 0 3px rgba(0,0,0,0.9);
+    transition: opacity 0.4s ease, color 0.2s ease;
+  }
+  .intro-map-link:hover, .intro-map-link:focus-visible { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  .intro-map-link.intro-map-link-hide { opacity: 0; pointer-events: none; }
   .intro-skip-icon { font-size: 17px; line-height: 1; }
   /* ③動画だけのキャッチコピー（本人指定・2026-09-06：コラージュ見出し用の一文をここへ移動） */
   .intro-video-caption {
@@ -316,16 +325,18 @@
   #declaration-slide.revealed .declaration-text { opacity: 1; transform: translateY(0); }
   .enter-map-prompt {
     display: flex; align-items: center; gap: 10px; cursor: pointer;
-    padding: 14px 30px; border-radius: 32px;
-    background: transparent; border: 1px solid rgba(var(--gold-glow-rgb),0.5);
-    color: var(--gold); font-size: 15px; font-weight: 700; letter-spacing: 0.15em;
+    padding: 16px 38px; border-radius: 34px;
+    /* 依頼BV-2：押せるものの主役。塗り＋はっきりした金の枠＋静かな光（脈打たせない） */
+    background: rgba(var(--gold-glow-rgb),0.2); border: 1.5px solid var(--gold);
+    box-shadow: 0 0 26px rgba(var(--gold-glow-rgb),0.25);
+    color: var(--gold); font-size: 16px; font-weight: 700; letter-spacing: 0.15em;
     text-shadow: 0 2px 10px rgba(0,0,0,0.7);
     opacity: 0; transform: translateY(12px);
     transition: opacity 1.1s ease 0.4s, transform 1.1s ease 0.4s, background 0.2s ease, border-color 0.2s ease;
   }
   #declaration-slide.revealed .enter-map-prompt { opacity: 1; transform: translateY(0); }
   .enter-map-prompt, .enter-map-prompt:visited { text-decoration: none; }
-  .enter-map-prompt:hover { background: rgba(var(--gold-glow-rgb),0.14); border-color: var(--gold); }
+  .enter-map-prompt:hover { background: rgba(var(--gold-glow-rgb),0.32); border-color: var(--gold); }
   /* 依頼BL：主なページへの普通のリンクの行。控えめな案内（演出のfade-inは付けない） */
   .intro-links {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px;
@@ -333,6 +344,14 @@
   }
   .intro-links a { color: var(--tan-text-2); text-decoration: none; }
   .intro-links a:hover, .intro-links a:focus-visible { color: var(--gold); text-decoration: underline; }
+  .enter-map-group { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .enter-map-sub {
+    font-size: 13.5px; letter-spacing: 0.08em; color: var(--tan-text); text-decoration: underline; text-underline-offset: 4px;
+    text-decoration-color: rgba(var(--gold-glow-rgb),0.45);
+    opacity: 0; transform: translateY(12px); transition: opacity 1.1s ease 0.7s, transform 1.1s ease 0.7s, color 0.2s ease;
+  }
+  #declaration-slide.revealed .enter-map-sub { opacity: 1; transform: translateY(0); }
+  .enter-map-sub:hover, .enter-map-sub:focus-visible { color: var(--gold); }
   .enter-map-prompt-arrow { font-size: 18px; transition: transform 0.2s ease; }
   .enter-map-prompt:hover .enter-map-prompt-arrow { transform: translateX(4px); }
   /* 新規5（2026-09-26）：AN-1申し送りへの回答＝トップにもプライバシーの1行を
@@ -342,28 +361,31 @@
   .declaration-privacy { font-size: 10.5px; color: var(--tan-text-2); opacity: 0.75; }
   .declaration-privacy a { color: var(--tan-text-2); text-decoration: underline; }
   @media (prefers-reduced-motion: reduce) {
-    .declaration-text, .enter-map-prompt { transition: none; }
+    .declaration-text, .enter-map-prompt, .enter-map-sub { transition: none; }
   }
 
+  /* 依頼BV-2（2026-10-22）：「SCROLL」（押せない金枠のピルで、常に脈打つ影が付いていた）→小さな「↓ 次へ／↓ Continue」。
+     次の区画への普通のページ内リンク（<a href="#…">。hrefは下のJSが付ける。強制のスクロール制御・自動送りはしない）。
+     押せるものの主役は最後の「地図へ進む」だけにするため、枠・脈打つ影は外した */
   .scroll-slide-hint {
-    position: absolute; left: 50%; bottom: 44px; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    padding: 12px 26px; border-radius: 32px;
-    background: rgba(0,0,0,0.4); border: 1px solid rgba(var(--gold-glow-rgb),0.45);
-    font-size: 14px; font-weight: 700; letter-spacing: 0.35em; color: var(--gold);
-    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-    animation: scrollHintPulse 1.6s ease-in-out infinite;
+    position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 8px; text-decoration: none;
+    padding: 8px 14px; font-size: 12.5px; font-weight: 400; letter-spacing: 0.2em; color: var(--tan-text);
+    text-shadow: 0 1px 8px rgba(0,0,0,0.9), 0 0 3px rgba(0,0,0,0.9);
+    opacity: 0.85; transition: opacity 0.2s ease, color 0.2s ease;
   }
+  .scroll-slide-hint:hover, .scroll-slide-hint:focus-visible { opacity: 1; color: var(--gold); }
+  .scroll-slide-hint:hover .scroll-slide-hint-label, .scroll-slide-hint:focus-visible .scroll-slide-hint-label { text-decoration: underline; text-underline-offset: 3px; }
   .scroll-slide-hint-arrow {
-    font-size: 32px; line-height: 1; animation: scrollHintBounce 1.4s ease-in-out infinite;
+    font-size: 16px; line-height: 1; animation: scrollHintBounce 1.6s ease-in-out infinite;
   }
   @keyframes scrollHintBounce {
-    0%, 100% { transform: translateY(0); opacity: 0.65; }
-    50% { transform: translateY(14px); opacity: 1; }
+    0%, 100% { transform: translateY(-1px); opacity: 0.6; }
+    50% { transform: translateY(4px); opacity: 1; }
   }
   @keyframes scrollHintPulse {
-    0%, 100% { box-shadow: 0 0 14px rgba(var(--gold-glow-rgb),0.2); }
-    50% { box-shadow: 0 0 34px rgba(var(--gold-glow-rgb),0.5); }
+    0%, 100% { box-shadow: 0 0 8px rgba(var(--gold-glow-rgb),0.12); }
+    50% { box-shadow: 0 0 16px rgba(var(--gold-glow-rgb),0.28); }
   }
   /* 本人指定（2026-09-20）：動画が自動再生されない環境（reduced-motion指定・
      一部端末の節電モード等）のための、クリックを促す表示。JSが必要な時だけ
@@ -512,6 +534,10 @@
     }
     .scroll-slide.revealed .intro-video-media,
     .scroll-slide.revealed > img.is-landscape { transform: translateY(-50%) scale(1); }
+    /* 依頼BV-3（2026-10-22）：3枚目は2700×1600の合成画像（縦写真3枚を横に並べたもの）。縦画面のスマホ（390×844）に
+       coverで敷くと、横の約27%しか見えず真ん中の1枚だけになる（三連の意味が無くなる）。この画面だけ、全体が見える
+       containにする（上下の余白は今の暗い地の色）。PC・横画面は今のまま。画像は差し替えない。社名入りの最初の2枚は変えない */
+    .scroll-slide > img.is-triptych { object-fit: contain; background: var(--bg-body); }
   }
   /* 2026-10-11（本人「スマホ横画面のOPを確認」→確認の結果、字幕が高さに対して大きい）：
      字幕の文字サイズが画面の幅（vw）基準のため、横画面（844x390）では幅が大きく高さが
@@ -526,15 +552,8 @@
     .triptych-caption { font-size: min(clamp(20px, 3.6vw, 34px), 6vh); }
     .declaration-text { font-size: min(clamp(24px, 4.4vw, 44px), 7.5vh); }
     .photo-shrine-name-badge { font-size: min(clamp(18px, 2.8vw, 26px), 5vh); padding: 6px 16px; }
-    .scroll-slide-hint {
-      bottom: 8px; flex-direction: row; gap: 8px; padding: 4px 16px;
-      font-size: 11px; letter-spacing: 0.3em;
-    }
-    .scroll-slide-hint-arrow { font-size: 18px; animation-name: scrollHintBounceSm; }
-    @keyframes scrollHintBounceSm {
-      0%, 100% { transform: translateY(-2px); opacity: 0.65; }
-      50% { transform: translateY(3px); opacity: 1; }
-    }
+    .scroll-slide-hint { bottom: 6px; padding: 4px 12px; font-size: 11px; letter-spacing: 0.2em; }
+    .scroll-slide-hint-arrow { font-size: 14px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .triptych-col img { transition: none; transition-delay: 0ms; }
@@ -879,6 +898,10 @@
 </style>
 <link href="https://nocta-works.github.io/chiyonomori/" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/" hreflang="x-default" rel="alternate"/><meta content="Z-u-3rnNrZVFUF7t0Gw71OMTZw6AYDyzemhH44_Sg6M" name="google-site-verification"/><meta content="ja_JP" property="og:locale:alternate"/></head>
 <body><div class="lang-toggle"><a class="lang-btn active" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/">EN</a><a class="lang-btn" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/">日本語</a></div>
+<!-- 依頼BV-1（2026-10-22）：導入から写真の区画まで、画面の右上に常に出す小さな「地図へ →」。文字だけの控えめなリンク（金の枠のピルにしない）。
+     普通の<a href>。hrefは下のJSが、最後の大きな入口（#enter-map-prompt）と同じ形（from=intro＋引き継ぐタグ）にする。
+     計測は最後の入口と同じ`to-map`（別のイベントにしない）。宣言の区画（最後の大きな入口が出る所）では隠す。#intro（z-index:5000）の上に出す -->
+<a class="intro-map-link" data-goatcounter-click="to-map" href="map.html" id="intro-map-link"><span>Skip to map</span> <span aria-hidden="true">→</span></a>
 <div id="intro">
 <div class="intro-overlay"></div>
 <button class="intro-skip" id="intro-skip" type="button">
@@ -907,15 +930,17 @@
        川勾の石段→白笹稲荷の竹の水→香取の拝殿→川勾の鳥居）のつなぎ合わせ16秒へ。
        最後が鳥居・最初が鳥居トンネルなので、ループの継ぎ目も鳥居どうしで繋がる。
        posterは動画の1コマ目＝reduced-motionで止まって見える絵・読み込み前の絵 -->
-<video autoplay="" class="intro-video-media" loop="" muted="" playsinline="" poster="assets/op-loop-poster.jpg" preload="auto">
+<!-- 依頼BV-5（2026-10-22）：autoplayを外し、導入（#intro）が閉じた後・この区画が見えている間だけJSが再生する（導入の裏で動画が先に進まない）。
+       preload="auto"は残す（読み込みは今までどおり導入の裏で先に進む＝再生の開始は遅れない） -->
+<video class="intro-video-media" loop="" muted="" playsinline="" poster="assets/op-loop-poster.jpg" preload="auto">
 <source src="assets/op-loop.mp4" type="video/mp4"/>
 </video>
 <button class="video-play-prompt" id="video-play-prompt" type="button">
 <span class="video-play-prompt-icon">▶</span>
 <span>Tap to play</span>
 </button>
-<div class="intro-video-caption" id="intro-video-caption"><span class="ivc-line">Jingu, Taisha, Ichinomiya, Ninomiya.</span><br/><span class="ivc-line">A ranking set a thousand years ago, still visible on a map.</span></div>
-<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>
+<div class="intro-video-caption" id="intro-video-caption"><span class="ivc-line">Jingu, Taisha, Ichinomiya, Ninomiya.</span><br/><span class="ivc-line">Old ranks, still visible on a map.</span></div>
+<a class="scroll-slide-hint" href="#scroll-slides"><span aria-hidden="true" class="scroll-slide-hint-arrow">↓</span><span class="scroll-slide-hint-label">Continue</span></a>
 </section>
 <div class="fixed-caption" id="fixed-caption">One step off the street, and the sound changes.</div>
 <div id="scroll-slides"></div>
@@ -927,10 +952,14 @@
 <!-- 依頼BL（2026-10-11）：検索エンジンはボタンを押さないので、トップが行き止まりだった。
        普通のリンク（<a href>）にする。hrefは最初から書いてあり、JSは下で「from=intro」と
        引き継ぐタグを足すだけ -->
+<div class="enter-map-group">
 <a class="enter-map-prompt" data-goatcounter-click="to-map" href="map.html" id="enter-map-prompt">
 <span>Enter the map</span>
 <span class="enter-map-prompt-arrow">→</span>
 </a>
+<!-- 依頼BV-4（2026-10-22）：補助の入口＝東京の神社のページ。入口が2つになるだけで、「日本から、ひとつの街へ。」は変えない -->
+<a class="enter-map-sub" href="areas/tokyo.html">Browse shrines around Tokyo</a>
+</div>
 <!-- 依頼BL：オープニングを見ずに先へ行きたい人にも、検索エンジンにも、主なページへの
        普通のリンクを見える形で置く（隠したリンクにはしない） -->
 <nav class="intro-links"><a href="map.html">Shrine map</a><a href="areas/tokyo.html">Shrines in Tokyo</a><a href="articles/japan-and-shrines.html">Japan and its shrines</a><a href="articles/how-to-visit.html">How to visit a shrine</a><a href="articles/torii-and-grounds.html">Torii gates and shrine grounds</a><a href="articles/kami-and-classification.html">Kami, ranks and lineages</a></nav>
@@ -1117,6 +1146,7 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
     // 裏側で先に終わってしまっていた。#introが実際に閉じる（＝③が見え始める）
     // この瞬間を起点にするよう、ここで直接表示させる
     if (videoCaption) videoCaption.classList.add('intro-video-caption-show');
+    document.dispatchEvent(new Event('op-intro-closed'));   // 依頼BV-5：動画の再生を始める合図
   }
   function openGates() {
     loader.classList.add('intro-loader-hide');
@@ -1136,6 +1166,11 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
 // 再生せず1フレーム目の静止画として止める（海外版の他6箇所と同じ流儀）。
 // 2026-09-20追加（本人指定）：reduced-motion時、または一部端末（節電モード等）
 // で自動再生そのものがブロックされた時のために、クリックで再生を促す表示を出す
+// 依頼BV-5（2026-10-22）：再生の始め方を変えた。以前は`autoplay`で、導入（#intro・約12秒）の裏で
+// 動画が先に進んでいた。今は`autoplay`を外し、①導入が閉じた後（finish()が`op-intro-closed`を出す）
+// ②この区画が画面に見えている間だけ、JSが再生する（見えなくなったら止める）。
+// preload="auto"は残してあるので、読み込みは導入の裏で進み、導入が閉じた瞬間に再生が始まる（遅れない）。
+// 自動再生が拒否された環境・動きを減らす設定では、ポスター（1コマ目）と再生ボタンを出す
 (function(){
   var video = document.querySelector('.intro-video-media');
   var prompt = document.getElementById('video-play-prompt');
@@ -1152,16 +1187,34 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
   }
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) {
-    video.removeAttribute('autoplay');
     video.removeAttribute('loop');
     video.pause();
     video.currentTime = 0;
     showPrompt();
     return;
   }
-  // 通常時：自動再生が実際に始まったか少し待って確認し、始まっていなければ
-  // （一部端末で自動再生がブロックされた場合）クリック促進表示を出す
-  setTimeout(function(){ if (video.paused) showPrompt(); }, 1200);
+  var introEl = document.getElementById('intro');
+  var introClosed = !introEl || getComputedStyle(introEl).display === 'none';
+  var inView = false;
+  function sync() {
+    if (!introClosed) return;
+    if (inView) {
+      var p = video.play();
+      if (p && p.catch) p.catch(showPrompt);   // 自動再生を拒否された環境では、再生ボタンを出す
+    } else {
+      video.pause();
+    }
+  }
+  document.addEventListener('op-intro-closed', function(){ introClosed = true; sync(); });
+  var slide = document.getElementById('video-slide');
+  if (slide && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ inView = e.isIntersecting; });
+      sync();
+    }, { threshold: 0.25 }).observe(slide);
+  } else {
+    inView = true; sync();
+  }
 })();
 
 // ③動画のキャプションの表示トリガーは、上のfinish()（#introが閉じた瞬間）に
@@ -1202,6 +1255,8 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
 (function(){
   var btn = document.getElementById('enter-map-prompt');
   if (!btn) return;
+  // 依頼BV-1（2026-10-22）：右上の「地図へ →」も、最後の入口と同じhrefにする（押した時の処理は同じ）
+  var topLink = document.getElementById('intro-map-link');
   // 依頼BL（2026-10-11）：<button>＋location.hrefだった「地図へ進む」を普通のリンク
   // （<a href="map.html">）にした。検索エンジンはJSを動かさなくてもhrefを辿れる。
   // 人が見る時は、読み込み時にhrefへ「from=intro」と引き継ぐタグを足しておく
@@ -1209,6 +1264,16 @@ wrapPhrasesOnly(document.querySelector('.declaration-text'));
   var params = new URLSearchParams(location.search);
   params.set('from', 'intro');
   btn.setAttribute('href', 'map.html?' + params.toString());
+  if (topLink) {
+    topLink.setAttribute('href', 'map.html?' + params.toString());
+    // 最後の大きな入口（宣言の区画）が画面に出ている間は隠す（同じ画面に入口を2つ並べない）
+    var decl = document.getElementById('declaration-slide');
+    if (decl && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ topLink.classList.toggle('intro-map-link-hide', e.isIntersecting); });
+      }, { threshold: 0.3 }).observe(decl);
+    }
+  }
 })();
 
 // ④スクロール連動のズームアウト：画面に入った写真だけ.revealedを付与
@@ -1270,6 +1335,32 @@ function initScrollSlideReveal() {
   // このIIFEは地図本体のapplyLang()と別クロージャで、写真は非同期fetch完了後に
   // 挿入されるため、挿入前に既にEN選択済みだった場合そのまま日本語で残ってしまう。
   // localStorageの保存値を直接見て、挿入直後だけその場でdata-enへ差し替える
+  // 依頼BV-5（2026-10-22）：後の写真は、近づいてから読む。以前は写真のimgに`loading="lazy"`も何も無く、
+  // 3枚とも最初の表示の時に読まれていた（＝導入と動画の間に、まだ見ない写真が通信を使っていた）。
+  // IntersectionObserverで「画面の下端から画面の高さ×0.9まで」に入った写真だけ、`data-src`を`src`にして読む
+  // ＝動画を見ている間に1枚目、1枚目を見ている間に2枚目（1画面先）。3枚目の合成も同じ。
+  // IntersectionObserverが無い環境では、すぐ全部読む
+  function loadSlidesAhead(root) {
+    var imgs = Array.prototype.slice.call(root.querySelectorAll('img[data-src]'));
+    function load(img) { img.setAttribute('src', img.getAttribute('data-src')); img.removeAttribute('data-src'); }
+    if (!('IntersectionObserver' in window)) { imgs.forEach(load); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) { load(e.target); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px 90% 0px' });
+    imgs.forEach(function(img){ io.observe(img); });
+  }
+  // 依頼BV-2（2026-10-22）：各区画の「↓ 次へ」を、次の区画への普通のページ内リンク（href="#…"）にする。
+  // 動画の区画→写真の区画（1枚ずつ、または合成の1画面）→宣言の区画の順。強制のスクロール制御・自動送りは足さない
+  function linkScrollHints() {
+    var list = [document.getElementById('video-slide')]
+      .concat(Array.prototype.slice.call(document.querySelectorAll('#scroll-slides > section')))
+      .concat([document.getElementById('declaration-slide')]).filter(Boolean);
+    list.forEach(function(el, i){ if (!el.id) el.id = 'op-slide-' + i; });
+    list.forEach(function(el, i){
+      var hint = el.querySelector('.scroll-slide-hint');
+      if (hint && list[i + 1]) hint.setAttribute('href', '#' + list[i + 1].id);
+    });
+  }
   function applyStoredLangTo(root) {
     // 🔴2026-10-11（本人「英語版なのに、神社の字幕が日本語になってる」）：言語を
     // localStorageから読んでいたため、公開版の英語ページ（<html lang="en">が焼き込み済み・
@@ -1306,20 +1397,25 @@ function initScrollSlideReveal() {
         ? '<div class="photo-shrine-name"><span class="photo-shrine-name-badge" data-en="' + nameEn + '">' + item.alt + '</span></div>'
         : '';
       return '<section class="scroll-slide reveal-slide"' + idAttr + '>' +
-        '<img src="' + item.file + '" alt="' + (item.alt || '') + '">' +
+        // 依頼BV-5：写真は`data-src`にして、下のloadSlidesAhead()が「1画面先」に近づいてから読む（以前は全部を最初に読んでいた）
+        '<img data-src="' + item.file + '" alt="' + (item.alt || '') + '" decoding="async">' +
         nameHtml +
-        '<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>' +
+        '<a class="scroll-slide-hint" href="#"><span class="scroll-slide-hint-arrow" aria-hidden="true">↓</span><span class="scroll-slide-hint-label" data-en="Continue">次へ</span></a>' +
         '</section>';
     }).join('');
     // 縦画面の枠（上のCSS・.is-landscape）の対象＝横長の写真だけ。3枚合成
     // （triptych-*）は横長だが、3枚の縦写真を並べた画像なので全画面のまま
     container.querySelectorAll('.scroll-slide > img').forEach(function(img){
+      var isTriptych = /triptych-/.test(img.getAttribute('data-src') || img.getAttribute('src') || '');
+      // 依頼BV-3（2026-10-22）：3枚合成（triptych-*）の印。スマホ縦だけ、全体が見える表示（contain）にする（CSSの`.is-triptych`）
+      if (isTriptych) img.classList.add('is-triptych');
       function mark() {
-        if (img.naturalHeight && img.naturalWidth / img.naturalHeight > 1.5 &&
-            !/triptych-/.test(img.getAttribute('src'))) img.classList.add('is-landscape');
+        if (img.naturalHeight && img.naturalWidth / img.naturalHeight > 1.5 && !isTriptych) img.classList.add('is-landscape');
       }
       if (img.complete && img.naturalWidth) mark(); else img.addEventListener('load', mark);
     });
+    loadSlidesAhead(container);
+    linkScrollHints();
     applyStoredLangTo(container);
     initScrollSlideReveal();
     var fixedCaption = document.getElementById('fixed-caption');
@@ -1345,12 +1441,13 @@ function initScrollSlideReveal() {
           '</div>';
       }).join('') +
       '<div class="triptych-caption" data-en="One step off the street, and the sound changes.">通りから一歩で、音が変わる。</div>' +
-      '<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>' +
+      '<a class="scroll-slide-hint" href="#"><span class="scroll-slide-hint-arrow" aria-hidden="true">↓</span><span class="scroll-slide-hint-label" data-en="Continue">次へ</span></a>' +
       '</section>';
     // トリプティック経路はこの関数専用のIntersectionObserver（下記）しか回さないため、
     // 静的HTML側に置いた#declaration-slide（依頼AE-2④）が別途initScrollSlideReveal()
     // を呼ばないと永久にrevealされない。フォールバック経路（renderSlides）は既に
     // 呼んでいるので、ここでも同じ関数を呼んで両経路を揃える
+    linkScrollHints();
     applyStoredLangTo(container);
     initScrollSlideReveal();
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
