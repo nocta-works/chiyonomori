@@ -353,28 +353,27 @@
     .declaration-text, .enter-map-prompt, .enter-map-sub { transition: none; }
   }
 
-  /* 依頼BV-2（2026-10-22）：「SCROLL」（押せない金枠のピルで、常に脈打つ影が付いていた）→小さな「↓ 次へ／↓ Continue」。
-     次の区画への普通のページ内リンク（<a href="#…">。hrefは下のJSが付ける。強制のスクロール制御・自動送りはしない）。
-     押せるものの主役は最後の「地図へ進む」だけにするため、枠・脈打つ影は外した */
+  /* 依頼BV-2（2026-10-22）で「↓ 次へ」の小さなリンクに替えたが、本人が「OPからスクロールが消えていた。これは戻してほしい」（2026-10-23）
+     と言ったため、元の「⌄ SCROLL」（金枠のピル・弾む矢印・脈打つ影）に戻した（押せるものではない案内。動画の再生ボタンの脈打つ影も元に戻る） */
   .scroll-slide-hint {
-    position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%);
-    display: flex; align-items: center; gap: 8px; text-decoration: none;
-    padding: 8px 14px; font-size: 12.5px; font-weight: 400; letter-spacing: 0.2em; color: var(--tan-text);
-    text-shadow: 0 1px 8px rgba(0,0,0,0.9), 0 0 3px rgba(0,0,0,0.9);
-    opacity: 0.85; transition: opacity 0.2s ease, color 0.2s ease;
+    position: absolute; left: 50%; bottom: 44px; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 12px 26px; border-radius: 32px;
+    background: rgba(0,0,0,0.4); border: 1px solid rgba(var(--gold-glow-rgb),0.45);
+    font-size: 14px; font-weight: 700; letter-spacing: 0.35em; color: var(--gold);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    animation: scrollHintPulse 1.6s ease-in-out infinite;
   }
-  .scroll-slide-hint:hover, .scroll-slide-hint:focus-visible { opacity: 1; color: var(--gold); }
-  .scroll-slide-hint:hover .scroll-slide-hint-label, .scroll-slide-hint:focus-visible .scroll-slide-hint-label { text-decoration: underline; text-underline-offset: 3px; }
   .scroll-slide-hint-arrow {
-    font-size: 16px; line-height: 1; animation: scrollHintBounce 1.6s ease-in-out infinite;
+    font-size: 32px; line-height: 1; animation: scrollHintBounce 1.4s ease-in-out infinite;
   }
   @keyframes scrollHintBounce {
-    0%, 100% { transform: translateY(-1px); opacity: 0.6; }
-    50% { transform: translateY(4px); opacity: 1; }
+    0%, 100% { transform: translateY(0); opacity: 0.65; }
+    50% { transform: translateY(14px); opacity: 1; }
   }
   @keyframes scrollHintPulse {
-    0%, 100% { box-shadow: 0 0 8px rgba(var(--gold-glow-rgb),0.12); }
-    50% { box-shadow: 0 0 16px rgba(var(--gold-glow-rgb),0.28); }
+    0%, 100% { box-shadow: 0 0 14px rgba(var(--gold-glow-rgb),0.2); }
+    50% { box-shadow: 0 0 34px rgba(var(--gold-glow-rgb),0.5); }
   }
   /* 本人指定（2026-09-20）：動画が自動再生されない環境（reduced-motion指定・
      一部端末の節電モード等）のための、クリックを促す表示。JSが必要な時だけ
@@ -541,8 +540,15 @@
     .triptych-caption { font-size: min(clamp(20px, 3.6vw, 34px), 6vh); }
     .declaration-text { font-size: min(clamp(24px, 4.4vw, 44px), 7.5vh); }
     .photo-shrine-name-badge { font-size: min(clamp(18px, 2.8vw, 26px), 5vh); padding: 6px 16px; }
-    .scroll-slide-hint { bottom: 6px; padding: 4px 12px; font-size: 11px; letter-spacing: 0.2em; }
-    .scroll-slide-hint-arrow { font-size: 14px; }
+    .scroll-slide-hint {
+      bottom: 8px; flex-direction: row; gap: 8px; padding: 4px 16px;
+      font-size: 11px; letter-spacing: 0.3em;
+    }
+    .scroll-slide-hint-arrow { font-size: 18px; animation-name: scrollHintBounceSm; }
+    @keyframes scrollHintBounceSm {
+      0%, 100% { transform: translateY(-2px); opacity: 0.65; }
+      50% { transform: translateY(3px); opacity: 1; }
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .triptych-col img { transition: none; transition-delay: 0ms; }
@@ -925,7 +931,7 @@
 <span>Tap to play</span>
 </button>
 <div class="intro-video-caption" id="intro-video-caption"><span class="ivc-line">Jingu, Taisha, Ichinomiya, Ninomiya.</span><br/><span class="ivc-line">Old ranks, still visible on a map.</span></div>
-<a class="scroll-slide-hint" href="#scroll-slides"><span aria-hidden="true" class="scroll-slide-hint-arrow">↓</span><span class="scroll-slide-hint-label">Continue</span></a>
+<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>
 </section>
 <div class="fixed-caption" id="fixed-caption">One step off the street, and the sound changes.</div>
 <div id="scroll-slides"></div>
@@ -1334,18 +1340,6 @@ function initScrollSlideReveal() {
     }, { rootMargin: '0px 0px 90% 0px' });
     imgs.forEach(function(img){ io.observe(img); });
   }
-  // 依頼BV-2（2026-10-22）：各区画の「↓ 次へ」を、次の区画への普通のページ内リンク（href="#…"）にする。
-  // 動画の区画→写真の区画（1枚ずつ、または合成の1画面）→宣言の区画の順。強制のスクロール制御・自動送りは足さない
-  function linkScrollHints() {
-    var list = [document.getElementById('video-slide')]
-      .concat(Array.prototype.slice.call(document.querySelectorAll('#scroll-slides > section')))
-      .concat([document.getElementById('declaration-slide')]).filter(Boolean);
-    list.forEach(function(el, i){ if (!el.id) el.id = 'op-slide-' + i; });
-    list.forEach(function(el, i){
-      var hint = el.querySelector('.scroll-slide-hint');
-      if (hint && list[i + 1]) hint.setAttribute('href', '#' + list[i + 1].id);
-    });
-  }
   function applyStoredLangTo(root) {
     // 🔴2026-10-11（本人「英語版なのに、神社の字幕が日本語になってる」）：言語を
     // localStorageから読んでいたため、公開版の英語ページ（<html lang="en">が焼き込み済み・
@@ -1385,7 +1379,7 @@ function initScrollSlideReveal() {
         // 依頼BV-5：写真は`data-src`にして、下のloadSlidesAhead()が「1画面先」に近づいてから読む（以前は全部を最初に読んでいた）
         '<img data-src="' + item.file + '" alt="' + (item.alt || '') + '" decoding="async">' +
         nameHtml +
-        '<a class="scroll-slide-hint" href="#"><span class="scroll-slide-hint-arrow" aria-hidden="true">↓</span><span class="scroll-slide-hint-label" data-en="Continue">次へ</span></a>' +
+        '<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>' +
         '</section>';
     }).join('');
     // 縦画面の枠（上のCSS・.is-landscape）の対象＝横長の写真だけ。3枚合成
@@ -1400,7 +1394,6 @@ function initScrollSlideReveal() {
       if (img.complete && img.naturalWidth) mark(); else img.addEventListener('load', mark);
     });
     loadSlidesAhead(container);
-    linkScrollHints();
     applyStoredLangTo(container);
     initScrollSlideReveal();
     var fixedCaption = document.getElementById('fixed-caption');
@@ -1426,13 +1419,12 @@ function initScrollSlideReveal() {
           '</div>';
       }).join('') +
       '<div class="triptych-caption" data-en="One step off the street, and the sound changes.">通りから一歩で、音が変わる。</div>' +
-      '<a class="scroll-slide-hint" href="#"><span class="scroll-slide-hint-arrow" aria-hidden="true">↓</span><span class="scroll-slide-hint-label" data-en="Continue">次へ</span></a>' +
+      '<div class="scroll-slide-hint"><span class="scroll-slide-hint-arrow">⌄</span>SCROLL</div>' +
       '</section>';
     // トリプティック経路はこの関数専用のIntersectionObserver（下記）しか回さないため、
     // 静的HTML側に置いた#declaration-slide（依頼AE-2④）が別途initScrollSlideReveal()
     // を呼ばないと永久にrevealされない。フォールバック経路（renderSlides）は既に
     // 呼んでいるので、ここでも同じ関数を呼んで両経路を揃える
-    linkScrollHints();
     applyStoredLangTo(container);
     initScrollSlideReveal();
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
