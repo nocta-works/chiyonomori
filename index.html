@@ -143,19 +143,9 @@
     color: var(--tan-text); font-size: clamp(18px, 3vw, 28px); letter-spacing: 0.06em;
     text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   }
-  /* 本人指定（2026-09-20）：オープニング②を待てない人向けのスキップ表示。
-     #intro自体が既にクリックでfinish()する作りだが、見えるアフォーダンスが
-     無かったため、明示的なアイコンを画面上部に置く */
-  .intro-skip {
-    position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
-    z-index: 4; display: flex; align-items: center; gap: 8px;
-    padding: 9px 20px; border-radius: 26px; cursor: pointer;
-    background: rgba(0,0,0,0.3); border: 1px solid rgba(var(--gold-glow-rgb),0.25);
-    color: var(--tan-text); font-size: 13px; letter-spacing: 0.1em;
-    opacity: 0.8; transition: opacity 0.2s ease, background 0.2s ease;
-  }
-  .intro-skip:hover { opacity: 1; background: rgba(0,0,0,0.55); }
-  /* 依頼BV-1（2026-10-22）：地図へ直接行く小さなリンク（右上・文字だけ） */
+  /* 依頼BV-1（2026-10-22）：地図へ直接行く小さなリンク（右上・文字だけ）。
+     依頼BW（2026-10-23・本人）：当初からあった導入の「スキップ」ボタン（#introを閉じて動画へ進むもの）は外し、
+     スキップはこのリンクだけにした。#introの「どこかをクリックするとfinish()」は残してある */
   .intro-map-link {
     position: fixed; top: 14px; right: 20px; z-index: 5100;
     padding: 8px 6px; font-size: 13px; letter-spacing: 0.08em; text-decoration: none;
@@ -164,7 +154,6 @@
   }
   .intro-map-link:hover, .intro-map-link:focus-visible { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
   .intro-map-link.intro-map-link-hide { opacity: 0; pointer-events: none; }
-  .intro-skip-icon { font-size: 17px; line-height: 1; }
   /* ③動画だけのキャッチコピー（本人指定・2026-09-06：コラージュ見出し用の一文をここへ移動） */
   .intro-video-caption {
     position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%);
@@ -904,10 +893,6 @@
 <a class="intro-map-link" data-goatcounter-click="to-map" href="map.html" id="intro-map-link"><span>Skip to map</span> <span aria-hidden="true">→</span></a>
 <div id="intro">
 <div class="intro-overlay"></div>
-<button class="intro-skip" id="intro-skip" type="button">
-<span>Skip</span>
-<span class="intro-skip-icon">›</span>
-</button>
 <div class="intro-tagline">A country with 80,000 shrines. More than a hundred of them here.</div>
 <div class="intro-gate intro-gate-left"></div>
 <div class="intro-gate intro-gate-right"></div>
