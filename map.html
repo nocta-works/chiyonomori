@@ -612,7 +612,7 @@
   /* 依頼CA-3：選択中（ポップアップが開いている社）の行 */
   .shrine-item.selected { background: rgba(var(--gold-glow-rgb),0.2); box-shadow: inset 3px 0 0 var(--gold); }
   .shrine-item.selected .shrine-item-name { color: #fff6dc; }
-  /* 依頼CA-2：リストの並べ替え（県別・ABC順）と、県が変わる所の小さな見出し */
+  /* 依頼CA-2：リストの並べ替え（県別・ABC順）。県名の小見出しは本人の指示で無し（各行の右の県名で足りる） */
   .sidebar-sort {
     display: flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 6px 12px;
     border-bottom: 1px solid var(--border-header); font-size: 10.5px; color: var(--tan-text-2);
@@ -623,10 +623,6 @@
   }
   .sidebar-sort-btn:hover { border-color: var(--gold); color: var(--gold); }
   .sidebar-sort-btn.active { background: rgba(var(--gold-glow-rgb),0.2); border-color: var(--gold); color: var(--gold); }
-  .sidebar-pref-head {
-    padding: 5px 12px 3px 21px; font-size: 10px; letter-spacing: 0.08em; color: var(--gold-muted);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
   /* 依頼CA-1：「?」窓の1行（金の縁＝紹介ページのある社） */
   .rank-modal-rim {
     display: flex; align-items: center; gap: 8px; margin: 6px 0 0; padding-top: 12px;
@@ -1222,7 +1218,10 @@
     }
   };
   var RANK_FG = '#f6ecd6';    // 印の色（生成り）
-  var RANK_EDGE = '#ecd08c';  // マーカーの縁・バッジの縁（金の細線。5つ共通）
+  // 2026-10-23（本人「金の縁の太線はいい感じなので、紹介ページの無い神社の縁の色を今より暗い色で目立たなくしたい」）：
+  // 紹介ページの無い社のマーカーの縁＝以前の明るい金（#ecd08c）から、くすんだ暗い金（#8f7d52）へ。紹介ページのある社の縁（DETAIL_EDGE）と差がつく。
+  // ボタン・「?」窓のバッジの縁は、下のCSSの#ecd08c直書きのまま（マーカーではないため）
+  var RANK_EDGE = '#8f7d52';
   // ボタン・「?」窓用の印だけのSVG（マーカーの印の座標をそのまま、周りを切り詰めたviewBoxで拡大）。
   // fg='currentColor'にすると、ボタンの文字色（表示中＝#fbf3e0／非表示＝薄い色）に従う
   function rankMarkSvg(tag, fg, vein, k) {
@@ -1792,16 +1791,8 @@
       title.style.cssText = 'background:linear-gradient(' + cfg.bg + ',' + cfg.bg + '), var(--bg-popup-1); border-left:3px solid ' + cfg.border + '; color:' + cfg.border + ';';
       title.innerHTML = '<span>' + cfg.label[currentLang] + '</span><span class="sidebar-section-count">' + CHROME_TEXT[currentLang].countFmt(items.length) + '</span>';
       sec.appendChild(title);
-      var lastPref = null;
+      // 依頼CA-2：県別（北→南）の並び。県名の小見出しは出さない（本人2026-10-23＝各行の右に県名があるので、上にも出すと過剰）
       sortForList(items).forEach(function(item){
-        // 依頼CA-2：県別の時、県が変わる所に小さな県名の見出し
-        if (listSort === 'pref' && item.shrine.pref !== lastPref) {
-          lastPref = item.shrine.pref;
-          var head = document.createElement('div');
-          head.className = 'sidebar-pref-head';
-          head.textContent = currentLang === 'en' ? item.shrine.prefEn : item.shrine.pref;
-          sec.appendChild(head);
-        }
         sec.appendChild(buildShrineItem(item.shrine, cfg.color));
       });
       list.appendChild(sec);
