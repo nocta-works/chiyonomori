@@ -347,7 +347,7 @@
      がそのまま縦に伸び、地図・サイドバー全体が4700px超まで引き伸ばされてしまう。
      heightを確定値にして初めてflex:1とoverflow-y:autoが機能する */
   .mock-app { height: 100vh; display: flex; flex-direction: column; scroll-snap-align: start; }
-  /* 依頼BW：地図のページは縦にスクロールさせない。スマホでは100vhがアドレスバーの分だけ見える高さを超えるため、
+  /* 2026-10-23・本人の指示：地図のページは縦にスクロールさせない。スマホでは100vhがアドレスバーの分だけ見える高さを超えるため、
      動的な画面高（100dvh）があればそれに合わせる（横画面の指定は下の@mediaにも残してある） */
   @supports (height: 100dvh) { .mock-app { height: 100dvh; } }
   .mock-header {
@@ -903,7 +903,7 @@
 <button class="shrine-dropdown-toggle" id="basics-dropdown-toggle" type="button">
 <span id="basics-dropdown-label"></span><span class="shrine-dropdown-caret">▾</span>
 </button>
-<!-- 依頼BX（2026-10-23・本人「Bでとりあえずやってみて、気に入らなかったらAにする」）：下の2つのメニューの中身は、開いた時にJS
+<!-- 2026-10-23・本人の指示（地図ページ発のリンクを戻す＝案B。「Bでとりあえずやってみて、気に入らなかったらAにする」）：下の2つのメニューの中身は、開いた時にJS
          （renderBasicsDropdown／renderAreaDropdown）が作り直すが、最初のHTMLにも同じリンクを書いておく（検索側がJSの描画を待たずに
          地図ページ発の普通の<a href>を見つけられるように。依頼BLの目的を、地図の下のリンク行をやめた後も保つ）。メニューは閉じている間は
          表示されないので、見た目・スクロール・操作は変わらない。⚠️記事・エリアの一覧（ARTICLE_PAGES／AREA_PAGES／VISIBLE_AREA_FILES）を
@@ -963,7 +963,7 @@
 </div>
 </div>
 </div>
-<!-- 依頼BW（2026-10-23・本人）：依頼BL（2026-10-11）で地図の下に置いていた「主なページへの普通のリンクの行」（<footer class="site-links">）は外した。
+<!-- 2026-10-23・本人の指示：依頼BL（2026-10-11）で地図の下に置いていた「主なページへの普通のリンクの行」（<footer class="site-links">）は外した。
      地図の下に内容があるとページが縦にスクロールでき、下へ動いた後に地図へ戻るのが構造上難しくなる（地図の上のホイールはページでなく地図のズームになる）ため。
      主なページへの<a href>は、OPの最後の区画（index.html・.intro-links）とsitemap.xmlに残っている -->
 <script src="../assets/leaflet/leaflet.js"></script>
