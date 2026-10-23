@@ -603,7 +603,36 @@
     font-size: 11.5px; color: var(--tan-text); flex: 1; min-width: 0;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .shrine-item-pref { font-size: 10px; color: var(--gold-muted); flex-shrink: 0; }
+  .shrine-item-pref { font-size: 10px; color: var(--gold-muted); flex-shrink: 0; margin-left: auto; }
+  /* 依頼CA-1（2026-10-23）：紹介ページのある社＝リストでは社名の右に小さな金の絵馬の印＋社名を一段明るく（マーカーの金の縁と同じ印）。
+     名前は中身の幅に（印を名前のすぐ右に置くため）、県名は右端へ（margin-left:auto） */
+  .shrine-item-name { flex: 0 1 auto; }
+  .shrine-item-detail { width: 9px; height: 11px; flex-shrink: 0; margin-left: -3px; }
+  .shrine-item.has-detail .shrine-item-name { color: #f6ecd6; }
+  /* 依頼CA-3：選択中（ポップアップが開いている社）の行 */
+  .shrine-item.selected { background: rgba(var(--gold-glow-rgb),0.2); box-shadow: inset 3px 0 0 var(--gold); }
+  .shrine-item.selected .shrine-item-name { color: #fff6dc; }
+  /* 依頼CA-2：リストの並べ替え（県別・ABC順）と、県が変わる所の小さな見出し */
+  .sidebar-sort {
+    display: flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 6px 12px;
+    border-bottom: 1px solid var(--border-header); font-size: 10.5px; color: var(--tan-text-2);
+  }
+  .sidebar-sort-btn {
+    font: inherit; font-size: 10.5px; letter-spacing: 0.04em; padding: 2px 9px; border-radius: 10px; cursor: pointer;
+    border: 1px solid var(--border-4); background: transparent; color: var(--tan-text);
+  }
+  .sidebar-sort-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .sidebar-sort-btn.active { background: rgba(var(--gold-glow-rgb),0.2); border-color: var(--gold); color: var(--gold); }
+  .sidebar-pref-head {
+    padding: 5px 12px 3px 21px; font-size: 10px; letter-spacing: 0.08em; color: var(--gold-muted);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  /* 依頼CA-1：「?」窓の1行（金の縁＝紹介ページのある社） */
+  .rank-modal-rim {
+    display: flex; align-items: center; gap: 8px; margin: 6px 0 0; padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.07); font-size: 12px; line-height: 1.7; color: var(--tan-text-2);
+  }
+  .rank-modal-rim svg { width: 14px; height: 17px; flex-shrink: 0; }
 
   /* 🔴依頼X-1（2026-09-13・最優先）：幹（index.html）は2026-09-09〜11に
      「マーカーが消える」「発光が明るすぎる」の2件を受けて3段階の修正を重ね、
@@ -931,6 +960,7 @@
 <button class="rank-modal-close" id="rank-modal-close" type="button">✕</button>
 <h2 class="rank-modal-title" id="rank-modal-title"></h2>
 <div id="rank-modal-rows"></div>
+<p class="rank-modal-rim" id="rank-modal-rim"></p>
 <a class="rank-modal-more" href="#" id="rank-modal-more"></a>
 <div class="rank-modal-tip">
 <span>千代の杜は広告のない独立したガイドです。旅の計画に役立ったら、</span>
@@ -954,6 +984,12 @@
 <div class="sidebar-top">
 <span class="sidebar-title" id="sidebar-title"></span>
 <span class="sidebar-count" id="sidebar-count"></span>
+</div>
+<!-- 依頼CA-2：同じタグの節の中の並び（県別＝北→南／ABC順）。選んだ方は、そのページを見ている間だけ保つ -->
+<div class="sidebar-sort" id="sidebar-sort">
+<span id="sidebar-sort-label"></span>
+<button class="sidebar-sort-btn active" data-sort="pref" id="sidebar-sort-pref" type="button"></button>
+<button class="sidebar-sort-btn" data-sort="az" id="sidebar-sort-az" type="button"></button>
 </div>
 <div id="sidebar-list"></div>
 <div class="sidebar-tip">
@@ -1049,6 +1085,18 @@
     '伊奈波神社': 'shrines/inaba-jinja.html',
     '諏訪大社本宮': 'shrines/suwa-taisha.html',
   };
+  // 依頼CA-1（2026-10-23）：詳細ページの引き方。以前は社名だけで引いていた＝同名の社（住吉神社・吉備津神社・小野神社）があると
+  // 誤って別の県の社にも出し得た。今は、上のDETAIL_PAGESに`'県|社名'`のキーがあればそれを優先し、
+  // 名前だけのキーは「地図データに同名の社が無い時」だけ効かせる（同名の社は`'福岡|住吉神社'`のように足した時だけ詳細ページを持つ）
+  var NAME_COUNT = {};   // 地図データを読んだ時に数える（同名の社を見分けるため）
+  function detailFileFor(s) {
+    var byKey = DETAIL_PAGES[s.pref + '|' + s.name];
+    if (byKey) return byKey;
+    var byName = DETAIL_PAGES[s.name];
+    if (byName && NAME_COUNT[s.name] > 1) return null;
+    return byName || null;
+  }
+  function shrineHasDetail(s) { return !!detailFileFor(s); }
   var PRIORITY = { jingu:10, taisha:9, ichi:8, ni:7, meisha:6, meisha2:5, hachiman:4, inari:3, meisha3:2 };
   // 実行順A（依頼R-1＋S-1・2026-09-13）：名社26社の選定が済み、地図データにも
   // 追加したため、ここから正式にフィルター対象へ。「準備中」のダミー表示は撤去。
@@ -1182,14 +1230,18 @@
     if (!sym) return '';
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="5.5 6.5 23 23" aria-hidden="true" focusable="false">' + sym(fg, vein, k) + '</svg>';
   }
-  function getIcon(tag) {
+  // 依頼CA-1（2026-10-23）：紹介ページ（詳細ページ）のある社のマーカー＝縁を太く・明るい金に＋ひと回り大きく（1.12倍）。
+  // 色（格式の色）と印（千木・注連縄など）は変えない。「少し」なので、紹介ページの無い社が見えにくくなるほどにはしない
+  var DETAIL_EDGE = '#ffe6a0', DETAIL_EDGE_W = 2.2, DETAIL_SCALE = 1.12;
+  function getIcon(tag, hasDetail) {
     var isRank = !!RANK_SYMBOLS[tag];
     // 5つの格式は印が言語で変わらない＝キャッシュのキーに言語を含めない。それ以外のタグ（名社2・3・八幡・稲荷）は従来の文字入りのピン
-    var key = isRank ? tag : currentLang + '_' + tag;
+    var key = (isRank ? tag : currentLang + '_' + tag) + (hasDetail ? '_d' : '');
     if (iconCache[key]) return iconCache[key];
     var steps = ICON_SIZE_STEPS[tag] || 0;
     var w = ICON_BASE_W + steps * ICON_STEP_W;
     var h = ICON_BASE_H + steps * ICON_STEP_H;
+    if (hasDetail) { w = Math.round(w * DETAIL_SCALE); h = Math.round(h * DETAIL_SCALE); }
     // アンカーは元の[17,40]（34×42）・[20,48]（40×50）と同じ規則
     // ＝x=幅の半分／y=高さ-2 で機械的に算出する
     var anchor = [Math.round(w / 2), h - 2];
@@ -1199,13 +1251,13 @@
     if (isRank) {
       // 依頼BN-1：形＝絵馬（尖りの先（17, 39.5）が地点）。塗り＝地の色／縁＝金の細線／中の印＝生成り
       svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 34 42">' +
-        '<path d="M17 2L31 10V30H20.5L17 39.5L13.5 30H3V10Z" fill="' + c.color + '" stroke="' + RANK_EDGE + '" stroke-width="1" stroke-linejoin="round"/>' +
+        '<path d="M17 2L31 10V30H20.5L17 39.5L13.5 30H3V10Z" fill="' + c.color + '" stroke="' + (hasDetail ? DETAIL_EDGE : RANK_EDGE) + '" stroke-width="' + (hasDetail ? DETAIL_EDGE_W : 1) + '" stroke-linejoin="round"/>' +
         RANK_SYMBOLS[tag](RANK_FG, c.color, 1) +
         '</svg>';
     } else {
       var ch = c.char[currentLang];
       svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 34 42">' +
-        '<path d="M17 2C9 2 2 9 2 17c0 10 15 23 15 23S32 27 32 17C32 9 25 2 17 2z" fill="' + c.color + '" fill-opacity="0.9" stroke="' + c.border + '" stroke-width="1.5"/>' +
+        '<path d="M17 2C9 2 2 9 2 17c0 10 15 23 15 23S32 27 32 17C32 9 25 2 17 2z" fill="' + c.color + '" fill-opacity="0.9" stroke="' + (hasDetail ? DETAIL_EDGE : c.border) + '" stroke-width="' + (hasDetail ? 2.4 : 1.5) + '"/>' +
         '<circle cx="17" cy="17" r="9" fill="rgba(255,255,255,0.13)"/>' +
         '<text x="17" y="22" text-anchor="middle" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',serif" font-size="' + (ch.length > 1 ? 10 : 12) + '" font-weight="bold" fill="white">' + ch + '</text>' +
         '</svg>';
@@ -1231,7 +1283,7 @@
     var wikiUrl = 'https://ja.wikipedia.org/w/index.php?search=' + encodeURIComponent(s.name) + '&title=特別:検索&go=Go';
     // 詳細ページ（巡礼記録層）がある社だけ、外部3本より上に内部リンクを出す
     // （実装キュー依頼N-2）。持たない社には出さない＝リンク切れを作らない
-    var detailFile = DETAIL_PAGES[s.name];
+    var detailFile = detailFileFor(s);
     var detailHtml = detailFile
       ? '<a href="' + detailFile + '" class="popup-link-detail"><span class="popup-link-icon">⛩</span>' + t.detail + '</a>'
       : '';
@@ -1612,6 +1664,9 @@
         '<div class="rank-modal-text"><div class="rank-modal-row-title">' + r.label[currentLang] + '<span class="rank-modal-count">' + r.count + '</span></div>' +
         '<p>' + r.desc[currentLang] + '</p></div></div>';
     }).join('');
+    // 依頼CA-1：金の縁（紹介ページのある社）の説明を1行
+    var rim = document.getElementById('rank-modal-rim');
+    if (rim) rim.innerHTML = DETAIL_MARK_SVG.replace('class="shrine-item-detail"', '') + '<span>' + (currentLang === 'ja' ? '金の縁＝紹介ページのある社' : 'Gold rim: this shrine has its own page.') + '</span>';
     var moreLink = document.getElementById('rank-modal-more');
     moreLink.textContent = t.more;
     moreLink.href = withTagsQuery('articles/kami-and-classification.html');
@@ -1636,9 +1691,16 @@
     el.textContent = CHROME_TEXT[currentLang].shownFmt(n);
   }
 
+  // 依頼CA-1：リストの「紹介ページあり」の印＝マーカーの絵馬の形を金の線で描いた小さな印（マーカーの金の縁と同じもの）
+  var DETAIL_MARK_SVG = '<svg class="shrine-item-detail" viewBox="0 0 34 42" aria-hidden="true" focusable="false"><path d="M17 2L31 10V30H20.5L17 39.5L13.5 30H3V10Z" fill="none" stroke="#ecd08c" stroke-width="4.5" stroke-linejoin="round"/></svg>';
+  var DETAIL_LABEL = { ja: '紹介ページあり', en: 'Has its own page' };
+  function shrineKey(s) { return s.pref + '|' + s.name; }
   function buildShrineItem(shrine, dotColor) {
     var item = document.createElement('div');
     item.className = 'shrine-item';
+    item.dataset.key = shrineKey(shrine);   // 依頼CA-3：マーカーから行を探すため
+    var hasDetail = shrineHasDetail(shrine);
+    if (hasDetail) item.classList.add('has-detail');
     // 依頼X-3（2026-09-13）：マーカー（速い・主役）に対してサイドバーの
     // リスト項目はやや遅れて追従させる（parallax as hierarchy、幹から移植）
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1654,14 +1716,66 @@
     item.innerHTML =
       '<div class="shrine-item-dot" style="background:' + dotColor + ';box-shadow:0 0 5px ' + dotColor + '80;"></div>' +
       '<div class="shrine-item-name">' + name + '</div>' +
+      (hasDetail ? DETAIL_MARK_SVG.replace('aria-hidden="true"', 'role="img" aria-label="' + DETAIL_LABEL[currentLang] + '"') : '') +
       '<div class="shrine-item-pref">' + pref + '</div>';
-    item.addEventListener('click', function(){ focusShrine(shrine); });
+    item.addEventListener('click', function(){
+      // 依頼CA-3：押した行を選択中の色に。ポップアップが開いた時の「地図→リスト」の追従は、この行からの操作なら動かさない（押した行は見えているため）
+      var pickKey = shrineKey(shrine);
+      listPickKey = pickKey;
+      setTimeout(function(){ if (listPickKey === pickKey) listPickKey = null; }, 1500);   // ポップアップが開かなかった時に残らないように
+      selectedKey = pickKey;
+      applySelection();
+      focusShrine(shrine);
+    });
     return item;
   }
 
-  function renderSidebarList() {
+  // 依頼CA-2（2026-10-23）：同じタグの節の中の並び。県別（都道府県コードの順＝北→南・同じ県の中は英語名のABC順）／ABC順（英語名）。
+  // 節の並び（神宮・大社・一宮・二宮・名社）は変えない。日本語版も同じ順（英語名はほぼ読みのローマ字なので、読みの順に近い）
+  var PREF_ORDER = ['北海道','青森','岩手','宮城','秋田','山形','福島','茨城','栃木','群馬','埼玉','千葉','東京','神奈川','新潟','富山','石川','福井','山梨','長野','岐阜','静岡','愛知','三重','滋賀','京都','大阪','兵庫','奈良','和歌山','鳥取','島根','岡山','広島','山口','徳島','香川','愛媛','高知','福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄'];
+  var listSort = 'pref';   // 'pref'（県別）か'az'（ABC順）。そのページを見ている間だけ保つ
+  var LIST_SORT_TEXT = {
+    ja: { label: '並び：', pref: '県別', az: 'ABC順' },
+    en: { label: 'Sort:', pref: 'Prefecture', az: 'A–Z' }
+  };
+  function prefIndex(pref) { var i = PREF_ORDER.indexOf(pref); return i === -1 ? 99 : i; }
+  function sortForList(items) {
+    return items.slice().sort(function(a, b){
+      var sa = a.shrine, sb = b.shrine;
+      if (listSort === 'pref') {
+        var d = prefIndex(sa.pref) - prefIndex(sb.pref);
+        if (d) return d;
+      }
+      return (sa.nameEn || sa.name).localeCompare(sb.nameEn || sb.name, 'en', { sensitivity: 'base' }) || sa.name.localeCompare(sb.name, 'ja');
+    });
+  }
+  // 依頼CA-3（2026-10-23）：リストと地図が互いに追う。選択中の社（ポップアップが開いている社）の行に色を付ける。
+  // 地図→リスト＝マーカーを押してポップアップが開いたら、右のリストをその行までなめらかにスクロール（リストの中ほど）。
+  // その社のタグがオフで行が無い時・スマホ（リストが隠れている）は何もしない
+  var selectedKey = null, listPickKey = null;
+  function applySelection() {
+    var list = document.getElementById('sidebar-list');
+    if (!list) return null;
+    var found = null;
+    Array.prototype.forEach.call(list.querySelectorAll('.shrine-item'), function(el){
+      var on = !!selectedKey && el.dataset.key === selectedKey;
+      el.classList.toggle('selected', on);
+      if (on) found = el;
+    });
+    return found;
+  }
+  function scrollListToRow(row) {
+    var list = document.getElementById('sidebar-list');
+    if (!list || !row || list.offsetParent === null) return;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var lr = list.getBoundingClientRect(), rr = row.getBoundingClientRect();
+    var top = list.scrollTop + (rr.top - lr.top) - (list.clientHeight - rr.height) / 2;
+    list.scrollTo({ top: Math.max(0, top), behavior: reduced ? 'auto' : 'smooth' });
+  }
+  function renderSidebarList(keepScroll) {
     var list = document.getElementById('sidebar-list');
     if (!list) return;
+    var prevScroll = list.scrollTop;
     list.innerHTML = '';
     var total = 0;
     TAG_ORDER.forEach(function(tag){
@@ -1674,10 +1788,22 @@
       sec.setAttribute('data-tag', tag);   // 依頼BU-2：最初の演出で、増えたタグの節へスクロールするため
       var title = document.createElement('div');
       title.className = 'sidebar-section-title';
-      title.style.cssText = 'background:' + cfg.bg + '; border-left:3px solid ' + cfg.border + '; color:' + cfg.border + ';';
+      // 依頼CA：節の見出し（上に貼り付く）の下に、スクロールした行が透けて見えていた（背景が半透明）→サイドバーの地の色を下に敷く
+      title.style.cssText = 'background:linear-gradient(' + cfg.bg + ',' + cfg.bg + '), var(--bg-popup-1); border-left:3px solid ' + cfg.border + '; color:' + cfg.border + ';';
       title.innerHTML = '<span>' + cfg.label[currentLang] + '</span><span class="sidebar-section-count">' + CHROME_TEXT[currentLang].countFmt(items.length) + '</span>';
       sec.appendChild(title);
-      items.forEach(function(item){ sec.appendChild(buildShrineItem(item.shrine, cfg.color)); });
+      var lastPref = null;
+      sortForList(items).forEach(function(item){
+        // 依頼CA-2：県別の時、県が変わる所に小さな県名の見出し
+        if (listSort === 'pref' && item.shrine.pref !== lastPref) {
+          lastPref = item.shrine.pref;
+          var head = document.createElement('div');
+          head.className = 'sidebar-pref-head';
+          head.textContent = currentLang === 'en' ? item.shrine.prefEn : item.shrine.pref;
+          sec.appendChild(head);
+        }
+        sec.appendChild(buildShrineItem(item.shrine, cfg.color));
+      });
       list.appendChild(sec);
       total += items.length;
     });
@@ -1692,7 +1818,22 @@
     if (countEl) countEl.textContent = CHROME_TEXT[currentLang].countFmt(total);
     var titleEl = document.getElementById('sidebar-title');
     if (titleEl) titleEl.textContent = CHROME_TEXT[currentLang].listTitle;
+    // 依頼CA-2：並べ替えのボタンの文字・選択中の印
+    var st = LIST_SORT_TEXT[currentLang];
+    var lab = document.getElementById('sidebar-sort-label'); if (lab) lab.textContent = st.label;
+    var bp = document.getElementById('sidebar-sort-pref'); if (bp) { bp.textContent = st.pref; bp.classList.toggle('active', listSort === 'pref'); bp.setAttribute('aria-pressed', listSort === 'pref'); }
+    var ba = document.getElementById('sidebar-sort-az'); if (ba) { ba.textContent = st.az; ba.classList.toggle('active', listSort === 'az'); ba.setAttribute('aria-pressed', listSort === 'az'); }
+    if (keepScroll) list.scrollTop = prevScroll;   // 並べ替え・言語切替など、中身の入れ替えでない時は位置を保つ
+    applySelection();
   }
+  Array.prototype.forEach.call(document.querySelectorAll('.sidebar-sort-btn'), function(btn){
+    btn.addEventListener('click', function(){
+      var mode = btn.getAttribute('data-sort');
+      if (mode === listSort) return;
+      listSort = mode;
+      renderSidebarList(true);
+    });
+  });
 
   function focusShrine(shrine) {
     var entry = markerList.filter(function(item){ return item.shrine === shrine; })[0];
@@ -1997,6 +2138,7 @@
     // 人が「すべて外す」・タグを押した時＝そこで止める。finishAllと違い、残りのタグは足さない（押した後の状態を、人の操作で決める）
     revealControl = {
       cancel: function(){ interrupted = true; following = false; if (timer) clearTimeout(timer); revealControl = null; },
+      stopFollow: function(){ following = false; },   // 依頼CA-3：マーカーを押してポップアップが開いた時＝リストのスクロールの追従だけ止める（演出は続く）
       active: function(){ return !interrupted && stageIndex < STAGES.length; }
     };
     map.once('dragstart', function(){
@@ -2060,7 +2202,7 @@
         var tag = activeTopTag(item.shrine.tags);
         if (tag !== item._iconTag) {
           var prevName = item.marker._icon ? item.marker._icon.dataset.name : null;
-          item.marker.setIcon(getIcon(tag));
+          item.marker.setIcon(getIcon(tag, shrineHasDetail(item.shrine)));
           item.marker.setZIndexOffset(markerZIndex(tag));
           item._iconTag = tag;
           if (item.marker._icon) item.marker._icon.dataset.name = prevName || shrineName(item.shrine);
@@ -2123,10 +2265,10 @@
     renderShrineDropdown();
     renderFilterButtons();
     updateStats();
-    renderSidebarList();
+    renderSidebarList(true);   // 依頼CA：言語を切り替えてもリストの位置は保つ
     markerList.forEach(function(item){
       var langTag = activeTopTag(item.shrine.tags);
-      item.marker.setIcon(getIcon(langTag));
+      item.marker.setIcon(getIcon(langTag, shrineHasDetail(item.shrine)));
       item.marker.setZIndexOffset(markerZIndex(langTag));
       // 依頼Z-2③：setIconはアイコンのDOM要素を作り直すため、直前に付けた
       // dataset.name（ホバー時の社名表示用）も消える。言語切替のたびに
@@ -2518,6 +2660,19 @@
       });
       var basemap = initBasemaps(map, detailedTiles);
       flyCap = basemap.capFly;
+      // 依頼CA-3（2026-10-23）：マーカーを押してポップアップが開いたら、右のリストをその社の行へ追わせ、選択中の色を付ける。閉じたら外す。
+      // 演出（依頼BUの追従）の途中で押した時は、演出のスクロールの追従を止める（今の「人が触ったら止める」と同じ）
+      map.on('popupopen', function(e){
+        var src = e.popup && e.popup._source;
+        var entry = markerList.filter(function(i){ return i.marker === src; })[0];
+        if (!entry) return;
+        selectedKey = shrineKey(entry.shrine);
+        var row = applySelection();
+        if (revealControl && revealControl.stopFollow) revealControl.stopFollow();
+        if (row && listPickKey !== selectedKey) scrollListToRow(row);
+        listPickKey = null;
+      });
+      map.on('popupclose', function(){ selectedKey = null; applySelection(); });
       // 実行順F（依頼P-2・2026-09-13）：地図の何もない場所をクリックしたら
       // エリアの囲いを解除する（囲い自体のクリックはstopPropagationしてあるので
       // ここには来ない）
@@ -2601,9 +2756,10 @@
       // 寄っていた場合だけ、その表示をそのまま見せるためDetailedで始める
       basemap.setMode(restoredView && restoredView.zoom > basemap.maxZoom ? 'detailed' : 'simple');
       var bounds = [];
+      shrines.forEach(function(s){ NAME_COUNT[s.name] = (NAME_COUNT[s.name] || 0) + 1; });   // 依頼CA-1：同名の社を見分けるため先に数える
       shrines.forEach(function(s){
         var initialTag = activeTopTag(s.tags);
-        var marker = L.marker([s.lat, s.lng], { icon: getIcon(initialTag), zIndexOffset: markerZIndex(initialTag) })
+        var marker = L.marker([s.lat, s.lng], { icon: getIcon(initialTag, shrineHasDetail(s)), zIndexOffset: markerZIndex(initialTag) })
           .bindPopup(buildPopupContent(s), { className: 'shrine-popup' });
         if (passesFilter(s)) {
           marker.addTo(map);
