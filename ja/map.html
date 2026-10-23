@@ -903,13 +903,26 @@
 <button class="shrine-dropdown-toggle" id="basics-dropdown-toggle" type="button">
 <span id="basics-dropdown-label"></span><span class="shrine-dropdown-caret">▾</span>
 </button>
-<div class="shrine-dropdown-panel" id="basics-dropdown-panel"></div>
+<!-- 依頼BX（2026-10-23・本人「Bでとりあえずやってみて、気に入らなかったらAにする」）：下の2つのメニューの中身は、開いた時にJS
+         （renderBasicsDropdown／renderAreaDropdown）が作り直すが、最初のHTMLにも同じリンクを書いておく（検索側がJSの描画を待たずに
+         地図ページ発の普通の<a href>を見つけられるように。依頼BLの目的を、地図の下のリンク行をやめた後も保つ）。メニューは閉じている間は
+         表示されないので、見た目・スクロール・操作は変わらない。⚠️記事・エリアの一覧（ARTICLE_PAGES／AREA_PAGES／VISIBLE_AREA_FILES）を
+         変える時は、ここも同じにする。気に入らなければ、中身を空に戻す（<div class="shrine-dropdown-panel" id="…"></div>）だけで元の形 -->
+<div class="shrine-dropdown-panel" id="basics-dropdown-panel">
+<a class="shrine-dropdown-item" href="articles/japan-and-shrines.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">1</span><span class="shrine-dropdown-name">日本と神社</span></a>
+<a class="shrine-dropdown-item" href="articles/how-to-visit.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">2</span><span class="shrine-dropdown-name">参拝の作法</span></a>
+<a class="shrine-dropdown-item" href="articles/torii-and-grounds.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">3</span><span class="shrine-dropdown-name">鳥居と境内</span></a>
+<a class="shrine-dropdown-item" href="articles/kami-and-classification.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">4</span><span class="shrine-dropdown-name">神々と分類</span></a>
+</div>
 </div>
 <div class="shrine-dropdown" id="area-dropdown">
 <button class="shrine-dropdown-toggle" id="area-dropdown-toggle" type="button">
 <span id="area-dropdown-label"></span><span class="shrine-dropdown-caret">▾</span>
 </button>
-<div class="shrine-dropdown-panel" id="area-dropdown-panel"></div>
+<div class="shrine-dropdown-panel" id="area-dropdown-panel">
+<div class="area-row" data-area-file="areas/tokyo.html"><span class="area-row-name">東京</span><div class="area-row-chips"></div><a class="area-row-link" href="areas/tokyo.html">東京の神社　厳選紹介 →</a></div>
+<div class="area-row" data-area-file="areas/beyond-tokyo.html"><span class="area-row-name">東京の外</span><div class="area-row-chips"></div><a class="area-row-link" href="areas/beyond-tokyo.html">東京の外の神社　紹介 →</a></div>
+</div>
 </div>
 <div class="mock-controls" id="mock-controls"></div>
 </div>
