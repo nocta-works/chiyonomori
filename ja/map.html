@@ -412,6 +412,9 @@
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-size: 13px; font-weight: bold; color: #fff;
   }
   .shrine-dropdown-name { font-size: 13px; color: var(--tan-text); white-space: nowrap; }
+  /* 依頼CE-1（2026-10-25）：基礎の4本の後ろに区切りを入れ、目次ページ「基礎の先に」への1行（番号なし・金色の文字）。記事が増えてもメニューはこの1行のまま */
+  .shrine-dropdown-sep { height: 1px; margin: 6px 10px; background: var(--border-4); opacity: 0.7; }
+  .shrine-dropdown-more .shrine-dropdown-name { color: var(--gold); }
 
   /* 依頼AM-4（2026-09-23）：「エリアが行、レベルがチップ」の表。エリアの数だけ
      .area-rowが増える設計にしておく（今は東京の1行だけ）。パネル自体の
@@ -938,6 +941,8 @@
 <a class="shrine-dropdown-item" href="articles/how-to-visit.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">2</span><span class="shrine-dropdown-name">参拝の作法</span></a>
 <a class="shrine-dropdown-item" href="articles/torii-and-grounds.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">3</span><span class="shrine-dropdown-name">鳥居と境内</span></a>
 <a class="shrine-dropdown-item" href="articles/kami-and-classification.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">4</span><span class="shrine-dropdown-name">神々と分類</span></a>
+<div class="shrine-dropdown-sep"></div>
+<a class="shrine-dropdown-item shrine-dropdown-more" href="articles/beyond-the-basics.html"><span class="shrine-dropdown-name">基礎の先に →</span></a>
 </div>
 </div>
 <div class="shrine-dropdown" id="area-dropdown">
@@ -1388,6 +1393,8 @@
     { num: 3, name:{ja:'鳥居と境内',     en:'Torii & Grounds'},   file:'articles/torii-and-grounds.html' },
     { num: 4, name:{ja:'神々と分類',     en:'Kami & Ranks'},      file:'articles/kami-and-classification.html' },
   ];
+  // 依頼CE-1（2026-10-25）：基礎の4本の後ろに区切りを入れて、目次ページ「基礎の先に」への1行だけ。記事ごとには足さない（メニューを軽く保つ）
+  var BEYOND_PAGE = { name:{ja:'基礎の先に →', en:'Beyond the basics →'}, file:'articles/beyond-the-basics.html' };
   function renderBasicsDropdown(){
     var label = document.getElementById('basics-dropdown-label');
     if (label) label.textContent = '⛩ ' + BASICS_LABEL[currentLang];
@@ -1398,7 +1405,10 @@
         '<span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">' + s.num + '</span>' +
         '<span class="shrine-dropdown-name">' + s.name[currentLang] + '</span>' +
         '</a>';
-    }).join('');
+    }).join('') +
+      '<div class="shrine-dropdown-sep"></div>' +
+      '<a class="shrine-dropdown-item shrine-dropdown-more" href="' + withTagsQuery(BEYOND_PAGE.file) + '">' +
+      '<span class="shrine-dropdown-name">' + BEYOND_PAGE.name[currentLang] + '</span></a>';
   }
   // 依頼AM-4（2026-09-23）：本人「東京エリアタグを押した時、Lv1〜Lv3が展開され、
   // カーソルを合わせると地図の範囲とズームでイコールになるのが分かる表現に」。
