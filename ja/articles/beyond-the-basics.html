@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>基礎の先に——もっと深く読む記事｜千代の杜</title>
+<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/articles/beyond-the-basics.html — 基礎の先の記事の目次ページ（Beyond the basics）。
+     構想＝海外版_構造再検討.md「基礎の先のページ集の構造」の入口。依頼CC-1「目次ページは2本目ができてから作る」。
+     基礎の記事4本の末尾（もっと深く）と、基礎の先の記事の先頭（eyebrow）からここへ来る。 */
+
+  /* design-lab/articles/torii-and-grounds.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;   /* 依頼BT-1（2026-10-18）：未定義のままだとKo-fiリンクとプライバシーの行が親の色（#6a5030・コントラスト約2.5:1）になり読めなかった。定義のあるページ（川勾神社など）と同じ値（約9.5:1） */
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .article-hero {
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+  }
+
+  .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(24px, 4vw, 34px); color: var(--gold); margin: 0 0 18px; line-height: 1.5;
+  }
+  .article-lead { font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.92; margin: 0; }
+
+  .article-body { max-width: 700px; margin: 0 auto; padding: 0 24px 20px; font-size: 14px; }
+  .article-body h2 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 19px; color: var(--gold); margin: 48px 0 14px; letter-spacing: 0.02em;
+    border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); padding-left: 12px;
+  }
+  .article-body h3 { font-size: 14px; color: var(--gold); opacity: 0.9; margin: 30px 0 10px; letter-spacing: 0.05em; }
+  .article-body p { line-height: 2.05; opacity: 0.9; margin: 0 0 16px; }
+  .article-body ul, .article-body ol { margin: 0 0 16px; padding-left: 1.3em; }
+  .article-body li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
+  .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  /* 依頼CC・CD（2026-10-24）：基礎の先の記事への1行 */
+  .article-deeper { margin: 6px 0 26px; font-size: 13.5px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+  .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
+  .article-table th { color: var(--gold); font-weight: 600; opacity: 0.85; white-space: nowrap; }
+  .article-table td:first-child { white-space: nowrap; color: var(--gold); opacity: 0.9; }
+
+  .article-nav {
+    max-width: 700px; margin: 40px auto 0; padding: 0 24px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .article-nav a {
+    flex: 1; min-width: 220px; text-decoration: none; font-size: 12px; line-height: 1.8;
+    border: 1px solid var(--border-4); border-radius: 3px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); color: var(--tan-text); opacity: 0.85;
+    transition: background var(--dur-base) ease;
+  }
+  .article-nav a:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .article-nav-next { text-align: right; }
+  .article-nav-label { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; margin-bottom: 6px; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 20px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  /* 依頼💰収益-8 C（2026-10-19）：フッターの「支援する理由の1文」とプライバシーの行が`.page-footer`の色（#6a5030・約2.5:1）で読めなかった。
+     #a89c78（約6.8:1）に。リンクは明るい色（#c9b98a・約9.5:1）＋下線で、文と見分ける。サイト名の行は控えめなまま */
+  .footer-support, .footer-privacy { color: #a89c78; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(201,185,138,0.55); }
+  .footer-support a:hover { color: var(--gold); }
+  .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
+
+
+  html { scroll-padding-top: 70px; }
+  .article-body h3 { margin-top: 30px; }
+  .article-body a { text-underline-offset: 2px; text-decoration-color: rgba(245,208,138,0.45); }
+  .article-body a:hover { text-decoration-color: var(--gold); }
+  .article-eyebrow a { color: inherit; text-decoration: none; }
+  .article-eyebrow a:hover { text-decoration: underline; }
+
+  /* 依頼CC・CD（2026-10-24）：基礎の先の記事。基礎4本の固定の一覧は置かない（4本は「基礎」の鎖。ここは鎖の外） */
+  .article-hero { padding-top: 100px; }
+  .article-table td:first-child { white-space: normal; }
+  .article-table td .cell-label { display: none; }
+  .table-wrap { margin-bottom: 18px; }
+
+  /* 狭い画面（375px）：横にはみ出す表は、1行を1枚のカードにして縦に積む。見出しは各セルの上に小さく出す */
+  @media (max-width: 600px) {
+    .article-hero { padding: 84px 6vw 28px; }
+    .stack-table, .stack-table tbody, .stack-table tr, .stack-table td { display: block; width: 100%; }
+    .stack-table thead { display: none; }
+    .stack-table tr { border: 1px solid var(--border-4); border-radius: 4px; padding: 6px 12px 8px; margin: 0 0 10px; background: rgba(255,255,255,0.02); }
+    .stack-table td { border: none; padding: 5px 0 2px; }
+    .stack-table td:first-child { color: var(--gold); font-weight: 600; font-size: 14px; padding-bottom: 4px; border-bottom: 1px solid rgba(106,80,48,0.6); margin-bottom: 4px; }
+    .stack-table td .cell-label { display: block; font-size: 10.5px; letter-spacing: 0.08em; color: var(--gold-muted); margin-bottom: 1px; text-transform: none; }
+    .article-table th { white-space: normal; }
+  }
+
+  .mistakes { border: 1px solid var(--border-4); border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); border-radius: 3px; background: rgba(255,255,255,0.02); padding: 14px 20px 4px; margin: 0 0 24px; }
+  .mistakes ul { padding-left: 1.1em; margin: 0; }
+  .mistakes li { margin-bottom: 10px; }
+
+  .article-deeper { margin: 6px 0 26px; font-size: 13.5px; }
+
+  .diagram { margin: 28px 0 34px; }
+  .diagram-title { font-size: 13.5px; letter-spacing: 0.08em; color: var(--gold-muted); margin: 0 0 14px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-svg-wrap svg { width: 100%; max-width: 540px; height: auto; display: block; }
+  .diagram-note { font-size: 12.5px; color: var(--gold-muted); text-align: center; margin: 12px 0 0; line-height: 1.7; }
+
+  /* 図の中の色（文字は <text data-en> に置き、言語を切り替える。画像には焼き込まない） */
+  .dg-box { fill: rgba(245,208,138,0.05); stroke: #6a5030; stroke-width: 1.2; }
+  .dg-box-strong { fill: rgba(245,208,138,0.30); stroke: #f5d08a; stroke-width: 1.4; }
+  .dg-outer { fill: rgba(245,208,138,0.04); stroke: #907040; stroke-width: 1.4; }
+  .dg-t { fill: #f5d08a; font-size: 12px; font-weight: 700; }
+  .dg-tm { fill: #f5d08a; font-size: 11px; font-weight: 700; }
+  .dg-s { fill: #ddd0a0; font-size: 9.5px; opacity: 0.85; }
+  .dg-n { fill: #c9b98a; font-size: 10.5px; }
+  .dg-axis { stroke: #907040; stroke-width: 1; fill: none; }
+  .dg-tick { fill: #c9b98a; font-size: 9.5px; }
+  .dg-bar { fill: rgba(245,208,138,0.30); stroke: #f5d08a; stroke-width: 1.2; }
+  .dg-bar-open { fill: rgba(245,208,138,0.10); stroke: #f5d08a; stroke-width: 1.2; stroke-dasharray: 3 2.5; }
+  .dg-line { stroke: #f5d08a; stroke-width: 1.6; }
+  .dg-dot { fill: #f5d08a; stroke: #1a1209; stroke-width: 1.5; }
+  .dg-dot-none { fill: #1a1209; stroke: #f5d08a; stroke-width: 1.6; }
+  .dg-hikawa { fill: #ddd0a0; font-size: 10.5px; }
+  .dg-hikawa-none { fill: #c9b98a; font-size: 10.5px; font-style: italic; }
+
+  /* 地図の一宮の図（東京のまわり） */
+  .ichi-map { margin: 22px 0 26px; }
+  .ichi-map svg { width: 100%; max-width: 540px; height: auto; display: block; margin: 0 auto; }
+  .im-land { fill: #2a1f12; stroke: #907040; stroke-width: 0.9; stroke-linejoin: round; }
+  .im-pref { fill: none; stroke: #6a5030; stroke-width: 0.7; stroke-linejoin: round; }
+  .im-label { fill: #c9b98a; font-size: 9.5px; }
+  .im-tokyo { fill: #f5d08a; font-size: 9.5px; font-weight: 700; }
+
+  /* 目次ページ（Beyond the basics）：記事を足したら、下の <ul class="beyond-list"> に <li class="beyond-card"> を1つ足す */
+  .article-body .beyond-list { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 14px; }
+  .article-body .beyond-card { margin: 0; padding: 0; opacity: 1; }
+  .article-body .beyond-card a.beyond-card-link { display: block; text-decoration: none; color: var(--tan-text); border: 1px solid var(--border-4); border-radius: 4px; padding: 18px 20px 16px; background: rgba(255,255,255,0.02); transition: background var(--dur-base) ease, border-color var(--dur-base) ease; }
+  .article-body .beyond-card a.beyond-card-link:hover, .article-body .beyond-card a.beyond-card-link:focus-visible { background: rgba(var(--gold-glow-rgb),0.07); border-color: var(--gold-muted); outline: none; }
+  .beyond-label { display: block; font-size: 11px; letter-spacing: 0.14em; color: var(--gold-muted); text-transform: uppercase; margin-bottom: 6px; }
+  .beyond-title { display: block; font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif; font-size: 17px; line-height: 1.55; color: var(--gold); margin-bottom: 8px; }
+  .article-body .beyond-card a.beyond-card-link:hover .beyond-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(245,208,138,0.5); }
+  .beyond-desc { display: block; font-size: 13.5px; line-height: 1.9; opacity: 0.9; }
+  .beyond-go { display: block; margin-top: 8px; font-size: 12px; color: var(--gold); opacity: 0.85; }
+
+  .article-body .beyond-basics { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; counter-reset: basics; }
+  .article-body .beyond-basics li { margin: 0; line-height: 1.4; opacity: 1; counter-increment: basics; }
+  .article-body .beyond-basics a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 13px; color: var(--tan-text); border: 1px solid var(--border-4); border-radius: 20px; padding: 7px 14px 7px 8px; background: rgba(255,255,255,0.02); }
+  .article-body .beyond-basics a:hover, .article-body .beyond-basics a:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .article-body .beyond-basics a::before { content: counter(basics); display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; font-size: 10px; font-weight: 700; color: var(--gold); background: rgba(var(--gold-glow-rgb),0.3); border: 1.5px solid var(--gold); }
+
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/ja/articles/beyond-the-basics.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/beyond-the-basics.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/beyond-the-basics.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/beyond-the-basics.html" hreflang="x-default" rel="alternate"/><meta content="基礎の4本は、はじめて神社を訪ねるのに要ることをまとめた。ここから先は、もう一歩深く読む記事。" name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="基礎の先に——もっと深く読む記事｜千代の杜" property="og:title"/><meta content="基礎の4本は、はじめて神社を訪ねるのに要ることをまとめた。ここから先は、もう一歩深く読む記事。" property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/ja/articles/beyond-the-basics.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/beyond-the-basics.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="基礎の先に——もっと深く読む記事｜千代の杜" property="og:image:alt"/><meta content="ja_JP" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="基礎の先に——もっと深く読む記事｜千代の杜" name="twitter:title"/><meta content="基礎の4本は、はじめて神社を訪ねるのに要ることをまとめた。ここから先は、もう一歩深く読む記事。" name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/beyond-the-basics.jpg" name="twitter:image"/><style>
+  /* 依頼BP-2：共有のボタン（外部の部品は使わない） */
+  .share-row { max-width: 860px; margin: 56px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .share-label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; margin-right: 6px; }
+  .share-btn { font: inherit; font-size: 12px; letter-spacing: 0.04em; padding: 8px 16px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: transparent; color: var(--tan-text); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+  .share-btn:hover, .share-btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .share-btn[hidden] { display: none; }
+</style></head>
+<body>
+<a class="back-link" href="../map.html#mock-app" id="back-link">← 地図に戻る</a>
+<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/articles/beyond-the-basics.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/articles/beyond-the-basics.html">日本語</a></div>
+<div class="article-hero">
+<span class="article-eyebrow">記事</span>
+<h1 class="article-title">基礎の先に</h1>
+<p class="article-lead">基礎の4本は、はじめて神社を訪ねるのに要ることをまとめた。ここから先は、もう一歩深く読む記事。</p>
+</div>
+<div class="article-body">
+<h2 id="articles">もっと深く読む記事</h2>
+<p>どの記事も、最後は地図につながる。</p>
+<!-- 記事を足したら、下の <li class="beyond-card"> を1つ足す（まとまり＝label。仕組み／歴史／神々の話／場所…は、増えたら見出しで分ける） -->
+<ul class="beyond-list">
+<li class="beyond-card"><a class="beyond-card-link" href="shrine-names-and-ranks.html"><span class="beyond-label">神社の仕組み</span><span class="beyond-title">神社の名前と格付け——一つの社に重なる、千年分のラベル</span><span class="beyond-desc">神社・神宮・大社という社号と、古代から今までの格付けを、氷川神社を例に、時代ごとの層として一つずつはがして読む。</span><span class="beyond-go">記事を読む →</span></a></li>
+<li class="beyond-card"><a class="beyond-card-link" href="ichinomiya-near-tokyo.html"><span class="beyond-label">場所</span><span class="beyond-title">東京から行ける一宮——関東の旧国を一社ずつ</span><span class="beyond-desc">東京は、一宮を巡るのに日本で一番便利な起点の一つ。武蔵・相模・常陸など、東京のまわりの旧国の一宮を一社ずつ紹介し、一宮が一つに決まらない国も読む。</span><span class="beyond-go">記事を読む →</span></a></li>
+</ul>
+<h2 id="basics">先に基礎から</h2>
+<p>はじめて読む人は、基礎の4本から。読んでおくと、上の記事がすっと入る。</p>
+<ul class="beyond-basics">
+<li><a href="japan-and-shrines.html">日本と神社</a></li>
+<li><a href="how-to-visit.html">参拝の作法</a></li>
+<li><a href="torii-and-grounds.html">鳥居と境内</a></li>
+<li><a href="kami-and-classification.html">神々と分類</a></li>
+</ul>
+<h2 id="on-the-map">地図で見る</h2>
+<ul>
+<li><span>神宮・大社・一宮などの色で、全国の神社を絞り込める。</span><a href="../map.html#mock-app">地図を開く →</a></li>
+</ul>
+</div>
+<div class="share-row" data-share=""><span class="share-label">このページを共有</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">共有</button><button class="share-btn" data-done="コピーしました" data-goatcounter-click="share" data-share-copy="" type="button">リンクをコピー</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fja%2Farticles%2Fbeyond-the-basics.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Fbeyond-the-basics.jpg&amp;description=%E5%9F%BA%E7%A4%8E%E3%81%AE%E5%85%88%E3%81%AB%E2%80%94%E2%80%94%E3%82%82%E3%81%A3%E3%81%A8%E6%B7%B1%E3%81%8F%E8%AA%AD%E3%82%80%E8%A8%98%E4%BA%8B%EF%BD%9C%E5%8D%83%E4%BB%A3%E3%81%AE%E6%9D%9C" rel="noopener noreferrer" target="_blank">Pinterestに保存</a></div><div class="page-footer">
+<div>千代の杜</div>
+<div class="footer-support">
+<span>千代の杜は広告のない独立したガイドです。旅の計画に役立ったら、</span>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>チップを送る ↗</span></a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">Cookieは使用していません。匿名の訪問数のみ集計します。 <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">プライバシー</a></div></div>
+<script>
+(function(){
+  var tags = new URLSearchParams(location.search).get('tags');
+  var back = document.getElementById('back-link');
+  if (back && tags) {
+    back.setAttribute('href', '../map.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+  } catch(err){}
+})();
+</script>
+<script async="" data-goatcounter="https://chiyonomori.goatcounter.com/count" src="//gc.zgo.at/count.js"></script><script>
+(function(){
+  var root = document.querySelector('[data-share]'); if (!root) return;
+  var canon = document.querySelector('link[rel="canonical"]');
+  var url = canon ? canon.href : location.href, title = document.title;
+  var nat = root.querySelector('[data-share-native]');
+  if (nat && navigator.share) {
+    nat.hidden = false;
+    nat.addEventListener('click', function(){ navigator.share({ title: title, url: url }).catch(function(){}); });
+  }
+  var cp = root.querySelector('[data-share-copy]');
+  if (cp) cp.addEventListener('click', function(){
+    var label = cp.textContent, done = cp.getAttribute('data-done');
+    function ok(){ cp.textContent = done; setTimeout(function(){ cp.textContent = label; }, 1500); }
+    function fallback(){
+      var t = document.createElement('textarea'); t.value = url; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t); ok();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
+  });
+})();
+</script>
+</body>
+</html>

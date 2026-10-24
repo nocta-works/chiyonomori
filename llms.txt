@@ -14,7 +14,7 @@ The site plots shrines on a Leaflet map using GSI (Geospatial Information Author
 
 - Map: https://nocta-works.github.io/chiyonomori/map.html
 - Tokyo area: https://nocta-works.github.io/chiyonomori/areas/tokyo.html
-- Background articles: https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html, https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html, https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html, https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html, https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html, https://nocta-works.github.io/chiyonomori/articles/ichinomiya-near-tokyo.html
+- Background articles: https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html, https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html, https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html, https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html, https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html, https://nocta-works.github.io/chiyonomori/articles/ichinomiya-near-tokyo.html, https://nocta-works.github.io/chiyonomori/articles/beyond-the-basics.html
 - Sitemap: https://nocta-works.github.io/chiyonomori/sitemap.xml (all English and Japanese pages currently indexed)
 
 ## Scope

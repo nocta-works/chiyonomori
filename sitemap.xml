@@ -51,6 +51,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://nocta-works.github.io/chiyonomori/articles/beyond-the-basics.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://nocta-works.github.io/chiyonomori/shrines/ise-jingu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -297,6 +302,11 @@
   </url>
   <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/articles/ichinomiya-near-tokyo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/articles/beyond-the-basics.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
