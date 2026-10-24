@@ -41,6 +41,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/articles/ichinomiya-near-tokyo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://nocta-works.github.io/chiyonomori/shrines/ise-jingu.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -277,6 +287,16 @@
   </url>
   <url>
     <loc>https://nocta-works.github.io/chiyonomori/ja/articles/kami-and-classification.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/articles/shrine-names-and-ranks.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nocta-works.github.io/chiyonomori/ja/articles/ichinomiya-near-tokyo.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

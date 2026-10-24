@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>神社の名前と格付け——社号と社格｜千代の杜</title>
+<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/articles/shrine-names-and-ranks.html — 実装キュー依頼CC（2026-10-24）：基礎の先の記事の1本目。
+     原稿＝記事原稿_社号と社格.md（本人OK済み）。✅・⏳・出典の括弧・確認の節はページに出さない。
+     【地域】の4か所は <!-- region: kansai (n/4) --> の目印（大阪・京都版が入った時に探す）。7の表は <tbody data-region="…"> で段に分けてある。 */
+
+  /* design-lab/articles/torii-and-grounds.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;   /* 依頼BT-1（2026-10-18）：未定義のままだとKo-fiリンクとプライバシーの行が親の色（#6a5030・コントラスト約2.5:1）になり読めなかった。定義のあるページ（川勾神社など）と同じ値（約9.5:1） */
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .article-hero {
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+  }
+
+  .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(24px, 4vw, 34px); color: var(--gold); margin: 0 0 18px; line-height: 1.5;
+  }
+  .article-lead { font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.92; margin: 0; }
+
+  .article-body { max-width: 700px; margin: 0 auto; padding: 0 24px 20px; font-size: 14px; }
+  .article-body h2 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 19px; color: var(--gold); margin: 48px 0 14px; letter-spacing: 0.02em;
+    border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); padding-left: 12px;
+  }
+  .article-body h3 { font-size: 14px; color: var(--gold); opacity: 0.9; margin: 30px 0 10px; letter-spacing: 0.05em; }
+  .article-body p { line-height: 2.05; opacity: 0.9; margin: 0 0 16px; }
+  .article-body ul, .article-body ol { margin: 0 0 16px; padding-left: 1.3em; }
+  .article-body li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
+  .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+  .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
+  .article-table th { color: var(--gold); font-weight: 600; opacity: 0.85; white-space: nowrap; }
+  .article-table td:first-child { white-space: nowrap; color: var(--gold); opacity: 0.9; }
+
+  .article-nav {
+    max-width: 700px; margin: 40px auto 0; padding: 0 24px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .article-nav a {
+    flex: 1; min-width: 220px; text-decoration: none; font-size: 12px; line-height: 1.8;
+    border: 1px solid var(--border-4); border-radius: 3px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); color: var(--tan-text); opacity: 0.85;
+    transition: background var(--dur-base) ease;
+  }
+  .article-nav a:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .article-nav-next { text-align: right; }
+  .article-nav-label { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; margin-bottom: 6px; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 20px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  /* 依頼💰収益-8 C（2026-10-19）：フッターの「支援する理由の1文」とプライバシーの行が`.page-footer`の色（#6a5030・約2.5:1）で読めなかった。
+     #a89c78（約6.8:1）に。リンクは明るい色（#c9b98a・約9.5:1）＋下線で、文と見分ける。サイト名の行は控えめなまま */
+  .footer-support, .footer-privacy { color: #a89c78; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(201,185,138,0.55); }
+  .footer-support a:hover { color: var(--gold); }
+  .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
+
+
+  html { scroll-padding-top: 70px; }
+  .article-body h3 { margin-top: 30px; }
+  .article-body a { text-underline-offset: 2px; text-decoration-color: rgba(245,208,138,0.45); }
+  .article-body a:hover { text-decoration-color: var(--gold); }
+  .article-eyebrow a { color: inherit; text-decoration: none; }
+  .article-eyebrow a:hover { text-decoration: underline; }
+
+  /* 依頼CC・CD（2026-10-24）：基礎の先の記事。基礎4本の固定の一覧は置かない（4本は「基礎」の鎖。ここは鎖の外） */
+  .article-hero { padding-top: 100px; }
+  .article-table td:first-child { white-space: normal; }
+  .article-table td .cell-label { display: none; }
+  .table-wrap { margin-bottom: 18px; }
+
+  /* 狭い画面（375px）：横にはみ出す表は、1行を1枚のカードにして縦に積む。見出しは各セルの上に小さく出す */
+  @media (max-width: 600px) {
+    .article-hero { padding: 84px 6vw 28px; }
+    .stack-table, .stack-table tbody, .stack-table tr, .stack-table td { display: block; width: 100%; }
+    .stack-table thead { display: none; }
+    .stack-table tr { border: 1px solid var(--border-4); border-radius: 4px; padding: 6px 12px 8px; margin: 0 0 10px; background: rgba(255,255,255,0.02); }
+    .stack-table td { border: none; padding: 5px 0 2px; }
+    .stack-table td:first-child { color: var(--gold); font-weight: 600; font-size: 14px; padding-bottom: 4px; border-bottom: 1px solid rgba(106,80,48,0.6); margin-bottom: 4px; }
+    .stack-table td .cell-label { display: block; font-size: 10.5px; letter-spacing: 0.08em; color: var(--gold-muted); margin-bottom: 1px; text-transform: none; }
+    .article-table th { white-space: normal; }
+  }
+
+  .mistakes { border: 1px solid var(--border-4); border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); border-radius: 3px; background: rgba(255,255,255,0.02); padding: 14px 20px 4px; margin: 0 0 24px; }
+  .mistakes ul { padding-left: 1.1em; margin: 0; }
+  .mistakes li { margin-bottom: 10px; }
+
+  .article-deeper { margin: 6px 0 26px; font-size: 13.5px; }
+
+  .diagram { margin: 28px 0 34px; }
+  .diagram-title { font-size: 13.5px; letter-spacing: 0.08em; color: var(--gold-muted); margin: 0 0 14px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-svg-wrap svg { width: 100%; max-width: 540px; height: auto; display: block; }
+  .diagram-note { font-size: 12.5px; color: var(--gold-muted); text-align: center; margin: 12px 0 0; line-height: 1.7; }
+
+  /* 図の中の色（文字は <text data-en> に置き、言語を切り替える。画像には焼き込まない） */
+  .dg-box { fill: rgba(245,208,138,0.05); stroke: #6a5030; stroke-width: 1.2; }
+  .dg-box-strong { fill: rgba(245,208,138,0.30); stroke: #f5d08a; stroke-width: 1.4; }
+  .dg-outer { fill: rgba(245,208,138,0.04); stroke: #907040; stroke-width: 1.4; }
+  .dg-t { fill: #f5d08a; font-size: 12px; font-weight: 700; }
+  .dg-tm { fill: #f5d08a; font-size: 11px; font-weight: 700; }
+  .dg-s { fill: #ddd0a0; font-size: 9.5px; opacity: 0.85; }
+  .dg-n { fill: #c9b98a; font-size: 10.5px; }
+  .dg-axis { stroke: #907040; stroke-width: 1; fill: none; }
+  .dg-tick { fill: #c9b98a; font-size: 9.5px; }
+  .dg-bar { fill: rgba(245,208,138,0.30); stroke: #f5d08a; stroke-width: 1.2; }
+  .dg-bar-open { fill: rgba(245,208,138,0.10); stroke: #f5d08a; stroke-width: 1.2; stroke-dasharray: 3 2.5; }
+  .dg-line { stroke: #f5d08a; stroke-width: 1.6; }
+  .dg-dot { fill: #f5d08a; stroke: #1a1209; stroke-width: 1.5; }
+  .dg-dot-none { fill: #1a1209; stroke: #f5d08a; stroke-width: 1.6; }
+  .dg-hikawa { fill: #ddd0a0; font-size: 10.5px; }
+  .dg-hikawa-none { fill: #c9b98a; font-size: 10.5px; font-style: italic; }
+
+  /* 地図の一宮の図（東京のまわり） */
+  .ichi-map { margin: 22px 0 26px; }
+  .ichi-map svg { width: 100%; max-width: 540px; height: auto; display: block; margin: 0 auto; }
+  .im-land { fill: #2a1f12; stroke: #907040; stroke-width: 0.9; stroke-linejoin: round; }
+  .im-pref { fill: none; stroke: #6a5030; stroke-width: 0.7; stroke-linejoin: round; }
+  .im-label { fill: #c9b98a; font-size: 9.5px; }
+  .im-tokyo { fill: #f5d08a; font-size: 9.5px; font-weight: 700; }
+
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/ja/articles/shrine-names-and-ranks.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/shrine-names-and-ranks.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html" hreflang="x-default" rel="alternate"/><meta content="鳥居の脇の石柱や案内板には、社の名前のほかに、いくつもの肩書きが刻まれていることがある。「武蔵一宮」「旧官幣大社」「勅祭社」——さいたま市の氷川神社なら、これが全部当てはまる。" name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="神社の名前と格付け——社号と社格｜千代の杜" property="og:title"/><meta content="鳥居の脇の石柱や案内板には、社の名前のほかに、いくつもの肩書きが刻まれていることがある。「武蔵一宮」「旧官幣大社」「勅祭社」——さいたま市の氷川神社なら、これが全部当てはまる。" property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/ja/articles/shrine-names-and-ranks.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/shrine-names-and-ranks.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="神社の名前と格付け——社号と社格｜千代の杜" property="og:image:alt"/><meta content="ja_JP" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="神社の名前と格付け——社号と社格｜千代の杜" name="twitter:title"/><meta content="鳥居の脇の石柱や案内板には、社の名前のほかに、いくつもの肩書きが刻まれていることがある。「武蔵一宮」「旧官幣大社」「勅祭社」——さいたま市の氷川神社なら、これが全部当てはまる。" name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/shrine-names-and-ranks.jpg" name="twitter:image"/><style>
+  /* 依頼BP-2：共有のボタン（外部の部品は使わない） */
+  .share-row { max-width: 860px; margin: 56px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .share-label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; margin-right: 6px; }
+  .share-btn { font: inherit; font-size: 12px; letter-spacing: 0.04em; padding: 8px 16px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: transparent; color: var(--tan-text); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+  .share-btn:hover, .share-btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .share-btn[hidden] { display: none; }
+</style></head>
+<body>
+<a class="back-link" href="../map.html#mock-app" id="back-link">← 地図に戻る</a>
+<div class="lang-toggle"><a class="lang-btn" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html">EN</a><a class="lang-btn active" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/articles/shrine-names-and-ranks.html">日本語</a></div>
+<div class="article-hero">
+<span class="article-eyebrow">基礎の先に・1</span>
+<h1 class="article-title">神社の名前と格付け——一つの社に重なる、千年分のラベル</h1>
+<p class="article-lead">鳥居の脇の石柱や案内板には、社の名前のほかに、いくつもの肩書きが刻まれていることがある。「武蔵一宮」「旧官幣大社」「勅祭社」——さいたま市の氷川神社なら、これが全部当てはまる。</p>
+</div>
+<div class="article-body">
+<p><span>これらは、一度に決まったものではない。927年の朝廷の台帳、平安時代の終わりに国ごとに定まった序列、1868年の天皇の祭り、1871年から1946年までの国の等級。</span><strong>時代の違うラベルが、地層のように一つの社に重なっている。</strong></p>
+<p>この地図の色分け（神宮・大社・一宮・二宮）は、その層のいくつかを拾ったものだ。この記事は、残りの層も含めて、一つずつはがして読む。</p>
+<div class="diagram" id="layers-diagram">
+<p class="diagram-title">一つの社に重なる5つの層——氷川神社の場合</p>
+<div class="diagram-svg-wrap"><svg role="img" viewbox="0 0 340 346" xmlns="http://www.w3.org/2000/svg">
+<line class="dg-axis" x1="6" x2="200" y1="40" y2="40"></line>
+<line class="dg-axis" x1="14" x2="14" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="14" y="28">927年</text>
+<line class="dg-axis" x1="66" x2="66" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="66" y="28">平安後期</text>
+<line class="dg-axis" x1="130" x2="130" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="130" y="28">1871</text>
+<line class="dg-axis" x1="158" x2="158" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="158" y="28">1946</text>
+<line class="dg-axis" x1="192" x2="192" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="192" y="28">今</text>
+<text class="dg-tm" x="214" y="22">氷川神社</text>
+<text class="dg-s" x="214" y="34">各層での肩書き</text>
+<text class="dg-tm" x="6" y="64">層1 · 朝廷の台帳</text>
+<rect class="dg-bar" height="14" rx="3" width="26" x="14" y="70"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="40" x2="212" y1="77" y2="77"></line>
+<text class="dg-s" x="6" y="98">式内社・名神大社</text>
+<text class="dg-tm" x="6" y="122">層2 · 二十二社</text>
+<rect class="dg-bar" height="14" rx="3" width="56" x="44" y="128"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="100" x2="212" y1="135" y2="135"></line>
+<text class="dg-s" x="6" y="156">朝廷が特に頼った社（京都の周り）</text>
+<text class="dg-tm" x="6" y="180">層3 · 国ごとの序列</text>
+<rect class="dg-bar" height="14" rx="3" width="126" x="66" y="186"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="192" x2="212" y1="193" y2="193"></line>
+<text class="dg-s" x="6" y="214">一宮・総社</text>
+<text class="dg-tm" x="6" y="238">層4 · 国の等級</text>
+<rect class="dg-bar" height="14" rx="3" width="28" x="130" y="244"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="158" x2="212" y1="251" y2="251"></line>
+<text class="dg-s" x="6" y="272">1871〜1946・官幣社、国幣社ほか</text>
+<text class="dg-tm" x="6" y="296">層5 · 今も使われている区分</text>
+<rect class="dg-bar" height="14" rx="3" width="34" x="158" y="302"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="192" x2="212" y1="309" y2="309"></line>
+<text class="dg-s" x="6" y="330">勅祭社・別表神社</text>
+<line class="dg-line" x1="212" x2="212" y1="65" y2="309"></line>
+<circle class="dg-dot" cx="212" cy="77" r="5.5"></circle>
+<text class="dg-hikawa" x="224" y="81">名神大社</text>
+<circle class="dg-dot-none" cx="212" cy="135" r="5.5"></circle>
+<text class="dg-hikawa-none" x="224" y="139">入っていない</text>
+<circle class="dg-dot" cx="212" cy="193" r="5.5"></circle>
+<text class="dg-hikawa" x="224" y="197">武蔵一宮</text>
+<circle class="dg-dot" cx="212" cy="251" r="5.5"></circle>
+<text class="dg-hikawa" x="224" y="255">官幣大社</text>
+<circle class="dg-dot" cx="212" cy="309" r="5.5"></circle>
+<text class="dg-hikawa" x="224" y="313">勅祭社</text>
+</svg></div>
+<p class="diagram-note">横軸は時代（縮尺は合わせていない）。氷川神社（さいたま市）の縦の線が、各層で何に当たるかを示す。層2の白い丸は「入っていない」の意味。</p>
+</div>
+<h2 id="suffix">名前の末尾を読む——社号</h2>
+<p><span>神社の名前は、二つに分けられる。「氷川」「鹿島」のような</span><strong>社名</strong><span>と、末尾の「神社」「神宮」「大社」のような</span><strong>社号</strong><span>。社号は、その社がどういう社かを示す。</span></p>
+<div class="table-wrap"><table class="article-table stack-table">
+<thead><tr><th><span>社号</span></th><th><span>何を示すか</span></th></tr></thead>
+<tbody>
+<tr><td><span>神社（じんじゃ）</span></td><td><span class="cell-label">何を示すか</span><span>もっとも一般的な社号</span></td></tr>
+<tr><td><span>神宮（じんぐう）</span></td><td><span class="cell-label">何を示すか</span><span>皇室にゆかりのある神、または天皇を祀る社（</span><a href="../articles/kami-and-classification.html#status">基礎の記事</a><span>）</span></td></tr>
+<tr><td><span>大社（たいしゃ）</span></td><td><span class="cell-label">何を示すか</span><span>戦前は出雲大社だけ。戦後に名乗る社が増えた（</span><a href="../articles/kami-and-classification.html#status">基礎の記事</a><span>）</span></td></tr>
+<tr><td><span>宮（ぐう・みや）</span></td><td><span class="cell-label">何を示すか</span><span>八幡宮・天満宮・東照宮など</span></td></tr>
+<tr><td><span>社（しゃ・やしろ）</span></td><td><span class="cell-label">何を示すか</span><span>小さな社や、境内の中の社</span></td></tr>
+</tbody>
+</table></div>
+<p><strong>古代の台帳で「神宮」と呼ばれた社は、ごくわずかだった。</strong><span>927年の朝廷の台帳（下の層1）に載る約2,860社のうち、ほとんどは「社」。数少ない「神宮」の中に、</span><strong>関東の鹿島と香取が入っている。</strong><span>東京から日帰りで行ける。</span></p>
+<h3 id="lost-names">消えた名前——明神と権現</h3>
+<p><span>江戸時代まで、神には「大明神」「権現」「大菩薩」といった呼び名がよく付いた。権現・菩薩は仏教の言葉で、神は仏が姿を変えたもの、という考え（神仏習合。</span><a href="../articles/japan-and-shrines.html#history">基礎の記事「日本と神社」</a><span>）から来ている。</span></p>
+<p><span>明治の初めに政府が神と仏を分けたとき（神仏分離、1868年）、</span><strong>権現・菩薩、そして明神も、神の呼び名として使われなくなった。</strong></p>
+<ul>
+<li><a href="../shrines/hakone-jinja.html">箱根神社</a><span>は、中世には「箱根権現」と呼ばれる神仏習合の霊場だった。神仏分離を経て、今の名前になった。</span></li>
+<li><span></span><a href="../shrines/kanda-myojin.html">神田明神</a><span>の正式な名前は「神田神社」。それでも「明神」の名前で親しまれ続けている。</span></li>
+</ul>
+<p><strong>看板の名前と、人々が呼ぶ名前が違う社は、たいていこの時に名前が変わった社だ。</strong></p>
+<h2 id="layer1">層1 ——朝廷の台帳（927年）</h2>
+<h3 id="shikinaisha">式内社</h3>
+<p><span>平安時代の朝廷は、国の祭りで捧げ物（幣帛）を受ける神社を台帳にまとめた。法令集『延喜式』の巻9・10で、</span><strong>神名帳</strong><span>と呼ぶ。927年にまとまり、967年から使われた。</span></p>
+<p><span>載っている社は</span><strong>2,861社、神の数で3,132座</strong><span>。これを</span><strong>式内社</strong><span>と呼ぶ。</span></p>
+<ul>
+<li><strong>載っていない＝新しい、ではない。</strong><span>当時あったのに載らなかった社も多い（式外社）。</span></li>
+<li><span>千年の間に場所が移ったり、名前が変わったりして、「本当の後継ぎはどの社か」が決まらない式内社もある。後継ぎを名乗る社が複数あるとき、それぞれを</span><strong>論社</strong><span>と呼ぶ。</span></li>
+</ul>
+<h3 id="divisions">4つの区分と、特別な社</h3>
+<p><span>式内社は、</span><strong>誰が捧げ物をするか</strong><span>で二つに分かれた。都の役所（神祇官）がする</span><strong>官幣社</strong><span>と、国の役人（国司）がする</span><strong>国幣社</strong><span>。それぞれに大社と小社がある。</span></p>
+<p><span>その大社の中から、国に異変があったときに特に祈る社が選ばれた。</span><strong>名神大社</strong><span>という。</span></p>
+<ul>
+<li><span>例＝</span><a href="../shrines/musashi-hikawa-jinja.html">氷川神社</a><span>は名神大社として載っている。</span></li>
+</ul>
+<div class="diagram" id="register-diagram">
+<p class="diagram-title">927年の台帳の仕組み</p>
+<div class="diagram-svg-wrap"><svg role="img" viewbox="0 0 340 304" xmlns="http://www.w3.org/2000/svg">
+<rect class="dg-outer" height="300" rx="10" width="336" x="2" y="2"></rect>
+<text class="dg-t" x="14" y="22">式内社——台帳に載る社</text>
+<text class="dg-s" x="14" y="38">2,861社・神の数で3,132座</text>
+<rect class="dg-box" height="246" rx="7" width="154" x="12" y="48"></rect>
+<text class="dg-tm" x="22" y="67">官幣社</text>
+<text class="dg-s" x="22" y="81">捧げ物をするのは</text>
+<text class="dg-s" x="22" y="93">都の役所（神祇官）</text>
+<rect class="dg-box" height="110" rx="5" width="134" x="22" y="102"></rect>
+<text class="dg-tm" x="30" y="119">大社（大きな社）</text>
+<rect class="dg-box-strong" height="72" rx="4" width="118" x="30" y="130"></rect>
+<text class="dg-tm" text-anchor="middle" x="89" y="152">名神大社</text>
+<text class="dg-s" text-anchor="middle" x="89" y="169">異変のときに</text>
+<text class="dg-s" text-anchor="middle" x="89" y="181">特に祈る社</text>
+<rect class="dg-box" height="62" rx="5" width="134" x="22" y="222"></rect>
+<text class="dg-tm" text-anchor="middle" x="89" y="257">小社（小さな社）</text>
+<rect class="dg-box" height="246" rx="7" width="154" x="174" y="48"></rect>
+<text class="dg-tm" x="184" y="67">国幣社</text>
+<text class="dg-s" x="184" y="81">捧げ物をするのは</text>
+<text class="dg-s" x="184" y="93">国の役人（国司）</text>
+<rect class="dg-box" height="110" rx="5" width="134" x="184" y="102"></rect>
+<text class="dg-tm" x="192" y="119">大社（大きな社）</text>
+<rect class="dg-box-strong" height="72" rx="4" width="118" x="192" y="130"></rect>
+<text class="dg-tm" text-anchor="middle" x="251" y="152">名神大社</text>
+<text class="dg-s" text-anchor="middle" x="251" y="169">異変のときに</text>
+<text class="dg-s" text-anchor="middle" x="251" y="181">特に祈る社</text>
+<rect class="dg-box" height="62" rx="5" width="134" x="184" y="222"></rect>
+<text class="dg-tm" text-anchor="middle" x="251" y="257">小社（小さな社）</text>
+</svg></div>
+<p class="diagram-note">式内社 → 官幣社／国幣社 → それぞれ大社／小社 → 大社の一部が名神大社。</p>
+</div>
+<h3 id="shinkai">神にも位があった——神階</h3>
+<p><span>朝廷は、人に位を与えるのと同じように、神にも位を与えた。</span><strong>神階</strong><span>という。人の位の最高位と同じ</span><strong>正一位</strong><span>まで上った神もいる。</span></p>
+<p>稲荷神社の赤い幟に「正一位稲荷大明神」とあるのは、この名残。</p>
+<!-- region: kansai (1/4) 神階：大阪・京都版が入ったら、ここに伏見稲荷大社が942年に正一位を受けた例を足せる（その時に公式で確認）。 -->
+<h2 id="layer2">層2 ——朝廷が特に頼った22社（平安〜室町）</h2>
+<p><span>平安時代の中ごろから、朝廷は、雨乞いや天変地異のときに特に捧げ物をする社を決めていった。少しずつ増えて22社になったので、</span><strong>二十二社</strong><span>と呼ぶ。室町時代の後半まで、朝廷の祭りとして続いた。</span></p>
+<p><strong>22社は、伊勢を除くと、すべて京都の周り（京都・奈良・大阪・滋賀・兵庫）にある。関東には1社も無い。</strong><span>都の近くの社を、都が頼った仕組みだったからだ。</span></p>
+<!-- region: kansai (2/4) 二十二社の書き方：今の地図（関東・東海）では二十二社は伊勢しか出ない。大阪・京都版が入ったら、この節は「地図で見ると京都の周りに固まる」に書き換え、地図への道を付ける（二十二社のタグを作るかは、その時に決める）。 -->
+<h2 id="layer3">層3 ——国ごとの序列（平安の終わりごろから）</h2>
+<h3 id="ichinomiya">一宮</h3>
+<p><span>国ごとに最も格の高い社を</span><strong>一宮</strong><span>、次を二宮と呼ぶ（</span><a href="../articles/kami-and-classification.html#ichinomiya">基礎の記事</a><span>）。この記事で足しておきたいのは2点。</span></p>
+<ul>
+<li><strong>国が作った一覧は無い。</strong><span>法令で決まった制度ではなく、慣習として定着した。だから一宮が2社以上ある国がある。</span></li>
+<li>一宮も総社も、平安時代の後半に形になった。</li>
+</ul>
+<p><span>東京のまわりの一宮は、別の記事で国ごとに読む：</span><a href="ichinomiya-near-tokyo.html">東京から行ける一宮</a><span>。</span></p>
+<h3 id="soja">総社</h3>
+<p><span>国司は、赴任すると国中の社を回って参拝した。その手間を省くために、国府の近くに国中の神をまとめて祀ったのが</span><strong>総社</strong><span>とされる。記録に残る早い例は、1099年の「因幡の総社」。</span></p>
+<ul>
+<li><strong><span>東京の府中市の</span><a href="../shrines/okunitama-jinja.html">大国魂神社</a><span>は、武蔵国の総社。</span></strong><span>武蔵国の一宮から六宮までを合わせて祀る。「府中」という地名も、国府があったことに由来する。</span></li>
+</ul>
+<p><strong>一宮と総社は別の仕組み。</strong><span>一宮は国の中の順位で、総社は国の神を一か所に集めた社。</span></p>
+<h2 id="layer4">層4 ——国の等級（1871〜1946年）</h2>
+<p>明治政府は、1871年の布告で、全国の神社を国の等級に組み入れた。</p>
+<div class="table-wrap"><table class="article-table stack-table">
+<thead><tr><th><span>区分</span></th><th><span>中身</span></th></tr></thead>
+<tbody>
+<tr><td><strong>官幣社</strong><span>（大・中・小）</span></td><td><span class="cell-label">中身</span><span>国の祭りで、皇室から捧げ物を受ける社</span></td></tr>
+<tr><td><strong>国幣社</strong><span>（大・中・小）</span></td><td><span class="cell-label">中身</span><span>国の予算から捧げ物を受ける社</span></td></tr>
+<tr><td><strong>別格官幣社</strong><span></span></td><td><span class="cell-label">中身</span><span>国に尽くした人物を祀る社の特別枠。最初は神戸の湊川神社（楠木正成）</span></td></tr>
+<tr><td><span>府社・県社・郷社・村社</span></td><td><span class="cell-label">中身</span><span>府県・郡・村が祀る社</span></td></tr>
+<tr><td><span>無格社</span></td><td><span class="cell-label">中身</span><span>どの等級にも入らない社。</span><strong>1945年には全国109,712社のうち59,997社＝半分以上</strong></td></tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>古代と同じ言葉で、中身が違う。</strong><span>古代の官幣・国幣は「誰が捧げ物をするか」、明治の官幣・国幣は国の制度の中の等級。名前が同じなので、混同されやすい。</span></li>
+<li><span>この制度は、戦後の1946年に、国が神社を管理することをやめたときに廃止された（</span><a href="../articles/japan-and-shrines.html#history">基礎の記事「日本と神社」</a><span>）。だから今は「</span><strong>旧</strong><span>官幣大社」と、「旧」を付けて言う。</span></li>
+</ul>
+<h2 id="layer5">層5 ——今も生きている区分</h2>
+<p>社格は廃止されたが、今も使われている区分が2つある。</p>
+<h3 id="chokusaisha">勅祭社</h3>
+<p><span>天皇の使い（勅使）が、今も祭りに来る社。</span><strong>今は16社。</strong><span>伊勢神宮は、この16社とは別の扱い。</span></p>
+<ul>
+<li>氷川神社が勅祭社になったのは1868年。東京に移った明治天皇が、武蔵国の鎮守と定め、自ら大宮に出向いて祭りを行った。</li>
+<li><span>16社のうち、この地図にあるのは</span><strong><a href="../shrines/musashi-hikawa-jinja.html">氷川</a><span>・</span><a href="../shrines/kashima-jingu.html">鹿島</a><span>・</span><a href="../shrines/katori-jingu.html">香取</a><span>・</span><a href="../shrines/meiji-jingu.html">明治神宮</a><span>・</span><a href="../shrines/atsuta-jingu.html">熱田</a></strong><span>。</span></li>
+</ul>
+<!-- region: kansai (3/4) 勅祭社の地図にある社：残りの多くは京都・奈良・九州（上賀茂・下鴨・石清水・春日・橿原・平安・近江・宇佐・香椎・出雲・靖国）。大阪・京都版が入ったら、地図にある社が増えるので、上の1行を書き換える。 -->
+<h3 id="beppyo">別表神社</h3>
+<p><span>戦後にできた神社本庁（全国の神社の多くが属する民間の宗教法人）が、人事などで別に扱う社。神社本庁の規程の「別表」に載っているので、こう呼ぶ。規程は1948年にでき、最初は旧官幣社・国幣社だけが載った。その後、由緒・建物・神職の数・氏子の数などで選ばれる社が加わり、</span><strong>約350社</strong><span>。</span></p>
+<p><strong>国の格付けではなく、一つの民間団体の中の区分。</strong><span>旧社格と混同されやすい。</span></p>
+<h2 id="reading">この地図の社で、層を読む</h2>
+<p>一つの社に、どの時代のラベルが重なっているか。</p>
+<!-- region: kansai (4/4) 7の表：大阪・京都版が入ったら、下の<tbody>の後ろに、京都・大阪の段（<tbody data-region="kansai">）を足す。伏見稲荷大社・住吉大社・上賀茂神社などを入れると、二十二社の層（層2）が埋まる例になる。層2の列も、その時に足す。 -->
+<div class="table-wrap"><table class="article-table stack-table">
+<thead><tr><th><span>社</span></th><th><span>層1 古代（927）</span></th><th><span>層3 国ごと</span></th><th><span>層4 1871〜1946</span></th><th><span>層5 今</span></th></tr></thead>
+<tbody data-region="kanto-tokai">
+<tr><td><a href="../shrines/musashi-hikawa-jinja.html">氷川神社</a><span>（さいたま）</span></td><td><span class="cell-label">層1 古代（927）</span><span>名神大社</span></td><td><span class="cell-label">層3 国ごと</span><span>武蔵一宮</span></td><td><span class="cell-label">層4 1871〜1946</span><span>官幣大社</span></td><td><span class="cell-label">層5 今</span><span>勅祭社</span></td></tr>
+<tr><td><a href="../shrines/kashima-jingu.html">鹿島神宮</a><span>（茨城）</span></td><td><span class="cell-label">層1 古代（927）</span><span>名神大社・数少ない「神宮」</span></td><td><span class="cell-label">層3 国ごと</span><span>常陸一宮</span></td><td><span class="cell-label">層4 1871〜1946</span><span>官幣大社</span></td><td><span class="cell-label">層5 今</span><span>勅祭社</span></td></tr>
+<tr><td><a href="../shrines/katori-jingu.html">香取神宮</a><span>（千葉）</span></td><td><span class="cell-label">層1 古代（927）</span><span>名神大社・数少ない「神宮」</span></td><td><span class="cell-label">層3 国ごと</span><span>下総一宮</span></td><td><span class="cell-label">層4 1871〜1946</span><span>官幣大社</span></td><td><span class="cell-label">層5 今</span><span>勅祭社</span></td></tr>
+<tr><td><a href="../shrines/samukawa-jinja.html">寒川神社</a><span>（神奈川）</span></td><td><span class="cell-label">層1 古代（927）</span><span>名神大社（相模で唯一）</span></td><td><span class="cell-label">層3 国ごと</span><span>相模一宮</span></td><td><span class="cell-label">層4 1871〜1946</span><span>国幣中社</span></td><td><span class="cell-label">層5 今</span><span>―</span></td></tr>
+<tr><td><a href="../shrines/okunitama-jinja.html">大国魂神社</a><span>（府中）</span></td><td><span class="cell-label">層1 古代（927）</span><span>―</span></td><td><span class="cell-label">層3 国ごと</span><span>武蔵国総社</span></td><td><span class="cell-label">層4 1871〜1946</span><span>官幣小社</span></td><td><span class="cell-label">層5 今</span><span>―</span></td></tr>
+<tr><td><a href="../shrines/suwa-taisha.html">諏訪大社</a><span>（長野）</span></td><td><span class="cell-label">層1 古代（927）</span><span>名神大社（台帳では「南方刀美神社」）</span></td><td><span class="cell-label">層3 国ごと</span><span>信濃一宮</span></td><td><span class="cell-label">層4 1871〜1946</span><span>官幣大社</span></td><td><span class="cell-label">層5 今</span><span>「大社」の社号は1948年から</span></td></tr>
+<tr><td><a href="../shrines/meiji-jingu.html">明治神宮</a><span>（東京）</span></td><td><span class="cell-label">層1 古代（927）</span><span>―（1920年創建）</span></td><td><span class="cell-label">層3 国ごと</span><span>―</span></td><td><span class="cell-label">層4 1871〜1946</span><span>官幣大社</span></td><td><span class="cell-label">層5 今</span><span>勅祭社</span></td></tr>
+<tr><td><a href="../shrines/kanda-myojin.html">神田神社</a><span>（東京）</span></td><td><span class="cell-label">層1 古代（927）</span><span>―</span></td><td><span class="cell-label">層3 国ごと</span><span>―</span></td><td><span class="cell-label">層4 1871〜1946</span><span>府社</span></td><td><span class="cell-label">層5 今</span><span>―</span></td></tr>
+</tbody>
+</table></div>
+<p><strong>読み方</strong><span>：明治神宮は1920年に創建されたので、古代の層を持たない。それでも、近代の層では一番上にいる。</span><strong>古さと格は、別の物差し。</strong></p>
+<h2 id="mistakes">間違えやすい所</h2>
+<div class="mistakes"><ul>
+<li><strong>「Jingu＝一番格が高い」とは限らない。</strong><span>「神宮」は、皇室との関係を示す社号。古さや、近代の等級とは別。</span></li>
+<li><strong>「大社」と付いていても、旧官幣大社とは限らない。</strong><span>社号と社格は別物（</span><a href="../articles/kami-and-classification.html#status">基礎の記事</a><span>）。</span></li>
+<li><strong>「一宮」の公式な一覧は無い。</strong><span>国が決めた制度ではなく、慣習。</span></li>
+<li><strong>旧社格は今は無い。</strong><span>「旧」が付くのはそのため。今も使われている区分は、勅祭社と、神社本庁の中の別表神社。</span></li>
+<li><strong>式内社に載っていない＝新しい、ではない。</strong></li>
+</ul></div>
+<h2 id="on-the-map">地図で見る</h2>
+<ul>
+<li><span>地図で「神宮」の色だけを出す → 24社。その中で、古代の台帳でも「神宮」と呼ばれていたのは鹿島と香取。</span><a href="../map.html?tags=jingu#mock-app">神宮だけを地図で見る →</a></li>
+<li><span>地図で「一宮」の色だけを出す → 国ごとの序列の層。県境とずれるのは、国の境が今の県境と違うから。</span><a href="../map.html?tags=ichi#mock-app">一宮だけを地図で見る →</a></li>
+</ul>
+<!-- 将来：二十二社を出すと京都・奈良に固まる。地図に二十二社のタグを足すかは別に決める（原稿9節）。 -->
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>三橋健『神社の由来がわかる小事典』PHP新書、2007年</li>
+<li>島田裕巳『教養として学んでおきたい神社』マイナビ新書、2020年</li>
+<li>國學院大學『神道事典』（Encyclopedia of Shinto）ウェブ版</li>
+</ul>
+</div>
+<div class="share-row" data-share=""><span class="share-label">このページを共有</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">共有</button><button class="share-btn" data-done="コピーしました" data-goatcounter-click="share" data-share-copy="" type="button">リンクをコピー</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fja%2Farticles%2Fshrine-names-and-ranks.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Fshrine-names-and-ranks.jpg&amp;description=%E7%A5%9E%E7%A4%BE%E3%81%AE%E5%90%8D%E5%89%8D%E3%81%A8%E6%A0%BC%E4%BB%98%E3%81%91%E2%80%94%E2%80%94%E7%A4%BE%E5%8F%B7%E3%81%A8%E7%A4%BE%E6%A0%BC%EF%BD%9C%E5%8D%83%E4%BB%A3%E3%81%AE%E6%9D%9C" rel="noopener noreferrer" target="_blank">Pinterestに保存</a></div><div class="article-nav">
+<a class="article-nav-prev" href="kami-and-classification.html"><span class="article-nav-label">← 前の記事</span><span>神々と、この地図の分類</span></a>
+<a class="article-nav-next" href="ichinomiya-near-tokyo.html"><span class="article-nav-label">次の記事 →</span><span>東京から行ける一宮——関東の旧国を一社ずつ</span></a>
+</div>
+<div class="page-footer">
+<div>千代の杜</div>
+<div class="footer-support">
+<span>千代の杜は広告のない独立したガイドです。旅の計画に役立ったら、</span>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>チップを送る ↗</span></a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">Cookieは使用していません。匿名の訪問数のみ集計します。 <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">プライバシー</a></div></div>
+<script>
+(function(){
+  var tags = new URLSearchParams(location.search).get('tags');
+  var back = document.getElementById('back-link');
+  if (back && tags) {
+    back.setAttribute('href', '../map.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+  } catch(err){}
+})();
+</script>
+<script async="" data-goatcounter="https://chiyonomori.goatcounter.com/count" src="//gc.zgo.at/count.js"></script><script>
+(function(){
+  var root = document.querySelector('[data-share]'); if (!root) return;
+  var canon = document.querySelector('link[rel="canonical"]');
+  var url = canon ? canon.href : location.href, title = document.title;
+  var nat = root.querySelector('[data-share-native]');
+  if (nat && navigator.share) {
+    nat.hidden = false;
+    nat.addEventListener('click', function(){ navigator.share({ title: title, url: url }).catch(function(){}); });
+  }
+  var cp = root.querySelector('[data-share-copy]');
+  if (cp) cp.addEventListener('click', function(){
+    var label = cp.textContent, done = cp.getAttribute('data-done');
+    function ok(){ cp.textContent = done; setTimeout(function(){ cp.textContent = label; }, 1500); }
+    function fallback(){
+      var t = document.createElement('textarea'); t.value = url; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t); ok();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
+  });
+})();
+</script>
+</body>
+</html>

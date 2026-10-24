@@ -2,7 +2,7 @@
 
 > An English-language map of Japanese shrines, with the Tokyo area covered in depth (individually written pages with photos, visiting tips, and access directions) while the rest of the country is shown as map markers only. A Japanese-language edition is available at /ja/. No login required, no ads. Visit records are stored only on the visitor's own device (localStorage).
 
-The site plots shrines on a Leaflet map using GSI (Geospatial Information Authority of Japan) tile data. For Tokyo it provides individually written guides — history, how to get there, what to notice — rather than only linking out to external sources. Four background articles cover the basics for a first-time visitor: what a shrine is and how it differs from a temple, torii gates and what to look for inside the grounds, how to worship, and the kami enshrined at different types of shrines.
+The site plots shrines on a Leaflet map using GSI (Geospatial Information Authority of Japan) tile data. For Tokyo it provides individually written guides — history, how to get there, what to notice — rather than only linking out to external sources. Four background articles cover the basics for a first-time visitor: what a shrine is and how it differs from a temple, torii gates and what to look for inside the grounds, how to worship, and the kami enshrined at different types of shrines. Two longer articles go beyond the basics: how shrine names (Jinja, Jingu, Taisha) and old and modern ranks layer on a single shrine, and the ichinomiya (first shrines of the old provinces) you can reach from Tokyo.
 
 ## Languages
 
@@ -14,7 +14,7 @@ The site plots shrines on a Leaflet map using GSI (Geospatial Information Author
 
 - Map: https://nocta-works.github.io/chiyonomori/map.html
 - Tokyo area: https://nocta-works.github.io/chiyonomori/areas/tokyo.html
-- Background articles: https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html, https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html, https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html, https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html
+- Background articles: https://nocta-works.github.io/chiyonomori/articles/japan-and-shrines.html, https://nocta-works.github.io/chiyonomori/articles/how-to-visit.html, https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html, https://nocta-works.github.io/chiyonomori/articles/kami-and-classification.html, https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html, https://nocta-works.github.io/chiyonomori/articles/ichinomiya-near-tokyo.html
 - Sitemap: https://nocta-works.github.io/chiyonomori/sitemap.xml (all English and Japanese pages currently indexed)
 
 ## Scope

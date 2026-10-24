@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shrine Names and Ranks: Jinja, Jingu, Taisha — Chiyo no Mori</title>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  /* design-lab/articles/shrine-names-and-ranks.html — 実装キュー依頼CC（2026-10-24）：基礎の先の記事の1本目。
+     原稿＝記事原稿_社号と社格.md（本人OK済み）。✅・⏳・出典の括弧・確認の節はページに出さない。
+     【地域】の4か所は <!-- region: kansai (n/4) --> の目印（大阪・京都版が入った時に探す）。7の表は <tbody data-region="…"> で段に分けてある。 */
+
+  /* design-lab/articles/torii-and-grounds.html — 実装キュー依頼N-3：
+     記事9本を4本に合併したうちの1本。旧9枚のうち、この記事に統合された
+     元記事の見出しはh2のまま節として残し（元がh2だった格式内部の小見出しは
+     h3へ1段階下げてある）、接続部に.article-bridgeで橋渡しの1文を入れている。 */
+  :root {
+    --bg-body: #1a1209;
+    --gold: #f5d08a;
+    --gold-glow-rgb: 245,180,60;
+    --gold-muted: #907040;
+    --border-4: #6a5030;
+    --tan-text: #ddd0a0;
+    --tan-text-2: #c9b98a;   /* 依頼BT-1（2026-10-18）：未定義のままだとKo-fiリンクとプライバシーの行が親の色（#6a5030・コントラスト約2.5:1）になり読めなかった。定義のあるページ（川勾神社など）と同じ値（約9.5:1） */
+    --dur-base: .3s;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-body); color: var(--tan-text);
+    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--gold); }
+
+  .back-link {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    font-size: 12px; color: var(--tan-text); text-decoration: none;
+    background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4);
+  }
+  .lang-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 4px; }
+  .lang-btn {
+    font-size: 11px; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: rgba(0,0,0,0.4); color: var(--tan-text);
+    cursor: pointer; font-family: inherit;
+  }
+  .lang-btn.active { background: rgba(var(--gold-glow-rgb),0.22); border-color: var(--gold); color: var(--gold); }
+
+  .article-hero {
+    padding: 110px 6vw 48px; max-width: 760px; margin: 0 auto;
+  }
+
+  .article-eyebrow { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; }
+  .article-title {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(24px, 4vw, 34px); color: var(--gold); margin: 0 0 18px; line-height: 1.5;
+  }
+  .article-lead { font-size: 14px; line-height: 2; color: var(--tan-text); opacity: 0.92; margin: 0; }
+
+  .article-body { max-width: 700px; margin: 0 auto; padding: 0 24px 20px; font-size: 14px; }
+  .article-body h2 {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+    font-size: 19px; color: var(--gold); margin: 48px 0 14px; letter-spacing: 0.02em;
+    border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); padding-left: 12px;
+  }
+  .article-body h3 { font-size: 14px; color: var(--gold); opacity: 0.9; margin: 30px 0 10px; letter-spacing: 0.05em; }
+  .article-body p { line-height: 2.05; opacity: 0.9; margin: 0 0 16px; }
+  .article-body ul, .article-body ol { margin: 0 0 16px; padding-left: 1.3em; }
+  .article-body li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body strong { color: var(--tan-text); opacity: 1; font-weight: 700; }
+  .article-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  .article-note { font-size: 12px; line-height: 1.9; color: var(--tan-text); opacity: 0.6; border-top: 1px solid var(--border-4); padding-top: 10px; margin: 0 0 20px; }
+  .article-bridge { font-size: 13px; line-height: 1.9; color: var(--gold-muted); font-style: italic; margin: 8px 0 32px; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+  .article-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-4); vertical-align: top; line-height: 1.7; }
+  .article-table th { color: var(--gold); font-weight: 600; opacity: 0.85; white-space: nowrap; }
+  .article-table td:first-child { white-space: nowrap; color: var(--gold); opacity: 0.9; }
+
+  .article-nav {
+    max-width: 700px; margin: 40px auto 0; padding: 0 24px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .article-nav a {
+    flex: 1; min-width: 220px; text-decoration: none; font-size: 12px; line-height: 1.8;
+    border: 1px solid var(--border-4); border-radius: 3px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); color: var(--tan-text); opacity: 0.85;
+    transition: background var(--dur-base) ease;
+  }
+  .article-nav a:hover { background: rgba(var(--gold-glow-rgb),0.06); }
+  .article-nav-next { text-align: right; }
+  .article-nav-label { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; margin-bottom: 6px; }
+
+  .page-footer { text-align: center; padding: 56px 24px 44px; margin-top: 20px; font-size: 11px; color: var(--border-4); }
+  .footer-support { margin-top: 8px; }
+  /* 依頼💰収益-8 C（2026-10-19）：フッターの「支援する理由の1文」とプライバシーの行が`.page-footer`の色（#6a5030・約2.5:1）で読めなかった。
+     #a89c78（約6.8:1）に。リンクは明るい色（#c9b98a・約9.5:1）＋下線で、文と見分ける。サイト名の行は控えめなまま */
+  .footer-support, .footer-privacy { color: #a89c78; }
+  .footer-support a { color: var(--tan-text-2); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(201,185,138,0.55); }
+  .footer-support a:hover { color: var(--gold); }
+  .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
+
+
+  html { scroll-padding-top: 70px; }
+  .article-body h3 { margin-top: 30px; }
+  .article-body a { text-underline-offset: 2px; text-decoration-color: rgba(245,208,138,0.45); }
+  .article-body a:hover { text-decoration-color: var(--gold); }
+  .article-eyebrow a { color: inherit; text-decoration: none; }
+  .article-eyebrow a:hover { text-decoration: underline; }
+
+  /* 依頼CC・CD（2026-10-24）：基礎の先の記事。基礎4本の固定の一覧は置かない（4本は「基礎」の鎖。ここは鎖の外） */
+  .article-hero { padding-top: 100px; }
+  .article-table td:first-child { white-space: normal; }
+  .article-table td .cell-label { display: none; }
+  .table-wrap { margin-bottom: 18px; }
+
+  /* 狭い画面（375px）：横にはみ出す表は、1行を1枚のカードにして縦に積む。見出しは各セルの上に小さく出す */
+  @media (max-width: 600px) {
+    .article-hero { padding: 84px 6vw 28px; }
+    .stack-table, .stack-table tbody, .stack-table tr, .stack-table td { display: block; width: 100%; }
+    .stack-table thead { display: none; }
+    .stack-table tr { border: 1px solid var(--border-4); border-radius: 4px; padding: 6px 12px 8px; margin: 0 0 10px; background: rgba(255,255,255,0.02); }
+    .stack-table td { border: none; padding: 5px 0 2px; }
+    .stack-table td:first-child { color: var(--gold); font-weight: 600; font-size: 14px; padding-bottom: 4px; border-bottom: 1px solid rgba(106,80,48,0.6); margin-bottom: 4px; }
+    .stack-table td .cell-label { display: block; font-size: 10.5px; letter-spacing: 0.08em; color: var(--gold-muted); margin-bottom: 1px; text-transform: none; }
+    .article-table th { white-space: normal; }
+  }
+
+  .mistakes { border: 1px solid var(--border-4); border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); border-radius: 3px; background: rgba(255,255,255,0.02); padding: 14px 20px 4px; margin: 0 0 24px; }
+  .mistakes ul { padding-left: 1.1em; margin: 0; }
+  .mistakes li { margin-bottom: 10px; }
+
+  .article-deeper { margin: 6px 0 26px; font-size: 13.5px; }
+
+  .diagram { margin: 28px 0 34px; }
+  .diagram-title { font-size: 13.5px; letter-spacing: 0.08em; color: var(--gold-muted); margin: 0 0 14px; text-align: center; }
+  .diagram-svg-wrap { display: flex; justify-content: center; }
+  .diagram-svg-wrap svg { width: 100%; max-width: 540px; height: auto; display: block; }
+  .diagram-note { font-size: 12.5px; color: var(--gold-muted); text-align: center; margin: 12px 0 0; line-height: 1.7; }
+
+  /* 図の中の色（文字は <text data-en> に置き、言語を切り替える。画像には焼き込まない） */
+  .dg-box { fill: rgba(245,208,138,0.05); stroke: #6a5030; stroke-width: 1.2; }
+  .dg-box-strong { fill: rgba(245,208,138,0.30); stroke: #f5d08a; stroke-width: 1.4; }
+  .dg-outer { fill: rgba(245,208,138,0.04); stroke: #907040; stroke-width: 1.4; }
+  .dg-t { fill: #f5d08a; font-size: 12px; font-weight: 700; }
+  .dg-tm { fill: #f5d08a; font-size: 11px; font-weight: 700; }
+  .dg-s { fill: #ddd0a0; font-size: 9.5px; opacity: 0.85; }
+  .dg-n { fill: #c9b98a; font-size: 10.5px; }
+  .dg-axis { stroke: #907040; stroke-width: 1; fill: none; }
+  .dg-tick { fill: #c9b98a; font-size: 9.5px; }
+  .dg-bar { fill: rgba(245,208,138,0.30); stroke: #f5d08a; stroke-width: 1.2; }
+  .dg-bar-open { fill: rgba(245,208,138,0.10); stroke: #f5d08a; stroke-width: 1.2; stroke-dasharray: 3 2.5; }
+  .dg-line { stroke: #f5d08a; stroke-width: 1.6; }
+  .dg-dot { fill: #f5d08a; stroke: #1a1209; stroke-width: 1.5; }
+  .dg-dot-none { fill: #1a1209; stroke: #f5d08a; stroke-width: 1.6; }
+  .dg-hikawa { fill: #ddd0a0; font-size: 10.5px; }
+  .dg-hikawa-none { fill: #c9b98a; font-size: 10.5px; font-style: italic; }
+
+  /* 地図の一宮の図（東京のまわり） */
+  .ichi-map { margin: 22px 0 26px; }
+  .ichi-map svg { width: 100%; max-width: 540px; height: auto; display: block; margin: 0 auto; }
+  .im-land { fill: #2a1f12; stroke: #907040; stroke-width: 0.9; stroke-linejoin: round; }
+  .im-pref { fill: none; stroke: #6a5030; stroke-width: 0.7; stroke-linejoin: round; }
+  .im-label { fill: #c9b98a; font-size: 9.5px; }
+  .im-tokyo { fill: #f5d08a; font-size: 9.5px; font-weight: 700; }
+
+</style>
+<link href="https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/shrine-names-and-ranks.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html" hreflang="x-default" rel="alternate"/><meta content="Why some shrines are called Jingu or Taisha, and how one shrine carries labels from 927, the Middle Ages, 1871 and today — five layers of rank and title." name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="Shrine Names and Ranks: Jinja, Jingu, Taisha — Chiyo no Mori" property="og:title"/><meta content="Why some shrines are called Jingu or Taisha, and how one shrine carries labels from 927, the Middle Ages, 1871 and today — five layers of rank and title." property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/shrine-names-and-ranks.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="Shrine Names and Ranks: Jinja, Jingu, Taisha — Chiyo no Mori" property="og:image:alt"/><meta content="en_US" property="og:locale"/><meta content="ja_JP" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Shrine Names and Ranks: Jinja, Jingu, Taisha — Chiyo no Mori" name="twitter:title"/><meta content="Why some shrines are called Jingu or Taisha, and how one shrine carries labels from 927, the Middle Ages, 1871 and today — five layers of rank and title." name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/shrine-names-and-ranks.jpg" name="twitter:image"/><style>
+  /* 依頼BP-2：共有のボタン（外部の部品は使わない） */
+  .share-row { max-width: 860px; margin: 56px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .share-label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; margin-right: 6px; }
+  .share-btn { font: inherit; font-size: 12px; letter-spacing: 0.04em; padding: 8px 16px; border-radius: 20px;
+    border: 1px solid var(--border-4); background: transparent; color: var(--tan-text); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+  .share-btn:hover, .share-btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .share-btn[hidden] { display: none; }
+</style></head>
+<body>
+<a class="back-link" href="../map.html#mock-app" id="back-link">← Back to map</a>
+<div class="lang-toggle"><a class="lang-btn active" data-goatcounter-click="lang-en" href="https://nocta-works.github.io/chiyonomori/articles/shrine-names-and-ranks.html">EN</a><a class="lang-btn" data-goatcounter-click="lang-ja" href="https://nocta-works.github.io/chiyonomori/ja/articles/shrine-names-and-ranks.html">日本語</a></div>
+<div class="article-hero">
+<span class="article-eyebrow">Beyond the basics · 1</span>
+<h1 class="article-title">Shrine Names and Ranks: Jinja, Jingu, Taisha and a Thousand Years of Labels</h1>
+<p class="article-lead">Next to the torii, a stone pillar or signboard often carries several titles besides the shrine's name: “Musashi Ichinomiya,” “former Kanpei Taisha,” “Chokusaisha.” For Hikawa Jinja in Saitama, all of them apply.</p>
+</div>
+<div class="article-body">
+<p><span>None of them was decided at once. A register compiled by the imperial court in 927. A ranking drawn up province by province near the end of the Heian period. An imperial festival in 1868. A system of state ranks that ran from 1871 to 1946. </span><strong>Labels from different eras lie on one shrine like layers of sediment.</strong></p>
+<p>The colours on this map (Jingu, Taisha, Ichinomiya, Ninomiya) pick up some of those layers. This article peels them back one at a time, including the ones the map does not show.</p>
+<div class="diagram" id="layers-diagram">
+<p class="diagram-title">Five layers on one shrine — the case of Hikawa Jinja</p>
+<div class="diagram-svg-wrap"><svg role="img" viewbox="0 0 340 346" xmlns="http://www.w3.org/2000/svg">
+<line class="dg-axis" x1="6" x2="200" y1="40" y2="40"></line>
+<line class="dg-axis" x1="14" x2="14" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="14" y="28">927</text>
+<line class="dg-axis" x1="66" x2="66" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="66" y="28">Late Heian</text>
+<line class="dg-axis" x1="130" x2="130" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="130" y="28">1871</text>
+<line class="dg-axis" x1="158" x2="158" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="158" y="28">1946</text>
+<line class="dg-axis" x1="192" x2="192" y1="36" y2="44"></line>
+<text class="dg-tick" text-anchor="middle" x="192" y="28">Now</text>
+<text class="dg-tm" x="214" y="22">Hikawa Jinja</text>
+<text class="dg-s" x="214" y="34">its label in each layer</text>
+<text class="dg-tm" x="6" y="64">Layer 1 · The court's register</text>
+<rect class="dg-bar" height="14" rx="3" width="26" x="14" y="70"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="40" x2="212" y1="77" y2="77"></line>
+<text class="dg-s" x="6" y="98">Shikinaisha, Myojin Taisha</text>
+<text class="dg-tm" x="6" y="122">Layer 2 · The Twenty-Two Shrines</text>
+<rect class="dg-bar" height="14" rx="3" width="56" x="44" y="128"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="100" x2="212" y1="135" y2="135"></line>
+<text class="dg-s" x="6" y="156">The court's special shrines (around Kyoto)</text>
+<text class="dg-tm" x="6" y="180">Layer 3 · Ranking by province</text>
+<rect class="dg-bar" height="14" rx="3" width="126" x="66" y="186"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="192" x2="212" y1="193" y2="193"></line>
+<text class="dg-s" x="6" y="214">Ichinomiya, Soja</text>
+<text class="dg-tm" x="6" y="238">Layer 4 · State ranks</text>
+<rect class="dg-bar" height="14" rx="3" width="28" x="130" y="244"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="158" x2="212" y1="251" y2="251"></line>
+<text class="dg-s" x="6" y="272">1871–1946 · Kanpeisha, Kokuheisha</text>
+<text class="dg-tm" x="6" y="296">Layer 5 · Still in use</text>
+<rect class="dg-bar" height="14" rx="3" width="34" x="158" y="302"></rect>
+<line stroke="#6a5030" stroke-dasharray="2 3" stroke-width="1" x1="192" x2="212" y1="309" y2="309"></line>
+<text class="dg-s" x="6" y="330">Chokusaisha, Beppyo shrines</text>
+<line class="dg-line" x1="212" x2="212" y1="65" y2="309"></line>
+<circle class="dg-dot" cx="212" cy="77" r="5.5"></circle>
+<text class="dg-hikawa" x="224" y="81">Myojin Taisha</text>
+<circle class="dg-dot-none" cx="212" cy="135" r="5.5"></circle>
+<text class="dg-hikawa-none" x="224" y="139">Not one of the 22</text>
+<circle class="dg-dot" cx="212" cy="193" r="5.5"></circle>
+<text class="dg-hikawa" x="224" y="197">Musashi Ichinomiya</text>
+<circle class="dg-dot" cx="212" cy="251" r="5.5"></circle>
+<text class="dg-hikawa" x="224" y="255">Kanpei Taisha</text>
+<circle class="dg-dot" cx="212" cy="309" r="5.5"></circle>
+<text class="dg-hikawa" x="224" y="313">Chokusaisha</text>
+</svg></div>
+<p class="diagram-note">The horizontal axis is time (not to scale). The vertical line is Hikawa Jinja in Saitama, showing what it is in each layer. The empty circle in Layer 2 means it is not among the 22.</p>
+</div>
+<h2 id="suffix">Reading the end of the name: the shrine suffix (shago)</h2>
+<p><span>A shrine's name has two parts: the </span><strong>name</strong><span> itself, such as Hikawa or Kashima, and the </span><strong>shrine suffix</strong><span> (shago) at the end, such as Jinja, Jingu or Taisha. The suffix is the last word of the name, and it shows what kind of shrine this is.</span></p>
+<div class="table-wrap"><table class="article-table stack-table">
+<thead><tr><th><span>Suffix</span></th><th><span>What it shows</span></th></tr></thead>
+<tbody>
+<tr><td><span>Jinja</span></td><td><span class="cell-label">What it shows</span><span>The most common suffix</span></td></tr>
+<tr><td><span>Jingu</span></td><td><span class="cell-label">What it shows</span><span>A shrine linked to a deity of the Imperial Family, or enshrining an emperor (</span><a href="../articles/kami-and-classification.html#status">see the basics article</a><span>)</span></td></tr>
+<tr><td><span>Taisha</span></td><td><span class="cell-label">What it shows</span><span>Before the war, only Izumo Taisha. After the war, more shrines began to use it (</span><a href="../articles/kami-and-classification.html#status">see the basics article</a><span>)</span></td></tr>
+<tr><td><span>Gu / Miya</span></td><td><span class="cell-label">What it shows</span><span>Examples: Hachimangu, Tenmangu, Toshogu</span></td></tr>
+<tr><td><span>Sha / Yashiro</span></td><td><span class="cell-label">What it shows</span><span>Small shrines, and shrines inside the grounds of another</span></td></tr>
+</tbody>
+</table></div>
+<p><strong>In the ancient register, very few shrines were called “Jingu.”</strong><span> Of the roughly 2,860 shrines in the court's register of 927 (Layer 1, below), most are simply “sha.” Among the few Jingu are </span><strong>Kashima and Katori in the Kanto region</strong><span>, and both can be visited from Tokyo in a day.</span></p>
+<h3 id="lost-names">Names that disappeared: Myojin and Gongen</h3>
+<p><span>Until the Edo period, kami were often given titles such as “Daimyojin,” “Gongen” and “Daibosatsu.” Gongen and Bosatsu are Buddhist words, and they came from the idea that a kami is a Buddha in another form (Shinto–Buddhist syncretism; see </span><a href="../articles/japan-and-shrines.html#history">Japan and Shrines</a><span>).</span></p>
+<p><span>When the government separated kami from Buddhas at the start of the Meiji era (the separation of Shinto and Buddhism, 1868), </span><strong>Gongen and Bosatsu, and Myojin as well, stopped being used as titles for kami.</strong></p>
+<ul>
+<li><a href="../shrines/hakone-jinja.html">Hakone Jinja</a><span> was known in the Middle Ages as “Hakone Gongen,” a sacred site where Shinto and Buddhism were joined. After the separation, it took its present name.</span></li>
+<li><span>The formal name of </span><a href="../shrines/kanda-myojin.html">Kanda Myojin</a><span> is “Kanda Jinja.” Even so, people still call it by the name “Myojin.”</span></li>
+</ul>
+<p><strong>Where the name on the signboard differs from the name people use, the shrine was usually renamed at this time.</strong></p>
+<h2 id="layer1">Layer 1: the court's register (927)</h2>
+<h3 id="shikinaisha">Shikinaisha</h3>
+<p><span>The Heian court compiled a register of the shrines that received offerings (heihaku) at state rituals. It forms volumes 9 and 10 of the Engishiki, a collection of regulations, and is called the </span><strong>Jinmyocho</strong><span>, the Engishiki register of shrines. It was completed in 927 and came into use in 967.</span></p>
+<p><span>It lists </span><strong>2,861 shrines and 3,132 kami</strong><span>, counted by deity. These are the </span><strong>Shikinaisha</strong><span>, the shrines listed in the Engishiki.</span></p>
+<ul>
+<li><strong>Not being listed does not mean a shrine is new.</strong><span> Many shrines that existed at the time were left out (Shikigesha).</span></li>
+<li><span>Over a thousand years, shrines have moved or changed names, and for some Shikinaisha it is unclear which shrine today is the true successor. When several shrines claim to be the successor, each is called a </span><strong>ronsha</strong><span>, a claimant shrine.</span></li>
+</ul>
+<h3 id="divisions">Four divisions, and a special class</h3>
+<p><span>Shikinaisha were divided in two by </span><strong>who made the offering</strong><span>. At </span><strong>Kanpeisha</strong><span>, the Jingikan, the court's office for shrines, made it; at </span><strong>Kokuheisha</strong><span>, the provincial officials (kokushi) did. Each group had Taisha (major shrines) and Shosha (minor shrines).</span></p>
+<p><span>From among the Taisha, some were singled out for special prayers when something went wrong in the country. These are the </span><strong>Myojin Taisha</strong><span>.</span></p>
+<ul>
+<li><span>Example: </span><a href="../shrines/musashi-hikawa-jinja.html">Hikawa Jinja</a><span> is listed as a Myojin Taisha.</span></li>
+</ul>
+<div class="diagram" id="register-diagram">
+<p class="diagram-title">How the register of 927 is organised</p>
+<div class="diagram-svg-wrap"><svg role="img" viewbox="0 0 340 304" xmlns="http://www.w3.org/2000/svg">
+<rect class="dg-outer" height="300" rx="10" width="336" x="2" y="2"></rect>
+<text class="dg-t" x="14" y="22">Shikinaisha: shrines in the register</text>
+<text class="dg-s" x="14" y="38">2,861 shrines · 3,132 kami</text>
+<rect class="dg-box" height="246" rx="7" width="154" x="12" y="48"></rect>
+<text class="dg-tm" x="22" y="67">Kanpeisha</text>
+<text class="dg-s" x="22" y="81">Offered by the court's</text>
+<text class="dg-s" x="22" y="93">Jingikan (shrine office)</text>
+<rect class="dg-box" height="110" rx="5" width="134" x="22" y="102"></rect>
+<text class="dg-tm" x="30" y="119">Taisha — major</text>
+<rect class="dg-box-strong" height="72" rx="4" width="118" x="30" y="130"></rect>
+<text class="dg-tm" text-anchor="middle" x="89" y="152">Myojin Taisha</text>
+<text class="dg-s" text-anchor="middle" x="89" y="169">Singled out for special</text>
+<text class="dg-s" text-anchor="middle" x="89" y="181">prayers in a crisis</text>
+<rect class="dg-box" height="62" rx="5" width="134" x="22" y="222"></rect>
+<text class="dg-tm" text-anchor="middle" x="89" y="257">Shosha — minor</text>
+<rect class="dg-box" height="246" rx="7" width="154" x="174" y="48"></rect>
+<text class="dg-tm" x="184" y="67">Kokuheisha</text>
+<text class="dg-s" x="184" y="81">Offered by provincial</text>
+<text class="dg-s" x="184" y="93">officials (kokushi)</text>
+<rect class="dg-box" height="110" rx="5" width="134" x="184" y="102"></rect>
+<text class="dg-tm" x="192" y="119">Taisha — major</text>
+<rect class="dg-box-strong" height="72" rx="4" width="118" x="192" y="130"></rect>
+<text class="dg-tm" text-anchor="middle" x="251" y="152">Myojin Taisha</text>
+<text class="dg-s" text-anchor="middle" x="251" y="169">Singled out for special</text>
+<text class="dg-s" text-anchor="middle" x="251" y="181">prayers in a crisis</text>
+<rect class="dg-box" height="62" rx="5" width="134" x="184" y="222"></rect>
+<text class="dg-tm" text-anchor="middle" x="251" y="257">Shosha — minor</text>
+</svg></div>
+<p class="diagram-note">Shikinaisha → Kanpeisha or Kokuheisha → Taisha or Shosha each → some of the Taisha are Myojin Taisha.</p>
+</div>
+<h3 id="shinkai">Kami had ranks too: shinkai</h3>
+<p><span>The court gave ranks to kami just as it gave them to people. This is called </span><strong>shinkai</strong><span>, divine rank. Some kami rose all the way to </span><strong>Shoichii</strong><span>, First Rank, the same top rank that people could hold.</span></p>
+<p>The red banners at Inari shrines that read “Shoichii Inari Daimyojin” are a remnant of this.</p>
+<!-- region: kansai (1/4) 神階：大阪・京都版が入ったら、ここに伏見稲荷大社が942年に正一位を受けた例を足せる（その時に公式で確認）。 -->
+<h2 id="layer2">Layer 2: the 22 shrines the court relied on (Heian to Muromachi)</h2>
+<p><span>From the middle of the Heian period, the court gradually chose shrines to which it made special offerings, for rain-making prayers and in times of disaster. The number grew little by little until it reached 22, which is why they are called the </span><strong>Twenty-Two Shrines</strong><span>. The practice continued as a court ritual until the later Muromachi period.</span></p>
+<p><strong>Apart from Ise, all 22 lie around Kyoto, in Kyoto, Nara, Osaka, Shiga and Hyogo. There is not one in the Kanto region.</strong><span> The system was the capital relying on the shrines near the capital.</span></p>
+<!-- region: kansai (2/4) 二十二社の書き方：今の地図（関東・東海）では二十二社は伊勢しか出ない。大阪・京都版が入ったら、この節は「地図で見ると京都の周りに固まる」に書き換え、地図への道を付ける（二十二社のタグを作るかは、その時に決める）。 -->
+<h2 id="layer3">Layer 3: a ranking by province (from the end of the Heian period)</h2>
+<h3 id="ichinomiya">Ichinomiya</h3>
+<p><span>The highest-ranking shrine of each province is the </span><strong>Ichinomiya</strong><span>, and the next is the Ninomiya (</span><a href="../articles/kami-and-classification.html#ichinomiya">see the basics article</a><span>). Two points to add here.</span></p>
+<ul>
+<li><strong>There was never an official list made by the state.</strong><span> It was not a system fixed by law; it settled in as custom. That is why some provinces have two or more Ichinomiya.</span></li>
+<li>Both the Ichinomiya and the Soja took shape in the later Heian period.</li>
+</ul>
+<p><span>The Ichinomiya around Tokyo are read province by province in a separate article: </span><a href="ichinomiya-near-tokyo.html">Ichinomiya near Tokyo</a><span>.</span></p>
+<h3 id="soja">Soja</h3>
+<p><span>On taking up a post, a provincial governor (kokushi) visited the shrines of the whole province. To save that trouble, the kami of the province were enshrined together near the provincial capital (kokufu), and this is said to be the origin of the </span><strong>Soja</strong><span>. One of the earliest recorded examples is the Soja of Inaba, in 1099.</span></p>
+<ul>
+<li><strong><span></span><a href="../shrines/okunitama-jinja.html">Okunitama Jinja</a><span> in Fuchu, Tokyo, is the Soja of Musashi Province.</span></strong><span> It enshrines the Ichinomiya through Rokunomiya of Musashi together. The place name “Fuchu” also comes from the provincial capital (kokufu) that stood there.</span></li>
+</ul>
+<p><strong>Ichinomiya and Soja are separate systems.</strong><span> Ichinomiya is a ranking within a province; a Soja is a shrine that gathers the province's kami in one place.</span></p>
+<h2 id="layer4">Layer 4: the state's ranks (1871–1946)</h2>
+<p>In a proclamation of 1871, the Meiji government placed the shrines of the whole country into a system of state ranks.</p>
+<div class="table-wrap"><table class="article-table stack-table">
+<thead><tr><th><span>Rank</span></th><th><span>What it means</span></th></tr></thead>
+<tbody>
+<tr><td><strong>Kanpeisha</strong><span> (large, medium, small)</span></td><td><span class="cell-label">What it means</span><span>Shrines that received offerings from the Imperial House at state rituals</span></td></tr>
+<tr><td><strong>Kokuheisha</strong><span> (large, medium, small)</span></td><td><span class="cell-label">What it means</span><span>Shrines that received offerings paid for from the national budget</span></td></tr>
+<tr><td><strong>Bekkaku Kanpeisha</strong><span> (special imperial shrines)</span></td><td><span class="cell-label">What it means</span><span>A special class for shrines enshrining people who served the country. The first was Minatogawa Jinja in Kobe (Kusunoki Masashige)</span></td></tr>
+<tr><td><span>Fusha, Kensha, Gosha, Sonsha</span></td><td><span class="cell-label">What it means</span><span>Shrines of the prefecture, the district and the village</span></td></tr>
+<tr><td><span>Mukakusha (unranked)</span></td><td><span class="cell-label">What it means</span><span>Shrines that fit none of the ranks. </span><strong>In 1945, 59,997 of the 109,712 shrines in the country, more than half.</strong></td></tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The same words, a different meaning.</strong><span> In ancient times, Kanpei and Kokuhei described who made the offering; in the Meiji system they were ranks within a state system. The names are identical, so they are easily confused.</span></li>
+<li><span>The system was abolished in 1946, after the war, when the state stopped administering shrines (</span><a href="../articles/japan-and-shrines.html#history">see Japan and Shrines</a><span>). That is why we now say “</span><strong>former</strong><span> Kanpei Taisha,” with “former” attached.</span></li>
+</ul>
+<h2 id="layer5">Layer 5: the labels still in use</h2>
+<p>The state ranks are gone, but two classifications are still in use.</p>
+<h3 id="chokusaisha">Chokusaisha</h3>
+<p><span>Shrines to whose festivals an imperial envoy (chokushi) still comes. </span><strong>There are 16 today.</strong><span> Ise Jingu is treated separately from these 16.</span></p>
+<ul>
+<li>Hikawa Jinja became a Chokusaisha in 1868. Emperor Meiji, who had moved to Tokyo, designated it the guardian shrine of Musashi Province and went to Omiya himself to hold a festival.</li>
+<li><span>Of the 16, the ones on this map are </span><strong><a href="../shrines/musashi-hikawa-jinja.html">Hikawa</a><span>, </span><a href="../shrines/kashima-jingu.html">Kashima</a><span>, </span><a href="../shrines/katori-jingu.html">Katori</a><span>, </span><a href="../shrines/meiji-jingu.html">Meiji Jingu</a><span> and </span><a href="../shrines/atsuta-jingu.html">Atsuta</a></strong><span>.</span></li>
+</ul>
+<!-- region: kansai (3/4) 勅祭社の地図にある社：残りの多くは京都・奈良・九州（上賀茂・下鴨・石清水・春日・橿原・平安・近江・宇佐・香椎・出雲・靖国）。大阪・京都版が入ったら、地図にある社が増えるので、上の1行を書き換える。 -->
+<h3 id="beppyo">Beppyo shrines</h3>
+<p><span>Shrines that Jinja Honcho treats separately, in matters such as personnel. Jinja Honcho, the Association of Shinto Shrines, is a private religious corporation formed after the war, and most of the country's shrines belong to it. They are called Beppyo shrines because they are listed in the appendix (beppyo) to its regulations. The regulations were made in 1948, and at first only former Kanpeisha and Kokuheisha were listed. Shrines chosen for their history, buildings, number of priests, number of parishioners and so on were added later, and the total is now </span><strong>about 350</strong><span>.</span></p>
+<p><strong>This is not a state ranking but a classification inside one private organisation.</strong><span> It is easily confused with the old shrine ranks.</span></p>
+<h2 id="reading">Reading the layers on shrines from this map</h2>
+<p>Which labels, from which eras, lie on a single shrine?</p>
+<!-- region: kansai (4/4) 7の表：大阪・京都版が入ったら、下の<tbody>の後ろに、京都・大阪の段（<tbody data-region="kansai">）を足す。伏見稲荷大社・住吉大社・上賀茂神社などを入れると、二十二社の層（層2）が埋まる例になる。層2の列も、その時に足す。 -->
+<div class="table-wrap"><table class="article-table stack-table">
+<thead><tr><th><span>Shrine</span></th><th><span>Layer 1 · Ancient (927)</span></th><th><span>Layer 3 · By province</span></th><th><span>Layer 4 · 1871–1946</span></th><th><span>Layer 5 · Today</span></th></tr></thead>
+<tbody data-region="kanto-tokai">
+<tr><td><a href="../shrines/musashi-hikawa-jinja.html">Hikawa Jinja</a><span> (Saitama)</span></td><td><span class="cell-label">Layer 1 · Ancient (927)</span><span>Myojin Taisha</span></td><td><span class="cell-label">Layer 3 · By province</span><span>Ichinomiya of Musashi</span></td><td><span class="cell-label">Layer 4 · 1871–1946</span><span>Kanpei Taisha</span></td><td><span class="cell-label">Layer 5 · Today</span><span>Chokusaisha</span></td></tr>
+<tr><td><a href="../shrines/kashima-jingu.html">Kashima Jingu</a><span> (Ibaraki)</span></td><td><span class="cell-label">Layer 1 · Ancient (927)</span><span>Myojin Taisha; one of the few “Jingu”</span></td><td><span class="cell-label">Layer 3 · By province</span><span>Ichinomiya of Hitachi</span></td><td><span class="cell-label">Layer 4 · 1871–1946</span><span>Kanpei Taisha</span></td><td><span class="cell-label">Layer 5 · Today</span><span>Chokusaisha</span></td></tr>
+<tr><td><a href="../shrines/katori-jingu.html">Katori Jingu</a><span> (Chiba)</span></td><td><span class="cell-label">Layer 1 · Ancient (927)</span><span>Myojin Taisha; one of the few “Jingu”</span></td><td><span class="cell-label">Layer 3 · By province</span><span>Ichinomiya of Shimosa</span></td><td><span class="cell-label">Layer 4 · 1871–1946</span><span>Kanpei Taisha</span></td><td><span class="cell-label">Layer 5 · Today</span><span>Chokusaisha</span></td></tr>
+<tr><td><a href="../shrines/samukawa-jinja.html">Samukawa Jinja</a><span> (Kanagawa)</span></td><td><span class="cell-label">Layer 1 · Ancient (927)</span><span>Myojin Taisha (the only one in Sagami)</span></td><td><span class="cell-label">Layer 3 · By province</span><span>Ichinomiya of Sagami</span></td><td><span class="cell-label">Layer 4 · 1871–1946</span><span>Kokuhei Chusha (medium)</span></td><td><span class="cell-label">Layer 5 · Today</span><span>—</span></td></tr>
+<tr><td><a href="../shrines/okunitama-jinja.html">Okunitama Jinja</a><span> (Fuchu)</span></td><td><span class="cell-label">Layer 1 · Ancient (927)</span><span>—</span></td><td><span class="cell-label">Layer 3 · By province</span><span>Soja of Musashi</span></td><td><span class="cell-label">Layer 4 · 1871–1946</span><span>Kanpei Shosha (small)</span></td><td><span class="cell-label">Layer 5 · Today</span><span>—</span></td></tr>
+<tr><td><a href="../shrines/suwa-taisha.html">Suwa Taisha</a><span> (Nagano)</span></td><td><span class="cell-label">Layer 1 · Ancient (927)</span><span>Myojin Taisha (listed in the register as 南方刀美神社)</span></td><td><span class="cell-label">Layer 3 · By province</span><span>Ichinomiya of Shinano</span></td><td><span class="cell-label">Layer 4 · 1871–1946</span><span>Kanpei Taisha</span></td><td><span class="cell-label">Layer 5 · Today</span><span>The suffix “Taisha” only since 1948</span></td></tr>
+<tr><td><a href="../shrines/meiji-jingu.html">Meiji Jingu</a><span> (Tokyo)</span></td><td><span class="cell-label">Layer 1 · Ancient (927)</span><span>— (founded in 1920)</span></td><td><span class="cell-label">Layer 3 · By province</span><span>—</span></td><td><span class="cell-label">Layer 4 · 1871–1946</span><span>Kanpei Taisha</span></td><td><span class="cell-label">Layer 5 · Today</span><span>Chokusaisha</span></td></tr>
+<tr><td><a href="../shrines/kanda-myojin.html">Kanda Jinja</a><span> (Tokyo)</span></td><td><span class="cell-label">Layer 1 · Ancient (927)</span><span>—</span></td><td><span class="cell-label">Layer 3 · By province</span><span>—</span></td><td><span class="cell-label">Layer 4 · 1871–1946</span><span>Fusha (prefectural)</span></td><td><span class="cell-label">Layer 5 · Today</span><span>—</span></td></tr>
+</tbody>
+</table></div>
+<p><strong>How to read it:</strong><span> Meiji Jingu was founded in 1920, so it has no ancient layers. Even so, it stands at the top of the modern layer. </span><strong>Age and rank are separate measures.</strong></p>
+<h2 id="mistakes">Easy mistakes</h2>
+<div class="mistakes"><ul>
+<li><strong>“Jingu” does not always mean the highest rank.</strong><span> It is a suffix that shows a link with the Imperial Family, and it is separate from age and from the modern ranks.</span></li>
+<li><strong>A shrine called “Taisha” was not necessarily a Kanpei Taisha.</strong><span> The suffix and the rank are different things (</span><a href="../articles/kami-and-classification.html#status">see the basics article</a><span>).</span></li>
+<li><strong>There is no official list of Ichinomiya.</strong><span> It is a custom, not a system decided by the state.</span></li>
+<li><strong>The old shrine ranks no longer exist.</strong><span> That is why “former” is attached. The classifications still in use are the Chokusaisha and, inside Jinja Honcho, the Beppyo shrines.</span></li>
+<li><strong>Not being listed among the Shikinaisha does not mean a shrine is new.</strong></li>
+</ul></div>
+<h2 id="on-the-map">On the map</h2>
+<ul>
+<li><span>Show only the Jingu colour → 24 shrines. Of these, the ones already called “Jingu” in the ancient register are Kashima and Katori. </span><a href="../map.html?tags=jingu#mock-app">See only the Jingu on the map →</a></li>
+<li><span>Show only the Ichinomiya colour → the layer of the ranking by province. It does not line up with prefecture borders because the old provinces' borders differ from today's prefectures. </span><a href="../map.html?tags=ichi#mock-app">See only the Ichinomiya on the map →</a></li>
+</ul>
+<!-- 将来：二十二社を出すと京都・奈良に固まる。地図に二十二社のタグを足すかは別に決める（原稿9節）。 -->
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>Takeshi Mitsuhashi, 『神社の由来がわかる小事典』 (PHP Shinsho, 2007)</li>
+<li>Hiromi Shimada, 『教養として学んでおきたい神社』 (Mynavi Shinsho, 2020)</li>
+<li>Kokugakuin University, Encyclopedia of Shinto (『神道事典』), web edition</li>
+</ul>
+</div>
+<div class="share-row" data-share=""><span class="share-label">Share this page</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">Share</button><button class="share-btn" data-done="Copied" data-goatcounter-click="share" data-share-copy="" type="button">Copy link</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Farticles%2Fshrine-names-and-ranks.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Fshrine-names-and-ranks.jpg&amp;description=Shrine%20Names%20and%20Ranks%3A%20Jinja%2C%20Jingu%2C%20Taisha%20%E2%80%94%20Chiyo%20no%20Mori" rel="noopener noreferrer" target="_blank">Save to Pinterest</a></div><div class="article-nav">
+<a class="article-nav-prev" href="kami-and-classification.html"><span class="article-nav-label">← Previous article</span><span>The gods and the map's classifications</span></a>
+<a class="article-nav-next" href="ichinomiya-near-tokyo.html"><span class="article-nav-label">Next article →</span><span>Ichinomiya near Tokyo: the first shrines of the old provinces</span></a>
+</div>
+<div class="page-footer">
+<div>Chiyo no Mori — Shrines of Japan</div>
+<div class="footer-support">
+<span>Chiyo no Mori is independent and ad-free. If this guide helped you plan your visit,</span>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>leave a small tip ↗</span></a>
+</div>
+<div class="footer-privacy" style="margin-top:8px;">No cookies. Anonymous visit counts only. <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">Privacy</a></div></div>
+<script>
+(function(){
+  var tags = new URLSearchParams(location.search).get('tags');
+  var back = document.getElementById('back-link');
+  if (back && tags) {
+    back.setAttribute('href', '../map.html?tags=' + encodeURIComponent(tags) + '#mock-app');
+  }
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.jaCache === undefined) el.dataset.jaCache = el.textContent;
+      el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.dataset.jaCache;
+    });
+    document.querySelectorAll('img[data-alt-en]').forEach(function(el){
+      if (el.dataset.altJaCache === undefined) el.dataset.altJaCache = el.getAttribute('alt') || '';
+      el.setAttribute('alt', lang === 'en' ? el.getAttribute('data-alt-en') : el.dataset.altJaCache);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  var toggle = document.getElementById('lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function(e){
+      var btn = e.target.closest('.lang-btn');
+      if (btn) {
+        applyLang(btn.getAttribute('data-lang'));
+        try { localStorage.setItem('siteLang', btn.getAttribute('data-lang')); } catch(err){}
+      }
+    });
+  }
+  // 本人指摘（2026-09-19）：ENで切り替えても別ページに移動すると日本語に戻る不具合。
+  // localStorageに保存した言語選択を、ページを開いた時点で復元する
+  try {
+  } catch(err){}
+})();
+</script>
+<script async="" data-goatcounter="https://chiyonomori.goatcounter.com/count" src="//gc.zgo.at/count.js"></script><script>
+(function(){
+  var root = document.querySelector('[data-share]'); if (!root) return;
+  var canon = document.querySelector('link[rel="canonical"]');
+  var url = canon ? canon.href : location.href, title = document.title;
+  var nat = root.querySelector('[data-share-native]');
+  if (nat && navigator.share) {
+    nat.hidden = false;
+    nat.addEventListener('click', function(){ navigator.share({ title: title, url: url }).catch(function(){}); });
+  }
+  var cp = root.querySelector('[data-share-copy]');
+  if (cp) cp.addEventListener('click', function(){
+    var label = cp.textContent, done = cp.getAttribute('data-done');
+    function ok(){ cp.textContent = done; setTimeout(function(){ cp.textContent = label; }, 1500); }
+    function fallback(){
+      var t = document.createElement('textarea'); t.value = url; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t); ok();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
+  });
+})();
+</script>
+</body>
+</html>
