@@ -129,7 +129,7 @@
     "blessing": "武運・勝負・縁結び",
     "blessingEn": "Martial arts, decisive moments",
     "founded": "神武天皇18年と伝わる",
-    "foundedEn": "Traditionally dated to the 18th year of Emperor Jimmu",
+    "foundedEn": "Traditionally dated to the 18th year of Emperor Jinmu",
     "station": "JR佐原＋バス／車",
     "stationEn": "JR Sawara + bus / car"
   },
@@ -408,7 +408,7 @@
     "blessing": "武運・勝負・旅立ち",
     "blessingEn": "Martial arts, decisive moments",
     "founded": "神武天皇元年と伝わる",
-    "foundedEn": "Traditionally dated to the first year of Emperor Jimmu",
+    "foundedEn": "Traditionally dated to the first year of Emperor Jinmu",
     "station": "JR鹿島神宮",
     "stationEn": "JR Kashima-Jingu"
   },
@@ -1391,7 +1391,7 @@
     "prefEn": "Yamanashi",
     "provinceEn": "Kai Province",
     "deityEn": "Asama Okami (Konohanasakuyahime)",
-    "reasonEn": "By one tradition the ichinomiya of Kai Province, and a former village shrine. A centre of Sengen (Mount Fuji) worship in the Kofu Basin, distinct from the Fujiyoshida line of shrines."
+    "reasonEn": "By one tradition the ichinomiya of Kai Province, and a former district shrine (gosha). A centre of Sengen (Mount Fuji) worship in the Kofu Basin, distinct from the Fujiyoshida line of shrines."
   },
   {
     "pref": "岐阜",
@@ -1720,7 +1720,7 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Amenoshitaharu",
-    "reasonEn": "A shrine listed in the Engishiki register, one of several claimants to the title of ichinomiya of Musashi Province. A former village shrine standing in the Ichinomiya district of Tama, enshrining Amenoshitaharu."
+    "reasonEn": "A shrine listed in the Engishiki register, one of several claimants to the title of ichinomiya of Musashi Province. A former district shrine (gosha) standing in the Ichinomiya district of Tama, enshrining Amenoshitaharu."
   },
   {
     "pref": "栃木",
@@ -2646,12 +2646,12 @@
     "lat": 35.32608,
     "lng": 139.55642,
     "deity": "応神天皇・比売神・神功皇后",
-    "reason": "八幡宮。源頼朝が鎌倉幕府の守護神として創建。日本三大八幡宮の一。全国一の宮会加盟社で相模国一宮を称する（伝統的な一宮は寒川神社）。鎌倉の総鎮守として年間数百万人が参拝。",
+    "reason": "八幡宮。源頼朝が鎌倉幕府の守護神として創建。日本三大八幡宮の一。相模国一宮に数えられることもある（伝統的な一宮は寒川神社）。鎌倉の総鎮守として年間数百万人が参拝。",
     "nameEn": "Tsurugaoka Hachimangu",
     "prefEn": "Kanagawa",
     "provinceEn": "Sagami Province",
     "deityEn": "Emperor Ojin, Himegami and Empress Jingu",
-    "reasonEn": "A Hachiman shrine founded by Minamoto no Yoritomo as guardian deity of the Kamakura shogunate, and one of the three great Hachiman shrines of Japan. As a member of the National Ichinomiya Association it calls itself the ichinomiya of Sagami Province, though tradition assigns that title to Samukawa Jinja. As guardian of the whole of Kamakura it receives several million visitors a year.",
+    "reasonEn": "A Hachiman shrine founded by Minamoto no Yoritomo as guardian deity of the Kamakura shogunate, and one of the three great Hachiman shrines of Japan. It is sometimes counted as the ichinomiya of Sagami Province, though tradition assigns that title to Samukawa Jinja. As guardian of the whole of Kamakura it receives several million visitors a year.",
     "blessing": "必勝・出世・縁結び",
     "blessingEn": "Victory, career",
     "founded": "1063年（由比ヶ浜）／1180年に現在地",
@@ -3150,7 +3150,7 @@
     "prefEn": "Tokyo",
     "provinceEn": "Musashi Province",
     "deityEn": "Sukunahikona (Sugawara no Michizane enshrined alongside)",
-    "reasonEn": "A shrine listed in the Engishiki register, and a former village shrine. Guardian of the whole of Chofu, once also known as the 'Tenjin of the Five Post Towns'. Also known for its links to the manga and anime GeGeGe no Kitaro."
+    "reasonEn": "A shrine listed in the Engishiki register, and a former district shrine (gosha). Guardian of the whole of Chofu, once also known as the 'Tenjin of the Five Post Towns'. Also known for its links to the manga and anime GeGeGe no Kitaro."
   },
   {
     "pref": "神奈川",
@@ -3367,7 +3367,7 @@
     "prefEn": "Kumamoto",
     "provinceEn": "Higo Province",
     "deityEn": "Yaimimitama (Kosa Myojin)",
-    "reasonEn": "The ninomiya of Higo Province. One of the “Four Aso Shrines” together with Aso Jinja, Kooriura Jinja and Kengun Jinja. A former village shrine (gosha)."
+    "reasonEn": "The ninomiya of Higo Province. One of the “Four Aso Shrines” together with Aso Jinja, Kooriura Jinja and Kengun Jinja. A former district shrine (gosha)."
   },
   {
     "pref": "千葉",
@@ -3384,7 +3384,7 @@
     "prefEn": "Chiba",
     "provinceEn": "Shimosa Province",
     "deityEn": "Takehayasusanoo, Kushinadahime, Okuninushi, Fujiwara no Shihei and others",
-    "reasonEn": "Claims the title of ninomiya of Shimosa Province, and is a candidate for the “Samukawa Jinja” listed in the Engishiki. A former village shrine (gosha). Tamasaki Jinja in Asahi also claims the title."
+    "reasonEn": "Claims the title of ninomiya of Shimosa Province, and is a candidate for the “Samukawa Jinja” listed in the Engishiki. A former district shrine (gosha). Tamasaki Jinja in Asahi also claims the title."
   },
   {
     "pref": "千葉",
@@ -3401,6 +3401,6 @@
     "prefEn": "Chiba",
     "provinceEn": "Shimosa Province",
     "deityEn": "Tamayorihime (Yamato Takeru enshrined alongside)",
-    "reasonEn": "Held by one theory to be the ninomiya of Shimosa Province, a rival claimant alongside Ninomiya Jinja in Funabashi. A former village shrine (gosha)."
+    "reasonEn": "Held by one theory to be the ninomiya of Shimosa Province, a rival claimant alongside Ninomiya Jinja in Funabashi. A former district shrine (gosha)."
   }
 ]
