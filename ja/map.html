@@ -587,6 +587,25 @@
   }
   .sidebar-tip a { color: var(--tan-text-2); text-decoration: none; }
   .sidebar-tip a:hover { color: var(--gold); }
+  /* 依頼CF（2026-10-28・本人「右端のリストはタブレットサイズで縦で見る場合邪魔になった。必要に応じて隠せる機能を」）：
+     右のリストを隠す・出すつまみ。リストが出る幅（641px以上）で使う＝タブレットの縦だけでなくPCでも。640px以下と、横画面の低い画面は
+     リスト自体が無いのでつまみも出さない（下の2つの@mediaで消す）。置き場所＝地図とリストの境目の真ん中の高さ
+     （右上の地図の種類・左上のズーム・下のCTAや出典表示と重ならない）。出ている時はリストの左端に「›」、隠れている時は地図の右端に「‹ リスト」 */
+  .sidebar-toggle {
+    position: absolute; top: 50%; right: 220px; transform: translateY(-50%); z-index: 1000;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    width: 22px; height: 64px; padding: 0;
+    border: 1px solid var(--border-header); border-right: none; border-radius: 9px 0 0 9px;
+    background: linear-gradient(180deg, var(--bg-popup-1) 0%, var(--bg-popup-2) 100%);
+    color: var(--gold); font-family: inherit; font-size: 17px; line-height: 1; cursor: pointer;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.35);
+  }
+  .sidebar-toggle:hover, .sidebar-toggle:focus-visible { background: rgba(var(--gold-glow-rgb),0.22); outline: none; }
+  .sidebar-toggle-text { font-size: 12px; letter-spacing: 0.04em; }
+  #map-area.sidebar-hidden #sidebar { display: none; }
+  #map-area.sidebar-hidden .sidebar-toggle { right: 0; width: auto; height: 38px; padding: 0 10px 0 9px; }
+  #map-area.sidebar-hidden .area-enclosure-cta-wrap { right: 0; }
+  #map-area.sidebar-hidden .bm-toast { left: 50%; }
   .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
   .sidebar-section-title {
     position: sticky; top: 0; z-index: 10;
@@ -738,6 +757,7 @@
      （本番のボトムシート化まではこの試作の現段階ではスコープ外） */
   @media (max-width: 640px) {
     #sidebar { display: none; }
+    .sidebar-toggle { display: none; }   /* 依頼CF：リストが無い幅ではつまみも出さない */
     /* 依頼AZ：サイドバーが無いので地図の全幅の中央へ。ピルも一回り小さくして
        375px幅でも画面の端に触れないようにする */
     .area-enclosure-cta-wrap { right: 0; }
@@ -794,6 +814,7 @@
     .tag-all-btn { font-size: 11px; padding: 4px 8px; }
     #map-area { min-height: 0; }
     #sidebar { display: none; }
+    .sidebar-toggle { display: none; }   /* 依頼CF */
     .area-enclosure-cta-wrap { right: 0; }
     .shrine-popup .leaflet-popup-content {
       max-height: calc(100vh - 160px); overflow-y: auto; overscroll-behavior: contain;
@@ -998,6 +1019,8 @@
 <a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>チップを送る ↗</span></a>
 </div>
 </div>
+<!-- 依頼CF（2026-10-28）：右のリストを隠す・出すつまみ（中身は renderSidebarToggle() が作る） -->
+<button aria-controls="sidebar" aria-expanded="true" class="sidebar-toggle" id="sidebar-toggle" type="button"></button>
 </div>
 </div>
 <!-- 2026-10-23・本人の指示：依頼BL（2026-10-11）で地図の下に置いていた「主なページへの普通のリンクの行」（<footer class="site-links">）は外した。
@@ -2238,6 +2261,40 @@
 
   var markerList = [];
   var map; // fetch内で代入。redrawMarkers/focusShrineから参照するため外側スコープで宣言
+  // 依頼CF（2026-10-28）：右のリストを隠す・出す。最初は今と同じ＝出ている。押した状態はlocalStorageで覚える（使えない時は毎回「出ている」から）。
+  // 隠れている間は、マーカーを押してもリストは勝手に出さない（scrollListToRow()が、見えていないリストは何もしない）。
+  // 押した後は地図の大きさを合わせ直す（Leafletのinvalidatesize。タイルの欠けを防ぐ）
+  var SIDEBAR_TOGGLE_TEXT = {
+    ja: { hide: 'リストを隠す', show: 'リストを表示', tab: 'リスト' },
+    en: { hide: 'Hide list', show: 'Show list', tab: 'List' }
+  };
+  var SIDEBAR_HIDDEN_KEY = 'sidebarHidden';
+  var sidebarHidden = false;
+  try { sidebarHidden = localStorage.getItem(SIDEBAR_HIDDEN_KEY) === '1'; } catch(err){}
+  function renderSidebarToggle() {
+    var btn = document.getElementById('sidebar-toggle'), area = document.getElementById('map-area');
+    if (!btn || !area) return;
+    var t = SIDEBAR_TOGGLE_TEXT[currentLang];
+    area.classList.toggle('sidebar-hidden', sidebarHidden);
+    var label = sidebarHidden ? t.show : t.hide;
+    btn.setAttribute('aria-expanded', sidebarHidden ? 'false' : 'true');
+    btn.setAttribute('aria-label', label);
+    btn.setAttribute('title', label);
+    btn.innerHTML = sidebarHidden
+      ? '<span class="sidebar-toggle-glyph" aria-hidden="true">‹</span><span class="sidebar-toggle-text">' + t.tab + '</span>'
+      : '<span class="sidebar-toggle-glyph" aria-hidden="true">›</span>';
+  }
+  function setSidebarHidden(hidden) {
+    sidebarHidden = hidden;
+    try { localStorage.setItem(SIDEBAR_HIDDEN_KEY, hidden ? '1' : '0'); } catch(err){}
+    renderSidebarToggle();
+    if (map) map.invalidateSize({ animate: false });
+  }
+  (function(){
+    var btn = document.getElementById('sidebar-toggle');
+    if (btn) btn.addEventListener('click', function(){ setSidebarHidden(!sidebarHidden); });
+    renderSidebarToggle();
+  })();
   function saveMapViewState() {
     if (!map) return;
     try {
@@ -2267,6 +2324,7 @@
     renderFilterButtons();
     updateStats();
     renderSidebarList(true);   // 依頼CA：言語を切り替えてもリストの位置は保つ
+    renderSidebarToggle();     // 依頼CF：つまみの文字
     markerList.forEach(function(item){
       var langTag = activeTopTag(item.shrine.tags);
       item.marker.setIcon(getIcon(langTag, shrineHasDetail(item.shrine)));
