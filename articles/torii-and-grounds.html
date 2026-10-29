@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Torii gates: Shinmei and Myojin types, and shrine grounds — Chiyo no Mori</title>
+<title>Torii Gate Types: Shinmei, Myojin and Six More — Chiyo no Mori</title>
 <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <style>
   /* design-lab/articles/torii-and-grounds.html — 実装キュー依頼N-3：
@@ -193,8 +193,61 @@
     /* 固定の一覧（上端52px＋高さ約50px）の下から始める */
     .article-hero { padding: 120px 6vw 36px; }
   }
+
+  /* 依頼CG（2026-10-29）：鳥居の記事を「型の図鑑」に。型の表（狭い画面は1行を1枚のカードに）・写真・問いの分かれ道・8つの型の線画 */
+  .article-body h4 { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif; font-size: 16px; color: var(--gold); margin: 40px 0 12px; letter-spacing: 0.03em; line-height: 1.55; scroll-margin-top: 80px; }
+  .article-body ol { margin: 0 0 16px; padding-left: 1.5em; }
+  .article-body ol li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body a { text-underline-offset: 2px; text-decoration-color: rgba(245,208,138,0.45); }
+  .type-family { margin: 26px 0 8px; font-size: 12px; letter-spacing: 0.14em; color: var(--gold-muted); text-transform: uppercase; }
+  .types-table td:first-child { white-space: normal; font-weight: 600; }
+  .types-table th { white-space: normal; }
+  @media (min-width: 601px) {
+    .types-table { table-layout: fixed; }
+    .types-table th:nth-child(1) { width: 15%; } .types-table th:nth-child(2) { width: 31%; } .types-table th:nth-child(3) { width: 21%; } .types-table th:nth-child(4) { width: 33%; }
+  }
+  .types-table td.type-photo-cell { padding: 8px 0 8px 12px; }
+  .type-photo { margin: 0; }
+  .type-photo img { display: block; width: 100%; height: auto; border-radius: 3px; border: 1px solid var(--border-4); }
+  .types-table td .cell-label { display: none; }
+  @media (max-width: 600px) {
+    .stack-table, .stack-table tbody, .stack-table tr, .stack-table td { display: block; width: 100%; }
+    .stack-table thead { display: none; }
+    .stack-table tr { border: 1px solid var(--border-4); border-radius: 4px; padding: 6px 12px 10px; margin: 0 0 10px; background: rgba(255,255,255,0.02); }
+    .stack-table td { border: none; padding: 5px 0 2px; }
+    .stack-table td:first-child { color: var(--gold); font-weight: 600; font-size: 14px; padding-bottom: 4px; border-bottom: 1px solid rgba(106,80,48,0.6); margin-bottom: 4px; }
+    .stack-table td .cell-label { display: block; font-size: 10.5px; letter-spacing: 0.08em; color: var(--gold-muted); margin-bottom: 1px; }
+    .types-table td.type-photo-cell { width: 100%; padding: 8px 0 2px; }
+    .types-table td.type-photo-cell:empty { display: none; }
+    .types-table td.type-photo-cell .type-photo { max-width: 340px; }
+    .article-table th { white-space: normal; }
+  }
+  .torii-flow { margin: 26px 0 36px; }
+  .flow-step { border: 1px solid var(--border-4); background: rgba(255,255,255,0.03); border-radius: 6px; padding: 10px 14px; font-size: 13.5px; line-height: 1.7; text-align: center; color: var(--tan-text); }
+  .flow-step strong { color: var(--gold); }
+  .flow-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .flow-col { display: flex; flex-direction: column; gap: 8px; border-top: 2px solid rgba(var(--gold-glow-rgb),0.45); padding-top: 8px; }
+  .flow-branch { text-align: center; font-size: 12px; letter-spacing: 0.12em; color: var(--gold-muted); }
+  .flow-family { text-align: center; font-size: 14.5px; font-weight: 700; color: var(--gold); }
+  .article-body .flow-outs { list-style: none; margin: 0; padding: 0; }
+  .article-body .flow-outs li { margin: 0 0 6px; padding: 8px 12px; border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); background: rgba(255,255,255,0.025); font-size: 13px; line-height: 1.65; opacity: 1; }
+  @media (max-width: 560px) { .flow-split { grid-template-columns: 1fr; } }
+  .tt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 14px; }
+  .tt-cell { margin: 0; text-align: center; }
+  .tt-cell figcaption { margin-top: 6px; display: flex; flex-direction: column; gap: 2px; }
+  .tt-name { font-size: 13px; color: var(--gold); font-weight: 600; }
+  .tt-feat { font-size: 11.5px; color: var(--tan-text); opacity: 0.8; line-height: 1.45; }
+  @media (max-width: 600px) { .tt-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* 依頼CG（2026-10-29）：8つの型の線画。文字は画像に焼かない（キャプションはHTML）。明るい所＝その型を見分ける所 */
+  .tt-svg { width: 100%; height: auto; display: block; }
+  .tt-m { fill: rgba(245,208,138,0.12); stroke: #f5d08a; stroke-width: 1.5; stroke-linejoin: round; }
+  .tt-hl { fill: rgba(245,208,138,0.55); stroke: #f5d08a; stroke-width: 1.5; stroke-linejoin: round; }
+  .tt-hole { fill: #1a1209; stroke: #f5d08a; stroke-width: 1.2; stroke-linejoin: round; }
+  .tt-marker circle { fill: #f5d08a; stroke: #1a1209; stroke-width: 1; }
+  .tt-marker text { fill: #1a1209; font-size: 8px; font-weight: 700; text-anchor: middle; }
 </style>
-<link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="x-default" rel="alternate"/><meta content="What a torii marks, how to tell a Shinmei torii from a Myojin torii, and what to look at in shrine grounds — with photos from visits." name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="Torii gates: Shinmei and Myojin types, and shrine grounds — Chiyo no Mori" property="og:title"/><meta content="What a torii marks, how to tell a Shinmei torii from a Myojin torii, and what to look at in shrine grounds — with photos from visits." property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/torii-and-grounds.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="Torii gates: Shinmei and Myojin types, and shrine grounds — Chiyo no Mori" property="og:image:alt"/><meta content="en_US" property="og:locale"/><meta content="ja_JP" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Torii gates: Shinmei and Myojin types, and shrine grounds — Chiyo no Mori" name="twitter:title"/><meta content="What a torii marks, how to tell a Shinmei torii from a Myojin torii, and what to look at in shrine grounds — with photos from visits." name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/torii-and-grounds.jpg" name="twitter:image"/><style>
+<link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="x-default" rel="alternate"/><meta content="Eight types of torii gate, from the plain Shinmei and the common Myojin to the Sanno with its triangular gable, how to tell them apart, and the shrines they are named after, all on this map." name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="Torii Gate Types: Shinmei, Myojin and Six More — Chiyo no Mori" property="og:title"/><meta content="Eight types of torii gate, from the plain Shinmei and the common Myojin to the Sanno with its triangular gable, how to tell them apart, and the shrines they are named after, all on this map." property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/torii-and-grounds.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="Torii Gate Types: Shinmei, Myojin and Six More — Chiyo no Mori" property="og:image:alt"/><meta content="en_US" property="og:locale"/><meta content="ja_JP" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Torii Gate Types: Shinmei, Myojin and Six More — Chiyo no Mori" name="twitter:title"/><meta content="Eight types of torii gate, from the plain Shinmei and the common Myojin to the Sanno with its triangular gable, how to tell them apart, and the shrines they are named after, all on this map." name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/torii-and-grounds.jpg" name="twitter:image"/><style>
   /* 依頼BP-2：共有のボタン（外部の部品は使わない） */
   .share-row { max-width: 860px; margin: 56px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
   .share-label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; margin-right: 6px; }
@@ -222,16 +275,19 @@
 <div class="article-body">
 <h2 id="torii">Torii — beyond this point, the land is no longer ordinary human space</h2>
 <ul>
-<li>Why vermilion? It is regarded as protective, but the pigment originally contained mercury and also preserved the wood. Practical use and belief came from the same material. Many torii are also unpainted wood or stone.</li>
+<li id="vermilion">Why vermilion? It is regarded as protective, but the pigment originally contained mercury and also preserved the wood. Practical use and belief came from the same material. Many torii are also unpainted wood or stone.</li>
 <li>The thousand torii of Fushimi Inari Taisha are not decoration. They are donations. People dedicate one after a wish is fulfilled. The back of each pillar bears the donor's name and date. New ones are still being added.</li>
 <li>Torii in the sea at Itsukushima shrine, and torii on mountain summits: when an island or mountain itself is sacred, the torii stands in front of it.</li>
 </ul>
 <!-- 依頼BW-2（2026-10-23）：鳥居の型（神明・明神）の見分け方に見出しを立てた。本文の事実は足していない＝今ある文（2つの型）と、下の図（見分け方・凡例・注）を、この見出しの下に集めただけ。
      朱色・千本鳥居・海の鳥居の3項目は、見出しの上（節の最初）に移した。 -->
 <h3 id="torii-types">Types of torii: Shinmei and Myojin</h3>
+<p><span>Torii fall into </span><strong>two broad families</strong><span>. What to look at: is there a second beam (the </span><strong>shimagi</strong><span>) directly below the top lintel (the </span><strong>kasagi</strong><span>)?</span></p>
 <ul>
-<li>Learn two forms and most torii become easy to identify. Shinmei torii: straight pillars and crossbeams, almost no decoration. The form associated with Ise Jingu. Myojin torii: the top crossbeam curves upwards, with a second beam beneath it. This is the more common form.</li>
+<li><strong>No shimagi: the Shinmei family.</strong><span> Straight lines and little ornament.</span></li>
+<li><strong>A shimagi: the Myojin family.</strong><span> The ends of the kasagi often curve upward.</span></li>
 </ul>
+<p><strong>Colour does not decide it.</strong><span> There are vermilion Shinmei torii and unpainted-wood Myojin torii. </span><strong>Nor does the strength of the curve:</strong><span> the great torii of </span><a href="../shrines/meiji-jingu.html">Meiji Jingu</a><span> has almost no curve, but it has a shimagi, so it belongs to the Myojin family.</span></p>
 <div class="diagram">
 <p class="diagram-title">Shinmei and Myojin torii — how to tell them apart</p>
 <div class="diagram-compare diagram-compare-torii">
@@ -269,6 +325,75 @@
 <p class="diagram-note">Shinmei: straight beams, no ornament (Ise Jingu's lineage). Myojin: the top beam curves upward and a second beam (shimagi) sits below it — most torii nationwide are this type.</p>
 <p class="diagram-note">Colour is not the distinction. Shinmei gates can be vermilion, Myojin gates plain wood.</p>
 </div>
+<h4 id="named-after">Each type is named after a shrine, and every one of those shrines is on this map</h4>
+<p><span>Many torii types take their names from </span><strong>the shrine best known for that form</strong><span>, and all of those shrines are on this map. Learn a type, then go and see the shrine it comes from.</span></p>
+<p class="type-family">Shinmei family</p>
+<div class="table-wrap"><table class="article-table stack-table types-table">
+<thead><tr><th><span>Type</span></th><th><span>How to recognise it</span></th><th><span>Named after (on the map)</span></th><th><span>Photo</span></th></tr></thead>
+<tbody>
+<tr><td><span>Shinmei torii</span></td><td><span class="cell-label">How to recognise it</span><span>Just pillars, a top lintel (kasagi) and a tie beam (nuki): the plainest form.</span></td><td><span class="cell-label">Named after / example</span><span>(the name of the family)</span></td><td class="type-photo-cell"></td></tr>
+<tr><td><span>Ise torii</span></td><td><span class="cell-label">How to recognise it</span><span>A Shinmei type whose kasagi has its upper surface cut at an angle, so its cross-section is a pentagon or similar.</span></td><td><span class="cell-label">Named after / example</span><a href="../shrines/ise-jingu.html">Ise Jingu</a></td><td class="type-photo-cell"><figure class="type-photo"><img alt="An Ise-style torii (Ise Jingu), seen against the light: no second beam under the top lintel" height="371" loading="lazy" src="../assets/torii-type-ise.jpg" width="720"/></figure></td></tr>
+<tr><td><span>Kashima torii</span></td><td><span class="cell-label">How to recognise it</span><span>A Shinmei type in which the lower beam (nuki) runs through the pillars, sticks out on both sides and is fixed with wedges.</span></td><td><span class="cell-label">Named after / example</span><a href="../shrines/kashima-jingu.html">Kashima Jingu</a></td><td class="type-photo-cell"><figure class="type-photo"><img alt="A Kashima-style torii at Kashima Jingu: the tie beam runs through the pillars" height="440" loading="lazy" src="../assets/torii-type-kashima.jpg" width="720"/></figure></td></tr>
+</tbody>
+</table></div>
+<p class="type-family">Myojin family</p>
+<div class="table-wrap"><table class="article-table stack-table types-table">
+<thead><tr><th><span>Type</span></th><th><span>How to recognise it</span></th><th><span>Named after (on the map)</span></th><th><span>Photo</span></th></tr></thead>
+<tbody data-region="kanto-tokai">
+<tr><td><span>Myojin torii</span></td><td><span class="cell-label">How to recognise it</span><span>A shimagi below the kasagi, whose ends curve upward. The most common type today; it spread from the Middle Ages onward.</span></td><td><span class="cell-label">Named after / example</span><span>(the name of the family)</span></td><td class="type-photo-cell"><figure class="type-photo"><img alt="The great torii of Meiji Jingu, a wooden Myojin torii: a shimagi under the kasagi" height="330" loading="lazy" src="../assets/torii-type-meiji.jpg" width="580"/></figure></td></tr>
+<tr><td><span>Kasuga torii</span></td><td><span class="cell-label">How to recognise it</span><span>Kasagi and shimagi are horizontal, with no upward curve. Often vermilion.</span></td><td><span class="cell-label">Named after / example</span><a href="../map.html?shrine=奈良|春日大社#mock-app">Kasuga Taisha</a></td><td class="type-photo-cell"></td></tr>
+<tr><td><span>Inari torii</span></td><td><span class="cell-label">How to recognise it</span><span>A round seat (daiwa) at the top of each pillar. Often vermilion.</span></td><td><span class="cell-label">Named after / example</span><span>Common at Inari shrines (on this map: </span><a href="../map.html?shrine=京都|伏見稲荷大社#mock-app">Fushimi Inari Taisha</a><span>)</span></td><td class="type-photo-cell"><figure class="type-photo"><img alt="An Inari-style torii at Shirasasa Inari Jinja: round seats (daiwa) at the top of the pillars" height="464" loading="lazy" src="../assets/torii-type-inari.jpg" width="720"/></figure></td></tr>
+<tr><td><span>Sanno torii</span></td><td><span class="cell-label">How to recognise it</span><span>A triangular, roof-shaped gable (a gassho gable) sits on top of the kasagi.</span></td><td><span class="cell-label">Named after / example</span><a href="../map.html?shrine=滋賀|日吉大社#mock-app">Hiyoshi Taisha</a><span> (Shiga); in Tokyo, </span><a href="../shrines/hie-jinja.html">Hie Jinja</a></td><td class="type-photo-cell"><figure class="type-photo"><img alt="A Sanno-style torii at Hie Jinja: a triangular gable on top of the kasagi" height="405" loading="lazy" src="../assets/torii-type-sanno.jpg" width="720"/></figure></td></tr>
+<tr><td><span>Ryobu torii</span></td><td><span class="cell-label">How to recognise it</span><span>Supporting posts (hikae-bashira) stand in front of and behind the pillars, joined to them by tie beams.</span></td><td><span class="cell-label">Named after / example</span><a href="../map.html?shrine=広島|厳島神社#mock-app">Itsukushima Jinja</a><span> (the great torii in the sea)</span></td><td class="type-photo-cell"></td></tr>
+</tbody>
+</table></div>
+<!-- region: kansai 住吉鳥居（住吉大社）・三輪鳥居（大神神社）は、辞典の記述が薄いか食い違うので今回は入れていない。京都・大阪版が入ったら、住吉を公式で確かめて、上の表の後ろに足す（【地域】）。宇佐鳥居・八幡鳥居は名前の元の社の記述が無い／一つの辞典だけなので入れない。 -->
+<h4 id="how-to-tell">How to tell them apart, step by step</h4>
+<ol>
+<li><span>Is there a second beam under the top lintel? </span><strong>No:</strong><span> Shinmei family (go to step 2). </span><strong>Yes:</strong><span> Myojin family (go to step 3).</span></li>
+<li><span>Shinmei family: do the ends of the lower beam stick out past the pillars? </span><strong>Yes:</strong><span> Kashima torii. </span><strong>The top of the kasagi is cut at an angle:</strong><span> Ise torii. </span><strong>Neither:</strong><span> Shinmei torii.</span></li>
+<li><span>Myojin family: a </span><strong>triangular roof-shaped gable</strong><span> above the kasagi: Sanno torii. </span><strong>Supporting posts</strong><span> in front of and behind the pillars: Ryobu torii. A </span><strong>round seat</strong><span> at the top of the pillars: Inari torii. Beams that are </span><strong>straight, with no curve:</strong><span> Kasuga torii. None of these: Myojin torii.</span></li>
+</ol>
+<p>Some torii combine features. Name them by the most striking one.</p>
+<div class="diagram torii-flow" id="torii-flow">
+<p class="diagram-title">Which type is it? The questions in order</p>
+<div class="flow-step"><strong>1</strong><span> Is there a second beam (shimagi) under the top lintel (kasagi)?</span></div>
+<div class="flow-split">
+<div class="flow-col">
+<div class="flow-branch"><span>No</span></div>
+<div class="flow-family"><span>Shinmei family</span></div>
+<div class="flow-step"><strong>2</strong><span> Do the ends of the lower beam (nuki) stick out past the pillars?</span></div>
+<ul class="flow-outs"><li><strong>Yes</strong><span> → Kashima torii</span></li><li><strong>Top of the kasagi cut at an angle</strong><span> → Ise torii</span></li><li><strong>Neither</strong><span> → Shinmei torii</span></li></ul>
+</div>
+<div class="flow-col">
+<div class="flow-branch"><span>Yes</span></div>
+<div class="flow-family"><span>Myojin family</span></div>
+<div class="flow-step"><strong>3</strong><span> What is the most striking feature?</span></div>
+<ul class="flow-outs"><li><strong>A triangular gable above the kasagi</strong><span> → Sanno torii</span></li><li><strong>Supporting posts beside the pillars</strong><span> → Ryobu torii</span></li><li><strong>A round seat on the pillar tops</strong><span> → Inari torii</span></li><li><strong>Straight beams, no curve</strong><span> → Kasuga torii</span></li><li><strong>None of these</strong><span> → Myojin torii</span></li></ul>
+</div>
+</div>
+</div>
+<div class="diagram" id="torii-types-diagram">
+<p class="diagram-title">The eight types, side by side</p>
+<div class="tt-grid"><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="69" width="8" x="36" y="27"></rect><rect class="tt-m" height="69" width="8" x="76" y="27"></rect><rect class="tt-m" height="9" width="92" x="14" y="17"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">Shinmei torii</span><span class="tt-feat">Straight kasagi</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="69" width="8" x="36" y="27"></rect><rect class="tt-m" height="69" width="8" x="76" y="27"></rect><polygon class="tt-hl" points="14,27 14,21 20,16 100,16 106,21 106,27"></polygon><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">Ise torii</span><span class="tt-feat">Angled top of kasagi</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="70" width="8" x="36" y="26"></rect><rect class="tt-m" height="70" width="8" x="76" y="26"></rect><rect class="tt-m" height="10" rx="5" width="96" x="12" y="16"></rect><rect class="tt-hl" height="6" width="104" x="8" y="56"></rect><g class="tt-marker"><circle cx="114" cy="21" r="6.4"></circle><text x="114" y="24.2">1</text></g><g class="tt-marker"><circle cx="114" cy="59" r="6.4"></circle><text x="114" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">Kashima torii</span><span class="tt-feat">Nuki sticks out</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="60" width="8" x="36" y="36"></rect><rect class="tt-m" height="60" width="8" x="76" y="36"></rect><path class="tt-m" d="M12 13 Q60 27 108 13 L108 21 Q60 35 12 21 Z"></path><rect class="tt-m" height="7" width="68" x="26" y="29"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">Myojin torii</span><span class="tt-feat">Shimagi, curved kasagi</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="66" width="8" x="36" y="30"></rect><rect class="tt-m" height="66" width="8" x="76" y="30"></rect><rect class="tt-hl" height="8" width="96" x="12" y="15"></rect><rect class="tt-hl" height="7" width="72" x="24" y="23"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="114" cy="19" r="6.4"></circle><text x="114" y="22.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">Kasuga torii</span><span class="tt-feat">Horizontal, no curve</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="60" width="8" x="36" y="36"></rect><rect class="tt-m" height="60" width="8" x="76" y="36"></rect><path class="tt-m" d="M12 13 Q60 27 108 13 L108 21 Q60 35 12 21 Z"></path><rect class="tt-m" height="7" width="68" x="26" y="29"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><rect class="tt-hl" height="6" rx="2.6" width="16" x="32" y="36"></rect><rect class="tt-hl" height="6" rx="2.6" width="16" x="72" y="36"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">Inari torii</span><span class="tt-feat">Round seat on pillars</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="60" width="8" x="36" y="36"></rect><rect class="tt-m" height="60" width="8" x="76" y="36"></rect><polygon class="tt-hl" points="22,14 60,-6 98,14"></polygon><polygon class="tt-hole" points="34,14 60,1 86,14"></polygon><path class="tt-m" d="M12 13 Q60 27 108 13 L108 21 Q60 35 12 21 Z"></path><rect class="tt-m" height="7" width="68" x="26" y="29"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">Sanno torii</span><span class="tt-feat">Triangular gable</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-hl" height="36" width="6" x="26" y="60"></rect><rect class="tt-hl" height="36" width="6" x="88" y="60"></rect><rect class="tt-hl" height="4" width="18" x="26" y="74"></rect><rect class="tt-hl" height="4" width="18" x="76" y="74"></rect><rect class="tt-m" height="60" width="8" x="36" y="36"></rect><rect class="tt-m" height="60" width="8" x="76" y="36"></rect><path class="tt-m" d="M12 13 Q60 27 108 13 L108 21 Q60 35 12 21 Z"></path><rect class="tt-m" height="7" width="68" x="26" y="29"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">Ryobu torii</span><span class="tt-feat">Supporting posts</span></figcaption></figure></div>
+<div class="torii-legend"><div class="torii-legend-row"><span class="torii-legend-num">1</span><span>Kasagi — top lintel</span></div><div class="torii-legend-row"><span class="torii-legend-num">2</span><span>Shimagi — second beam (Myojin family)</span></div><div class="torii-legend-row"><span class="torii-legend-num">3</span><span>Nuki — tie beam</span></div><div class="torii-legend-row"><span class="torii-legend-num">4</span><span>Hashira — pillars</span></div></div>
+<p class="diagram-note">The numbers match the parts diagram above. The brighter part is what identifies each type.</p>
+</div>
+<h4 id="by-material">By material</h4>
+<p><span>Material is a separate matter. </span><strong>A type is decided by shape, not by material.</strong></p>
+<ul>
+<li><strong>Wood:</strong><span> the great wooden torii of </span><a href="../shrines/kashima-jingu.html">Kashima Jingu</a><span></span></li>
+<li><strong>Stone:</strong><span> the stone torii of </span><a href="../shrines/katori-jingu.html">Katori Jingu</a><span>, and the stone torii of a small shrine in the grounds of </span><a href="../shrines/kanda-myojin.html">Kanda Myojin</a><span></span></li>
+<li><strong>Copper:</strong><span> the copper torii of </span><a href="../shrines/toranomon-kotohira.html">Toranomon Kotohira-gu</a><span>, standing between office buildings</span></li>
+<li><strong>Vermilion:</strong><span> </span><a href="../shrines/shirasasa-inari.html">Shirasasa Inari Jinja</a><span>. For why vermilion, see </span><a href="#vermilion">the section above</a></li>
+</ul>
+<h4 id="near-tokyo">Seeing them near Tokyo</h4>
+<ul>
+<li><span>Sanno torii: </span><strong><a href="../shrines/hie-jinja.html">Hie Jinja</a></strong><span> (Akasaka)</span></li>
+<li><span>Inari torii: </span><strong><a href="../shrines/shirasasa-inari.html">Shirasasa Inari Jinja</a></strong><span> (Hadano)</span></li>
+<li><span>Kashima torii: </span><strong><a href="../shrines/kashima-jingu.html">Kashima Jingu</a></strong><span> (Ibaraki)</span></li>
+<li><span>Myojin torii: </span><strong><a href="../shrines/meiji-jingu.html">Meiji Jingu</a></strong><span> (Harajuku)</span></li>
+</ul>
 <p class="article-bridge">After the torii, what is actually worth looking at inside the grounds?</p>
 <h2 id="grounds">Shrine grounds — built around what cannot be seen</h2>
 <p>The most important thing in a shrine cannot be seen. The shintai, the sacred object, is kept deep inside the main sanctuary. No one looks at it. Even the Emperor does not see the shintai of Ise Jingu. Once that is clear, the layout of the grounds makes more sense.</p>
@@ -317,7 +442,7 @@
 </div>
 <p class="article-deeper"><a href="beyond-the-basics.html">Go deeper: Beyond the basics →</a></p>
 </div>
-<div class="share-row" data-share=""><span class="share-label">Share this page</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">Share</button><button class="share-btn" data-done="Copied" data-goatcounter-click="share" data-share-copy="" type="button">Copy link</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Farticles%2Ftorii-and-grounds.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Ftorii-and-grounds.jpg&amp;description=Torii%20gates%3A%20Shinmei%20and%20Myojin%20types%2C%20and%20shrine%20grounds%20%E2%80%94%20Chiyo%20no%20Mori" rel="noopener noreferrer" target="_blank">Save to Pinterest</a></div><div class="article-nav">
+<div class="share-row" data-share=""><span class="share-label">Share this page</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">Share</button><button class="share-btn" data-done="Copied" data-goatcounter-click="share" data-share-copy="" type="button">Copy link</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Farticles%2Ftorii-and-grounds.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Ftorii-and-grounds.jpg&amp;description=Torii%20Gate%20Types%3A%20Shinmei%2C%20Myojin%20and%20Six%20More%20%E2%80%94%20Chiyo%20no%20Mori" rel="noopener noreferrer" target="_blank">Save to Pinterest</a></div><div class="article-nav">
 <a class="article-nav-prev" href="how-to-visit.html"><span class="article-nav-label">← Previous article</span><span>How to worship, and what a shrine gives</span></a>
 <a class="article-nav-next" href="kami-and-classification.html"><span class="article-nav-label">Next article →</span><span>The gods and the map's classifications</span></a>
 </div>

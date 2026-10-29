@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>鳥居と境内——何を見るか｜千代の杜</title>
+<title>鳥居の型——神明・明神から山王まで、見分け方｜千代の杜</title>
 <link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <style>
   /* design-lab/articles/torii-and-grounds.html — 実装キュー依頼N-3：
@@ -193,8 +193,61 @@
     /* 固定の一覧（上端52px＋高さ約50px）の下から始める */
     .article-hero { padding: 120px 6vw 36px; }
   }
+
+  /* 依頼CG（2026-10-29）：鳥居の記事を「型の図鑑」に。型の表（狭い画面は1行を1枚のカードに）・写真・問いの分かれ道・8つの型の線画 */
+  .article-body h4 { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif; font-size: 16px; color: var(--gold); margin: 40px 0 12px; letter-spacing: 0.03em; line-height: 1.55; scroll-margin-top: 80px; }
+  .article-body ol { margin: 0 0 16px; padding-left: 1.5em; }
+  .article-body ol li { line-height: 1.95; opacity: 0.9; margin-bottom: 12px; }
+  .article-body a { text-underline-offset: 2px; text-decoration-color: rgba(245,208,138,0.45); }
+  .type-family { margin: 26px 0 8px; font-size: 12px; letter-spacing: 0.14em; color: var(--gold-muted); text-transform: uppercase; }
+  .types-table td:first-child { white-space: normal; font-weight: 600; }
+  .types-table th { white-space: normal; }
+  @media (min-width: 601px) {
+    .types-table { table-layout: fixed; }
+    .types-table th:nth-child(1) { width: 15%; } .types-table th:nth-child(2) { width: 31%; } .types-table th:nth-child(3) { width: 21%; } .types-table th:nth-child(4) { width: 33%; }
+  }
+  .types-table td.type-photo-cell { padding: 8px 0 8px 12px; }
+  .type-photo { margin: 0; }
+  .type-photo img { display: block; width: 100%; height: auto; border-radius: 3px; border: 1px solid var(--border-4); }
+  .types-table td .cell-label { display: none; }
+  @media (max-width: 600px) {
+    .stack-table, .stack-table tbody, .stack-table tr, .stack-table td { display: block; width: 100%; }
+    .stack-table thead { display: none; }
+    .stack-table tr { border: 1px solid var(--border-4); border-radius: 4px; padding: 6px 12px 10px; margin: 0 0 10px; background: rgba(255,255,255,0.02); }
+    .stack-table td { border: none; padding: 5px 0 2px; }
+    .stack-table td:first-child { color: var(--gold); font-weight: 600; font-size: 14px; padding-bottom: 4px; border-bottom: 1px solid rgba(106,80,48,0.6); margin-bottom: 4px; }
+    .stack-table td .cell-label { display: block; font-size: 10.5px; letter-spacing: 0.08em; color: var(--gold-muted); margin-bottom: 1px; }
+    .types-table td.type-photo-cell { width: 100%; padding: 8px 0 2px; }
+    .types-table td.type-photo-cell:empty { display: none; }
+    .types-table td.type-photo-cell .type-photo { max-width: 340px; }
+    .article-table th { white-space: normal; }
+  }
+  .torii-flow { margin: 26px 0 36px; }
+  .flow-step { border: 1px solid var(--border-4); background: rgba(255,255,255,0.03); border-radius: 6px; padding: 10px 14px; font-size: 13.5px; line-height: 1.7; text-align: center; color: var(--tan-text); }
+  .flow-step strong { color: var(--gold); }
+  .flow-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .flow-col { display: flex; flex-direction: column; gap: 8px; border-top: 2px solid rgba(var(--gold-glow-rgb),0.45); padding-top: 8px; }
+  .flow-branch { text-align: center; font-size: 12px; letter-spacing: 0.12em; color: var(--gold-muted); }
+  .flow-family { text-align: center; font-size: 14.5px; font-weight: 700; color: var(--gold); }
+  .article-body .flow-outs { list-style: none; margin: 0; padding: 0; }
+  .article-body .flow-outs li { margin: 0 0 6px; padding: 8px 12px; border-left: 3px solid rgba(var(--gold-glow-rgb),0.55); background: rgba(255,255,255,0.025); font-size: 13px; line-height: 1.65; opacity: 1; }
+  @media (max-width: 560px) { .flow-split { grid-template-columns: 1fr; } }
+  .tt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 14px; }
+  .tt-cell { margin: 0; text-align: center; }
+  .tt-cell figcaption { margin-top: 6px; display: flex; flex-direction: column; gap: 2px; }
+  .tt-name { font-size: 13px; color: var(--gold); font-weight: 600; }
+  .tt-feat { font-size: 11.5px; color: var(--tan-text); opacity: 0.8; line-height: 1.45; }
+  @media (max-width: 600px) { .tt-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* 依頼CG（2026-10-29）：8つの型の線画。文字は画像に焼かない（キャプションはHTML）。明るい所＝その型を見分ける所 */
+  .tt-svg { width: 100%; height: auto; display: block; }
+  .tt-m { fill: rgba(245,208,138,0.12); stroke: #f5d08a; stroke-width: 1.5; stroke-linejoin: round; }
+  .tt-hl { fill: rgba(245,208,138,0.55); stroke: #f5d08a; stroke-width: 1.5; stroke-linejoin: round; }
+  .tt-hole { fill: #1a1209; stroke: #f5d08a; stroke-width: 1.2; stroke-linejoin: round; }
+  .tt-marker circle { fill: #f5d08a; stroke: #1a1209; stroke-width: 1; }
+  .tt-marker text { fill: #1a1209; font-size: 8px; font-weight: 700; text-anchor: middle; }
 </style>
-<link href="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="x-default" rel="alternate"/><meta content="鳥居は門ではない。境界の印。くぐった先は神の領域という合図で、それ以上の機能を持たない。境界の外側と内側、鳥居と境内——2つの節で見る。" name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="鳥居と境内——何を見るか｜千代の杜" property="og:title"/><meta content="鳥居は門ではない。境界の印。くぐった先は神の領域という合図で、それ以上の機能を持たない。境界の外側と内側、鳥居と境内——2つの節で見る。" property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/torii-and-grounds.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="鳥居と境内——何を見るか｜千代の杜" property="og:image:alt"/><meta content="ja_JP" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="鳥居と境内——何を見るか｜千代の杜" name="twitter:title"/><meta content="鳥居は門ではない。境界の印。くぐった先は神の領域という合図で、それ以上の機能を持たない。境界の外側と内側、鳥居と境内——2つの節で見る。" name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/torii-and-grounds.jpg" name="twitter:image"/><style>
+<link href="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" rel="canonical"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="en" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" hreflang="ja" rel="alternate"/><link href="https://nocta-works.github.io/chiyonomori/articles/torii-and-grounds.html" hreflang="x-default" rel="alternate"/><meta content="鳥居は門ではない。境界の印。くぐった先は神の領域という合図で、それ以上の機能を持たない。境界の外側と内側、鳥居と境内——2つの節で見る。" name="description"/><meta content="article" property="og:type"/><meta content="Chiyo no Mori" property="og:site_name"/><meta content="鳥居の型——神明・明神から山王まで、見分け方｜千代の杜" property="og:title"/><meta content="鳥居は門ではない。境界の印。くぐった先は神の領域という合図で、それ以上の機能を持たない。境界の外側と内側、鳥居と境内——2つの節で見る。" property="og:description"/><meta content="https://nocta-works.github.io/chiyonomori/ja/articles/torii-and-grounds.html" property="og:url"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/torii-and-grounds.jpg" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="鳥居の型——神明・明神から山王まで、見分け方｜千代の杜" property="og:image:alt"/><meta content="ja_JP" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="鳥居の型——神明・明神から山王まで、見分け方｜千代の杜" name="twitter:title"/><meta content="鳥居は門ではない。境界の印。くぐった先は神の領域という合図で、それ以上の機能を持たない。境界の外側と内側、鳥居と境内——2つの節で見る。" name="twitter:description"/><meta content="https://nocta-works.github.io/chiyonomori/assets/og/torii-and-grounds.jpg" name="twitter:image"/><style>
   /* 依頼BP-2：共有のボタン（外部の部品は使わない） */
   .share-row { max-width: 860px; margin: 56px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
   .share-label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; margin-right: 6px; }
@@ -222,16 +275,19 @@
 <div class="article-body">
 <h2 id="torii">鳥居——ここから先は、人の土地ではない</h2>
 <ul>
-<li><strong>朱色の理由</strong>＝魔除けとされるが、<strong>もとは水銀を含む顔料で、木材の防腐剤でもあった。</strong>実用と信仰が同じ材料から来ている。無塗装の木や石の鳥居も多い</li>
+<li id="vermilion"><strong>朱色の理由</strong>＝魔除けとされるが、<strong>もとは水銀を含む顔料で、木材の防腐剤でもあった。</strong>実用と信仰が同じ材料から来ている。無塗装の木や石の鳥居も多い</li>
 <li><strong>千本鳥居（伏見稲荷大社）</strong>＝あれは装飾ではなく<strong>奉納。</strong>願いが叶った礼に人が1本ずつ寄進したもので、<strong>柱の裏を見ると寄進者の名前と年月が彫ってある。</strong>今も増え続けている</li>
 <li><strong>海に立つ鳥居（厳島神社）・山頂の鳥居</strong>＝島や山そのものが神なので、社殿を建てられない。<strong>鳥居だけが手前に立つ</strong></li>
 </ul>
 <!-- 依頼BW-2（2026-10-23）：鳥居の型（神明・明神）の見分け方に見出しを立てた。本文の事実は足していない＝今ある文（2つの型）と、下の図（見分け方・凡例・注）を、この見出しの下に集めただけ。
      朱色・千本鳥居・海の鳥居の3項目は、見出しの上（節の最初）に移した。 -->
 <h3 id="torii-types">鳥居の型——神明と明神</h3>
+<p><span>鳥居の型は、大きく</span><strong>2つの系統</strong><span>に分かれる。見るのは、一番上の横木（</span><strong>笠木</strong><span>）のすぐ下に、もう1本の横木（</span><strong>島木</strong><span>）があるかどうか。</span></p>
 <ul>
-<li><strong>2つの型を覚えれば大半が見分けられる。</strong> <strong>神明（しんめい）鳥居</strong>＝柱も横木もまっすぐで、装飾がほとんどない。伊勢神宮の系統。<strong>明神（みょうじん）鳥居</strong>＝一番上の横木（笠木）が反り上がり、その下にもう1本（島木）が入る。<strong>数の上ではこちらが大半</strong></li>
+<li><strong>無い＝神明系</strong><span>。まっすぐで飾りが少ない。</span></li>
+<li><strong>ある＝明神系</strong><span>。笠木の端が反り上がるものが多い。</span></li>
 </ul>
+<p><strong>色では分からない。</strong><span>朱塗りの神明系も、白木の明神系もある。</span><strong>反りの強さでも決めない</strong><span>＝</span><a href="../shrines/meiji-jingu.html">明治神宮</a><span>の大鳥居は反りがほとんど無いが、島木があるので明神系。</span></p>
 <div class="diagram">
 <p class="diagram-title">神明鳥居と明神鳥居——見分け方</p>
 <div class="diagram-compare diagram-compare-torii">
@@ -269,6 +325,75 @@
 <p class="diagram-note">神明＝直線・装飾なし（伊勢神宮の系統）。明神＝笠木が反り、島木が入る。数の上ではこちらが大半。</p>
 <p class="diagram-note">色は見分けの基準ではない。朱塗りの神明鳥居も、素木の明神鳥居もある。</p>
 </div>
+<h4 id="named-after">型ごとに、名前の元の社がある——そして、その社は全部この地図にある</h4>
+<p><span>鳥居の型の多くは、</span><strong>その形で知られる社の名前</strong><span>で呼ばれる。この地図には、その社が全部載っている。型を覚えたら、地図で元の社を見に行ける。</span></p>
+<p class="type-family">神明系</p>
+<div class="table-wrap"><table class="article-table stack-table types-table">
+<thead><tr><th><span>型</span></th><th><span>見分け方</span></th><th><span>名前の元・代表の社</span></th><th><span>写真</span></th></tr></thead>
+<tbody>
+<tr><td><span>神明鳥居</span></td><td><span class="cell-label">見分け方</span><span>柱・笠木・貫だけの、一番素朴な形。</span></td><td><span class="cell-label">名前の元・代表の社</span><span>（系統の名前）</span></td><td class="type-photo-cell"></td></tr>
+<tr><td><span>伊勢鳥居</span></td><td><span class="cell-label">見分け方</span><span>神明系で、笠木の上の面が角に削られ、断面が五角形などになる。</span></td><td><span class="cell-label">名前の元・代表の社</span><a href="../shrines/ise-jingu.html">伊勢神宮</a></td><td class="type-photo-cell"><figure class="type-photo"><img alt="伊勢鳥居（伊勢神宮）。逆光。笠木の下に島木は無い" height="371" loading="lazy" src="../../assets/torii-type-ise.jpg" width="720"/></figure></td></tr>
+<tr><td><span>鹿島鳥居</span></td><td><span class="cell-label">見分け方</span><span>神明系で、下の横木（貫）の両端が柱の外に突き出て、くさびで留める。</span></td><td><span class="cell-label">名前の元・代表の社</span><a href="../shrines/kashima-jingu.html">鹿島神宮</a></td><td class="type-photo-cell"><figure class="type-photo"><img alt="鹿島神宮の鹿島鳥居。貫が柱を貫いて突き出ている" height="440" loading="lazy" src="../../assets/torii-type-kashima.jpg" width="720"/></figure></td></tr>
+</tbody>
+</table></div>
+<p class="type-family">明神系</p>
+<div class="table-wrap"><table class="article-table stack-table types-table">
+<thead><tr><th><span>型</span></th><th><span>見分け方</span></th><th><span>名前の元・代表の社</span></th><th><span>写真</span></th></tr></thead>
+<tbody data-region="kanto-tokai">
+<tr><td><span>明神鳥居</span></td><td><span class="cell-label">見分け方</span><span>笠木の下に島木。笠木の端が反り上がる。今いちばん多い型（中世以後に広まった）。</span></td><td><span class="cell-label">名前の元・代表の社</span><span>（系統の名前）</span></td><td class="type-photo-cell"><figure class="type-photo"><img alt="明治神宮の大鳥居（明神鳥居）。笠木の下に島木がある" height="330" loading="lazy" src="../../assets/torii-type-meiji.jpg" width="580"/></figure></td></tr>
+<tr><td><span>春日鳥居</span></td><td><span class="cell-label">見分け方</span><span>笠木と島木が水平で反りが無い。多くは朱塗り。</span></td><td><span class="cell-label">名前の元・代表の社</span><a href="../map.html?shrine=奈良|春日大社#mock-app">春日大社</a></td><td class="type-photo-cell"></td></tr>
+<tr><td><span>稲荷鳥居</span></td><td><span class="cell-label">見分け方</span><span>柱の上端に丸い座（台輪）がある。朱塗りが多い。</span></td><td><span class="cell-label">名前の元・代表の社</span><span>稲荷神社に多い（地図＝</span><a href="../map.html?shrine=京都|伏見稲荷大社#mock-app">伏見稲荷大社</a><span>）</span></td><td class="type-photo-cell"><figure class="type-photo"><img alt="白笹稲荷神社の稲荷鳥居。柱の上端に丸い座（台輪）がある" height="464" loading="lazy" src="../../assets/torii-type-inari.jpg" width="720"/></figure></td></tr>
+<tr><td><span>山王鳥居</span></td><td><span class="cell-label">見分け方</span><span>笠木の上に、三角の屋根形（合掌の破風）が乗る。</span></td><td><span class="cell-label">名前の元・代表の社</span><a href="../map.html?shrine=滋賀|日吉大社#mock-app">日吉大社</a><span>（滋賀）／東京なら</span><a href="../shrines/hie-jinja.html">日枝神社</a></td><td class="type-photo-cell"><figure class="type-photo"><img alt="日枝神社の山王鳥居。笠木の上に三角の破風が乗る" height="405" loading="lazy" src="../../assets/torii-type-sanno.jpg" width="720"/></figure></td></tr>
+<tr><td><span>両部鳥居</span></td><td><span class="cell-label">見分け方</span><span>柱の前後に支えの柱（控柱）が立ち、貫でつながる。</span></td><td><span class="cell-label">名前の元・代表の社</span><a href="../map.html?shrine=広島|厳島神社#mock-app">厳島神社</a><span>（海の中の大鳥居）</span></td><td class="type-photo-cell"></td></tr>
+</tbody>
+</table></div>
+<!-- region: kansai 住吉鳥居（住吉大社）・三輪鳥居（大神神社）は、辞典の記述が薄いか食い違うので今回は入れていない。京都・大阪版が入ったら、住吉を公式で確かめて、上の表の後ろに足す（【地域】）。宇佐鳥居・八幡鳥居は名前の元の社の記述が無い／一つの辞典だけなので入れない。 -->
+<h4 id="how-to-tell">見分け方——上から順に見る</h4>
+<ol>
+<li><span>一番上の横木の下に、もう1本あるか。</span><strong>無い</strong><span>＝神明系（2へ）／</span><strong>ある</strong><span>＝明神系（3へ）。</span></li>
+<li><span>神明系：下の横木の端が、柱の外に突き出ているか。</span><strong>出ている</strong><span>＝鹿島鳥居／</span><strong>笠木の上が角に削られている</strong><span>＝伊勢鳥居／</span><strong>どちらでもない</strong><span>＝神明鳥居。</span></li>
+<li><span>明神系：笠木の上に</span><strong>三角の屋根形</strong><span>＝山王鳥居／柱の前後に</span><strong>支えの柱</strong><span>＝両部鳥居／柱の上端に</span><strong>丸い座</strong><span>＝稲荷鳥居／横木が</span><strong>まっすぐで反りが無い</strong><span>＝春日鳥居／どれでもない＝明神鳥居。</span></li>
+</ol>
+<p>特徴が重なる鳥居もある。一番目立つ特徴で呼ぶ。</p>
+<div class="diagram torii-flow" id="torii-flow">
+<p class="diagram-title">問いの分かれ道</p>
+<div class="flow-step"><strong>1</strong><span> 一番上の横木（笠木）の下に、もう1本（島木）はあるか</span></div>
+<div class="flow-split">
+<div class="flow-col">
+<div class="flow-branch"><span>無い</span></div>
+<div class="flow-family"><span>神明系</span></div>
+<div class="flow-step"><strong>2</strong><span> 下の横木（貫）の端が、柱の外に突き出ているか</span></div>
+<ul class="flow-outs"><li><strong>出ている</strong><span>→鹿島鳥居</span></li><li><strong>笠木の上が角に削られている</strong><span>→伊勢鳥居</span></li><li><strong>どちらでもない</strong><span>→神明鳥居</span></li></ul>
+</div>
+<div class="flow-col">
+<div class="flow-branch"><span>ある</span></div>
+<div class="flow-family"><span>明神系</span></div>
+<div class="flow-step"><strong>3</strong><span> 目立つ特徴は何か</span></div>
+<ul class="flow-outs"><li><strong>笠木の上の三角の屋根形</strong><span>→山王鳥居</span></li><li><strong>柱の前後の支えの柱</strong><span>→両部鳥居</span></li><li><strong>柱の上端の丸い座</strong><span>→稲荷鳥居</span></li><li><strong>横木がまっすぐで反りが無い</strong><span>→春日鳥居</span></li><li><strong>どれでもない</strong><span>→明神鳥居</span></li></ul>
+</div>
+</div>
+</div>
+<div class="diagram" id="torii-types-diagram">
+<p class="diagram-title">8つの型を並べると</p>
+<div class="tt-grid"><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="69" width="8" x="36" y="27"></rect><rect class="tt-m" height="69" width="8" x="76" y="27"></rect><rect class="tt-m" height="9" width="92" x="14" y="17"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">神明鳥居</span><span class="tt-feat">まっすぐな笠木</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="69" width="8" x="36" y="27"></rect><rect class="tt-m" height="69" width="8" x="76" y="27"></rect><polygon class="tt-hl" points="14,27 14,21 20,16 100,16 106,21 106,27"></polygon><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">伊勢鳥居</span><span class="tt-feat">笠木の上が角に削られる</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="70" width="8" x="36" y="26"></rect><rect class="tt-m" height="70" width="8" x="76" y="26"></rect><rect class="tt-m" height="10" rx="5" width="96" x="12" y="16"></rect><rect class="tt-hl" height="6" width="104" x="8" y="56"></rect><g class="tt-marker"><circle cx="114" cy="21" r="6.4"></circle><text x="114" y="24.2">1</text></g><g class="tt-marker"><circle cx="114" cy="59" r="6.4"></circle><text x="114" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">鹿島鳥居</span><span class="tt-feat">貫が柱の外へ突き出る</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="60" width="8" x="36" y="36"></rect><rect class="tt-m" height="60" width="8" x="76" y="36"></rect><path class="tt-m" d="M12 13 Q60 27 108 13 L108 21 Q60 35 12 21 Z"></path><rect class="tt-m" height="7" width="68" x="26" y="29"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">明神鳥居</span><span class="tt-feat">島木＋反った笠木</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="66" width="8" x="36" y="30"></rect><rect class="tt-m" height="66" width="8" x="76" y="30"></rect><rect class="tt-hl" height="8" width="96" x="12" y="15"></rect><rect class="tt-hl" height="7" width="72" x="24" y="23"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="114" cy="19" r="6.4"></circle><text x="114" y="22.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">春日鳥居</span><span class="tt-feat">水平で反りが無い</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="60" width="8" x="36" y="36"></rect><rect class="tt-m" height="60" width="8" x="76" y="36"></rect><path class="tt-m" d="M12 13 Q60 27 108 13 L108 21 Q60 35 12 21 Z"></path><rect class="tt-m" height="7" width="68" x="26" y="29"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><rect class="tt-hl" height="6" rx="2.6" width="16" x="32" y="36"></rect><rect class="tt-hl" height="6" rx="2.6" width="16" x="72" y="36"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">稲荷鳥居</span><span class="tt-feat">柱の上に丸い座</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-m" height="60" width="8" x="36" y="36"></rect><rect class="tt-m" height="60" width="8" x="76" y="36"></rect><polygon class="tt-hl" points="22,14 60,-6 98,14"></polygon><polygon class="tt-hole" points="34,14 60,1 86,14"></polygon><path class="tt-m" d="M12 13 Q60 27 108 13 L108 21 Q60 35 12 21 Z"></path><rect class="tt-m" height="7" width="68" x="26" y="29"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">山王鳥居</span><span class="tt-feat">三角の破風</span></figcaption></figure><figure class="tt-cell"><svg class="tt-svg" role="img" viewbox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0,14)"><rect class="tt-hl" height="36" width="6" x="26" y="60"></rect><rect class="tt-hl" height="36" width="6" x="88" y="60"></rect><rect class="tt-hl" height="4" width="18" x="26" y="74"></rect><rect class="tt-hl" height="4" width="18" x="76" y="74"></rect><rect class="tt-m" height="60" width="8" x="36" y="36"></rect><rect class="tt-m" height="60" width="8" x="76" y="36"></rect><path class="tt-m" d="M12 13 Q60 27 108 13 L108 21 Q60 35 12 21 Z"></path><rect class="tt-m" height="7" width="68" x="26" y="29"></rect><rect class="tt-m" height="6" width="56" x="32" y="56"></rect><g class="tt-marker"><circle cx="112" cy="21" r="6.4"></circle><text x="112" y="24.2">1</text></g><g class="tt-marker"><circle cx="100" cy="33" r="6.4"></circle><text x="100" y="36.2">2</text></g><g class="tt-marker"><circle cx="94" cy="59" r="6.4"></circle><text x="94" y="62.2">3</text></g><g class="tt-marker"><circle cx="80" cy="80" r="6.4"></circle><text x="80" y="83.2">4</text></g></g></svg><figcaption><span class="tt-name">両部鳥居</span><span class="tt-feat">控柱が前後に</span></figcaption></figure></div>
+<div class="torii-legend"><div class="torii-legend-row"><span class="torii-legend-num">1</span><span>笠木</span></div><div class="torii-legend-row"><span class="torii-legend-num">2</span><span>島木（明神系）</span></div><div class="torii-legend-row"><span class="torii-legend-num">3</span><span>貫</span></div><div class="torii-legend-row"><span class="torii-legend-num">4</span><span>柱</span></div></div>
+<p class="diagram-note">番号は上の部位の図と同じ。明るくしてあるのが、その型を見分ける所。</p>
+</div>
+<h4 id="by-material">素材で見る</h4>
+<p><span>型とは別に、素材もさまざま。</span><strong>型は形で決まり、素材では決まらない。</strong></p>
+<ul>
+<li><strong>木</strong><span>＝</span><a href="../shrines/kashima-jingu.html">鹿島神宮</a><span>の大きな木の鳥居</span></li>
+<li><strong>石</strong><span>＝</span><a href="../shrines/katori-jingu.html">香取神宮</a><span>の石の鳥居と、</span><a href="../shrines/kanda-myojin.html">神田明神</a><span>の境内の社の石の鳥居</span></li>
+<li><strong>銅</strong><span>＝</span><a href="../shrines/toranomon-kotohira.html">虎ノ門金刀比羅宮</a><span>の銅の鳥居（ビルの谷間）</span></li>
+<li><strong>朱塗り</strong><span>＝</span><a href="../shrines/shirasasa-inari.html">白笹稲荷神社</a><span>。なぜ朱かは</span><a href="#vermilion">上の節</a></li>
+</ul>
+<h4 id="near-tokyo">東京の近くで、実物を見るなら</h4>
+<ul>
+<li><span>山王鳥居＝</span><strong><a href="../shrines/hie-jinja.html">日枝神社</a></strong><span>（赤坂）</span></li>
+<li><span>稲荷鳥居＝</span><strong><a href="../shrines/shirasasa-inari.html">白笹稲荷神社</a></strong><span>（秦野）</span></li>
+<li><span>鹿島鳥居＝</span><strong><a href="../shrines/kashima-jingu.html">鹿島神宮</a></strong><span>（茨城）</span></li>
+<li><span>明神鳥居＝</span><strong><a href="../shrines/meiji-jingu.html">明治神宮</a></strong><span>（原宿）</span></li>
+</ul>
 <p class="article-bridge">鳥居をくぐった先、境内で実際に何を見ればいいか。</p>
 <h2 id="grounds">境内——見えないものを中心に作られている</h2>
 <p>神社でいちばん大事なものは、<strong>見えない。</strong>本殿の奥に神体があり、<strong>誰も見ない。</strong>伊勢神宮の神体は天皇でさえ見ない。この前提が分かると、境内の作りの意味が変わる。</p>
@@ -317,7 +442,7 @@
 </div>
 <p class="article-deeper"><a href="beyond-the-basics.html">もっと深く：基礎の先に →</a></p>
 </div>
-<div class="share-row" data-share=""><span class="share-label">このページを共有</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">共有</button><button class="share-btn" data-done="コピーしました" data-goatcounter-click="share" data-share-copy="" type="button">リンクをコピー</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fja%2Farticles%2Ftorii-and-grounds.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Ftorii-and-grounds.jpg&amp;description=%E9%B3%A5%E5%B1%85%E3%81%A8%E5%A2%83%E5%86%85%E2%80%94%E2%80%94%E4%BD%95%E3%82%92%E8%A6%8B%E3%82%8B%E3%81%8B%EF%BD%9C%E5%8D%83%E4%BB%A3%E3%81%AE%E6%9D%9C" rel="noopener noreferrer" target="_blank">Pinterestに保存</a></div><div class="article-nav">
+<div class="share-row" data-share=""><span class="share-label">このページを共有</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">共有</button><button class="share-btn" data-done="コピーしました" data-goatcounter-click="share" data-share-copy="" type="button">リンクをコピー</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fja%2Farticles%2Ftorii-and-grounds.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Ftorii-and-grounds.jpg&amp;description=%E9%B3%A5%E5%B1%85%E3%81%AE%E5%9E%8B%E2%80%94%E2%80%94%E7%A5%9E%E6%98%8E%E3%83%BB%E6%98%8E%E7%A5%9E%E3%81%8B%E3%82%89%E5%B1%B1%E7%8E%8B%E3%81%BE%E3%81%A7%E3%80%81%E8%A6%8B%E5%88%86%E3%81%91%E6%96%B9%EF%BD%9C%E5%8D%83%E4%BB%A3%E3%81%AE%E6%9D%9C" rel="noopener noreferrer" target="_blank">Pinterestに保存</a></div><div class="article-nav">
 <a class="article-nav-prev" href="how-to-visit.html"><span class="article-nav-label">← 前の記事</span><span>参拝の作法と、授かりもの</span></a>
 <a class="article-nav-next" href="kami-and-classification.html"><span class="article-nav-label">次の記事 →</span><span>神々と、この地図の分類</span></a>
 </div>
