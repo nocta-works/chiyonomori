@@ -454,6 +454,17 @@
     .area-row { flex-direction: column; align-items: flex-start; }
     .area-row-chips { width: 100%; }
   }
+  /* 依頼CK（2026-11-03）：スマホの幅でエリアのパネルが画面の右へはみ出していた（375pxで英50px・日100px・独84px。
+     日本語・320pxでは、チップとリンクも切れ、パネルを開くとページが横に動いた）。
+     真因＝パネル（min-width:300px）が、押したボタン（.shrine-dropdown＝position:relative）の左端から左揃えで付くため、
+     ボタンが右にある言語（日本語175px・独語159px）ほど右へ出る。
+     直し＝この幅では、ボタンを基準にするのをやめて（position:static）ツールバー（position:relative・全幅）を基準にし、
+     左右8pxずつで画面いっぱいに出す。縦の位置は、top:autoで「ボタンのすぐ下」のまま（margin-topで8px）＝今と同じ。
+     PCの幅（501px以上）は今のまま。「基礎知識」のパネルは、ボタンが左端にあって内側に収まっているので触らない */
+  @media (max-width: 500px) {
+    #area-dropdown { position: static; }
+    #area-dropdown-panel { top: auto; margin-top: 8px; left: 8px; right: 8px; min-width: 0; }
+  }
 
   /* タグフィルター（本人指定・2026-09-10：海外版は神宮・大社・一宮・二宮の4タグに厳選。
      見た目・構成は本番index.htmlの.controls-tagsに合わせるが、参拝記録・令制国絞り込み・
