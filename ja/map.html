@@ -618,6 +618,9 @@
   #map-area.sidebar-hidden .area-enclosure-cta-wrap { right: 0; }
   #map-area.sidebar-hidden .bm-toast { left: 50%; }
   .tip-glyph { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 0.15em; }
+  /* 💰収益-9：Basicsメニュー末尾のKo-fiの1行。鳥居のグリフは文字色（currentColor）なので、リンクの既定の青にならないよう金にする */
+  .menu-tip .shrine-dropdown-item { color: var(--gold); }
+  .menu-tip .tip-glyph { width: 1.1em; height: 1.1em; margin: 0 2px 0 0; flex-shrink: 0; }
   .sidebar-section-title {
     position: sticky; top: 0; z-index: 10;
     padding: 6px 12px 6px 10px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
@@ -813,6 +816,9 @@
     .lang-btn { padding: 3px 9px; }
     .mock-toolbar { flex-wrap: nowrap; gap: 8px; padding: 6px 12px; }
     .shrine-dropdown-toggle { padding: 5px 12px; }
+    /* 💰収益-9：Basicsのパネルは、Ko-fiの1行を足すと横向き（高さ375pxなど）で70vhを超えて中でスクロールになる。項目の上下の余白を詰めて、1画面に収める */
+    #basics-dropdown-panel .shrine-dropdown-item { padding: 5px 10px; }
+    #basics-dropdown-panel .shrine-dropdown-sep { margin: 3px 10px; }
     .mock-controls {
       flex: 1 1 auto; min-width: 0; margin-left: 0; flex-wrap: nowrap; gap: 6px;
       overflow-x: auto; overflow-y: hidden; padding-right: 26px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
@@ -969,12 +975,20 @@
          表示されないので、見た目・スクロール・操作は変わらない。⚠️記事・エリアの一覧（ARTICLE_PAGES／AREA_PAGES／VISIBLE_AREA_FILES）を
          変える時は、ここも同じにする。気に入らなければ、中身を空に戻す（<div class="shrine-dropdown-panel" id="…"></div>）だけで元の形 -->
 <div class="shrine-dropdown-panel" id="basics-dropdown-panel">
+<div id="basics-dropdown-list">
 <a class="shrine-dropdown-item" href="articles/japan-and-shrines.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">1</span><span class="shrine-dropdown-name">日本と神社</span></a>
 <a class="shrine-dropdown-item" href="articles/how-to-visit.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">2</span><span class="shrine-dropdown-name">参拝の作法</span></a>
 <a class="shrine-dropdown-item" href="articles/torii-and-grounds.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">3</span><span class="shrine-dropdown-name">鳥居と境内</span></a>
 <a class="shrine-dropdown-item" href="articles/kami-and-classification.html"><span class="shrine-dropdown-badge" style="background:rgba(var(--gold-glow-rgb),0.3);border:1.5px solid var(--gold);">4</span><span class="shrine-dropdown-name">神々と分類</span></a>
 <div class="shrine-dropdown-sep"></div>
 <a class="shrine-dropdown-item shrine-dropdown-more" href="articles/beyond-the-basics.html"><span class="shrine-dropdown-name">基礎の先に →</span></a>
+</div>
+<!-- 💰収益-9（2026-11-05）：パネルの一番下にKo-fiの1行（英日のみ。独語版には出さない＝sync_preview.pyが.menu-tipを外す）。
+             記事の一覧はJS（renderBasicsDropdown）が#basics-dropdown-listの中だけを作り直す＝この行は作り直されない（計測のイベントが外れないように） -->
+<div class="menu-tip">
+<div class="shrine-dropdown-sep"></div>
+<a class="shrine-dropdown-item shrine-dropdown-more" data-goatcounter-click="kofi-menu" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span class="shrine-dropdown-name">Ko-fiでチップを送る ↗</span></a>
+</div>
 </div>
 </div>
 <div class="shrine-dropdown" id="area-dropdown">
@@ -1432,7 +1446,7 @@
   function renderBasicsDropdown(){
     var label = document.getElementById('basics-dropdown-label');
     if (label) label.textContent = '⛩ ' + BASICS_LABEL[currentLang];
-    var panel = document.getElementById('basics-dropdown-panel');
+    var panel = document.getElementById('basics-dropdown-list') || document.getElementById('basics-dropdown-panel');   // 💰収益-9：Ko-fiの1行（.menu-tip）は作り直さない
     if (!panel) return;
     panel.innerHTML = ARTICLE_PAGES.map(function(s){
       return '<a class="shrine-dropdown-item" href="' + withTagsQuery(s.file) + '">' +

@@ -156,6 +156,13 @@
     border: 1px solid var(--border-4); background: transparent; color: var(--tan-text); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
   .share-btn:hover, .share-btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
   .share-btn[hidden] { display: none; }
+  /* 💰収益-9：共有の行の直後の「理由の文＋Ko-fiのボタン」。形・大きさは共有ボタンと同じ。文字色は金（塗りつぶしにしない）。スマホは高さ44px以上 */
+  .kofi-row { max-width: 860px; margin: 14px auto 0; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  .kofi-reason { flex: 1 1 260px; margin: 0; font-size: 13px; line-height: 1.7; color: var(--tan-text); }
+  .kofi-row .kofi-btn { color: var(--gold); border-color: rgba(245,208,138,0.55); font-size: 12.5px; }
+  .kofi-row .kofi-btn:hover, .kofi-row .kofi-btn:focus-visible { border-color: var(--gold); background: rgba(245,208,138,0.08); }
+  .kofi-row .tip-glyph { width: 1.1em; height: 1.1em; margin-right: 0.45em; flex-shrink: 0; }
+  @media (max-width: 640px), (pointer: coarse) { .kofi-row .kofi-btn { min-height: 44px; box-sizing: border-box; } }   /* スマホは縦も横も（横向きは幅が640pxを超えるので、タッチの端末でも） */
 </style></head>
 <body>
 <a class="back-link" href="../map.html#mock-app">← Back to map</a>
@@ -216,7 +223,7 @@
 <p><span>The warrior class and Hachiman (→ </span><a href="../articles/kami-and-classification.html#lineages">Kami, ranks and lineages: Lineage</a><span>). The Minamoto clan adopted Hachiman as a god of war. The cult then spread across Japan with warrior governments.</span></p>
 </div>
 </div>
-<div class="share-row" data-share=""><span class="share-label">Share this page</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">Share</button><button class="share-btn" data-done="Copied" data-goatcounter-click="share" data-share-copy="" type="button">Copy link</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fshrines%2Ftsurugaoka-hachimangu.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Ftsurugaoka-hachimangu.jpg&amp;description=Tsurugaoka%20Hachimangu%20Shrine%2C%20Kamakura%20%E2%80%94%20Chiyo%20no%20Mori" rel="noopener noreferrer" target="_blank">Save to Pinterest</a></div><div class="next-shrines">
+<div class="share-row" data-share=""><span class="share-label">Share this page</span><button class="share-btn" data-goatcounter-click="share" data-share-native="" hidden="" type="button">Share</button><button class="share-btn" data-done="Copied" data-goatcounter-click="share" data-share-copy="" type="button">Copy link</button><a class="share-btn" data-goatcounter-click="share" data-share-pin="" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fshrines%2Ftsurugaoka-hachimangu.html&amp;media=https%3A%2F%2Fnocta-works.github.io%2Fchiyonomori%2Fassets%2Fog%2Ftsurugaoka-hachimangu.jpg&amp;description=Tsurugaoka%20Hachimangu%20Shrine%2C%20Kamakura%20%E2%80%94%20Chiyo%20no%20Mori" rel="noopener noreferrer" target="_blank">Save to Pinterest</a></div><div class="kofi-row"><p class="kofi-reason">Chiyo no Mori is independent and ad-free. If this page helped you plan your visit, you can leave a small tip.</p><a class="share-btn kofi-btn" data-goatcounter-click="kofi-share" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg>Leave a tip on Ko-fi ↗</a></div><div class="next-shrines">
 <div class="next-shrines-title">Next shrine</div>
 <p class="next-shrines-lead">Two more Kamakura shrines: Zeniarai Benzaiten and Egara Tenjinsha.</p>
 <div class="next-shrine-grid">
@@ -238,8 +245,7 @@
 <div class="page-footer">
 <div>Chiyo no Mori — Shrines of Japan</div>
 <div class="footer-support">
-<span>Chiyo no Mori is independent and ad-free. If this guide helped you plan your visit,</span>
-<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>leave a small tip ↗</span></a>
+<a data-goatcounter-click="kofi" href="https://ko-fi.com/chiyonomori" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="tip-glyph" fill="none" stroke="currentColor" stroke-linecap="round" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.6 Q12 7.92 22 5.6" stroke-width="2"></path><path d="M3.9 9.74 H20.1" stroke-width="1.9"></path><path d="M6.16 7.3 L5.5 18.5" stroke-width="2.3"></path><path d="M17.84 7.3 L18.5 18.5" stroke-width="2.3"></path></svg><span>Leave a tip on Ko-fi ↗</span></a>
 </div>
 <div class="footer-privacy" style="margin-top:8px;">No cookies. Anonymous visit counts only. <a href="../privacy.html" style="color:var(--tan-text-2);text-decoration:underline;">Privacy</a></div></div>
 <script>
