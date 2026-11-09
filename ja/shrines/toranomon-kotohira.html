@@ -79,6 +79,24 @@
   .quick-fact-label { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; margin-bottom: 4px; }
   .quick-fact-value { font-size: 13.5px; color: var(--tan-text); line-height: 1.6; }
 
+  /* 依頼CO（2026-11-10）：Quick Factsの直後に置く「行き方／Getting there」の欄。枠・文字・余白はQuick Factsと同じ。
+     行は「駅から／目印／段差」。広い画面はラベルと文を横に並べ、狭い画面（520px以下）は縦に積む（文が長くても横スクロールを出さない） */
+  .getting-there {
+    max-width: 760px; margin: 0 auto 56px; padding: 20px 24px;
+    border: 1px solid var(--border-4); border-radius: 4px; background: rgba(255,255,255,0.02);
+  }
+  .quick-facts + .getting-there { margin-top: -32px; }
+  .getting-there-title { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; margin-bottom: 12px; }
+  .getting-there-row { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); gap: 0 16px; padding: 10px 0; border-top: 1px solid var(--border-4); }
+  .getting-there-title + .getting-there-row { border-top: 0; padding-top: 0; }
+  .getting-there-row:last-child { padding-bottom: 0; }
+  .getting-there-label { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; padding-top: 3px; }
+  .getting-there-value { font-size: 13.5px; color: var(--tan-text); line-height: 1.7; overflow-wrap: anywhere; }
+  @media (max-width: 520px) {
+    .getting-there-row { grid-template-columns: minmax(0, 1fr); gap: 4px 0; }
+    .getting-there-label { padding-top: 0; }
+  }
+
   .shrine-links { display: flex; gap: 8px; margin-top: 20px; max-width: 360px; }
   .shrine-link {
     display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1;
@@ -177,7 +195,7 @@
 </div>
 <div class="shrine-links">
 <a class="shrine-link gmaps" href="https://www.google.com/maps/search/虎ノ門金刀比羅宮" rel="noopener" target="_blank">📍 地図</a>
-<a class="shrine-link official search" href="https://www.google.com/search?q=虎ノ門金刀比羅宮+公式" rel="noopener" target="_blank">🌐 公式サイトを検索</a>
+<a class="shrine-link official" href="https://www.kotohira.or.jp/" rel="noopener" target="_blank">🌐 公式サイト</a>
 <a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/虎ノ門金刀比羅宮" rel="noopener" target="_blank">📖 Wiki</a>
 </div>
 </div>
@@ -188,6 +206,11 @@
 <div><span class="quick-fact-label">ご利益</span><span class="quick-fact-value">金運・商売繁盛・海上安全</span></div>
 <div><span class="quick-fact-label">創建</span><span class="quick-fact-value">1660年</span></div>
 <div><span class="quick-fact-label">最寄駅</span><span class="quick-fact-value">地下鉄虎ノ門</span></div>
+</div>
+<div class="getting-there">
+<span class="getting-there-title">行き方</span>
+<div class="getting-there-row"><span class="getting-there-label">駅から</span><span class="getting-there-value">東京メトロ銀座線 虎ノ門駅（2a・3番出口）から徒歩1分／丸ノ内線・千代田線 霞ケ関駅（A13番出口）から徒歩5分／日比谷線 虎ノ門ヒルズ駅（A2a・b出口）から徒歩5分（神社の公式サイトによる）</span></div>
+<div class="getting-there-row"><span class="getting-there-label">目印</span><span class="getting-there-value">高層ビルの足元に社がある。ビルの谷間の参道の奥に拝殿</span></div>
 </div>
 <div class="section">
 <span class="section-label">History</span>

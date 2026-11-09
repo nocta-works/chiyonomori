@@ -79,6 +79,24 @@
   .quick-fact-label { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; margin-bottom: 4px; }
   .quick-fact-value { font-size: 13.5px; color: var(--tan-text); line-height: 1.6; }
 
+  /* 依頼CO（2026-11-10）：Quick Factsの直後に置く「行き方／Getting there」の欄。枠・文字・余白はQuick Factsと同じ。
+     行は「駅から／目印／段差」。広い画面はラベルと文を横に並べ、狭い画面（520px以下）は縦に積む（文が長くても横スクロールを出さない） */
+  .getting-there {
+    max-width: 760px; margin: 0 auto 56px; padding: 20px 24px;
+    border: 1px solid var(--border-4); border-radius: 4px; background: rgba(255,255,255,0.02);
+  }
+  .quick-facts + .getting-there { margin-top: -32px; }
+  .getting-there-title { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; margin-bottom: 12px; }
+  .getting-there-row { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); gap: 0 16px; padding: 10px 0; border-top: 1px solid var(--border-4); }
+  .getting-there-title + .getting-there-row { border-top: 0; padding-top: 0; }
+  .getting-there-row:last-child { padding-bottom: 0; }
+  .getting-there-label { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); opacity: 0.75; text-transform: uppercase; padding-top: 3px; }
+  .getting-there-value { font-size: 13.5px; color: var(--tan-text); line-height: 1.7; overflow-wrap: anywhere; }
+  @media (max-width: 520px) {
+    .getting-there-row { grid-template-columns: minmax(0, 1fr); gap: 4px 0; }
+    .getting-there-label { padding-top: 0; }
+  }
+
   .shrine-links { display: flex; gap: 8px; margin-top: 20px; max-width: 360px; }
   .shrine-link {
     display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1;
@@ -177,7 +195,7 @@
 </div>
 <div class="shrine-links">
 <a class="shrine-link gmaps" href="https://www.google.com/maps/search/神田神社（神田明神）" rel="noopener" target="_blank">📍 Map</a>
-<a class="shrine-link official search" href="https://www.google.com/search?q=神田神社（神田明神）+公式" rel="noopener" target="_blank">🌐 Search official site</a>
+<a class="shrine-link official" href="https://www.kandamyoujin.or.jp/" rel="noopener" target="_blank">🌐 Official site</a>
 <a class="shrine-link wiki" href="https://ja.wikipedia.org/wiki/神田神社（神田明神）" rel="noopener" target="_blank">📖 Wiki</a>
 </div>
 </div>
@@ -189,6 +207,12 @@
 <div><span class="quick-fact-label">Founded</span><span class="quick-fact-value">Traditionally dated to 730</span></div>
 <div><span class="quick-fact-label">Nearest station</span><span class="quick-fact-value">Suehirocho subway station / JR Ochanomizu</span></div>
 </div><p class="shrine-provenance" style="max-width:760px;margin:-40px auto 44px;font-size:11.5px;letter-spacing:0.06em;color:var(--gold-muted);text-align:center;">Visited in person · Original photography</p>
+<div class="getting-there">
+<span class="getting-there-title">Getting there</span>
+<div class="getting-there-row"><span class="getting-there-label">By train</span><span class="getting-there-value">5 min walk from JR Ochanomizu Station (Hijiribashi Exit) or Suehirocho Station (Tokyo Metro Ginza Line); 7 min from JR Akihabara Station (Electric Town Exit). Times are from the shrine's official website.</span></div>
+<div class="getting-there-row"><span class="getting-there-label">Look for</span><span class="getting-there-value">Coming from Ochanomizu, you enter through a large bronze torii, green with age, standing right on the street. Pass under it and the vermilion Zuishinmon gate is straight ahead.</span></div>
+<div class="getting-there-row"><span class="getting-there-label">Steps</span><span class="getting-there-value">The approach from the torii to the main hall is level.</span></div>
+</div>
 <div class="section">
 <span class="section-label">History</span>
 <h2 class="section-title">Origins and founding</h2>
